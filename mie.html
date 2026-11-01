@@ -307,14 +307,60 @@ header {
   background: var(--card-bg);
   border: 1px solid var(--border);
   border-radius: 12px;
-  padding: 14px;
   margin-bottom: 14px;
   box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+  overflow: hidden;
+  transition: all 0.2s ease;
 }
 .slot-card.must { border-left: 4px solid var(--danger); }
 .slot-card.activity { border-left: 4px solid var(--primary); }
 .slot-card.stay { border-left: 4px solid var(--purple); }
 .slot-card.food { border-left: 4px solid var(--accent); }
+
+/* Collapsible Slot Container */
+.slot-details {
+  border: none;
+  width: 100%;
+}
+.slot-summary {
+  list-style: none;
+  cursor: pointer;
+  padding: 14px;
+  user-select: none;
+  transition: background 0.15s;
+}
+.slot-summary::-webkit-details-marker {
+  display: none;
+}
+.slot-summary:hover {
+  background: rgba(255, 255, 255, 0.02);
+}
+.slot-details[open] .slot-summary {
+  border-bottom: 1px solid var(--border-subtle);
+  background: rgba(0, 0, 0, 0.15);
+}
+.slot-body {
+  padding: 14px;
+  background: rgba(11, 17, 32, 0.4);
+}
+.slot-expand-hint {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-top: 8px;
+  padding-top: 6px;
+  border-top: 1px dashed rgba(255, 255, 255, 0.07);
+  font-size: 0.72rem;
+  color: var(--primary);
+  font-weight: 600;
+}
+.slot-details[open] .slot-expand-arrow {
+  transform: rotate(180deg);
+}
+.slot-expand-arrow {
+  display: inline-block;
+  transition: transform 0.2s ease;
+}
 
 .slot-header {
   display: flex;
@@ -515,6 +561,63 @@ header {
 .factor-content {
   color: #cbd5e1;
 }
+.factor-bullet-line {
+  display: flex;
+  align-items: flex-start;
+  gap: 6px;
+  margin-bottom: 3px;
+  line-height: 1.45;
+}
+.factor-bullet-dot {
+  color: var(--primary);
+  font-weight: 800;
+  font-size: 0.85rem;
+  line-height: 1.2;
+}
+.factor-bullet-text {
+  flex: 1;
+  color: #e2e8f0;
+}
+.section-divider-tag {
+  font-size: 0.74rem;
+  font-weight: 700;
+  color: #94a3b8;
+  margin: 12px 0 6px 0;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+.section-divider-tag::before, .section-divider-tag::after {
+  content: "";
+  flex: 1;
+  height: 1px;
+  background: var(--border-subtle);
+}
+
+/* Mother Memo Collapsible */
+.mother-memo-details {
+  border: none;
+}
+.mother-memo-summary {
+  list-style: none;
+  cursor: pointer;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  user-select: none;
+}
+.mother-memo-summary::-webkit-details-marker {
+  display: none;
+}
+.mother-memo-details[open] .mother-memo-arrow {
+  transform: rotate(180deg);
+}
+.mother-memo-arrow {
+  display: inline-block;
+  transition: transform 0.2s ease;
+  font-size: 0.74rem;
+  color: #c084fc;
+}
 
 /* Spot Bottom Actions */
 .spot-bottom-actions {
@@ -636,10 +739,10 @@ header {
       <div class="controls-grid">
         <div>
           <div class="menu-section-label">⏰ 高蔵寺駅 出発時刻</div>
-          <div class="segmented-control">
-            <button class="segment-btn time" onclick="setDepartureOffset(-60)">06:00発</button>
-            <button class="segment-btn time active" onclick="setDepartureOffset(0)">07:00発</button>
-          </div>
+          <div class="segmented-control" style="background:rgba(56, 189, 248, 0.1); border-color:#0284c7;">
+            <div style="flex:1; text-align:center; padding:6px 0; font-size:0.78rem; font-weight:800; color:#38bdf8;">
+              🔒 07:00発 確定（母メモ完全厳守）
+            </div></div>
         </div>
         <div>
           <div class="menu-section-label">📅 日程絞り込み表示</div>
@@ -1424,11 +1527,11 @@ header {
           <p style="font-size:0.84rem; color:var(--text-muted); line-height:1.5; margin-bottom:12px;">${plan.desc}</p>
 
           <!-- 母メモ重要ポイントコールアウト -->
-          <div class="mother-memo-box">
-            <div class="mother-memo-title">🟣 母のメモ・重要ポイント＆おトク技（完全ベース）</div>
-            <ul class="mother-memo-list">
+          <details class="mother-memo-box mother-memo-details">
+            <summary class="mother-memo-summary"><span class="mother-memo-title" style="margin-bottom:0;">🟣 母のメモ・重要ポイント＆おトク技（全量記録・タップで開閉）</span><span class="mother-memo-arrow">▼ 開く</span></summary>
+            <ul class="mother-memo-list" style="margin-top:10px; border-top:1px dashed rgba(168, 85, 247, 0.3); padding-top:10px;">
               ${plan.motherPoints.map(p => `<li>${p}</li>`).join('')}
-            </ul>
+          </details>
           </div>
         </div>
       `;
@@ -1526,76 +1629,110 @@ header {
             `;
           }
 
-          // Collapsible 7 Factors
+          // Bullet formatting helper for 7 Factors
+          function toBullets(text) {
+            if (!text) return '';
+            const rawLines = text
+              .split(/<br\s*\/?>|\n/)
+              .map(s => s.trim())
+              .filter(Boolean);
+            if (rawLines.length === 0) return '';
+            return rawLines.map(line => {
+              const cleaned = line.replace(/^[・\-\*]\s*/, '').trim();
+              return '<div class="factor-bullet-line"><span class="factor-bullet-dot">•</span><span class="factor-bullet-text">' + cleaned + '</span></div>';
+            }).join('');
+          }
+
+          // 7 Factors with increased itemization and bullet points
           const factorsHtml = `
-            <details class="factors-collapse">
-              <summary class="factors-summary">
-                <span>📋 7つの詳細分析スペック（駐車場・雨天対策・名物・損切り）</span>
-                <span style="font-size:0.7rem; color:#38bdf8;">詳細を見る ▾</span>
-              </summary>
-              <div class="factors-box">
+            <div class="factors-collapse" style="margin-top:10px;">
+              <div class="factors-summary" style="cursor:default; margin-bottom:6px; color:#38bdf8;">
+                <span>📋 7つの詳細分析スペック（箇条書き項目化）</span>
+              </div>
+              <div class="factors-box" style="border-top:1px solid var(--border-subtle); padding-top:8px;">
                 <div class="factor-item">
-                  <div class="factor-header">① 概要・目的</div>
-                  <div class="factor-content">${f.overview}</div>
+                  <div class="factor-header">① 概要・目的（何をする場所か）</div>
+                  <div class="factor-content">${toBullets(f.overview)}</div>
                 </div>
                 <div class="factor-item">
-                  <div class="factor-header success">② 立ち回り＆基本戦略</div>
-                  <div class="factor-content">${f.tactics}</div>
+                  <div class="factor-header success">② 立ち回り＆基本戦略（最速・最適手順）</div>
+                  <div class="factor-content">${toBullets(f.tactics)}</div>
                 </div>
                 <div class="factor-item">
-                  <div class="factor-header accent">③ 代替不可名物・限定体験</div>
-                  <div class="factor-content">${f.mustTry}</div>
+                  <div class="factor-header accent">③ 代替不可名物・限定体験（ここでしか味わえないもの）</div>
+                  <div class="factor-content">${toBullets(f.mustTry)}</div>
                 </div>
                 <div class="factor-item">
-                  <div class="factor-header purple">④ ついでに巡れる名所・スイーツ</div>
-                  <div class="factor-content">${f.plusOne}</div>
+                  <div class="factor-header purple">④ ついでに巡れる名所・スイーツ（立ち寄り推奨）</div>
+                  <div class="factor-content">${toBullets(f.plusOne)}</div>
                 </div>
                 <div class="factor-item">
-                  <div class="factor-header">⑤ 次エリア事前Tips</div>
-                  <div class="factor-content">${f.tips}</div>
+                  <div class="factor-header">⑤ 事前Tips・同行者配慮（歩行・トイレ・準備）</div>
+                  <div class="factor-content">${toBullets(f.tips)}</div>
                 </div>
                 <div class="factor-item">
-                  <div class="factor-header accent">⑥ 交通・移動・駐車場評価</div>
-                  <div class="factor-content">${f.transit}</div>
+                  <div class="factor-header accent">⑥ 交通・移動・駐車場評価（料金・ルート・入庫性）</div>
+                  <div class="factor-content">${toBullets(f.transit)}</div>
                 </div>
                 <div class="factor-item">
-                  <div class="factor-header danger">⑦ スキップ基準・損切りタイムゲート</div>
-                  <div class="factor-content">${f.skipLimit}</div>
+                  <div class="factor-header danger">⑦ スキップ基準・損切りタイムゲート（遅延時の判断）</div>
+                  <div class="factor-content">${toBullets(f.skipLimit)}</div>
                 </div>
               </div>
-            </details>
+            </div>
           `;
+
+          // Quick summary line for collapsed view
+          const quickSummary = f.overview.split(/<br\s*\/?>|\n/)[0].replace(/^[・\-\*]\s*/, '').replace(/^滞在目的:\s*/, '');
 
           html += `
             <div class="slot-card ${item.type}">
-              <div class="slot-header">
-                <span class="slot-time">${timeDisplay}</span>
-                <span class="slot-badge ${item.badgeClass}">${item.badgeText}</span>
-              </div>
-              
-              <div class="slot-title-row">
-                <div class="slot-title">${item.title}</div>
-                <div class="duration-pill">
-                  <span class="duration-avg">⏱ 平均: ${item.avgDuration}</span>
-                  <span style="color:#475569;">|</span>
-                  <span class="duration-est">🎯 今回予想: ${item.estDuration}</span>
+              <details class="slot-details">
+                <summary class="slot-summary">
+                  <div class="slot-header">
+                    <span class="slot-time">${timeDisplay}</span>
+                    <span class="slot-badge ${item.badgeClass}">${item.badgeText}</span>
+                  </div>
+                  
+                  <div class="slot-title-row" style="margin-bottom:6px;">
+                    <div class="slot-title">${item.title}</div>
+                    <div class="duration-pill">
+                      <span class="duration-avg">⏱ 平均: ${item.avgDuration}</span>
+                      <span style="color:#475569;">|</span>
+                      <span class="duration-est">🎯 今回予想: ${item.estDuration}</span>
+                    </div>
+                  </div>
+
+                  <div style="font-size:0.8rem; color:var(--text-muted); line-height:1.4; display:flex; align-items:center; gap:6px;">
+                    <span style="color:#38bdf8; font-weight:700; white-space:nowrap;">【概要】</span>
+                    <span style="color:#cbd5e1; overflow:hidden; text-overflow:ellipsis; white-space:nowrap;">${quickSummary}</span>
+                  </div>
+
+                  <div class="slot-expand-hint">
+                    <span>タップして詳細（立ち回り手順・寄り道マップ・7分析）を展開</span>
+                    <span class="slot-expand-arrow">▼</span>
+                  </div>
+                </summary>
+
+                <div class="slot-body">
+                  <div class="section-divider-tag">ー 詳細手順・立ち回り・分析スペック ー</div>
+
+                  <!-- Micro Stepper (一筆書き立ち回り) -->
+                  ${microFlowHtml}
+
+                  <!-- Bonus Spots (ついで名所) -->
+                  ${bonusSpotsHtml}
+
+                  <!-- 7 Factors (箇条書き詳細スペック) -->
+                  ${factorsHtml}
+
+                  <div class="spot-bottom-actions" style="margin-top:12px;">
+                    <a href="${f.mapUrl}" target="_blank" class="map-btn-spot">
+                      📍 このスポットをGoogleマップで開く ↗
+                    </a>
+                  </div>
                 </div>
-              </div>
-
-              <!-- Micro Stepper (一筆書き立ち回り) -->
-              ${microFlowHtml}
-
-              <!-- Bonus Spots (ついで名所) -->
-              ${bonusSpotsHtml}
-
-              <!-- Collapsible 7 Factors (詳細スペック) -->
-              ${factorsHtml}
-
-              <div class="spot-bottom-actions">
-                <a href="${f.mapUrl}" target="_blank" class="map-btn-spot">
-                  📍 このスポットをGoogleマップで開く ↗
-                </a>
-              </div>
+              </details>
             </div>
           `;
         });
