@@ -932,7 +932,7 @@ header {
       <div class="title">🚗 三重・伊勢志摩 リアルタイムナビ</div>
       <div class="header-right">
         <div class="badge-origin">起点: 高蔵寺駅</div>
-        <button class="menu-drawer-btn" onclick="toggleDrawer(true)">☰ 履歴 (v4)</button>
+        <button class="menu-drawer-btn" onclick="toggleDrawer(true)">☰ 履歴 (v5)</button>
       </div>
     </div>
   </header>
@@ -949,15 +949,27 @@ header {
       旅程更新時に過去分が上書き消滅しないよう物理アーカイブされています。いつでも過去プランへ戻せます。
     </div>
 
-    <!-- v4 (Current) -->
+    <!-- v5 (Current) -->
     <div class="version-card current">
-      <span class="version-tag current">🟢 現在表示中 (v4)</span>
+      <span class="version-tag current">🟢 現在表示中 (v5)</span>
+      <div class="version-title">v5: 統一見出し＆ベストプラクティス完全準拠版</div>
+      <div class="version-desc">
+        ・不自然な「右回り」等の文脈不一致サブタイトルを完全撤廃<br>
+        ・全スロットのタイトル・サブタイトル・ブロック見出しを統一規律化<br>
+        ・立ち回りステップのタグ（【必須】/【推奨】/【スキップ可】）の表記統一<br>
+        ・プラン2（予備プラン）の全バッジを【目的】形式に統一
+      </div>
+    </div>
+
+    <!-- v4 (Archive) -->
+    <div class="version-card">
+      <span class="version-tag archive">📄 アーカイブ (v4)</span>
       <div class="version-title">v4: 目的バッジ＆昼食3ジャンル3択完備版</div>
       <div class="version-desc">
         ・見出しを【目的】バッジ化（昼食/参拝/移動/宿泊等）<br>
-        ・昼食：伊勢うどん/軽食/てこね寿司の3大ジャンル各店（おすすめ度★・所要時間・予算・マップ付き）<br>
-        ・スイーツ・名所にもおすすめ度・所要時間を完備
+        ・昼食：伊勢うどん/軽食/てこね寿司の3大ジャンル各店（おすすめ度・所要時間・予算・マップ付き）
       </div>
+      <a href="archive/v4.html" target="_blank" class="version-link">このバージョンを開く ↗</a>
     </div>
 
     <!-- v3 (Archive) -->
@@ -1705,7 +1717,7 @@ header {
           {
             baseStart: "07:00", baseEnd: "08:45",
             avgDuration: "105分", estDuration: "105分（母メモ: 朝食7時、08:45チェックアウト）",
-            type: "must", badgeClass: "badge-must", badgeText: "🍴 MUST:朝食 ＆ 出発準備",
+            type: "must", badgeClass: "badge-must", badgeText: "🏨 【朝食・出発】08:45チェックアウト",
             title: "朝食バイキング ＆ 出発準備（08:45チェックアウト）",
             tacticsFlowTitle: "朝食バイキングと鳥羽水族館への出発準備",
             tacticsSteps: [
@@ -1728,7 +1740,7 @@ header {
           {
             baseStart: "09:30", baseEnd: "11:30",
             avgDuration: "120分", estDuration: "120分（母メモ: 09:30開園とともに入園、2時間予定）",
-            type: "activity", badgeClass: "badge-activity", badgeText: "🐬 MUST:鳥羽水族館（全天候）",
+            type: "activity", badgeClass: "badge-activity", badgeText: "🐬 【観光】鳥羽水族館（全天候）",
             title: "❶ 鳥羽水族館 観光（開園09:30入園・雨天無敵・2時間満喫）",
             tacticsFlowTitle: "母メモ指定：前売割200円引＆開園入園2時間満喫",
             tacticsSteps: [
@@ -1754,7 +1766,7 @@ header {
           {
             baseStart: "12:00", baseEnd: "13:00",
             avgDuration: "60分", estDuration: "60分（鳥羽から国道167号南下約30分、展望台カフェ滞在30分）",
-            type: "activity", badgeClass: "badge-activity", badgeText: "🌄 MUST:パノラマ絶景 ＆ カフェ",
+            type: "activity", badgeClass: "badge-activity", badgeText: "☕ 【絶景・カフェ】横山展望台テラス",
             title: "❷ 横山展望台（天空カフェテラス Mirador Shima）",
             tacticsFlowTitle: "雨天でも安心な屋内カフェテラスからの英虞湾パノラマ",
             tacticsSteps: [
@@ -1780,7 +1792,7 @@ header {
           {
             baseStart: "13:15", baseEnd: "15:15",
             avgDuration: "120分", estDuration: "120分（車16分、地中海村ランチ＆散策）",
-            type: "food", badgeClass: "badge-food", badgeText: "⛵ MUST:街並み ＆ ランチ",
+            type: "food", badgeClass: "badge-food", badgeText: "🏰 【昼食・散策】地中海村金券ランチ",
             title: "❸ 志摩地中海村（金券活用ランチ ＆ 異国情緒散策）",
             tacticsFlowTitle: "地中海村での金券ランチと白壁の街並み散策",
             tacticsSteps: [
@@ -2097,7 +2109,7 @@ header {
                   <!-- Block 3: 必須スペック（交通・料金・雨天・損切り） -->
                   <div class="action-block-card">
                     <div class="action-block-title spec">
-                      <span>📋 必須アクションスペック（交通・料金・損切り）</span>
+                      <span>📋 必須アクションスペック（移動・名物・損切り）</span><span class="bonus-decision-badge" style="background:rgba(56,189,248,0.15); color:#38bdf8; border-color:#0284c7;">事前確認必須</span>
                     </div>
                     <div style="display:flex; flex-direction:column; gap:6px; font-size:0.78rem;">
                       <div class="factor-bullet-line">
@@ -2110,7 +2122,7 @@ header {
                       </div>
                       <div class="factor-bullet-line">
                         <span class="factor-bullet-dot">•</span>
-                        <span class="factor-bullet-text"><strong>事前Tips:</strong> ${f.tips}</span>
+                        <span class="factor-bullet-text"><strong>同行者（母）配慮・Tips:</strong> ${f.tips}</span>
                       </div>
                       <div class="factor-bullet-line">
                         <span class="factor-bullet-dot" style="color:#ef4444;">•</span>
