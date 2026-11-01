@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>予備プラン：鳥羽水族館 雨天全天候特化ルート - 三重伊勢志摩ナビ</title>
+  <title>予備プラン：鳥羽水族館組込ルート（2日目雨天・クルーズ欠航時対応） - 三重伊勢志摩 家族旅行ナビ</title>
   <style>
 :root {
   --bg: #090d16;
@@ -42,7 +42,7 @@ header {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  max-width: 760px;
+  max-width: 800px;
   margin: 0 auto;
 }
 .title {
@@ -63,40 +63,38 @@ header {
   font-weight: 600;
 }
 .container {
-  max-width: 760px;
+  max-width: 800px;
   margin: 0 auto;
   padding: 14px 16px;
 }
-
-/* Nav Bar for Modular Pages */
 .nav-pages {
   display: flex;
-  gap: 6px;
+  gap: 8px;
   margin-bottom: 16px;
-  overflow-x: auto;
-  padding-bottom: 4px;
 }
 .nav-link {
   flex: 1;
-  min-width: 120px;
   background: var(--card-inner);
   border: 1px solid var(--border);
   color: var(--text-muted);
   text-decoration: none;
-  padding: 9px 8px;
-  border-radius: 8px;
-  font-size: 0.8rem;
+  padding: 11px 12px;
+  border-radius: 10px;
+  font-size: 0.88rem;
   font-weight: 700;
   text-align: center;
   transition: all 0.15s;
-  white-space: nowrap;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
 }
 .nav-link:hover { border-color: var(--primary); color: #fff; }
 .nav-link.active {
   background: #0284c7;
   color: #ffffff;
   border-color: #38bdf8;
-  box-shadow: 0 0 10px rgba(56, 189, 248, 0.3);
+  box-shadow: 0 0 12px rgba(56, 189, 248, 0.35);
 }
 .nav-link.backup {
   border-color: rgba(168, 85, 247, 0.4);
@@ -104,23 +102,23 @@ header {
 .nav-link.backup.active {
   background: #7e22ce;
   border-color: #c084fc;
+  box-shadow: 0 0 12px rgba(168, 85, 247, 0.35);
 }
 
-/* Plan Hero Card */
 .hero-card {
   background: var(--card-bg);
   border: 1px solid var(--border);
   border-radius: 12px;
-  padding: 14px;
+  padding: 16px;
   margin-bottom: 16px;
 }
 .hero-header {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  margin-bottom: 6px;
+  margin-bottom: 8px;
 }
-.hero-title { font-size: 1.05rem; font-weight: 700; color: #fff; }
+.hero-title { font-size: 1.1rem; font-weight: 700; color: #fff; }
 .hero-badge {
   font-size: 0.72rem;
   padding: 3px 8px;
@@ -128,12 +126,252 @@ header {
   font-weight: 700;
 }
 .badge-main { background: rgba(56, 189, 248, 0.2); color: #38bdf8; border: 1px solid #38bdf8; }
-.badge-trad { background: rgba(245, 158, 11, 0.2); color: #fbbf24; border: 1px solid #f59e0b; }
-.badge-bypass { background: rgba(168, 85, 247, 0.2); color: #c084fc; border: 1px solid #a855f7; }
-.badge-backup { background: rgba(239, 68, 68, 0.2); color: #fca5a5; border: 1px solid var(--danger); }
-.hero-desc { font-size: 0.83rem; color: var(--text-muted); line-height: 1.45; }
+.badge-backup { background: rgba(168, 85, 247, 0.2); color: #c084fc; border: 1px solid #a855f7; }
+.hero-desc { font-size: 0.84rem; color: var(--text-muted); line-height: 1.5; }
 
-/* Route Action Buttons */
+/* Mother Memo Notice Card */
+.mother-memo-box {
+  background: rgba(245, 158, 11, 0.08);
+  border: 1px solid rgba(245, 158, 11, 0.35);
+  border-radius: 12px;
+  padding: 14px;
+  margin-bottom: 16px;
+}
+.mother-memo-title {
+  font-size: 0.88rem;
+  font-weight: 700;
+  color: #fbbf24;
+  margin-bottom: 8px;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+.mother-memo-list {
+  font-size: 0.79rem;
+  color: #e2e8f0;
+  line-height: 1.55;
+  padding-left: 18px;
+}
+
+/* Lunch Options Card */
+.lunch-options-box {
+  background: linear-gradient(135deg, rgba(30, 58, 138, 0.35), rgba(15, 23, 42, 0.9));
+  border: 2px solid rgba(56, 189, 248, 0.5);
+  border-radius: 14px;
+  padding: 16px;
+  margin-bottom: 20px;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.35);
+}
+.lunch-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 8px;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+.lunch-title {
+  font-size: 1.02rem;
+  font-weight: 800;
+  color: #38bdf8;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.lunch-badge-strategy {
+  background: rgba(245, 158, 11, 0.2);
+  border: 1px solid #f59e0b;
+  color: #fbbf24;
+  font-size: 0.74rem;
+  font-weight: 700;
+  padding: 3px 10px;
+  border-radius: 9999px;
+}
+.lunch-subtitle {
+  font-size: 0.8rem;
+  color: #cbd5e1;
+  margin-bottom: 14px;
+  line-height: 1.5;
+  background: rgba(15, 23, 42, 0.6);
+  padding: 10px 12px;
+  border-radius: 8px;
+  border-left: 3px solid #38bdf8;
+}
+.lunch-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  gap: 10px;
+}
+.lunch-item {
+  background: var(--card-inner);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 10px;
+  padding: 12px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  transition: transform 0.15s, border-color 0.15s;
+}
+.lunch-item:hover {
+  transform: translateY(-2px);
+  border-color: #38bdf8;
+}
+.lunch-item.recommend {
+  border: 1.5px solid #f59e0b;
+  background: linear-gradient(180deg, rgba(245, 158, 11, 0.12), rgba(11, 17, 32, 0.95));
+}
+.lunch-item.smart {
+  border: 1.5px solid #10b981;
+  background: linear-gradient(180deg, rgba(16, 185, 129, 0.12), rgba(11, 17, 32, 0.95));
+}
+.lunch-item-title {
+  font-size: 0.88rem;
+  font-weight: 800;
+  color: #fff;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 6px;
+}
+.lunch-item-desc {
+  font-size: 0.76rem;
+  color: #cbd5e1;
+  line-height: 1.45;
+  margin-bottom: 8px;
+  flex: 1;
+}
+.lunch-item-meta {
+  font-size: 0.72rem;
+  color: #94a3b8;
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+  padding-top: 6px;
+  border-top: 1px dashed rgba(255, 255, 255, 0.08);
+}
+.lunch-item-tag {
+  font-size: 0.68rem;
+  padding: 2px 7px;
+  border-radius: 4px;
+  font-weight: 700;
+  white-space: nowrap;
+}
+.lunch-tag-hot { background: #b45309; color: #fef3c7; }
+.lunch-tag-green { background: #065f46; color: #a7f3d0; }
+.lunch-tag-normal { background: #334155; color: #cbd5e1; }
+.lunch-map-link {
+  display: inline-block;
+  margin-top: 6px;
+  font-size: 0.72rem;
+  color: #38bdf8;
+  text-decoration: none;
+  font-weight: 600;
+}
+.lunch-map-link:hover { text-decoration: underline; color: #7dd3fc; }
+
+/* Mother Sweets & Exclusive Spots Card */
+.sweets-spots-box {
+  background: linear-gradient(135deg, rgba(168, 85, 247, 0.25), rgba(244, 63, 94, 0.15), rgba(15, 23, 42, 0.95));
+  border: 2px solid rgba(236, 72, 153, 0.5);
+  border-radius: 14px;
+  padding: 16px;
+  margin-bottom: 20px;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.35);
+}
+.sweets-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 8px;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+.sweets-title {
+  font-size: 1.05rem;
+  font-weight: 800;
+  color: #f472b6;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.sweets-badge {
+  background: rgba(244, 63, 94, 0.2);
+  border: 1px solid #f43f5e;
+  color: #fda4af;
+  font-size: 0.74rem;
+  font-weight: 700;
+  padding: 3px 10px;
+  border-radius: 9999px;
+}
+.sweets-subtitle {
+  font-size: 0.8rem;
+  color: #cbd5e1;
+  margin-bottom: 14px;
+  line-height: 1.5;
+  background: rgba(15, 23, 42, 0.65);
+  padding: 10px 12px;
+  border-radius: 8px;
+  border-left: 3px solid #f472b6;
+}
+.sweets-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  gap: 10px;
+}
+.sweets-item {
+  background: var(--card-inner);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 10px;
+  padding: 12px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  transition: transform 0.15s, border-color 0.15s;
+}
+.sweets-item:hover {
+  transform: translateY(-2px);
+  border-color: #f472b6;
+}
+.sweets-item.highlight {
+  border: 1.5px solid #ec4899;
+  background: linear-gradient(180deg, rgba(236, 72, 153, 0.12), rgba(11, 17, 32, 0.95));
+}
+.sweets-item-title {
+  font-size: 0.88rem;
+  font-weight: 800;
+  color: #fff;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 6px;
+}
+.sweets-item-desc {
+  font-size: 0.76rem;
+  color: #cbd5e1;
+  line-height: 1.45;
+  margin-bottom: 8px;
+  flex: 1;
+}
+.sweets-item-meta {
+  font-size: 0.72rem;
+  color: #94a3b8;
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+  padding-top: 6px;
+  border-top: 1px dashed rgba(255, 255, 255, 0.08);
+}
+.sweets-tag {
+  font-size: 0.68rem;
+  padding: 2px 7px;
+  border-radius: 4px;
+  font-weight: 700;
+  white-space: nowrap;
+}
+.sweets-tag-pink { background: #9d174d; color: #fbcfe8; }
+.sweets-tag-purple { background: #581c87; color: #e9d5ff; }
+.sweets-tag-amber { background: #78350f; color: #fde68a; }
+
 .map-action-box {
   background: linear-gradient(135deg, rgba(5, 150, 105, 0.15), rgba(15, 23, 42, 0.7));
   border: 1px solid rgba(16, 185, 129, 0.4);
@@ -159,7 +397,7 @@ header {
 }
 .map-route-btn {
   flex: 1;
-  min-width: 140px;
+  min-width: 150px;
   background: var(--map-green);
   color: #ffffff;
   text-decoration: none;
@@ -177,16 +415,15 @@ header {
 .map-route-btn.secondary { background: #2563eb; }
 .map-route-btn.secondary:hover { background: #3b82f6; }
 
-/* Macro Flow */
 .macro-flow-box {
   background: var(--card-inner);
   border: 1px solid var(--border);
   border-radius: 10px;
-  padding: 10px 12px;
+  padding: 12px;
   margin: 10px 0 16px 0;
 }
 .macro-flow-title {
-  font-size: 0.76rem;
+  font-size: 0.78rem;
   font-weight: 700;
   color: #38bdf8;
   margin-bottom: 8px;
@@ -214,31 +451,30 @@ header {
 }
 .macro-step-arrow { color: #64748b; font-weight: 700; }
 
-/* Day Divider */
 .day-divider {
   background: linear-gradient(90deg, #1e3a8a, #0b1120);
   border-left: 4px solid var(--primary);
   border-radius: 8px;
   padding: 10px 14px;
-  margin: 22px 0 10px 0;
+  margin: 24px 0 12px 0;
   display: flex;
   justify-content: space-between;
   align-items: center;
 }
 .day-divider-title {
-  font-size: 0.96rem;
+  font-size: 0.98rem;
   font-weight: 700;
   color: #ffffff;
 }
-.day-divider-sub { font-size: 0.75rem; color: #93c5fd; }
+.day-divider-sub { font-size: 0.76rem; color: #93c5fd; }
 
-/* Timeline Card */
+/* Timeline Slot Card */
 .slot-card {
   background: var(--card-bg);
   border: 1px solid var(--border);
   border-radius: 14px;
   padding: 16px;
-  margin-bottom: 16px;
+  margin-bottom: 18px;
   box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.2);
 }
 .slot-card.must { border-left: 5px solid var(--danger); }
@@ -251,7 +487,7 @@ header {
   margin-bottom: 6px;
 }
 .slot-time {
-  font-size: 1.05rem;
+  font-size: 1.08rem;
   font-weight: 700;
   color: var(--accent);
   font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
@@ -269,11 +505,11 @@ header {
   display: flex;
   justify-content: space-between;
   align-items: flex-start;
-  margin-bottom: 10px;
+  margin-bottom: 12px;
   flex-wrap: wrap;
   gap: 8px;
 }
-.slot-title { font-size: 1.05rem; font-weight: 700; color: #fff; flex: 1; min-width: 200px; }
+.slot-title { font-size: 1.08rem; font-weight: 700; color: #fff; flex: 1; min-width: 220px; }
 .duration-pill {
   background: #0f172a;
   border: 1px solid #334155;
@@ -289,14 +525,14 @@ header {
 
 /* Micro Flow Stepper */
 .micro-flow-card {
-  background: rgba(11, 17, 32, 0.9);
+  background: rgba(11, 17, 32, 0.95);
   border: 1px solid rgba(56, 189, 248, 0.25);
   border-radius: 10px;
   padding: 12px;
   margin-bottom: 12px;
 }
 .micro-flow-header {
-  font-size: 0.8rem;
+  font-size: 0.82rem;
   font-weight: 700;
   color: #38bdf8;
   display: flex;
@@ -308,7 +544,7 @@ header {
   display: flex;
   align-items: flex-start;
   gap: 8px;
-  background: rgba(30, 41, 59, 0.4);
+  background: rgba(30, 41, 59, 0.45);
   padding: 8px 10px;
   border-radius: 6px;
   border-left: 3px solid #10b981;
@@ -324,7 +560,7 @@ header {
   white-space: nowrap;
 }
 .step-badge-num.opt { background: #78350f; color: #fcd34d; }
-.micro-step-content { flex: 1; font-size: 0.8rem; color: #e2e8f0; line-height: 1.4; }
+.micro-step-content { flex: 1; font-size: 0.82rem; color: #e2e8f0; line-height: 1.45; }
 .skip-tag {
   display: inline-block;
   font-size: 0.68rem;
@@ -334,37 +570,67 @@ header {
   margin-left: 4px;
 }
 .skip-tag.must { background: rgba(16, 185, 129, 0.2); color: #34d399; border: 1px solid rgba(16, 185, 129, 0.4); }
+.skip-tag.recommend { background: rgba(56, 189, 248, 0.2); color: #38bdf8; border: 1px solid rgba(56, 189, 248, 0.4); }
 .skip-tag.can-skip { background: rgba(245, 158, 11, 0.2); color: #fbbf24; border: 1px solid rgba(245, 158, 11, 0.4); }
 
-/* Bonus Spots */
-.bonus-spots-container { margin-bottom: 12px; }
-.bonus-spot-card {
-  background: var(--card-inner);
-  border: 1px solid rgba(255, 255, 255, 0.05);
-  border-radius: 8px;
-  padding: 8px 12px;
+/* Bonus Spots Container */
+.bonus-spots-box {
+  background: rgba(15, 23, 42, 0.6);
+  border: 1px solid rgba(148, 163, 184, 0.15);
+  border-radius: 10px;
+  padding: 10px 12px;
+  margin-bottom: 12px;
+}
+.bonus-spots-header {
+  font-size: 0.78rem;
+  font-weight: 700;
+  color: #a855f7;
+  margin-bottom: 6px;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+.bonus-spot-item {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  gap: 10px;
-  margin-bottom: 6px;
+  padding: 6px 0;
+  border-bottom: 1px dashed rgba(255, 255, 255, 0.07);
 }
-.bonus-spot-name { font-size: 0.82rem; font-weight: 700; color: #fff; }
-.bonus-spot-desc { font-size: 0.74rem; color: var(--text-muted); margin-top: 1px; }
-.bonus-spot-map {
+.bonus-spot-item:last-child { border-bottom: none; }
+.bonus-spot-info { flex: 1; }
+.bonus-spot-name { font-size: 0.8rem; font-weight: 700; color: #f1f5f9; }
+.bonus-spot-desc { font-size: 0.74rem; color: #94a3b8; }
+.bonus-spot-link {
+  font-size: 0.72rem;
   background: #1e293b;
   border: 1px solid var(--border);
   color: #38bdf8;
   text-decoration: none;
-  padding: 5px 9px;
+  padding: 3px 8px;
   border-radius: 6px;
-  font-size: 0.74rem;
-  font-weight: 600;
   white-space: nowrap;
 }
-.bonus-spot-map:hover { background: #0284c7; color: #fff; }
+.bonus-spot-link:hover { background: #0284c7; color: #fff; }
 
-/* Map Button */
+/* Details Grid */
+.details-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(230px, 1fr));
+  gap: 8px;
+  margin-bottom: 12px;
+}
+.detail-item {
+  background: var(--card-inner);
+  border: 1px solid rgba(255, 255, 255, 0.05);
+  border-radius: 8px;
+  padding: 8px 10px;
+  font-size: 0.78rem;
+}
+.detail-label { color: #94a3b8; font-weight: 600; margin-bottom: 2px; }
+.detail-value { color: #f1f5f9; font-weight: 500; }
+.detail-highlight { color: #fbbf24; font-weight: 700; }
+
 .map-btn-spot {
   display: block;
   background: #1e293b;
@@ -376,7 +642,7 @@ header {
   font-size: 0.8rem;
   font-weight: 600;
   text-align: center;
-  margin-top: 10px;
+  margin-top: 8px;
 }
 .map-btn-spot:hover { background: #1d4ed8; color: #fff; }
 </style>
@@ -384,7 +650,7 @@ header {
 <body>
   <header>
     <div class="header-top">
-      <div class="title">🚗 三重・伊勢志摩 リアルタイムナビ</div>
+      <div class="title">🚗 三重・伊勢志摩 家族旅行ナビ</div>
       <div class="badge-origin">起点: 高蔵寺駅（愛知県）</div>
     </div>
   </header>
@@ -392,843 +658,2188 @@ header {
   <div class="container">
     
     <nav class="nav-pages">
-      <a href="index.html" class="nav-link ">★ プラン1（本命）</a>
-      <a href="plan2.html" class="nav-link ">プラン2（外宮先拝）</a>
-      <a href="plan3.html" class="nav-link ">プラン3（夫婦岩迂回）</a>
-      <a href="aquarium_backup.html" class="nav-link backup active">🐬 予備（鳥羽水族館）</a>
+      <a href="index.html" class="nav-link ">★ 本命プラン（外宮 ➜ 内宮・志摩クルーズ）</a>
+      <a href="aquarium_backup.html" class="nav-link backup active">🐬 予備（雨天・クルーズ欠航時：鳥羽水族館）</a>
     </nav>
   
 
     <div class="hero-card">
       <div class="hero-header">
-        <div class="hero-title">予備プラン：鳥羽水族館 雨天全天候特化ルート</div>
-        <span class="hero-badge badge-backup">☔ 予備プラン</span>
+        <div class="hero-title">予備プラン：鳥羽水族館組込ルート（2日目雨天・クルーズ欠航時対応）</div>
+        <span class="hero-badge badge-backup">🐬 予備（雨天・クルーズ欠航時）</span>
       </div>
-      <p class="hero-desc">2日目（11/3 火・祝）に強い雨天となった場合、または展望台よりも水族館を優先する場合の専用予備プラン。日本一の飼育種数を誇る鳥羽水族館（全天候屋内）をたっぷり満喫します。</p>
+      <p class="hero-desc">2日目が悪天候で英虞湾クルーズ（エスペランサ・地中海村小型船）が出航しない場合や雨天時に即座に切り替える全天候型バックアッププラン。朝イチ09:30開園で鳥羽水族館（前売りコンビニ割200円引×4人）へ直行し、午後から横山展望台カフェ、志摩地中海村、多気VISON（本草湯薬草風呂・辻口スイーツ・弁才天大福）を快適に巡ります。</p>
+    </div>
+
+    <!-- 🌸 お母さん歓喜！三重でしか味わえないご当地スイーツ＆絶景寄り道名所ガイド -->
+    <div class="sweets-spots-box">
+      <div class="sweets-header">
+        <div class="sweets-title">🌸 お母さん歓喜！三重でしか味わえない特選ご当地スイーツ＆絶景寄り道名所</div>
+        <span class="sweets-badge">✨ ここでしか食べられない名店・名菓</span>
+      </div>
+      <div class="sweets-subtitle">
+        ※松阪牛は愛知でも食べられるためパス！お母さんのための旅行として、<strong>「三重でしか味わえない名物餅」「川や海を臨む絶景カフェスイーツ」「多気VISONの世界的パティシエケーキ」</strong>など、道中で立ち寄れる女性目線のときめきスポットを厳選しました。
+      </div>
+      <div class="sweets-grid">
+        <div class="sweets-item highlight">
+          <div class="sweets-item-title">
+            <span>① 赤福本店 白餅黒餅 ＆ へんば餅</span>
+            <span class="sweets-tag sweets-tag-pink">伊勢二大名菓</span>
+          </div>
+          <div class="sweets-item-desc">
+            <strong>赤福本店限定「白餅黒餅」</strong>（白小豆の白あん×黒糖黒あん、母メモ指定！）に加え、創業安永4年（1775年）の<strong>『へんば餅（へんばや商店 おはらい町店）』</strong>は必見！香ばしい焼き目の平らなこし餡餅で、地元民の間では赤福以上と絶賛される伊勢でしか買えない名物。
+          </div>
+          <div class="sweets-item-meta">
+            <div>📍 おはらい町・おかげ横丁 / テイクアウト・お土産に最適</div>
+            <a href="https://www.google.com/maps/search/?api=1&query=へんばや商店+おはらい町店" target="_blank" rel="noopener noreferrer" class="lunch-map-link">📍 へんばや商店の場所を確認 ➜</a>
+          </div>
+        </div>
+        <div class="sweets-item highlight">
+          <div class="sweets-item-title">
+            <span>② 五十鈴川カフェ（せせらぎ絶景）</span>
+            <span class="sweets-tag sweets-tag-purple">絶景カフェ</span>
+          </div>
+          <div class="sweets-item-desc">
+            内宮・おはらい町沿い。五十鈴川の雄大な清流と緑を真横に望む和風カフェ。<strong>「和三盆と伊勢茶のロールケーキ」「雪鍋アイス」「ブレンド珈琲」</strong>。川のせせらぎの音に包まれ、お母さんが旅の中で最もゆったりと癒やされる最高の空間です。
+          </div>
+          <div class="sweets-item-meta">
+            <div>⏰ 09:30〜17:00 / おはらい町沿い・川面テラス席あり</div>
+            <a href="https://www.google.com/maps/search/?api=1&query=五十鈴川カフェ" target="_blank" rel="noopener noreferrer" class="lunch-map-link">📍 五十鈴川カフェの場所を確認 ➜</a>
+          </div>
+        </div>
+        <div class="sweets-item">
+          <div class="sweets-item-title">
+            <span>③ 二見浦 御福餅本家 ＆ おふくアイス</span>
+            <span class="sweets-tag sweets-tag-amber">二見浦名物</span>
+          </div>
+          <div class="sweets-item-desc">
+            二見興玉神社・夫婦岩近く。創業280余年の手作り波型あんころ餅『御福餅』。本店限定の昔懐かしいあずきバー<strong>「おふくアイスマック」</strong>は、海岸散策のお供にぴったりの名物スイーツ！
+          </div>
+          <div class="sweets-item-meta">
+            <div>⏰ 09:00〜16:00 / 二見浦夫婦岩から徒歩すぐ</div>
+            <a href="https://www.google.com/maps/search/?api=1&query=御福餅本家" target="_blank" rel="noopener noreferrer" class="lunch-map-link">📍 御福餅本家の場所を確認 ➜</a>
+          </div>
+        </div>
+        <div class="sweets-item">
+          <div class="sweets-item-title">
+            <span>④ 朝熊山頂 天空のポスト ＆ 天空ソフト</span>
+            <span class="sweets-tag sweets-tag-pink">スカイライン絶景</span>
+          </div>
+          <div class="sweets-item-desc">
+            伊勢志摩スカイライン山頂展望台（標高555m）。青空と海に映えるノスタルジックな「天空のポスト」と、展望足湯に浸かりながら味わう<strong>「天空ソフトクリーム」</strong>。行ければぜひ立ち寄りたいパノラマ名所！
+          </div>
+          <div class="sweets-item-meta">
+            <div>📍 伊勢志摩スカイライン 朝熊山頂 / 展望足湯あり</div>
+            <a href="https://www.google.com/maps/search/?api=1&query=朝熊山頂展望台+天空のポスト" target="_blank" rel="noopener noreferrer" class="lunch-map-link">📍 朝熊山頂展望台の場所を確認 ➜</a>
+          </div>
+        </div>
+        <div class="sweets-item highlight">
+          <div class="sweets-item-title">
+            <span>⑤ 横山展望台 天空カフェテラス Mirador Shima</span>
+            <span class="sweets-tag sweets-tag-purple">英虞湾パノラマ</span>
+          </div>
+          <div class="sweets-item-desc">
+            標高140mから英虞湾の島々を見渡すウッドデッキカフェ。ここでしか食べられない<strong>「志摩産あおさスコーン」「伊勢茶ソフトクリーム」「伊勢志摩ご当地サイダー」</strong>で絶景ティータイムを満喫！
+          </div>
+          <div class="sweets-item-meta">
+            <div>⏰ 09:00〜16:30 / 横山展望台 山上ウッドデッキ</div>
+            <a href="https://www.google.com/maps/search/?api=1&query=ミラドール志摩" target="_blank" rel="noopener noreferrer" class="lunch-map-link">📍 ミラドール志摩の場所を確認 ➜</a>
+          </div>
+        </div>
+        <div class="sweets-item highlight">
+          <div class="sweets-item-title">
+            <span>⑥ 多気VISON コンフィチュール アッシュ</span>
+            <span class="sweets-tag sweets-tag-pink">辻口博啓パティスリー</span>
+          </div>
+          <div class="sweets-item-desc">
+            日本を代表するトップパティシエ辻口博啓が手がける極上スイーツ。三重県産マイヤーレモンや完熟苺を使った芸術的な生ケーキ、焼き菓子、コンフィチュール。隣接の極上ベーカリー『マリアージュ ドゥ ファリーヌ』も大人気！
+          </div>
+          <div class="sweets-item-meta">
+            <div>⏰ 10:00〜18:00 / 多気VISON スウィーツ ヴィレッジ</div>
+            <a href="https://www.google.com/maps/search/?api=1&query=コンフィチュール+アッシュ+VISON" target="_blank" rel="noopener noreferrer" class="lunch-map-link">📍 コンフィチュールアッシュの場所を確認 ➜</a>
+          </div>
+        </div>
+        <div class="sweets-item">
+          <div class="sweets-item-title">
+            <span>⑦ 多気VISON 覚王山フルーツ大福 弁才天</span>
+            <span class="sweets-tag sweets-tag-amber">母メモ指定大福</span>
+          </div>
+          <div class="sweets-item-desc">
+            旬の極上果物を白あんと求肥で包んだ高級フルーツ大福。付属の専用糸でキュッと切ると、宝石のような美しいフルーツの断面が現れます。帰りの車内やお土産にテイクアウト購入！
+          </div>
+          <div class="sweets-item-meta">
+            <div>⏰ 10:00〜18:00 / 多気VISON 和ヴィソン内</div>
+            <a href="https://www.google.com/maps/search/?api=1&query=覚王山フルーツ大福+弁才天+VISON" target="_blank" rel="noopener noreferrer" class="lunch-map-link">📍 弁才天 VISON店の場所を確認 ➜</a>
+          </div>
+        </div>
+        <div class="sweets-item highlight">
+          <div class="sweets-item-title">
+            <span>⑧ 多気VISON 本草湯（薬草露天風呂）</span>
+            <span class="sweets-tag sweets-tag-purple">癒やしの温浴</span>
+          </div>
+          <div class="sweets-item-desc">
+            ロート製薬と三重大学が共同研究した72種の薬草湯。三重の大自然を見渡す絶景露天風呂と癒やしの薬草香で、お母さんの旅行の疲れを芯からリフレッシュ（イオンカード提示で100円引＋タオル無料！）。
+          </div>
+          <div class="sweets-item-meta">
+            <div>⏰ 06:00〜24:00 / 多気VISON 本草エリア</div>
+            <a href="https://www.google.com/maps/search/?api=1&query=本草湯+VISON" target="_blank" rel="noopener noreferrer" class="lunch-map-link">📍 本草湯の場所を確認 ➜</a>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 昼食候補カード -->
+    <div class="lunch-options-box">
+      <div class="lunch-header">
+        <div class="lunch-title">🍴 昼食候補リスト（夜の大江戸温泉バイキングを見据えた賢い5大選択肢）</div>
+        <span class="lunch-badge-strategy">💡 夕朝食バイキングで名物制覇可能！</span>
+      </div>
+      <div class="lunch-subtitle">
+        ※松阪牛は愛知でも食べられるためパス！夜は大江戸温泉物語Premium伊勢志摩の豪華バイキング（伊勢志摩の地魚刺身・海鮮浜焼き・てこね寿司・伊勢うどん・あおさ汁・スイーツなど）で名物を制覇できるため、昼食は行列や混雑状況に合わせて以下の5候補から柔軟に選べます。車移動なので内宮周辺の混雑を回避して円座町の「まるみつ」へ向かうルートが最もスムーズです！
+      </div>
+      <div class="lunch-grid">
+        <div class="lunch-item recommend">
+          <div class="lunch-item-title">
+            <span>① 伊勢うどん まるみつ</span>
+            <span class="lunch-item-tag lunch-tag-hot">★イチオシ・混雑回避</span>
+          </div>
+          <div class="lunch-item-desc">
+            <strong>三重県伊勢市円座町764-2</strong>（度会橋南側・県道22号沿い）。内宮から車で約15分。自家製手打ち麺と天然だしの黒タレ。うどん＋てこね寿司セットが約500円台という驚異的コスパ！観光客の大混雑を完全回避でき、宿（浜島）へ向かう南下ルート上。
+          </div>
+          <div class="lunch-item-meta">
+            <div>⏰ 11:00〜14:00（水曜休・<strong>月曜通常営業！</strong>） / 🅿️ 駐車場完備</div>
+            <a href="https://www.google.com/maps/search/?api=1&query=伊勢うどん+まるみつ+伊勢市円座町" target="_blank" rel="noopener noreferrer" class="lunch-map-link">📍 Googleマップで場所を確認 ➜</a>
+          </div>
+        </div>
+        <div class="lunch-item smart">
+          <div class="lunch-item-title">
+            <span>② 豚捨 ＆ おはらい町食べ歩き</span>
+            <span class="lunch-item-tag lunch-tag-green">💡 胃袋温存・夜バイキング向け</span>
+          </div>
+          <div class="lunch-item-desc">
+            おはらい町・おかげ横丁内。『豚捨』の揚げたて黒毛和牛コロッケ（130円）やメンチカツ、『まる天』のたこ棒をテイクアウトし、五十鈴川カフェや赤福茶屋で一服。夜の豪華バイキングを120%楽しむための最もスマートな軽食作戦！
+          </div>
+          <div class="lunch-item-meta">
+            <div>⏰ 09:30〜17:00 / 徒歩で散策しながら手軽に完結</div>
+            <a href="https://www.google.com/maps/search/?api=1&query=豚捨+おかげ横丁" target="_blank" rel="noopener noreferrer" class="lunch-map-link">📍 Googleマップで場所を確認 ➜</a>
+          </div>
+        </div>
+        <div class="lunch-item">
+          <div class="lunch-item-title">
+            <span>③ ふくすけ（おかげ横丁）</span>
+            <span class="lunch-item-tag lunch-tag-normal">横丁内・回転最速</span>
+          </div>
+          <div class="lunch-item-desc">
+            おかげ横丁中心部。自家製天然だしの極太もちもち伊勢うどん。食券制で回転が極めて早く、並んでいてもすぐに席に着ける定番人気店。
+          </div>
+          <div class="lunch-item-meta">
+            <div>⏰ 10:00〜17:00 / おかげ横丁内（徒歩0分）</div>
+            <a href="https://www.google.com/maps/search/?api=1&query=ふくすけ+おかげ横丁" target="_blank" rel="noopener noreferrer" class="lunch-map-link">📍 Googleマップで場所を確認 ➜</a>
+          </div>
+        </div>
+        <div class="lunch-item">
+          <div class="lunch-item-title">
+            <span>④ 伊勢うどん 中むら（本町）</span>
+            <span class="lunch-item-tag lunch-tag-normal">外宮前老舗</span>
+          </div>
+          <div class="lunch-item-desc">
+            三重県伊勢市本町12-14。大正創業の老舗。自家製秘伝タレと柔らか太麺。外宮前エリアにあり、落ち着いた店内で味わえます。
+          </div>
+          <div class="lunch-item-meta">
+            <div>⏰ 11:00〜15:00（木曜休・第1・3月曜営業） / 🅿️ 駐車場あり</div>
+            <a href="https://www.google.com/maps/search/?api=1&query=伊勢うどん+中むら+伊勢市本町" target="_blank" rel="noopener noreferrer" class="lunch-map-link">📍 Googleマップで場所を確認 ➜</a>
+          </div>
+        </div>
+        <div class="lunch-item">
+          <div class="lunch-item-title">
+            <span>⑤ すし久（おはらい町）</span>
+            <span class="lunch-item-tag lunch-tag-normal">老舗てこね寿司</span>
+          </div>
+          <div class="lunch-item-desc">
+            おはらい町沿い。天保年間創業、登録有形文化財の風情ある建物で味わう名物てこね寿司。行列が短ければ選択肢の一つ。
+          </div>
+          <div class="lunch-item-meta">
+            <div>⏰ 10:30〜17:00 / おはらい町沿い（徒歩ですぐ）</div>
+            <a href="https://www.google.com/maps/search/?api=1&query=すし久+伊勢" target="_blank" rel="noopener noreferrer" class="lunch-map-link">📍 Googleマップで場所を確認 ➜</a>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="mother-memo-box">
+      <div class="mother-memo-title">🟣 母のメモ・重要ポイント＆おトク技（完全ベース）</div>
+      <ul class="mother-memo-list">
+        <li><strong>鳥羽水族館前売り券割引</strong>：前日コンビニ端末（セブン/ローソン）で購入 2,800円 ➜ <strong>2,600円×4人（800円お得！）</strong></li><li>08:45チェックアウト、09:30開園と同時に水族館へ入館（完全屋内のため雨天無敵・2時間満喫）</li><li>午後から横山展望台（雨天でもカフェ店内から鑑賞可能） ➜ 志摩地中海村 ➜ 多気VISON（本草湯・辻口スイーツ・弁才天）</li>
+      </ul>
     </div>
 
     <div class="map-action-box">
       <div class="map-action-title">📲 ワンタップで全経由地が登録されたGoogleマップが起動します</div>
       <div class="map-btn-row">
-        <a href="https://www.google.com/maps/dir/?api=1&origin=高蔵寺駅&destination=戸田家&waypoints=御在所SA|伊勢市営宇治駐車場|伊勢神宮内宮|おはらい町|朝熊山頂展望台" target="_blank" class="map-route-btn">🚗 【1日目】全ルートナビ ↗</a>
-        <a href="https://www.google.com/maps/dir/?api=1&origin=戸田家&destination=高蔵寺駅&waypoints=鳥羽水族館|鳥羽一番街|ミキモト真珠島|亀山PA" target="_blank" class="map-route-btn secondary">🚗 【2日目】全ルートナビ ↗</a>
+        <a href="https://www.google.com/maps/dir/?api=1&origin=高蔵寺駅&destination=大江戸温泉物語+Premium+伊勢志摩&waypoints=二見興玉神社|伊勢神宮外宮|伊勢市営宇治浦田駐車場|伊勢神宮内宮|猿田彦神社|おはらい町|鵜倉園地+見江島展望台" target="_blank" rel="noopener noreferrer" class="map-route-btn">
+          🗺️ 1日目Googleマップ（高蔵寺 ➔ 外宮 ➔ 内宮 ➔ 宿 ➔ 鵜倉）
+        </a>
+        <a href="https://www.google.com/maps/dir/?api=1&origin=大江戸温泉物語+Premium+伊勢志摩&destination=高蔵寺駅&waypoints=鳥羽水族館|横山展望台|志摩地中海村|VISON" target="_blank" rel="noopener noreferrer" class="map-route-btn secondary">
+          🗺️ 2日目Googleマップ（宿 ➔ 賢島 ➔ 横山 ➔ 地中海村 ➔ VISON）
+        </a>
+      </div>
+    </div>
+
+    <div class="macro-flow-box">
+      <div class="macro-flow-title">🧭 全体一筆書き巡回順（広域ルート）</div>
+      <div class="macro-flow-steps">
+        
+          <span class="macro-step-badge origin">高蔵寺駅（07:00発）</span>
+          <span class="macro-step-arrow">➔</span>
+        
+          <span class="macro-step-badge ">二見浦・夫婦岩（09:30着）</span>
+          <span class="macro-step-arrow">➔</span>
+        
+          <span class="macro-step-badge ">外宮（写真5分サクッと撮影）</span>
+          <span class="macro-step-arrow">➔</span>
+        
+          <span class="macro-step-badge ">内宮（瀧祭神・正宮）</span>
+          <span class="macro-step-arrow">➔</span>
+        
+          <span class="macro-step-badge ">猿田彦神社【確定参拝】</span>
+          <span class="macro-step-arrow">➔</span>
+        
+          <span class="macro-step-badge ">おかげ横丁（昼食・白あん赤福）</span>
+          <span class="macro-step-arrow">➔</span>
+        
+          <span class="macro-step-badge ">大江戸温泉Premium伊勢志摩</span>
+          <span class="macro-step-arrow">➔</span>
+        
+          <span class="macro-step-badge ">鵜倉園地（夕日鑑賞）</span>
+          <span class="macro-step-arrow">➔</span>
+        
+          <span class="macro-step-badge ">鳥羽水族館（開園入館・前売割）</span>
+          <span class="macro-step-arrow">➔</span>
+        
+          <span class="macro-step-badge ">横山展望台（天空カフェ）</span>
+          <span class="macro-step-arrow">➔</span>
+        
+          <span class="macro-step-badge ">志摩地中海村</span>
+          <span class="macro-step-arrow">➔</span>
+        
+          <span class="macro-step-badge ">多気VISON（本草湯・辻口スイーツ・弁才天）</span>
+          <span class="macro-step-arrow">➔</span>
+        
+          <span class="macro-step-badge ">高蔵寺駅帰着</span>
+          
+        
       </div>
     </div>
 
     <div class="day-divider">
-      <div>
-        <div class="day-divider-title">📅 1日目：11月2日（月・平日）</div>
-        <div class="day-divider-sub">高蔵寺駅発 ➔ 伊勢参拝・散策 ➔ 鳥羽温泉宿泊</div>
-      </div>
+      <div class="day-divider-title">📅 1日目：2026年11月2日（月・平日）</div>
+      <div class="day-divider-sub">二見浦（夫婦岩） ➔ 外宮（写真5分） ➔ 内宮・瀧祭神 ➔ 猿田彦神社 ➔ おかげ横丁昼食（白あん赤福） ➔ スカイライン（行ければ） ➔ 大江戸温泉 ➔ 鵜倉園地（夕日・星空・夜景）</div>
     </div>
-    <div class="macro-flow-box">
-      <div class="macro-flow-title">🧭 1日目 全体一筆書きルート</div>
-      <div class="macro-flow-steps">
-        
-          <span class="macro-step-badge origin">高蔵寺駅</span>
-          <span class="macro-step-arrow">➔</span>
-        
-          <span class="macro-step-badge ">春日井IC</span>
-          <span class="macro-step-arrow">➔</span>
-        
-          <span class="macro-step-badge ">御在所SA</span>
-          <span class="macro-step-arrow">➔</span>
-        
-          <span class="macro-step-badge ">伊勢神宮 内宮</span>
-          <span class="macro-step-arrow">➔</span>
-        
-          <span class="macro-step-badge ">おはらい町</span>
-          <span class="macro-step-arrow">➔</span>
-        
-          <span class="macro-step-badge ">朝熊山頂展望台</span>
-          <span class="macro-step-arrow">➔</span>
-        
-          <span class="macro-step-badge origin">鳥羽 戸田家</span>
+    
+    <div class="slot-card must">
+      <div class="slot-header">
+        <div class="slot-time">⏱ 07:00 - 09:30</div>
+        <span class="slot-badge badge-must">🔴 MUST:移動</span>
+      </div>
+      <div class="slot-title-row">
+        <div class="slot-title">高蔵寺駅 出発 ➔ 二見浦（夫婦岩）直行</div>
+        <div class="duration-pill">
+          <span class="duration-avg">一般平均: 150分</span>
+          <span class="duration-est">🎯 今回予想: 148分（車で約2時間28分、09:30着）</span>
+        </div>
+      </div>
+
+      
+      <div class="micro-flow-card">
+        <div class="micro-flow-header">
+          <span>🎯 一筆書き立ち回りマニュアル</span>
+          <span style="font-size:0.7rem; color:#94a3b8;">4ステップ</span>
+        </div>
+        <div class="micro-steps-list">
           
-        
-      </div>
-    </div>
-    
-      <div class="slot-card must">
-        <div class="slot-header">
-          <span class="slot-time">07:00〜08:50</span>
-          <span class="slot-badge badge-must">🔴 MUST:移動</span>
-        </div>
-        <div class="slot-title-row">
-          <div class="slot-title">高蔵寺駅 出発 ➔ 伊勢神宮 内宮直行</div>
-          <div class="duration-pill">
-            <span class="duration-avg">⏱ 平均: 120分</span>
-            <span style="color:#475569;">|</span>
-            <span class="duration-est">🎯 今回予想: 110分</span>
-          </div>
-        </div>
-
-        <div class="micro-flow-card">
-          <div class="micro-flow-header">
-            <span>🚶‍♂️ 高速道路〜伊勢直行の立ち回り</span>
-            <span style="font-size:0.72rem; color:#94a3b8;">順路ナビ＆スキップ判断</span>
-          </div>
-          <div class="micro-steps-list">
-            
-              <div class="micro-step-row ">
-                <span class="step-badge-num ">Step 1</span>
-                <div class="micro-step-content">
-                  高蔵寺駅を出発し春日井ICから名古屋第二環状自動車道へ乗る。
-                  <span class="skip-tag must">必須</span>
-                </div>
+            <div class="micro-step-row ">
+              <span class="step-badge-num ">1</span>
+              <div class="micro-step-content">
+                高蔵寺駅を07:00に出発。春日井ICから名古屋第二環状自動車道（名二環）へ進入
+                <span class="skip-tag must">必須</span>
               </div>
-            
-              <div class="micro-step-row ">
-                <span class="step-badge-num ">Step 2</span>
-                <div class="micro-step-content">
-                  四日市JCT経由で東名阪道へ。御在所SAで10分トイレ休憩。
-                  <span class="skip-tag must">必須</span>
-                </div>
-              </div>
-            
-              <div class="micro-step-row ">
-                <span class="step-badge-num ">Step 3</span>
-                <div class="micro-step-content">
-                  亀山JCTから伊勢自動車道へ進み、伊勢ICで降りて内宮方面へ南下。
-                  <span class="skip-tag must">必須</span>
-                </div>
-              </div>
-            
-              <div class="micro-step-row ">
-                <span class="step-badge-num ">Step 4</span>
-                <div class="micro-step-content">
-                  内宮A4駐車場が空いていれば駐車。満車時は即B4/B5駐車場へ回送。
-                  <span class="skip-tag must">必須</span>
-                </div>
-              </div>
-            
-          </div>
-        </div>
-
-        
-          <div class="bonus-spots-container">
-            <div style="font-size:0.78rem; font-weight:700; color:#a855f7; margin-bottom:6px;">
-              🌟 ついで名所・寄り道スポット
             </div>
-            
-              <div class="bonus-spot-card">
-                <div>
-                  <div class="bonus-spot-name">📍 御在所SA 下り</div>
-                  <div class="bonus-spot-desc">東名阪道最大SA・焼き立てパン</div>
-                </div>
-                <a href="https://www.google.com/maps/search/?api=1&query=御在所SA+下り" target="_blank" class="bonus-spot-map">🗺️ 地図 ↗</a>
-              </div>
-            
-          </div>
-        
-
-        <a href="https://www.google.com/maps/search/?api=1&query=伊勢市営宇治駐車場" target="_blank" class="map-btn-spot">📍 このスポットをGoogleマップで開く ↗</a>
-      </div>
-    
-      <div class="slot-card must">
-        <div class="slot-header">
-          <span class="slot-time">08:50〜10:50</span>
-          <span class="slot-badge badge-must">⛩️ MUST:参拝</span>
-        </div>
-        <div class="slot-title-row">
-          <div class="slot-title">伊勢神宮 内宮（皇大神宮）参拝</div>
-          <div class="duration-pill">
-            <span class="duration-avg">⏱ 平均: 120分</span>
-            <span style="color:#475569;">|</span>
-            <span class="duration-est">🎯 今回予想: 90〜120分</span>
-          </div>
-        </div>
-
-        <div class="micro-flow-card">
-          <div class="micro-flow-header">
-            <span>🚶‍♂️ 神域内の一筆書き参拝順路（右回り）</span>
-            <span style="font-size:0.72rem; color:#94a3b8;">順路ナビ＆スキップ判断</span>
-          </div>
-          <div class="micro-steps-list">
-            
-              <div class="micro-step-row ">
-                <span class="step-badge-num ">Step 1</span>
-                <div class="micro-step-content">
-                  宇治橋大鳥居で一礼し右側通行で渡橋。五十鈴川の清流を望む。
-                  <span class="skip-tag must">必須</span>
-                </div>
-              </div>
-            
-              <div class="micro-step-row ">
-                <span class="step-badge-num ">Step 2</span>
-                <div class="micro-step-content">
-                  五十鈴川御手洗場の天然清流で手を清める（雨天時は手水舎）。
-                  <span class="skip-tag must">必須</span>
-                </div>
-              </div>
-            
-              <div class="micro-step-row ">
-                <span class="step-badge-num ">Step 3</span>
-                <div class="micro-step-content">
-                  瀧祭神（五十鈴川の守神）に参拝し正宮へお取次ぎを願う。
-                  <span class="skip-tag must">おすすめ</span>
-                </div>
-              </div>
-            
-              <div class="micro-step-row ">
-                <span class="step-badge-num ">Step 4</span>
-                <div class="micro-step-content">
-                  正宮（皇大神宮）へ階段を上り、日頃の感謝を祈念。
-                  <span class="skip-tag must">必須</span>
-                </div>
-              </div>
-            
-              <div class="micro-step-row ">
-                <span class="step-badge-num ">Step 5</span>
-                <div class="micro-step-content">
-                  荒祭宮（天照大御神の荒御魂）へ参拝し、個人の願いを祈る。
-                  <span class="skip-tag must">必須</span>
-                </div>
-              </div>
-            
-              <div class="micro-step-row skippable">
-                <span class="step-badge-num opt">Step 6</span>
-                <div class="micro-step-content">
-                  風日祈宮：風神の別宮。橋を渡る。
-                  <span class="skip-tag can-skip">雨天スキップ可</span>
-                </div>
-              </div>
-            
-              <div class="micro-step-row skippable">
-                <span class="step-badge-num opt">Step 7</span>
-                <div class="micro-step-content">
-                  神楽殿・参集殿でお札・お守りを受けて宇治橋へ戻る。
-                  <span class="skip-tag can-skip">混雑時スキップ可</span>
-                </div>
-              </div>
-            
-          </div>
-        </div>
-
-        
-          <div class="bonus-spots-container">
-            <div style="font-size:0.78rem; font-weight:700; color:#a855f7; margin-bottom:6px;">
-              🌟 ついで名所・寄り道スポット
-            </div>
-            
-              <div class="bonus-spot-card">
-                <div>
-                  <div class="bonus-spot-name">📍 猿田彦神社</div>
-                  <div class="bonus-spot-desc">みちひらきの大神・内宮から徒歩10分</div>
-                </div>
-                <a href="https://www.google.com/maps/search/?api=1&query=猿田彦神社" target="_blank" class="bonus-spot-map">🗺️ 地図 ↗</a>
-              </div>
-            
-              <div class="bonus-spot-card">
-                <div>
-                  <div class="bonus-spot-name">📍 五十鈴川カフェ</div>
-                  <div class="bonus-spot-desc">川のせせらぎを真横に望む絶景カフェ</div>
-                </div>
-                <a href="https://www.google.com/maps/search/?api=1&query=五十鈴川カフェ" target="_blank" class="bonus-spot-map">🗺️ 地図 ↗</a>
-              </div>
-            
-          </div>
-        
-
-        <a href="https://www.google.com/maps/search/?api=1&query=伊勢神宮+内宮" target="_blank" class="map-btn-spot">📍 このスポットをGoogleマップで開く ↗</a>
-      </div>
-    
-      <div class="slot-card must">
-        <div class="slot-header">
-          <span class="slot-time">10:50〜13:30</span>
-          <span class="slot-badge badge-must">🍢 MUST:グルメ</span>
-        </div>
-        <div class="slot-title-row">
-          <div class="slot-title">おはらい町 ＆ おかげ横丁 散策・昼食</div>
-          <div class="duration-pill">
-            <span class="duration-avg">⏱ 平均: 180分</span>
-            <span style="color:#475569;">|</span>
-            <span class="duration-est">🎯 今回予想: 150分</span>
-          </div>
-        </div>
-
-        <div class="micro-flow-card">
-          <div class="micro-flow-header">
-            <span>🚶‍♂️ 混雑回避の一筆書き昼食・散策ルート</span>
-            <span style="font-size:0.72rem; color:#94a3b8;">順路ナビ＆スキップ判断</span>
-          </div>
-          <div class="micro-steps-list">
-            
-              <div class="micro-step-row ">
-                <span class="step-badge-num ">Step 1</span>
-                <div class="micro-step-content">
-                  10:55に『すし久』へ直行入店し、名物てこね寿司を待ち時間ゼロで確保。
-                  <span class="skip-tag must">必須</span>
-                </div>
-              </div>
-            
-              <div class="micro-step-row ">
-                <span class="step-badge-num ">Step 2</span>
-                <div class="micro-step-content">
-                  食後に目の前の『赤福本店』へ移動。五十鈴川を臨む座敷で作りたて赤福餅喫茶。
-                  <span class="skip-tag must">必須</span>
-                </div>
-              </div>
-            
-              <div class="micro-step-row ">
-                <span class="step-badge-num ">Step 3</span>
-                <div class="micro-step-content">
-                  おかげ横丁中心部を散策し、『豚捨』で揚げたてコロッケをテイクアウト。
-                  <span class="skip-tag must">おすすめ</span>
-                </div>
-              </div>
-            
-              <div class="micro-step-row skippable">
-                <span class="step-badge-num opt">Step 4</span>
-                <div class="micro-step-content">
-                  おはらい町の軒下通りを物色しながら駐車場へ戻る。
-                  <span class="skip-tag can-skip">混雑時スキップ可</span>
-                </div>
-              </div>
-            
-          </div>
-        </div>
-
-        
-          <div class="bonus-spots-container">
-            <div style="font-size:0.78rem; font-weight:700; color:#a855f7; margin-bottom:6px;">
-              🌟 ついで名所・寄り道スポット
-            </div>
-            
-              <div class="bonus-spot-card">
-                <div>
-                  <div class="bonus-spot-name">📍 すし久</div>
-                  <div class="bonus-spot-desc">名物てこね寿司老舗</div>
-                </div>
-                <a href="https://www.google.com/maps/search/?api=1&query=すし久+伊勢" target="_blank" class="bonus-spot-map">🗺️ 地図 ↗</a>
-              </div>
-            
-              <div class="bonus-spot-card">
-                <div>
-                  <div class="bonus-spot-name">📍 赤福本店</div>
-                  <div class="bonus-spot-desc">創業1707年・作りたて赤福餅</div>
-                </div>
-                <a href="https://www.google.com/maps/search/?api=1&query=赤福本店" target="_blank" class="bonus-spot-map">🗺️ 地図 ↗</a>
-              </div>
-            
-          </div>
-        
-
-        <a href="https://www.google.com/maps/search/?api=1&query=おかげ横丁" target="_blank" class="map-btn-spot">📍 このスポットをGoogleマップで開く ↗</a>
-      </div>
-    
-      <div class="slot-card flex">
-        <div class="slot-header">
-          <span class="slot-time">13:40〜15:20</span>
-          <span class="slot-badge badge-flex">🚗 FLEX:絶景</span>
-        </div>
-        <div class="slot-title-row">
-          <div class="slot-title">伊勢志摩スカイライン ➜ 朝熊山山頂展望台</div>
-          <div class="duration-pill">
-            <span class="duration-avg">⏱ 平均: 90分</span>
-            <span style="color:#475569;">|</span>
-            <span class="duration-est">🎯 今回予想: 70分</span>
-          </div>
-        </div>
-
-        <div class="micro-flow-card">
-          <div class="micro-flow-header">
-            <span>🚶‍♂️ 山頂展望足湯での疲労回復立ち回り</span>
-            <span style="font-size:0.72rem; color:#94a3b8;">順路ナビ＆スキップ判断</span>
-          </div>
-          <div class="micro-steps-list">
-            
-              <div class="micro-step-row ">
-                <span class="step-badge-num ">Step 1</span>
-                <div class="micro-step-content">
-                  伊勢IC料金所から『伊勢志摩スカイライン』へ進入。
-                  <span class="skip-tag must">必須</span>
-                </div>
-              </div>
-            
-              <div class="micro-step-row ">
-                <span class="step-badge-num ">Step 2</span>
-                <div class="micro-step-content">
-                  山頂駐車場へ駐車し、展望デッキの『天空のポスト』前で記念撮影。
-                  <span class="skip-tag must">必須</span>
-                </div>
-              </div>
-            
-              <div class="micro-step-row ">
-                <span class="step-badge-num ">Step 3</span>
-                <div class="micro-step-content">
-                  展望足湯（無料）に浸かり伊勢湾を眺望して疲労回復。
-                  <span class="skip-tag must">おすすめ</span>
-                </div>
-              </div>
-            
-              <div class="micro-step-row ">
-                <span class="step-badge-num ">Step 4</span>
-                <div class="micro-step-content">
-                  鳥羽側出口へ下り、鳥羽市街地・戸田家へ直通。
-                  <span class="skip-tag must">必須</span>
-                </div>
-              </div>
-            
-          </div>
-        </div>
-
-        
-          <div class="bonus-spots-container">
-            <div style="font-size:0.78rem; font-weight:700; color:#a855f7; margin-bottom:6px;">
-              🌟 ついで名所・寄り道スポット
-            </div>
-            
-              <div class="bonus-spot-card">
-                <div>
-                  <div class="bonus-spot-name">📍 朝熊岳 金剛證寺</div>
-                  <div class="bonus-spot-desc">神宮の鬼門を守る名刹</div>
-                </div>
-                <a href="https://www.google.com/maps/search/?api=1&query=金剛證寺" target="_blank" class="bonus-spot-map">🗺️ 地図 ↗</a>
-              </div>
-            
-          </div>
-        
-
-        <a href="https://www.google.com/maps/search/?api=1&query=朝熊山頂展望台" target="_blank" class="map-btn-spot">📍 このスポットをGoogleマップで開く ↗</a>
-      </div>
-    
-      <div class="slot-card must">
-        <div class="slot-header">
-          <span class="slot-time">15:40〜翌朝</span>
-          <span class="slot-badge badge-must">♨️ MUST:宿泊</span>
-        </div>
-        <div class="slot-title-row">
-          <div class="slot-title">鳥羽温泉 戸田家 チェックイン・温泉・夕食</div>
-          <div class="duration-pill">
-            <span class="duration-avg">⏱ 平均: 一泊</span>
-            <span style="color:#475569;">|</span>
-            <span class="duration-est">🎯 今回予想: 一泊</span>
-          </div>
-        </div>
-
-        <div class="micro-flow-card">
-          <div class="micro-flow-header">
-            <span>🚶‍♂️ 宿での温泉・夕食立ち回り</span>
-            <span style="font-size:0.72rem; color:#94a3b8;">順路ナビ＆スキップ判断</span>
-          </div>
-          <div class="micro-steps-list">
-            
-              <div class="micro-step-row ">
-                <span class="step-badge-num ">Step 1</span>
-                <div class="micro-step-content">
-                  車を玄関に寄せ荷物を降ろし、専用駐車場へ駐車。
-                  <span class="skip-tag must">必須</span>
-                </div>
-              </div>
-            
-              <div class="micro-step-row ">
-                <span class="step-badge-num ">Step 2</span>
-                <div class="micro-step-content">
-                  フロントでチェックインし、夕食時間を18:00に確定。
-                  <span class="skip-tag must">必須</span>
-                </div>
-              </div>
-            
-              <div class="micro-step-row ">
-                <span class="step-badge-num ">Step 3</span>
-                <div class="micro-step-content">
-                  混み合う前に野天風呂『湯亭』または無料貸切家族風呂へ。
-                  <span class="skip-tag must">必須</span>
-                </div>
-              </div>
-            
-              <div class="micro-step-row ">
-                <span class="step-badge-num ">Step 4</span>
-                <div class="micro-step-content">
-                  伊勢湾の海の幸会席（伊勢海老・地魚）を堪能。
-                  <span class="skip-tag must">必須</span>
-                </div>
-              </div>
-            
-          </div>
-        </div>
-
-        
-          <div class="bonus-spots-container">
-            <div style="font-size:0.78rem; font-weight:700; color:#a855f7; margin-bottom:6px;">
-              🌟 ついで名所・寄り道スポット
-            </div>
-            
-              <div class="bonus-spot-card">
-                <div>
-                  <div class="bonus-spot-name">📍 鳥羽マリンターミナル</div>
-                  <div class="bonus-spot-desc">港のプロムナード</div>
-                </div>
-                <a href="https://www.google.com/maps/search/?api=1&query=鳥羽マリンターミナル" target="_blank" class="bonus-spot-map">🗺️ 地図 ↗</a>
-              </div>
-            
-          </div>
-        
-
-        <a href="https://www.google.com/maps/search/?api=1&query=戸田家+鳥羽" target="_blank" class="map-btn-spot">📍 このスポットをGoogleマップで開く ↗</a>
-      </div>
-    
-
-    <div class="day-divider" style="margin-top:28px;">
-      <div>
-        <div class="day-divider-title">📅 2日目：11月3日（火・祝）</div>
-        <div class="day-divider-sub">鳥羽水族館・全天候型予備プラン</div>
-      </div>
-    </div>
-    <div class="macro-flow-box">
-      <div class="macro-flow-title">🧭 2日目 全体一筆書きルート</div>
-      <div class="macro-flow-steps">
-        
-          <span class="macro-step-badge origin">鳥羽 戸田家</span>
-          <span class="macro-step-arrow">➔</span>
-        
-          <span class="macro-step-badge ">鳥羽水族館（日本一の飼育種数）</span>
-          <span class="macro-step-arrow">➔</span>
-        
-          <span class="macro-step-badge ">鳥羽一番街（海鮮昼食）</span>
-          <span class="macro-step-arrow">➔</span>
-        
-          <span class="macro-step-badge ">ミキモト真珠島</span>
-          <span class="macro-step-arrow">➔</span>
-        
-          <span class="macro-step-badge ">亀山PA</span>
-          <span class="macro-step-arrow">➔</span>
-        
-          <span class="macro-step-badge origin">高蔵寺駅</span>
           
+            <div class="micro-step-row ">
+              <span class="step-badge-num ">2</span>
+              <div class="micro-step-content">
+                四日市JCT経由で東名阪道へ。<strong>御在所SAで10分トイレ休憩・朝の軽食調達</strong>
+                <span class="skip-tag must">必須休憩</span>
+              </div>
+            </div>
+          
+            <div class="micro-step-row ">
+              <span class="step-badge-num ">3</span>
+              <div class="micro-step-content">
+                亀山JCTから伊勢自動車道・伊勢二見鳥羽ラインへ直通。<strong>祐のETCカードを使用</strong>（片道約4,200円）
+                <span class="skip-tag must">ETC祐</span>
+              </div>
+            </div>
+          
+            <div class="micro-step-row ">
+              <span class="step-badge-num ">4</span>
+              <div class="micro-step-content">
+                09:30に二見浦（二見興玉神社・夫婦岩）無料駐車場へスムーズに入庫
+                <span class="skip-tag must">必須</span>
+              </div>
+            </div>
+          
+        </div>
+      </div>
+      
+
+      
+      <div class="bonus-spots-box">
+        <div class="bonus-spots-header">✨ ついで名所・寄り道スポット</div>
+        
+          <div class="bonus-spot-item">
+            <div class="bonus-spot-info">
+              <div class="bonus-spot-name">御在所SA 下り（EXPASA御在所）</div>
+              <div class="bonus-spot-desc">東名阪道最大のSA。給油、焼きたてパン、名物赤福茶屋、清潔なトイレ。</div>
+            </div>
+            <a href="https://www.google.com/maps/search/?api=1&query=御在所SA+下り" target="_blank" rel="noopener noreferrer" class="bonus-spot-link">MAP</a>
+          </div>
+        
+          <div class="bonus-spot-item">
+            <div class="bonus-spot-info">
+              <div class="bonus-spot-name">安濃SA 下り</div>
+              <div class="bonus-spot-desc">伊勢道中間のオアシス。津ぎょうざ、伊勢うどん軽食、給油所あり。</div>
+            </div>
+            <a href="https://www.google.com/maps/search/?api=1&query=安濃SA+下り" target="_blank" rel="noopener noreferrer" class="bonus-spot-link">MAP</a>
+          </div>
         
       </div>
+      
+
+      
+      <div class="details-grid">
+        
+          <div class="detail-item">
+            <div class="detail-label">交通・ETC</div>
+            <div class="detail-value detail-highlight">祐のETCカード使用 / 片道約4,200円（春日井IC〜伊勢IC〜二見浦）</div>
+          </div>
+        
+          <div class="detail-item">
+            <div class="detail-label">所要時間</div>
+            <div class="detail-value ">車で約2時間28分（母メモ記載通り、約135km）</div>
+          </div>
+        
+          <div class="detail-item">
+            <div class="detail-label">二見浦駐車場</div>
+            <div class="detail-value detail-highlight">二見興玉神社 無料駐車場完備</div>
+          </div>
+        
+      </div>
+      
+
+      
+        <a href="https://www.google.com/maps/search/?api=1&query=二見興玉神社" target="_blank" rel="noopener noreferrer" class="map-btn-spot">
+          📍 二見興玉神社の場所をGoogleマップで確認
+        </a>
+      
+    </div>
+  
+    <div class="slot-card must">
+      <div class="slot-header">
+        <div class="slot-time">⏱ 09:30 - 10:30</div>
+        <span class="slot-badge badge-must">⛩️ MUST:参拝・絶景</span>
+      </div>
+      <div class="slot-title-row">
+        <div class="slot-title">❶ 二見浦・二見興玉神社・夫婦岩 観光（約1時間）</div>
+        <div class="duration-pill">
+          <span class="duration-avg">一般平均: 60分</span>
+          <span class="duration-est">🎯 今回予想: 60分（09:30〜10:30、母メモ指定通り）</span>
+        </div>
+      </div>
+
+      
+      <div class="micro-flow-card">
+        <div class="micro-flow-header">
+          <span>🎯 一筆書き立ち回りマニュアル</span>
+          <span style="font-size:0.7rem; color:#94a3b8;">4ステップ</span>
+        </div>
+        <div class="micro-steps-list">
+          
+            <div class="micro-step-row ">
+              <span class="step-badge-num ">1</span>
+              <div class="micro-step-content">
+                二見興玉神社境内へ進み、夫婦円満・縁結びのシンボルである大注連縄の『夫婦岩』を鑑賞
+                <span class="skip-tag must">夫婦岩</span>
+              </div>
+            </div>
+          
+            <div class="micro-step-row ">
+              <span class="step-badge-num ">2</span>
+              <div class="micro-step-content">
+                古来よりお伊勢参りの前に身を清めた禊の地にて、家族の健康・無事息災を祈願（無事蛙モニュメント）
+                <span class="skip-tag must">必須</span>
+              </div>
+            </div>
+          
+            <div class="micro-step-row ">
+              <span class="step-badge-num ">3</span>
+              <div class="micro-step-content">
+                海と夫婦岩をバックに家族記念写真を撮影
+                <span class="skip-tag must">写真撮影</span>
+              </div>
+            </div>
+          
+            <div class="micro-step-row ">
+              <span class="step-badge-num ">4</span>
+              <div class="micro-step-content">
+                海岸沿いの参道を散策し、<strong>母メモ通り10:30ちょうどに出発</strong>（伊勢神宮外宮へ車で約20分）
+                <span class="skip-tag must">10:30発</span>
+              </div>
+            </div>
+          
+        </div>
+      </div>
+      
+
+      
+      <div class="bonus-spots-box">
+        <div class="bonus-spots-header">✨ ついで名所・寄り道スポット</div>
+        
+          <div class="bonus-spot-item">
+            <div class="bonus-spot-info">
+              <div class="bonus-spot-name">夫婦岩（二見興玉神社）</div>
+              <div class="bonus-spot-desc">沖合700mに鎮まる猿田彦大神の興玉神石と日の神を拝する鳥居の役割を持つ名勝。</div>
+            </div>
+            <a href="https://www.google.com/maps/search/?api=1&query=夫婦岩" target="_blank" rel="noopener noreferrer" class="bonus-spot-link">MAP</a>
+          </div>
+        
+          <div class="bonus-spot-item">
+            <div class="bonus-spot-info">
+              <div class="bonus-spot-name">二見シーパラダイス（伊勢夫婦岩ふれあい水族館）</div>
+              <div class="bonus-spot-desc">夫婦岩隣接。トドやアザラシとゼロ距離ふれあい体験。</div>
+            </div>
+            <a href="https://www.google.com/maps/search/?api=1&query=二見シーパラダイス" target="_blank" rel="noopener noreferrer" class="bonus-spot-link">MAP</a>
+          </div>
+        
+      </div>
+      
+
+      
+      <div class="details-grid">
+        
+          <div class="detail-item">
+            <div class="detail-label">母メモ予定</div>
+            <div class="detail-value detail-highlight">09:30着、1時間位観光 ➜ 10:30発（母メモ完全準拠）</div>
+          </div>
+        
+          <div class="detail-item">
+            <div class="detail-label">由緒</div>
+            <div class="detail-value ">お伊勢参りの伝統：まず二見浦で禊をしてから神宮へ向かうのが古来の習わし</div>
+          </div>
+        
+      </div>
+      
+
+      
+        <a href="https://www.google.com/maps/search/?api=1&query=二見興玉神社" target="_blank" rel="noopener noreferrer" class="map-btn-spot">
+          📍 二見浦・夫婦岩の場所をGoogleマップで確認
+        </a>
+      
+    </div>
+  
+    <div class="slot-card must">
+      <div class="slot-header">
+        <div class="slot-time">⏱ 10:30 - 10:55</div>
+        <span class="slot-badge badge-must">🔴 MUST:移動</span>
+      </div>
+      <div class="slot-title-row">
+        <div class="slot-title">二見浦 ➔ 伊勢二見鳥羽ライン ➔ 外宮へ移動</div>
+        <div class="duration-pill">
+          <span class="duration-avg">一般平均: 20分</span>
+          <span class="duration-est">🎯 今回予想: 20分（二見浦から外宮へ車で20分）</span>
+        </div>
+      </div>
+
+      
+      <div class="micro-flow-card">
+        <div class="micro-flow-header">
+          <span>🎯 一筆書き立ち回りマニュアル</span>
+          <span style="font-size:0.7rem; color:#94a3b8;">2ステップ</span>
+        </div>
+        <div class="micro-steps-list">
+          
+            <div class="micro-step-row ">
+              <span class="step-badge-num ">1</span>
+              <div class="micro-step-content">
+                二見浦を出発し、伊勢二見鳥羽ライン（無料バイパス）を経由して伊勢市街・外宮方面へ直通（約12km）
+                <span class="skip-tag must">必須</span>
+              </div>
+            </div>
+          
+            <div class="micro-step-row ">
+              <span class="step-badge-num ">2</span>
+              <div class="micro-step-content">
+                外宮第1駐車場（無料・鳥居のすぐ近く）へスムーズに入庫（母メモ：車で20分位）
+                <span class="skip-tag must">必須</span>
+              </div>
+            </div>
+          
+        </div>
+      </div>
+      
+
+      
+
+      
+      <div class="details-grid">
+        
+          <div class="detail-item">
+            <div class="detail-label">ルート</div>
+            <div class="detail-value ">伊勢二見鳥羽ライン経由で直通約20分（母メモ記載通り）</div>
+          </div>
+        
+          <div class="detail-item">
+            <div class="detail-label">駐車場料金</div>
+            <div class="detail-value detail-highlight">外宮駐車場は終日完全無料（鳥居の直ぐ近くに停める）</div>
+          </div>
+        
+      </div>
+      
+
+      
+    </div>
+  
+    <div class="slot-card must">
+      <div class="slot-header">
+        <div class="slot-time">⏱ 10:55 - 11:05</div>
+        <span class="slot-badge badge-must">📸 MUST:写真撮影（5分）</span>
+      </div>
+      <div class="slot-title-row">
+        <div class="slot-title">❷ 伊勢神宮 外宮【写真だけ5分サクッと撮影】</div>
+        <div class="duration-pill">
+          <span class="duration-avg">一般平均: 10分</span>
+          <span class="duration-est">🎯 今回予想: 10分（10:55〜11:05、母メモ完全指定）</span>
+        </div>
+      </div>
+
+      
+      <div class="micro-flow-card">
+        <div class="micro-flow-header">
+          <span>🎯 一筆書き立ち回りマニュアル</span>
+          <span style="font-size:0.7rem; color:#94a3b8;">3ステップ</span>
+        </div>
+        <div class="micro-steps-list">
+          
+            <div class="micro-step-row ">
+              <span class="step-badge-num ">1</span>
+              <div class="micro-step-content">
+                <strong>外宮第1駐車場（無料・鳥居のすぐ近く）</strong>に駐車（母メモ：鳥居の直ぐ近くに停める）
+                <span class="skip-tag must">無料P</span>
+              </div>
+            </div>
+          
+            <div class="micro-step-row ">
+              <span class="step-badge-num ">2</span>
+              <div class="micro-step-content">
+                <strong>【母メモ完全指定】「写真だけ撮る」：表参道火除橋の大鳥居前で記念写真だけサクッと撮影！</strong>
+                <span class="skip-tag must">写真だけ撮る</span>
+              </div>
+            </div>
+          
+            <div class="micro-step-row ">
+              <span class="step-badge-num ">3</span>
+              <div class="micro-step-content">
+                深入りせず参拝は外宮鳥居前から一礼にとどめ、車に戻って11:05に出発（内宮へ車で約8分）
+                <span class="skip-tag must">5分出発</span>
+              </div>
+            </div>
+          
+        </div>
+      </div>
+      
+
+      
+      <div class="bonus-spots-box">
+        <div class="bonus-spots-header">✨ ついで名所・寄り道スポット</div>
+        
+          <div class="bonus-spot-item">
+            <div class="bonus-spot-info">
+              <div class="bonus-spot-name">せんぐう館（外宮まがたま池）</div>
+              <div class="bonus-spot-desc">式年遷宮の技術と歴史を伝える博物館。美しい勾玉池のほとりに建つ。</div>
+            </div>
+            <a href="https://www.google.com/maps/search/?api=1&query=せんぐう館" target="_blank" rel="noopener noreferrer" class="bonus-spot-link">MAP</a>
+          </div>
+        
+      </div>
+      
+
+      
+      <div class="details-grid">
+        
+          <div class="detail-item">
+            <div class="detail-label">母メモ指定の立ち回り</div>
+            <div class="detail-value detail-highlight">外宮は鳥居の直ぐ近くに停めて「写真だけ撮る」（所要5〜10分で即出発）</div>
+          </div>
+        
+          <div class="detail-item">
+            <div class="detail-label">駐車場</div>
+            <div class="detail-value ">外宮第1駐車場（無料・鳥居至近）</div>
+          </div>
+        
+      </div>
+      
+
+      
+        <a href="https://www.google.com/maps/search/?api=1&query=伊勢神宮外宮" target="_blank" rel="noopener noreferrer" class="map-btn-spot">
+          📍 外宮の場所をGoogleマップで確認
+        </a>
+      
+    </div>
+  
+    <div class="slot-card must">
+      <div class="slot-header">
+        <div class="slot-time">⏱ 11:05 - 11:15</div>
+        <span class="slot-badge badge-must">🔴 MUST:移動</span>
+      </div>
+      <div class="slot-title-row">
+        <div class="slot-title">外宮 ➔ 御幸道路 ➔ 内宮へ移動</div>
+        <div class="duration-pill">
+          <span class="duration-avg">一般平均: 10分</span>
+          <span class="duration-est">🎯 今回予想: 8〜10分（外宮から内宮へ車で8分位）</span>
+        </div>
+      </div>
+
+      
+      <div class="micro-flow-card">
+        <div class="micro-flow-header">
+          <span>🎯 一筆書き立ち回りマニュアル</span>
+          <span style="font-size:0.7rem; color:#94a3b8;">2ステップ</span>
+        </div>
+        <div class="micro-steps-list">
+          
+            <div class="micro-step-row ">
+              <span class="step-badge-num ">1</span>
+              <div class="micro-step-content">
+                外宮を出発し、御幸道路（県道12号）を南東へ直通（約4.5km、車で8分位）
+                <span class="skip-tag must">必須</span>
+              </div>
+            </div>
+          
+            <div class="micro-step-row ">
+              <span class="step-badge-num ">2</span>
+              <div class="micro-step-content">
+                11:15に市営宇治浦田A1・A2駐車場へスムーズに左折入庫
+                <span class="skip-tag must">必須</span>
+              </div>
+            </div>
+          
+        </div>
+      </div>
+      
+
+      
+
+      
+      <div class="details-grid">
+        
+          <div class="detail-item">
+            <div class="detail-label">ルート</div>
+            <div class="detail-value ">御幸道路（県道12号）経由で車で約8分（母メモ：車で8分位で内宮着）</div>
+          </div>
+        
+      </div>
+      
+
+      
+    </div>
+  
+    <div class="slot-card must">
+      <div class="slot-header">
+        <div class="slot-time">⏱ 11:15 - 12:30</div>
+        <span class="slot-badge badge-must">⛩️ MUST:参拝（内宮本殿）</span>
+      </div>
+      <div class="slot-title-row">
+        <div class="slot-title">❸ 伊勢神宮 内宮（皇大神宮）参拝 ＆ 瀧祭神</div>
+        <div class="duration-pill">
+          <span class="duration-avg">一般平均: 75分</span>
+          <span class="duration-est">🎯 今回予想: 75分（11:15〜12:30）</span>
+        </div>
+      </div>
+
+      
+      <div class="micro-flow-card">
+        <div class="micro-flow-header">
+          <span>🎯 一筆書き立ち回りマニュアル</span>
+          <span style="font-size:0.7rem; color:#94a3b8;">8ステップ</span>
+        </div>
+        <div class="micro-steps-list">
+          
+            <div class="micro-step-row ">
+              <span class="step-badge-num ">1</span>
+              <div class="micro-step-content">
+                <strong>市営宇治浦田A1・A2駐車場</strong>に駐車（最初の1時間無料、1〜2時間500円、以後30分毎100円加算・上限なし）
+                <span class="skip-tag must">P料金</span>
+              </div>
+            </div>
+          
+            <div class="micro-step-row ">
+              <span class="step-badge-num ">2</span>
+              <div class="micro-step-content">
+                地下道をくぐり、おはらい町入口を経て宇治橋前大鳥居へ進む
+                <span class="skip-tag must">必須</span>
+              </div>
+            </div>
+          
+            <div class="micro-step-row ">
+              <span class="step-badge-num ">3</span>
+              <div class="micro-step-content">
+                宇治橋前で一礼し、右側通行で渡橋。五十鈴川の雄大な清流を渡る
+                <span class="skip-tag must">必須</span>
+              </div>
+            </div>
+          
+            <div class="micro-step-row ">
+              <span class="step-badge-num ">4</span>
+              <div class="micro-step-content">
+                <strong>宇治橋を渡り、右手の緩やかな坂を下りて「五十鈴川御手洗場（みたらし）」へ。天然清流で手を清める</strong>
+                <span class="skip-tag must">母メモ指定</span>
+              </div>
+            </div>
+          
+            <div class="micro-step-row ">
+              <span class="step-badge-num ">5</span>
+              <div class="micro-step-content">
+                参道（砂利道）に戻り、正宮方向へ巨木が並ぶ神域を進む
+                <span class="skip-tag must">必須</span>
+              </div>
+            </div>
+          
+            <div class="micro-step-row ">
+              <span class="step-badge-num ">6</span>
+              <div class="micro-step-content">
+                <strong>参道すぐ脇・右手に鎮座する「瀧祭神（たきまつりのかみ・水の神様）」へ参拝</strong>（内宮正宮に先立ち案内役となる神様。母メモ指定！）
+                <span class="skip-tag must">水の神様</span>
+              </div>
+            </div>
+          
+            <div class="micro-step-row ">
+              <span class="step-badge-num ">7</span>
+              <div class="micro-step-content">
+                石段を上がり、<strong>正宮・皇大神宮</strong>を参拝（私利私欲ではなく日頃の平穏と感謝を祈念）
+                <span class="skip-tag must">正宮参拝</span>
+              </div>
+            </div>
+          
+            <div class="micro-step-row skippable">
+              <span class="step-badge-num opt">8</span>
+              <div class="micro-step-content">
+                荒祭宮（第一別宮・個人的なお願い可）へ立ち寄り、宇治橋へ戻る
+                <span class="skip-tag recommend">おすすめ</span>
+              </div>
+            </div>
+          
+        </div>
+      </div>
+      
+
+      
+      <div class="bonus-spots-box">
+        <div class="bonus-spots-header">✨ ついで名所・寄り道スポット</div>
+        
+          <div class="bonus-spot-item">
+            <div class="bonus-spot-info">
+              <div class="bonus-spot-name">荒祭宮（あらまつりのみや）</div>
+              <div class="bonus-spot-desc">天照大御神の荒御魂を祀る内宮第一別宮。ここでは個人的な願いを祈念できます。</div>
+            </div>
+            <a href="https://www.google.com/maps/search/?api=1&query=荒祭宮" target="_blank" rel="noopener noreferrer" class="bonus-spot-link">MAP</a>
+          </div>
+        
+          <div class="bonus-spot-item">
+            <div class="bonus-spot-info">
+              <div class="bonus-spot-name">風日祈宮（かざひのみのみや）</div>
+              <div class="bonus-spot-desc">風雨を司る神を祀る別宮。五十鈴川にかかる風日祈宮橋を渡る緑深い静寂の小径。</div>
+            </div>
+            <a href="https://www.google.com/maps/search/?api=1&query=風日祈宮" target="_blank" rel="noopener noreferrer" class="bonus-spot-link">MAP</a>
+          </div>
+        
+          <div class="bonus-spot-item">
+            <div class="bonus-spot-info">
+              <div class="bonus-spot-name">五十鈴川カフェ</div>
+              <div class="bonus-spot-desc">五十鈴川のせせらぎを真横に望む絶景和風カフェ。ブレンド珈琲と和スイーツ。</div>
+            </div>
+            <a href="https://www.google.com/maps/search/?api=1&query=五十鈴川カフェ" target="_blank" rel="noopener noreferrer" class="bonus-spot-link">MAP</a>
+          </div>
+        
+      </div>
+      
+
+      
+      <div class="details-grid">
+        
+          <div class="detail-item">
+            <div class="detail-label">駐車場料金</div>
+            <div class="detail-value detail-highlight">宇治浦田A1/A2：1h無料、1-2h 500円、以後30分毎100円（上限なし）</div>
+          </div>
+        
+          <div class="detail-item">
+            <div class="detail-label">母メモ参拝順路</div>
+            <div class="detail-value detail-highlight">宇治橋 ➜ 五十鈴川御手洗場 ➜ 右手の瀧祭神（水の神様） ➜ 正宮</div>
+          </div>
+        
+      </div>
+      
+
+      
+        <a href="https://www.google.com/maps/search/?api=1&query=伊勢市営宇治浦田駐車場" target="_blank" rel="noopener noreferrer" class="map-btn-spot">
+          📍 市営宇治浦田駐車場の場所をGoogleマップで確認
+        </a>
+      
+    </div>
+  
+    <div class="slot-card must">
+      <div class="slot-header">
+        <div class="slot-time">⏱ 12:30 - 13:00</div>
+        <span class="slot-badge badge-must">⛩️ MUST:確定参拝（猿田彦）</span>
+      </div>
+      <div class="slot-title-row">
+        <div class="slot-title">❹ 猿田彦神社 参拝【確定】（みちひらきの大神・方位石）</div>
+        <div class="duration-pill">
+          <span class="duration-avg">一般平均: 30分</span>
+          <span class="duration-est">🎯 今回予想: 30分（12:30〜13:00）</span>
+        </div>
+      </div>
+
+      
+      <div class="micro-flow-card">
+        <div class="micro-flow-header">
+          <span>🎯 一筆書き立ち回りマニュアル</span>
+          <span style="font-size:0.7rem; color:#94a3b8;">5ステップ</span>
+        </div>
+        <div class="micro-steps-list">
+          
+            <div class="micro-step-row ">
+              <span class="step-badge-num ">1</span>
+              <div class="micro-step-content">
+                市営宇治浦田駐車場・おはらい町入口から<strong>徒歩約5分</strong>で猿田彦神社へ移動（母メモ指定：〜5分で猿田彦神社へ）
+                <span class="skip-tag must">徒歩5分</span>
+              </div>
+            </div>
+          
+            <div class="micro-step-row ">
+              <span class="step-badge-num ">2</span>
+              <div class="micro-step-content">
+                ものごとの始まりに最も良い方向へ導く『みちひらきの大神（猿田彦大神）』へ参拝
+                <span class="skip-tag must">みちひらき</span>
+              </div>
+            </div>
+          
+            <div class="micro-step-row ">
+              <span class="step-badge-num ">3</span>
+              <div class="micro-step-content">
+                <strong>本殿前の八角形の石柱「方位石（古殿社跡）」に触れ、家族それぞれの干支や吉方位を祈願</strong>
+                <span class="skip-tag must">八角方位石</span>
+              </div>
+            </div>
+          
+            <div class="micro-step-row ">
+              <span class="step-badge-num ">4</span>
+              <div class="micro-step-content">
+                境内にある芸能・縁結び・人徳の神様『佐瑠女神社（さるめじんじゃ）』へも合わせて参拝
+                <span class="skip-tag recommend">佐瑠女神社</span>
+              </div>
+            </div>
+          
+            <div class="micro-step-row ">
+              <span class="step-badge-num ">5</span>
+              <div class="micro-step-content">
+                13:00に参拝を終え、徒歩でおはらい町・おかげ横丁へ昼食・散策に向かう
+                <span class="skip-tag must">必須</span>
+              </div>
+            </div>
+          
+        </div>
+      </div>
+      
+
+      
+      <div class="bonus-spots-box">
+        <div class="bonus-spots-header">✨ ついで名所・寄り道スポット</div>
+        
+          <div class="bonus-spot-item">
+            <div class="bonus-spot-info">
+              <div class="bonus-spot-name">佐瑠女神社（さるめじんじゃ）</div>
+              <div class="bonus-spot-desc">天宇受売命を祀る芸能・縁結びの神社。多くの芸能人やスポーツ選手も参拝するパワースポット。</div>
+            </div>
+            <a href="https://www.google.com/maps/search/?api=1&query=佐瑠女神社" target="_blank" rel="noopener noreferrer" class="bonus-spot-link">MAP</a>
+          </div>
+        
+          <div class="bonus-spot-item">
+            <div class="bonus-spot-info">
+              <div class="bonus-spot-name">猿田彦神社 方位石</div>
+              <div class="bonus-spot-desc">拝殿正面にある八角形の石柱。自分の干支の文字に手のひらを当てて祈願すると運気が開ける。</div>
+            </div>
+            <a href="https://www.google.com/maps/search/?api=1&query=猿田彦神社+方位石" target="_blank" rel="noopener noreferrer" class="bonus-spot-link">MAP</a>
+          </div>
+        
+      </div>
+      
+
+      
+      <div class="details-grid">
+        
+          <div class="detail-item">
+            <div class="detail-label">確定参拝</div>
+            <div class="detail-value detail-highlight">母メモ指定の必須スポット。宇治浦田駐車場から徒歩5分で移動ロスなし</div>
+          </div>
+        
+          <div class="detail-item">
+            <div class="detail-label">御利益</div>
+            <div class="detail-value ">道開き・進路開拓・交通安全・商売繁盛（佐瑠女神社：縁結び・芸能）</div>
+          </div>
+        
+          <div class="detail-item">
+            <div class="detail-label">駐車場</div>
+            <div class="detail-value ">宇治浦田駐車場に停めたまま徒歩で参拝可能（追加移動不要）</div>
+          </div>
+        
+      </div>
+      
+
+      
+        <a href="https://www.google.com/maps/search/?api=1&query=猿田彦神社" target="_blank" rel="noopener noreferrer" class="map-btn-spot">
+          📍 猿田彦神社の場所をGoogleマップで確認
+        </a>
+      
+    </div>
+  
+    <div class="slot-card must">
+      <div class="slot-header">
+        <div class="slot-time">⏱ 13:00 - 14:30</div>
+        <span class="slot-badge badge-must">🍴 MUST:昼食・お土産・散策</span>
+      </div>
+      <div class="slot-title-row">
+        <div class="slot-title">❺ おはらい町・おかげ横丁 昼食・散策 ＆ 赤福本店（白あん赤福購入）</div>
+        <div class="duration-pill">
+          <span class="duration-avg">一般平均: 90分</span>
+          <span class="duration-est">🎯 今回予想: 90分（13:00〜14:30、母メモ：14:30出発）</span>
+        </div>
+      </div>
+
+      
+      <div class="micro-flow-card">
+        <div class="micro-flow-header">
+          <span>🎯 一筆書き立ち回りマニュアル</span>
+          <span style="font-size:0.7rem; color:#94a3b8;">5ステップ</span>
+        </div>
+        <div class="micro-steps-list">
+          
+            <div class="micro-step-row ">
+              <span class="step-badge-num ">1</span>
+              <div class="micro-step-content">
+                徒歩でおはらい町を通り、おかげ横丁へ。<strong>【昼食選択】</strong>混雑に応じて「ふくすけ」「豚捨軽食」「まるみつ」等を決定
+                <span class="skip-tag must">昼食選択</span>
+              </div>
+            </div>
+          
+            <div class="micro-step-row skippable">
+              <span class="step-badge-num opt">2</span>
+              <div class="micro-step-content">
+                <strong>横丁内なら：『豚捨』の黒毛和牛コロッケ（130円）食べ歩きで胃袋を温存し、夜のバイキングを全力で楽しむのがスマート！</strong>
+                <span class="skip-tag recommend">豚捨胃袋温存</span>
+              </div>
+            </div>
+          
+            <div class="micro-step-row skippable">
+              <span class="step-badge-num opt">3</span>
+              <div class="micro-step-content">
+                <strong>うどん気分なら：おかげ横丁中心『ふくすけ』で極太もちもち伊勢うどん（食券制で回転最速）</strong>
+                <span class="skip-tag recommend">ふくすけ</span>
+              </div>
+            </div>
+          
+            <div class="micro-step-row ">
+              <span class="step-badge-num ">4</span>
+              <div class="micro-step-content">
+                <strong>『赤福本店』へ立ち寄り、母メモ指定の「白あんバージョンの赤福（白餅黒餅）」をテイクアウト購入</strong>
+                <span class="skip-tag must">白あん赤福</span>
+              </div>
+            </div>
+          
+            <div class="micro-step-row ">
+              <span class="step-badge-num ">5</span>
+              <div class="micro-step-content">
+                おかげ横丁のお土産店や五十鈴川沿いを散策し、<strong>母メモ指定通り14:30に駐車場を出発</strong>
+                <span class="skip-tag must">14:30発</span>
+              </div>
+            </div>
+          
+        </div>
+      </div>
+      
+
+      
+      <div class="bonus-spots-box">
+        <div class="bonus-spots-header">✨ ついで名所・寄り道スポット</div>
+        
+          <div class="bonus-spot-item">
+            <div class="bonus-spot-info">
+              <div class="bonus-spot-name">へんばや商店 おはらい町店（へんば餅）</div>
+              <div class="bonus-spot-desc">創業1775年。香ばしい焼き目の平らなこし餡餅。赤福と並ぶ地元絶賛の伊勢二大名菓（お土産必携）。</div>
+            </div>
+            <a href="https://www.google.com/maps/search/?api=1&query=へんばや商店+おはらい町店" target="_blank" rel="noopener noreferrer" class="bonus-spot-link">MAP</a>
+          </div>
+        
+          <div class="bonus-spot-item">
+            <div class="bonus-spot-info">
+              <div class="bonus-spot-name">五十鈴川カフェ</div>
+              <div class="bonus-spot-desc">五十鈴川のせせらぎを真横に望む絶景カフェ。和三盆と伊勢茶のロールケーキ、雪鍋アイス、珈琲。</div>
+            </div>
+            <a href="https://www.google.com/maps/search/?api=1&query=五十鈴川カフェ" target="_blank" rel="noopener noreferrer" class="bonus-spot-link">MAP</a>
+          </div>
+        
+          <div class="bonus-spot-item">
+            <div class="bonus-spot-info">
+              <div class="bonus-spot-name">赤福本店</div>
+              <div class="bonus-spot-desc">名物赤福餅に加え、白小豆を使用した白餅黒餅（白あんバージョン）をテイクアウト。</div>
+            </div>
+            <a href="https://www.google.com/maps/search/?api=1&query=赤福本店" target="_blank" rel="noopener noreferrer" class="bonus-spot-link">MAP</a>
+          </div>
+        
+          <div class="bonus-spot-item">
+            <div class="bonus-spot-info">
+              <div class="bonus-spot-name">ふくすけ（伊勢うどん）</div>
+              <div class="bonus-spot-desc">おかげ横丁中心部。食券制で回転が極めて早く、太麺もちもちの王道伊勢うどん。</div>
+            </div>
+            <a href="https://www.google.com/maps/search/?api=1&query=ふくすけ+おかげ横丁" target="_blank" rel="noopener noreferrer" class="bonus-spot-link">MAP</a>
+          </div>
+        
+          <div class="bonus-spot-item">
+            <div class="bonus-spot-info">
+              <div class="bonus-spot-name">豚捨 おかげ横丁店</div>
+              <div class="bonus-spot-desc">熱々サクサクの黒毛和牛コロッケ。夜バイキング前の軽食に最高。</div>
+            </div>
+            <a href="https://www.google.com/maps/search/?api=1&query=豚捨+おかげ横丁" target="_blank" rel="noopener noreferrer" class="bonus-spot-link">MAP</a>
+          </div>
+        
+      </div>
+      
+
+      
+      <div class="details-grid">
+        
+          <div class="detail-item">
+            <div class="detail-label">母メモ購入品</div>
+            <div class="detail-value detail-highlight">赤福本店 白あんバージョン（白餅黒餅）テイクアウト</div>
+          </div>
+        
+          <div class="detail-item">
+            <div class="detail-label">昼食方針</div>
+            <div class="detail-value detail-highlight">松阪牛は愛知でも食べられるためパス！伊勢うどん・豚捨軽食・てこね寿司に集中</div>
+          </div>
+        
+          <div class="detail-item">
+            <div class="detail-label">お母さん向け名菓</div>
+            <div class="detail-value ">五十鈴川カフェの伊勢茶ロールケーキ ＆ へんばや商店のへんば餅！</div>
+          </div>
+        
+          <div class="detail-item">
+            <div class="detail-label">出発時刻</div>
+            <div class="detail-value ">14:30出発（母メモ記載通り）</div>
+          </div>
+        
+      </div>
+      
+
+      
+        <a href="https://www.google.com/maps/search/?api=1&query=赤福本店" target="_blank" rel="noopener noreferrer" class="map-btn-spot">
+          📍 赤福本店の場所をGoogleマップで確認
+        </a>
+      
+    </div>
+  
+    <div class="slot-card must">
+      <div class="slot-header">
+        <div class="slot-time">⏱ 14:30 - 15:30（または16:30）</div>
+        <span class="slot-badge badge-must">🚗 MUST:移動 ＆ スカイライン分岐</span>
+      </div>
+      <div class="slot-title-row">
+        <div class="slot-title">❻ 移動 ＆ 伊勢志摩スカイライン【行ければ行く！柔軟オプション】</div>
+        <div class="duration-pill">
+          <span class="duration-avg">一般平均: 50分</span>
+          <span class="duration-est">🎯 今回予想: 直行なら40〜50分（15:30着） / スカイライン経由なら約90分（16:30着）</span>
+        </div>
+      </div>
+
+      
+      <div class="micro-flow-card">
+        <div class="micro-flow-header">
+          <span>🎯 一筆書き立ち回りマニュアル</span>
+          <span style="font-size:0.7rem; color:#94a3b8;">4ステップ</span>
+        </div>
+        <div class="micro-steps-list">
+          
+            <div class="micro-step-row ">
+              <span class="step-badge-num ">1</span>
+              <div class="micro-step-content">
+                <strong>【Aパターン：直行（母メモ本線）】</strong>伊勢志摩スカイラインをスキップし、伊勢道路（県道32号）経由で車40分 ➜ <strong>15:30に宿着！</strong>
+                <span class="skip-tag must">直行15:30着</span>
+              </div>
+            </div>
+          
+            <div class="micro-step-row skippable">
+              <span class="step-badge-num opt">2</span>
+              <div class="micro-step-content">
+                <strong>【Bパターン：絶景満喫（行ければ行く！）】</strong>内宮から車で20分、伊勢志摩スカイライン（有料・現金1,270円）へ進入
+                <span class="skip-tag recommend">行ければ行く</span>
+              </div>
+            </div>
+          
+            <div class="micro-step-row skippable">
+              <span class="step-badge-num opt">3</span>
+              <div class="micro-step-content">
+                朝熊山頂展望台の「天空のポスト」や絶景展望足湯から伊勢湾パノラマを一望（約20分観光）
+                <span class="skip-tag recommend">天空のポスト</span>
+              </div>
+            </div>
+          
+            <div class="micro-step-row skippable">
+              <span class="step-badge-num opt">4</span>
+              <div class="micro-step-content">
+                鳥羽側へ下りて国道167号経由で宿へ向かい、<strong>16:30前後に宿到着</strong>（行く行かないで1時間ずれる設計）
+                <span class="skip-tag can-skip">経由16:30着</span>
+              </div>
+            </div>
+          
+        </div>
+      </div>
+      
+
+      
+      <div class="bonus-spots-box">
+        <div class="bonus-spots-header">✨ ついで名所・寄り道スポット</div>
+        
+          <div class="bonus-spot-item">
+            <div class="bonus-spot-info">
+              <div class="bonus-spot-name">伊勢志摩スカイライン 朝熊山頂展望台</div>
+              <div class="bonus-spot-desc">伊勢湾・富士山を望む標高555mの大パノラマ。名物「天空のポスト」と展望足湯。</div>
+            </div>
+            <a href="https://www.google.com/maps/search/?api=1&query=朝熊山頂展望台" target="_blank" rel="noopener noreferrer" class="bonus-spot-link">MAP</a>
+          </div>
+        
+      </div>
+      
+
+      
+      <div class="details-grid">
+        
+          <div class="detail-item">
+            <div class="detail-label">母メモ指定の分岐</div>
+            <div class="detail-value detail-highlight">直行なら車40分で15:30宿着。20分かけてスカイライン行くなら16:30宿着（1時間調整）</div>
+          </div>
+        
+          <div class="detail-item">
+            <div class="detail-label">スカイライン通行料</div>
+            <div class="detail-value ">有料道路・現金払い 1,270円</div>
+          </div>
+        
+      </div>
+      
+
+      
+    </div>
+  
+    <div class="slot-card must">
+      <div class="slot-header">
+        <div class="slot-time">⏱ 15:30（または16:30） - 16:00（または16:40）</div>
+        <span class="slot-badge badge-must">🏨 MUST:宿チェックイン</span>
+      </div>
+      <div class="slot-title-row">
+        <div class="slot-title">❼ 大江戸温泉物語 プレミアム伊勢志摩 チェックイン</div>
+        <div class="duration-pill">
+          <span class="duration-avg">一般平均: 30分</span>
+          <span class="duration-est">🎯 今回予想: 30分（直行なら15:30着、スカイライン経由なら16:30着）</span>
+        </div>
+      </div>
+
+      
+      <div class="micro-flow-card">
+        <div class="micro-flow-header">
+          <span>🎯 一筆書き立ち回りマニュアル</span>
+          <span style="font-size:0.7rem; color:#94a3b8;">6ステップ</span>
+        </div>
+        <div class="micro-steps-list">
+          
+            <div class="micro-step-row ">
+              <span class="step-badge-num ">1</span>
+              <div class="micro-step-content">
+                大江戸温泉物語プレミアム伊勢志摩の玄関へ到着。荷物を降ろして専用駐車場へ入庫
+                <span class="skip-tag must">必須</span>
+              </div>
+            </div>
+          
+            <div class="micro-step-row ">
+              <span class="step-badge-num ">2</span>
+              <div class="micro-step-content">
+                フロントにてチェックイン手続き（チェックイン可能時間 15:00〜19:00）
+                <span class="skip-tag must">必須</span>
+              </div>
+            </div>
+          
+            <div class="micro-step-row ">
+              <span class="step-badge-num ">3</span>
+              <div class="micro-step-content">
+                <strong>【500円引】祐のスマホにスクショした画面を提示し、宿泊費500円OFFを適用！</strong>
+                <span class="skip-tag must">スクショ500円引</span>
+              </div>
+            </div>
+          
+            <div class="micro-step-row ">
+              <span class="step-badge-num ">4</span>
+              <div class="micro-step-content">
+                現地精算：税込46,800円（※クーポン前）＋ 入湯税（150〜200円×4人）
+                <span class="skip-tag must">必須</span>
+              </div>
+            </div>
+          
+            <div class="micro-step-row ">
+              <span class="step-badge-num ">5</span>
+              <div class="micro-step-content">
+                <strong>【夕食時間】チェックイン先着順の夕食予約にて、「19:00」枠を確実に確保！</strong>
+                <span class="skip-tag must">19:00夕食確保</span>
+              </div>
+            </div>
+          
+            <div class="micro-step-row ">
+              <span class="step-badge-num ">6</span>
+              <div class="micro-step-content">
+                部屋（スタンダード和室10畳・内風呂なし・オーシャンビュー海側）に荷物を置き、16:00（経由時16:40）に出発
+                <span class="skip-tag must">必須</span>
+              </div>
+            </div>
+          
+        </div>
+      </div>
+      
+
+      
+
+      
+      <div class="details-grid">
+        
+          <div class="detail-item">
+            <div class="detail-label">宿泊特典</div>
+            <div class="detail-value detail-highlight">祐のスマホスクショ提示で500円OFF！</div>
+          </div>
+        
+          <div class="detail-item">
+            <div class="detail-label">夕食時間予約</div>
+            <div class="detail-value detail-highlight">チェックイン順に選択 ➜ 19:00枠を即座に確保（夕食17:00〜21:30）</div>
+          </div>
+        
+          <div class="detail-item">
+            <div class="detail-label">現地精算額</div>
+            <div class="detail-value ">税込46,800円 ＋ 入湯税（150〜200円×4人＝約600〜800円）</div>
+          </div>
+        
+          <div class="detail-item">
+            <div class="detail-label">部屋タイプ</div>
+            <div class="detail-value ">スタンダード和室10畳 内風呂なし 海側（英虞湾一望）</div>
+          </div>
+        
+      </div>
+      
+
+      
+        <a href="https://www.google.com/maps/search/?api=1&query=大江戸温泉物語+Premium+伊勢志摩" target="_blank" rel="noopener noreferrer" class="map-btn-spot">
+          📍 大江戸温泉物語Premium伊勢志摩をGoogleマップで確認
+        </a>
+      
+    </div>
+  
+    <div class="slot-card must">
+      <div class="slot-header">
+        <div class="slot-time">⏱ 16:00 - 17:00</div>
+        <span class="slot-badge badge-must">🔴 MUST:移動</span>
+      </div>
+      <div class="slot-title-row">
+        <div class="slot-title">宿 ➔ 鵜倉園地・親子大橋へドライブ</div>
+        <div class="duration-pill">
+          <span class="duration-avg">一般平均: 50分</span>
+          <span class="duration-est">🎯 今回予想: 50分（車で50分間）</span>
+        </div>
+      </div>
+
+      
+      <div class="micro-flow-card">
+        <div class="micro-flow-header">
+          <span>🎯 一筆書き立ち回りマニュアル</span>
+          <span style="font-size:0.7rem; color:#94a3b8;">3ステップ</span>
+        </div>
+        <div class="micro-steps-list">
+          
+            <div class="micro-step-row ">
+              <span class="step-badge-num ">1</span>
+              <div class="micro-step-content">
+                宿を出発し、国道260号を西へ南伊勢町方面へ絶景シーサイドドライブ（車で約50分間）
+                <span class="skip-tag must">必須</span>
+              </div>
+            </div>
+          
+            <div class="micro-step-row ">
+              <span class="step-badge-num ">2</span>
+              <div class="micro-step-content">
+                志摩半島と南伊勢町を結ぶ赤いアーチの『南島大橋』と青い『阿曽浦大橋』（通称・親子大橋）を通過
+                <span class="skip-tag must">親子大橋</span>
+              </div>
+            </div>
+          
+            <div class="micro-step-row ">
+              <span class="step-badge-num ">3</span>
+              <div class="micro-step-content">
+                鵜倉半島の山道を登り、17:00ちょうどに鵜倉園地見江島展望台駐車場へ到着
+                <span class="skip-tag must">必須</span>
+              </div>
+            </div>
+          
+        </div>
+      </div>
+      
+
+      
+      <div class="bonus-spots-box">
+        <div class="bonus-spots-header">✨ ついで名所・寄り道スポット</div>
+        
+          <div class="bonus-spot-item">
+            <div class="bonus-spot-info">
+              <div class="bonus-spot-name">親子大橋（南島大橋・阿曽浦大橋）</div>
+              <div class="bonus-spot-desc">リアス海岸の深い入江にかかる赤と青の2連アーチ橋。日本の道100選にも通じる絶景道路。</div>
+            </div>
+            <a href="https://www.google.com/maps/search/?api=1&query=親子大橋+南伊勢町" target="_blank" rel="noopener noreferrer" class="bonus-spot-link">MAP</a>
+          </div>
+        
+      </div>
+      
+
+      
+      <div class="details-grid">
+        
+          <div class="detail-item">
+            <div class="detail-label">ルート</div>
+            <div class="detail-value ">国道260号シーサイドライン（浜島 ➔ 南伊勢町 鵜倉園地）</div>
+          </div>
+        
+          <div class="detail-item">
+            <div class="detail-label">所要時間</div>
+            <div class="detail-value ">車で約50分（母メモ記載の通り50分間）</div>
+          </div>
+        
+      </div>
+      
+
+      
+    </div>
+  
+    <div class="slot-card must">
+      <div class="slot-header">
+        <div class="slot-time">⏱ 17:00 - 18:00</div>
+        <span class="slot-badge badge-must">🌅 MUST:夕日・星空・夜景</span>
+      </div>
+      <div class="slot-title-row">
+        <div class="slot-title">❽ 鵜倉園地（見江島展望台・ハートの入り江）・親子大橋 観光（夕日・星空・夜景）</div>
+        <div class="duration-pill">
+          <span class="duration-avg">一般平均: 60分</span>
+          <span class="duration-est">🎯 今回予想: 60分（17:00〜18:00、母メモ完全準拠）</span>
+        </div>
+      </div>
+
+      
+      <div class="micro-flow-card">
+        <div class="micro-flow-header">
+          <span>🎯 一筆書き立ち回りマニュアル</span>
+          <span style="font-size:0.7rem; color:#94a3b8;">5ステップ</span>
+        </div>
+        <div class="micro-steps-list">
+          
+            <div class="micro-step-row ">
+              <span class="step-badge-num ">1</span>
+              <div class="micro-step-content">
+                鵜倉園地のメイン展望台である『見江島展望台（みえじまてんぼうだい）』ウッドデッキへ進む
+                <span class="skip-tag must">必須</span>
+              </div>
+            </div>
+          
+            <div class="micro-step-row ">
+              <span class="step-badge-num ">2</span>
+              <div class="micro-step-content">
+                <strong>眼下に広がる「かさらぎ池」が完璧なハート型に見える「ハートの入り江（恋人の聖地）」を鑑賞</strong>
+                <span class="skip-tag must">ハートの入り江</span>
+              </div>
+            </div>
+          
+            <div class="micro-step-row ">
+              <span class="step-badge-num ">3</span>
+              <div class="micro-step-content">
+                誓いの鐘やハートのモニュメント前で夕日をバックに家族記念写真を撮影
+                <span class="skip-tag must">必須</span>
+              </div>
+            </div>
+          
+            <div class="micro-step-row ">
+              <span class="step-badge-num ">4</span>
+              <div class="micro-step-content">
+                <strong>【母メモ指定】太平洋の水平線に沈む夕日（11月2日日没17:00頃）と夕焼け、黄昏の星空・夜景パノラマを鑑賞</strong>
+                <span class="skip-tag must">夕日・星空・夜景</span>
+              </div>
+            </div>
+          
+            <div class="micro-step-row ">
+              <span class="step-badge-num ">5</span>
+              <div class="micro-step-content">
+                18:00に出発し、宿泊先（大江戸温泉物語）へ戻る（母メモ：18時00分出発）
+                <span class="skip-tag must">18:00発</span>
+              </div>
+            </div>
+          
+        </div>
+      </div>
+      
+
+      
+      <div class="bonus-spots-box">
+        <div class="bonus-spots-header">✨ ついで名所・寄り道スポット</div>
+        
+          <div class="bonus-spot-item">
+            <div class="bonus-spot-info">
+              <div class="bonus-spot-name">橘展望台（たちばなてんぼうだい）</div>
+              <div class="bonus-spot-desc">鵜倉園地内にあるもう一つの展望台。リアス海岸の美しい入江と漁村を望む。</div>
+            </div>
+            <a href="https://www.google.com/maps/search/?api=1&query=橘展望台+南伊勢町" target="_blank" rel="noopener noreferrer" class="bonus-spot-link">MAP</a>
+          </div>
+        
+          <div class="bonus-spot-item">
+            <div class="bonus-spot-info">
+              <div class="bonus-spot-name">かさらぎ展望台</div>
+              <div class="bonus-spot-desc">ハートの入り江を別の角度から見下ろす静かな展望スポット。</div>
+            </div>
+            <a href="https://www.google.com/maps/search/?api=1&query=かさらぎ展望台+南伊勢町" target="_blank" rel="noopener noreferrer" class="bonus-spot-link">MAP</a>
+          </div>
+        
+      </div>
+      
+
+      
+      <div class="details-grid">
+        
+          <div class="detail-item">
+            <div class="detail-label">夕日・夜景鑑賞</div>
+            <div class="detail-value detail-highlight">11月2日 日没時刻 17:00頃（夕焼け〜星空〜トワイライト夜景グラデーション）</div>
+          </div>
+        
+          <div class="detail-item">
+            <div class="detail-label">絶景スポット</div>
+            <div class="detail-value ">見江島展望台（ハートの入り江・恋人の聖地）</div>
+          </div>
+        
+          <div class="detail-item">
+            <div class="detail-label">施設スペック</div>
+            <div class="detail-value ">展望台入場無料・無料駐車場完備。海風対策に上着着用推奨</div>
+          </div>
+        
+      </div>
+      
+
+      
+        <a href="https://www.google.com/maps/search/?api=1&query=鵜倉園地+見江島展望台" target="_blank" rel="noopener noreferrer" class="map-btn-spot">
+          📍 鵜倉園地 見江島展望台をGoogleマップで確認
+        </a>
+      
+    </div>
+  
+    <div class="slot-card must">
+      <div class="slot-header">
+        <div class="slot-time">⏱ 18:00 - 19:00</div>
+        <span class="slot-badge badge-must">♨️ MUST:帰着・温泉</span>
+      </div>
+      <div class="slot-title-row">
+        <div class="slot-title">宿戻り ＆ 温泉リフレッシュ</div>
+        <div class="duration-pill">
+          <span class="duration-avg">一般平均: 45分</span>
+          <span class="duration-est">🎯 今回予想: 45分（18:00発 ➔ 18:45宿戻り）</span>
+        </div>
+      </div>
+
+      
+      <div class="micro-flow-card">
+        <div class="micro-flow-header">
+          <span>🎯 一筆書き立ち回りマニュアル</span>
+          <span style="font-size:0.7rem; color:#94a3b8;">2ステップ</span>
+        </div>
+        <div class="micro-steps-list">
+          
+            <div class="micro-step-row ">
+              <span class="step-badge-num ">1</span>
+              <div class="micro-step-content">
+                国道260号を戻り、18:45までに大江戸温泉物語プレミアム伊勢志摩へ帰着
+                <span class="skip-tag must">必須</span>
+              </div>
+            </div>
+          
+            <div class="micro-step-row ">
+              <span class="step-badge-num ">2</span>
+              <div class="micro-step-content">
+                19:00の夕食バイキング開始まで、大浴場で冷えた体を温めるか客室でひと息つく
+                <span class="skip-tag must">必須</span>
+              </div>
+            </div>
+          
+        </div>
+      </div>
+      
+
+      
+
+      
+      <div class="details-grid">
+        
+          <div class="detail-item">
+            <div class="detail-label">所要時間</div>
+            <div class="detail-value ">車で約40分（18:45前後にスムーズ帰着）</div>
+          </div>
+        
+      </div>
+      
+
+      
+    </div>
+  
+    <div class="slot-card must">
+      <div class="slot-header">
+        <div class="slot-time">⏱ 19:00 - 21:00</div>
+        <span class="slot-badge badge-must">🍴 MUST:夕食バイキング</span>
+      </div>
+      <div class="slot-title-row">
+        <div class="slot-title">❾ 夕食バイキング（19:00枠・海の幸＆郷土の味制覇！） ＆ プレミアム温泉入浴</div>
+        <div class="duration-pill">
+          <span class="duration-avg">一般平均: 120分</span>
+          <span class="duration-est">🎯 今回予想: 120分（19:00〜21:00、母メモ指定）</span>
+        </div>
+      </div>
+
+      
+      <div class="micro-flow-card">
+        <div class="micro-flow-header">
+          <span>🎯 一筆書き立ち回りマニュアル</span>
+          <span style="font-size:0.7rem; color:#94a3b8;">4ステップ</span>
+        </div>
+        <div class="micro-steps-list">
+          
+            <div class="micro-step-row ">
+              <span class="step-badge-num ">1</span>
+              <div class="micro-step-content">
+                19:00よりレストランにて豪華夕食バイキング（伊勢志摩の旬の地魚・郷土料理てこね寿司・揚げたて天ぷら・あおさ汁・特製デザートバイキング）を満喫
+                <span class="skip-tag must">海の幸バイキング</span>
+              </div>
+            </div>
+          
+            <div class="micro-step-row ">
+              <span class="step-badge-num ">2</span>
+              <div class="micro-step-content">
+                ※松阪牛は愛知でも食べられるためパス！伊勢志摩ならではの新鮮な地魚と海の幸を存分に堪能
+                <span class="skip-tag recommend">海の幸特化</span>
+              </div>
+            </div>
+          
+            <div class="micro-step-row skippable">
+              <span class="step-badge-num opt">3</span>
+              <div class="micro-step-content">
+                夕食後はプレミアムラウンジで無料の生ビール・地酒・ソフトドリンク・アイスを堪能
+                <span class="skip-tag recommend">おすすめ</span>
+              </div>
+            </div>
+          
+            <div class="micro-step-row ">
+              <span class="step-badge-num ">4</span>
+              <div class="micro-step-content">
+                英虞湾の夜景を望む露天風呂に入浴し、旅の1日目の疲れを芯から癒やして就寝
+                <span class="skip-tag must">必須</span>
+              </div>
+            </div>
+          
+        </div>
+      </div>
+      
+
+      
+
+      
+      <div class="details-grid">
+        
+          <div class="detail-item">
+            <div class="detail-label">夕食時間</div>
+            <div class="detail-value detail-highlight">母メモ指定の「19:00」枠をチェックイン時に確保済み</div>
+          </div>
+        
+          <div class="detail-item">
+            <div class="detail-label">バイキングの強み</div>
+            <div class="detail-value detail-highlight">松阪牛は愛知で日常的に食べられるためパス！伊勢志摩の新鮮な地魚・てこね寿司・海の幸に集中して満喫</div>
+          </div>
+        
+      </div>
+      
+
+      
+    </div>
+  
+
+    <div class="day-divider">
+      <div class="day-divider-title">📅 2日目：2026年11月3日（火・祝）</div>
+      <div class="day-divider-sub">朝イチ鳥羽水族館（前売り割・全天候） ➔ 横山展望台 ➔ 志摩地中海村 ➔ 多気VISON（本草湯・辻口スイーツ・弁才天）</div>
     </div>
     
-      <div class="slot-card must">
-        <div class="slot-header">
-          <span class="slot-time">08:45〜12:15</span>
-          <span class="slot-badge badge-must">🐬 MUST:水族館</span>
-        </div>
-        <div class="slot-title-row">
-          <div class="slot-title">鳥羽水族館（日本一の飼育種数・完全全天候型）</div>
-          <div class="duration-pill">
-            <span class="duration-avg">⏱ 平均: 240分</span>
-            <span style="color:#475569;">|</span>
-            <span class="duration-est">🎯 今回予想: 200分</span>
-          </div>
-        </div>
-
-        <div class="micro-flow-card">
-          <div class="micro-flow-header">
-            <span>🚶‍♂️ 自由導線攻略の一筆書き立ち回り</span>
-            <span style="font-size:0.72rem; color:#94a3b8;">順路ナビ＆スキップ判断</span>
-          </div>
-          <div class="micro-steps-list">
-            
-              <div class="micro-step-row ">
-                <span class="step-badge-num ">Step 1</span>
-                <div class="micro-step-content">
-                  開館直後に入館し水族館専用駐車場に駐車。
-                  <span class="skip-tag must">必須</span>
-                </div>
-              </div>
-            
-              <div class="micro-step-row ">
-                <span class="step-badge-num ">Step 2</span>
-                <div class="micro-step-content">
-                  『極地の海』へ直行し混雑前にラッコの遊泳・お食事タイムを確保。
-                  <span class="skip-tag must">必須</span>
-                </div>
-              </div>
-            
-              <div class="micro-step-row ">
-                <span class="step-badge-num ">Step 3</span>
-                <div class="micro-step-content">
-                  『人魚の海』へ進み、国内唯一のジュゴン『セレナ』をじっくり鑑賞。
-                  <span class="skip-tag must">必須</span>
-                </div>
-              </div>
-            
-              <div class="micro-step-row ">
-                <span class="step-badge-num ">Step 4</span>
-                <div class="micro-step-content">
-                  パフォーマンススタジアムのアシカショー（約15分）を観覧。
-                  <span class="skip-tag must">必須</span>
-                </div>
-              </div>
-            
-              <div class="micro-step-row ">
-                <span class="step-badge-num ">Step 5</span>
-                <div class="micro-step-content">
-                  大水槽・スナメリ・カピバラを巡回。
-                  <span class="skip-tag must">おすすめ</span>
-                </div>
-              </div>
-            
-              <div class="micro-step-row skippable">
-                <span class="step-badge-num opt">Step 6</span>
-                <div class="micro-step-content">
-                  海獣の王国（トド・アザラシ）。
-                  <span class="skip-tag can-skip">雨天時スキップ可</span>
-                </div>
-              </div>
-            
-              <div class="micro-step-row ">
-                <span class="step-badge-num ">Step 7</span>
-                <div class="micro-step-content">
-                  メインショップでお土産を購入し、12:15に出庫。
-                  <span class="skip-tag must">必須</span>
-                </div>
-              </div>
-            
-          </div>
-        </div>
-
-        
-          <div class="bonus-spots-container">
-            <div style="font-size:0.78rem; font-weight:700; color:#a855f7; margin-bottom:6px;">
-              🌟 ついで名所・寄り道スポット
-            </div>
-            
-              <div class="bonus-spot-card">
-                <div>
-                  <div class="bonus-spot-name">📍 鳥羽城跡</div>
-                  <div class="bonus-spot-desc">九鬼嘉隆の水軍城跡</div>
-                </div>
-                <a href="https://www.google.com/maps/search/?api=1&query=鳥羽城跡" target="_blank" class="bonus-spot-map">🗺️ 地図 ↗</a>
-              </div>
-            
-          </div>
-        
-
-        <a href="https://www.google.com/maps/search/?api=1&query=鳥羽水族館" target="_blank" class="map-btn-spot">📍 このスポットをGoogleマップで開く ↗</a>
+    <div class="slot-card must">
+      <div class="slot-header">
+        <div class="slot-time">⏱ 07:00 - 08:45</div>
+        <span class="slot-badge badge-must">🍴 MUST:朝食・チェックアウト</span>
       </div>
-    
-      <div class="slot-card must">
-        <div class="slot-header">
-          <span class="slot-time">12:30〜14:00</span>
-          <span class="slot-badge badge-must">🦞 MUST:海鮮昼食</span>
+      <div class="slot-title-row">
+        <div class="slot-title">朝食バイキング ＆ チェックアウト（08:45発）</div>
+        <div class="duration-pill">
+          <span class="duration-avg">一般平均: 105分</span>
+          <span class="duration-est">🎯 今回予想: 105分（07:00朝食、08:45出発）</span>
         </div>
-        <div class="slot-title-row">
-          <div class="slot-title">鳥羽駅前 昼食（海鮮食堂 漣 または 鳥羽一番街）</div>
-          <div class="duration-pill">
-            <span class="duration-avg">⏱ 平均: 90分</span>
-            <span style="color:#475569;">|</span>
-            <span class="duration-est">🎯 今回予想: 90分</span>
-          </div>
-        </div>
-
-        <div class="micro-flow-card">
-          <div class="micro-flow-header">
-            <span>🚶‍♂️ 祝日昼の待ち時間短縮立ち回り</span>
-            <span style="font-size:0.72rem; color:#94a3b8;">順路ナビ＆スキップ判断</span>
-          </div>
-          <div class="micro-steps-list">
-            
-              <div class="micro-step-row ">
-                <span class="step-badge-num ">Step 1</span>
-                <div class="micro-step-content">
-                  佐田浜第1駐車場に駐車（1時間無料）。
-                  <span class="skip-tag must">必須</span>
-                </div>
-              </div>
-            
-              <div class="micro-step-row ">
-                <span class="step-badge-num ">Step 2</span>
-                <div class="micro-step-content">
-                  『漣 鳥羽本店』へ向かい名簿記入。
-                  <span class="skip-tag must">必須</span>
-                </div>
-              </div>
-            
-              <div class="micro-step-row ">
-                <span class="step-badge-num ">Step 3</span>
-                <div class="micro-step-content">
-                  待ち時間が長い場合は『鳥羽一番街』3Fへ切り替え。
-                  <span class="skip-tag must">混雑回避判断</span>
-                </div>
-              </div>
-            
-              <div class="micro-step-row ">
-                <span class="step-badge-num ">Step 4</span>
-                <div class="micro-step-content">
-                  名物の開き大海老フライ定食を満喫。
-                  <span class="skip-tag must">必須</span>
-                </div>
-              </div>
-            
-          </div>
-        </div>
-
-        
-          <div class="bonus-spots-container">
-            <div style="font-size:0.78rem; font-weight:700; color:#a855f7; margin-bottom:6px;">
-              🌟 ついで名所・寄り道スポット
-            </div>
-            
-              <div class="bonus-spot-card">
-                <div>
-                  <div class="bonus-spot-name">📍 鳥羽一番街</div>
-                  <div class="bonus-spot-desc">名産品モール</div>
-                </div>
-                <a href="https://www.google.com/maps/search/?api=1&query=鳥羽一番街" target="_blank" class="bonus-spot-map">🗺️ 地図 ↗</a>
-              </div>
-            
-          </div>
-        
-
-        <a href="https://www.google.com/maps/search/?api=1&query=海鮮食堂+漣+鳥羽本店" target="_blank" class="map-btn-spot">📍 このスポットをGoogleマップで開く ↗</a>
       </div>
-    
-      <div class="slot-card flex">
-        <div class="slot-header">
-          <span class="slot-time">14:15〜15:45</span>
-          <span class="slot-badge badge-flex">💎 FLEX:真珠文化</span>
-        </div>
-        <div class="slot-title-row">
-          <div class="slot-title">ミキモト真珠島（世界初真珠養殖成功の地）</div>
-          <div class="duration-pill">
-            <span class="duration-avg">⏱ 平均: 90分</span>
-            <span style="color:#475569;">|</span>
-            <span class="duration-est">🎯 今回予想: 90分</span>
-          </div>
-        </div>
 
-        <div class="micro-flow-card">
-          <div class="micro-flow-header">
-            <span>🚶‍♂️ 島内の一筆書き見学順路</span>
-            <span style="font-size:0.72rem; color:#94a3b8;">順路ナビ＆スキップ判断</span>
-          </div>
-          <div class="micro-steps-list">
-            
-              <div class="micro-step-row ">
-                <span class="step-badge-num ">Step 1</span>
-                <div class="micro-step-content">
-                  屋根付き真珠橋を渡り島内へ入場。
-                  <span class="skip-tag must">必須</span>
-                </div>
-              </div>
-            
-              <div class="micro-step-row ">
-                <span class="step-badge-num ">Step 2</span>
-                <div class="micro-step-content">
-                  海女実演スタンドへ直行し素潜り実演見学（屋根付き席）。
-                  <span class="skip-tag must">必須</span>
-                </div>
-              </div>
-            
-              <div class="micro-step-row ">
-                <span class="step-badge-num ">Step 3</span>
-                <div class="micro-step-content">
-                  真珠博物館で『真珠五重塔』等のアンティークジュエリー鑑賞。
-                  <span class="skip-tag must">必須</span>
-                </div>
-              </div>
-            
-              <div class="micro-step-row ">
-                <span class="step-badge-num ">Step 4</span>
-                <div class="micro-step-content">
-                  パールプラザでお土産物色。
-                  <span class="skip-tag must">おすすめ</span>
-                </div>
-              </div>
-            
-          </div>
+      
+      <div class="micro-flow-card">
+        <div class="micro-flow-header">
+          <span>🎯 一筆書き立ち回りマニュアル</span>
+          <span style="font-size:0.7rem; color:#94a3b8;">3ステップ</span>
         </div>
-
-        
-          <div class="bonus-spots-container">
-            <div style="font-size:0.78rem; font-weight:700; color:#a855f7; margin-bottom:6px;">
-              🌟 ついで名所・寄り道スポット
+        <div class="micro-steps-list">
+          
+            <div class="micro-step-row ">
+              <span class="step-badge-num ">1</span>
+              <div class="micro-step-content">
+                07:00よりレストランにて朝食バイキング
+                <span class="skip-tag must">必須</span>
+              </div>
             </div>
-            
-              <div class="bonus-spot-card">
-                <div>
-                  <div class="bonus-spot-name">📍 御木本幸吉記念館</div>
-                  <div class="bonus-spot-desc">創業者の生涯展示</div>
-                </div>
-                <a href="https://www.google.com/maps/search/?api=1&query=御木本幸吉記念館" target="_blank" class="bonus-spot-map">🗺️ 地図 ↗</a>
+          
+            <div class="micro-step-row ">
+              <span class="step-badge-num ">2</span>
+              <div class="micro-step-content">
+                <strong>【前売り割】前日までにコンビニ端末（セブン/ローソン）でチケット購入（2,800円 ➜ 2,600円×4人、合計800円お得！）</strong>
+                <span class="skip-tag must">前売800円引</span>
               </div>
-            
-          </div>
-        
-
-        <a href="https://www.google.com/maps/search/?api=1&query=ミキモト真珠島" target="_blank" class="map-btn-spot">📍 このスポットをGoogleマップで開く ↗</a>
-      </div>
-    
-      <div class="slot-card must">
-        <div class="slot-header">
-          <span class="slot-time">16:00〜18:30</span>
-          <span class="slot-badge badge-must">🚗 MUST:帰路</span>
-        </div>
-        <div class="slot-title-row">
-          <div class="slot-title">鳥羽 出発 ➔ 亀山PA・御在所SA ➔ 高蔵寺駅 帰着</div>
-          <div class="duration-pill">
-            <span class="duration-avg">⏱ 平均: 180分</span>
-            <span style="color:#475569;">|</span>
-            <span class="duration-est">🎯 今回予想: 150分</span>
-          </div>
-        </div>
-
-        <div class="micro-flow-card">
-          <div class="micro-flow-header">
-            <span>🚶‍♂️ 祝日上り渋滞回避ルート</span>
-            <span style="font-size:0.72rem; color:#94a3b8;">順路ナビ＆スキップ判断</span>
-          </div>
-          <div class="micro-steps-list">
-            
-              <div class="micro-step-row ">
-                <span class="step-badge-num ">Step 1</span>
-                <div class="micro-step-content">
-                  鳥羽を出発し伊勢道へ進入。
-                  <span class="skip-tag must">必須</span>
-                </div>
-              </div>
-            
-              <div class="micro-step-row ">
-                <span class="step-badge-num ">Step 2</span>
-                <div class="micro-step-content">
-                  亀山PAでトイレ休憩＆渋滞情報確認。
-                  <span class="skip-tag must">必須</span>
-                </div>
-              </div>
-            
-              <div class="micro-step-row ">
-                <span class="step-badge-num ">Step 3</span>
-                <div class="micro-step-content">
-                  渋滞が激しい場合は新名神・鈴鹿PAルートへ迂回判断。
-                  <span class="skip-tag must">渋滞回避判断</span>
-                </div>
-              </div>
-            
-              <div class="micro-step-row ">
-                <span class="step-badge-num ">Step 4</span>
-                <div class="micro-step-content">
-                  御在所SAで夕食休憩後、春日井ICを下りて高蔵寺駅帰着。
-                  <span class="skip-tag must">必須</span>
-                </div>
-              </div>
-            
-          </div>
-        </div>
-
-        
-          <div class="bonus-spots-container">
-            <div style="font-size:0.78rem; font-weight:700; color:#a855f7; margin-bottom:6px;">
-              🌟 ついで名所・寄り道スポット
             </div>
-            
-              <div class="bonus-spot-card">
-                <div>
-                  <div class="bonus-spot-name">📍 亀山PA 上り</div>
-                  <div class="bonus-spot-desc">名物みそ焼きうどん</div>
-                </div>
-                <a href="https://www.google.com/maps/search/?api=1&query=亀山PA+上り" target="_blank" class="bonus-spot-map">🗺️ 地図 ↗</a>
+          
+            <div class="micro-step-row ">
+              <span class="step-badge-num ">3</span>
+              <div class="micro-step-content">
+                荷物を積み込み、<strong>08:45にチェックアウト完了・出発</strong>（9時前には出発）
+                <span class="skip-tag must">08:45発</span>
               </div>
-            
+            </div>
+          
+        </div>
+      </div>
+      
+
+      
+
+      
+      <div class="details-grid">
+        
+          <div class="detail-item">
+            <div class="detail-label">水族館前売り割引</div>
+            <div class="detail-value detail-highlight">コンビニ端末購入で2,800円 ➜ 2,600円×4人（800円安くなる）</div>
           </div>
         
-
-        <a href="https://www.google.com/maps/search/?api=1&query=高蔵寺駅" target="_blank" class="map-btn-spot">📍 このスポットをGoogleマップで開く ↗</a>
+          <div class="detail-item">
+            <div class="detail-label">出発時刻</div>
+            <div class="detail-value detail-highlight">08:45チェックアウト・出発（母メモ：9時前には出発）</div>
+          </div>
+        
       </div>
-    
+      
+
+      
+    </div>
+  
+    <div class="slot-card must">
+      <div class="slot-header">
+        <div class="slot-time">⏱ 08:45 - 09:20</div>
+        <span class="slot-badge badge-must">🔴 MUST:移動</span>
+      </div>
+      <div class="slot-title-row">
+        <div class="slot-title">宿 ➔ 鳥羽水族館 移動</div>
+        <div class="duration-pill">
+          <span class="duration-avg">一般平均: 35分</span>
+          <span class="duration-est">🎯 今回予想: 35分（国道167号で約35分）</span>
+        </div>
+      </div>
+
+      
+      <div class="micro-flow-card">
+        <div class="micro-flow-header">
+          <span>🎯 一筆書き立ち回りマニュアル</span>
+          <span style="font-size:0.7rem; color:#94a3b8;">2ステップ</span>
+        </div>
+        <div class="micro-steps-list">
+          
+            <div class="micro-step-row ">
+              <span class="step-badge-num ">1</span>
+              <div class="micro-step-content">
+                国道167号を北上し、鳥羽市街へ向かう（約35分）
+                <span class="skip-tag must">必須</span>
+              </div>
+            </div>
+          
+            <div class="micro-step-row ">
+              <span class="step-badge-num ">2</span>
+              <div class="micro-step-content">
+                09:20に鳥羽水族館駐車場（普通車800円）へ入庫し、開園列へスタンバイ
+                <span class="skip-tag must">必須</span>
+              </div>
+            </div>
+          
+        </div>
+      </div>
+      
+
+      
+
+      
+      <div class="details-grid">
+        
+          <div class="detail-item">
+            <div class="detail-label">所要時間</div>
+            <div class="detail-value ">国道167号で約35分（母メモ記載通り）</div>
+          </div>
+        
+      </div>
+      
+
+      
+    </div>
+  
+    <div class="slot-card must">
+      <div class="slot-header">
+        <div class="slot-time">⏱ 09:30 - 11:30</div>
+        <span class="slot-badge badge-must">🐬 MUST:水族館観光（全天候）</span>
+      </div>
+      <div class="slot-title-row">
+        <div class="slot-title">❶ 鳥羽水族館 観光（開園09:30入園・雨天無敵・2時間満喫）</div>
+        <div class="duration-pill">
+          <span class="duration-avg">一般平均: 120分</span>
+          <span class="duration-est">🎯 今回予想: 120分（09:30〜11:30、2時間予定）</span>
+        </div>
+      </div>
+
+      
+      <div class="micro-flow-card">
+        <div class="micro-flow-header">
+          <span>🎯 一筆書き立ち回りマニュアル</span>
+          <span style="font-size:0.7rem; color:#94a3b8;">4ステップ</span>
+        </div>
+        <div class="micro-steps-list">
+          
+            <div class="micro-step-row ">
+              <span class="step-badge-num ">1</span>
+              <div class="micro-step-content">
+                <strong>09:30開園とともにスムーズに入園</strong>（完全屋内のため雨天でも快適）
+                <span class="skip-tag must">開園入園</span>
+              </div>
+            </div>
+          
+            <div class="micro-step-row ">
+              <span class="step-badge-num ">2</span>
+              <div class="micro-step-content">
+                日本唯一のジュゴン「セレナ」、大人気ラッコの「メイ」「キラ」のお食事タイムを鑑賞
+                <span class="skip-tag must">ジュゴン・ラッコ</span>
+              </div>
+            </div>
+          
+            <div class="micro-step-row ">
+              <span class="step-badge-num ">3</span>
+              <div class="micro-step-content">
+                アシカショーやセイウチふれあいタイム、海獣王国を満喫
+                <span class="skip-tag must">必須</span>
+              </div>
+            </div>
+          
+            <div class="micro-step-row ">
+              <span class="step-badge-num ">4</span>
+              <div class="micro-step-content">
+                11:30に水族館を出発し、国道167号で南下
+                <span class="skip-tag must">必須</span>
+              </div>
+            </div>
+          
+        </div>
+      </div>
+      
+
+      
+      <div class="bonus-spots-box">
+        <div class="bonus-spots-header">✨ ついで名所・寄り道スポット</div>
+        
+          <div class="bonus-spot-item">
+            <div class="bonus-spot-info">
+              <div class="bonus-spot-name">ミキモト真珠島（水族館隣接）</div>
+              <div class="bonus-spot-desc">世界で初めて真珠養殖に成功した島。海女の実演ダイビングと真珠博物館。</div>
+            </div>
+            <a href="https://www.google.com/maps/search/?api=1&query=ミキモト真珠島" target="_blank" rel="noopener noreferrer" class="bonus-spot-link">MAP</a>
+          </div>
+        
+          <div class="bonus-spot-item">
+            <div class="bonus-spot-info">
+              <div class="bonus-spot-name">鳥羽一番街</div>
+              <div class="bonus-spot-desc">鳥羽駅直結。伊勢志摩の銘菓、海産物、伊勢海老・あわび・松阪牛が揃う名店街。</div>
+            </div>
+            <a href="https://www.google.com/maps/search/?api=1&query=鳥羽一番街" target="_blank" rel="noopener noreferrer" class="bonus-spot-link">MAP</a>
+          </div>
+        
+      </div>
+      
+
+      
+      <div class="details-grid">
+        
+          <div class="detail-item">
+            <div class="detail-label">見どころ</div>
+            <div class="detail-value detail-highlight">飼育種類数日本一（約1200種）。ジュゴン、ラッコ、スナメリ、カピバラ</div>
+          </div>
+        
+          <div class="detail-item">
+            <div class="detail-label">雨天無敵</div>
+            <div class="detail-value ">完全屋内施設のため、荒天・風雨時でも傘不要で100%楽しめます</div>
+          </div>
+        
+      </div>
+      
+
+      
+        <a href="https://www.google.com/maps/search/?api=1&query=鳥羽水族館" target="_blank" rel="noopener noreferrer" class="map-btn-spot">
+          📍 鳥羽水族館の場所をGoogleマップで確認
+        </a>
+      
+    </div>
+  
+    <div class="slot-card must">
+      <div class="slot-header">
+        <div class="slot-time">⏱ 11:30 - 12:30</div>
+        <span class="slot-badge badge-must">🔴 MUST:移動・昼食</span>
+      </div>
+      <div class="slot-title-row">
+        <div class="slot-title">鳥羽 ➔ 志摩（横山展望台・カフェ）へ移動</div>
+        <div class="duration-pill">
+          <span class="duration-avg">一般平均: 45分</span>
+          <span class="duration-est">🎯 今回予想: 45分（国道167号南下）</span>
+        </div>
+      </div>
+
+      
+      <div class="micro-flow-card">
+        <div class="micro-flow-header">
+          <span>🎯 一筆書き立ち回りマニュアル</span>
+          <span style="font-size:0.7rem; color:#94a3b8;">2ステップ</span>
+        </div>
+        <div class="micro-steps-list">
+          
+            <div class="micro-step-row ">
+              <span class="step-badge-num ">1</span>
+              <div class="micro-step-content">
+                水族館を出発し、国道167号を南下して志摩方面へ向かう
+                <span class="skip-tag must">必須</span>
+              </div>
+            </div>
+          
+            <div class="micro-step-row ">
+              <span class="step-badge-num ">2</span>
+              <div class="micro-step-content">
+                横山展望台の天空カフェテラスMirador Shimaへ立ち寄り、屋根付きテラスで絶景と軽食
+                <span class="skip-tag must">必須</span>
+              </div>
+            </div>
+          
+        </div>
+      </div>
+      
+
+      
+
+      
+
+      
+    </div>
+  
+    <div class="slot-card must">
+      <div class="slot-header">
+        <div class="slot-time">⏱ 12:30 - 14:00</div>
+        <span class="slot-badge badge-must">☕ MUST:絶景カフェ</span>
+      </div>
+      <div class="slot-title-row">
+        <div class="slot-title">❷ 横山展望台（天空カフェテラス Mirador Shima）</div>
+        <div class="duration-pill">
+          <span class="duration-avg">一般平均: 60分</span>
+          <span class="duration-est">🎯 今回予想: 60分（12:30〜13:30）</span>
+        </div>
+      </div>
+
+      
+      <div class="micro-flow-card">
+        <div class="micro-flow-header">
+          <span>🎯 一筆書き立ち回りマニュアル</span>
+          <span style="font-size:0.7rem; color:#94a3b8;">2ステップ</span>
+        </div>
+        <div class="micro-steps-list">
+          
+            <div class="micro-step-row ">
+              <span class="step-badge-num ">1</span>
+              <div class="micro-step-content">
+                標高140mの展望デッキから雨上がりの幻想的な英虞湾パノラマを鑑賞
+                <span class="skip-tag must">必須</span>
+              </div>
+            </div>
+          
+            <div class="micro-step-row ">
+              <span class="step-badge-num ">2</span>
+              <div class="micro-step-content">
+                カフェにてスコーンや伊勢茶スイーツでひと息つき、14:00に出発
+                <span class="skip-tag must">必須</span>
+              </div>
+            </div>
+          
+        </div>
+      </div>
+      
+
+      
+
+      
+      <div class="details-grid">
+        
+          <div class="detail-item">
+            <div class="detail-label">施設スペック</div>
+            <div class="detail-value ">入場無料・駐車場無料。カフェ店内から景色を眺められます</div>
+          </div>
+        
+      </div>
+      
+
+      
+    </div>
+  
+    <div class="slot-card must">
+      <div class="slot-header">
+        <div class="slot-time">⏱ 14:15 - 15:45</div>
+        <span class="slot-badge badge-must">⛵ MUST:異国情緒散策</span>
+      </div>
+      <div class="slot-title-row">
+        <div class="slot-title">❸ 志摩地中海村（入村・雨天写真スポット散策）</div>
+        <div class="duration-pill">
+          <span class="duration-avg">一般平均: 90分</span>
+          <span class="duration-est">🎯 今回予想: 90分（14:15〜15:45）</span>
+        </div>
+      </div>
+
+      
+      <div class="micro-flow-card">
+        <div class="micro-flow-header">
+          <span>🎯 一筆書き立ち回りマニュアル</span>
+          <span style="font-size:0.7rem; color:#94a3b8;">3ステップ</span>
+        </div>
+        <div class="micro-steps-list">
+          
+            <div class="micro-step-row ">
+              <span class="step-badge-num ">1</span>
+              <div class="micro-step-content">
+                入村料700円×4人（内500円×4が金券として利用可能）で入村
+                <span class="skip-tag must">必須</span>
+              </div>
+            </div>
+          
+            <div class="micro-step-row ">
+              <span class="step-badge-num ">2</span>
+              <div class="micro-step-content">
+                モザイクタイルや地中海建築のカフェ、ショップで雨天でも映える記念写真撮影
+                <span class="skip-tag must">必須</span>
+              </div>
+            </div>
+          
+            <div class="micro-step-row ">
+              <span class="step-badge-num ">3</span>
+              <div class="micro-step-content">
+                15:45に出発し、高速道路で多気VISONへ向かう
+                <span class="skip-tag must">必須</span>
+              </div>
+            </div>
+          
+        </div>
+      </div>
+      
+
+      
+
+      
+
+      
+    </div>
+  
+    <div class="slot-card must">
+      <div class="slot-header">
+        <div class="slot-time">⏱ 15:45 - 17:00</div>
+        <span class="slot-badge badge-must">🔴 MUST:移動</span>
+      </div>
+      <div class="slot-title-row">
+        <div class="slot-title">志摩地中海村 ➔ 多気VISON 移動</div>
+        <div class="duration-pill">
+          <span class="duration-avg">一般平均: 75分</span>
+          <span class="duration-est">🎯 今回予想: 75分（高速で1時間〜1時間15分）</span>
+        </div>
+      </div>
+
+      
+      <div class="micro-flow-card">
+        <div class="micro-flow-header">
+          <span>🎯 一筆書き立ち回りマニュアル</span>
+          <span style="font-size:0.7rem; color:#94a3b8;">1ステップ</span>
+        </div>
+        <div class="micro-steps-list">
+          
+            <div class="micro-step-row ">
+              <span class="step-badge-num ">1</span>
+              <div class="micro-step-content">
+                高速道路経由で多気VISONへ移動（多気スマートIC直結）
+                <span class="skip-tag must">必須</span>
+              </div>
+            </div>
+          
+        </div>
+      </div>
+      
+
+      
+
+      
+
+      
+    </div>
+  
+    <div class="slot-card must">
+      <div class="slot-header">
+        <div class="slot-time">⏱ 17:00 - 19:00</div>
+        <span class="slot-badge badge-must">🦐 MUST:温浴・スイーツ・夕食</span>
+      </div>
+      <div class="slot-title-row">
+        <div class="slot-title">❹ 多気VISON（本草湯薬草風呂 ＆ 辻口スイーツ ＆ 弁才天フルーツ大福 ＆ 夕食）</div>
+        <div class="duration-pill">
+          <span class="duration-avg">一般平均: 120分</span>
+          <span class="duration-est">🎯 今回予想: 120分（17:00〜19:00）</span>
+        </div>
+      </div>
+
+      
+      <div class="micro-flow-card">
+        <div class="micro-flow-header">
+          <span>🎯 一筆書き立ち回りマニュアル</span>
+          <span style="font-size:0.7rem; color:#94a3b8;">4ステップ</span>
+        </div>
+        <div class="micro-steps-list">
+          
+            <div class="micro-step-row ">
+              <span class="step-badge-num ">1</span>
+              <div class="micro-step-content">
+                <strong>温浴施設『本草湯』</strong>で薬草湯入浴（イオンカード提示で100円引・タオル無料）
+                <span class="skip-tag must">本草湯</span>
+              </div>
+            </div>
+          
+            <div class="micro-step-row ">
+              <span class="step-badge-num ">2</span>
+              <div class="micro-step-content">
+                <strong>『スウィーツ ヴィレッジ コンフィチュール アッシュ』</strong>で辻口博啓パティスリーの極上ケーキや焼き菓子お土産を購入
+                <span class="skip-tag must">辻口スイーツ</span>
+              </div>
+            </div>
+          
+            <div class="micro-step-row ">
+              <span class="step-badge-num ">3</span>
+              <div class="micro-step-content">
+                <strong>覚王山フルーツ大福 弁才天</strong>で大福テイクアウト購入
+                <span class="skip-tag must">弁才天</span>
+              </div>
+            </div>
+          
+            <div class="micro-step-row ">
+              <span class="step-badge-num ">4</span>
+              <div class="micro-step-content">
+                サンセバスチャン通りや和ヴィソンの名店で夕食・おみやげ散策
+                <span class="skip-tag must">必須</span>
+              </div>
+            </div>
+          
+        </div>
+      </div>
+      
+
+      
+
+      
+      <div class="details-grid">
+        
+          <div class="detail-item">
+            <div class="detail-label">温浴・スイーツ</div>
+            <div class="detail-value detail-highlight">本草湯（イオンカード提示割） ＆ コンフィチュールアッシュ ＆ 弁才天フルーツ大福</div>
+          </div>
+        
+      </div>
+      
+
+      
+    </div>
+  
+    <div class="slot-card must">
+      <div class="slot-header">
+        <div class="slot-time">⏱ 19:00 - 20:45</div>
+        <span class="slot-badge badge-must">🏁 MUST:帰路</span>
+      </div>
+      <div class="slot-title-row">
+        <div class="slot-title">❺ 多気VISON ➔ 高蔵寺駅（帰着）</div>
+        <div class="duration-pill">
+          <span class="duration-avg">一般平均: 105分</span>
+          <span class="duration-est">🎯 今回予想: 105分（約1時間45分）</span>
+        </div>
+      </div>
+
+      
+      <div class="micro-flow-card">
+        <div class="micro-flow-header">
+          <span>🎯 一筆書き立ち回りマニュアル</span>
+          <span style="font-size:0.7rem; color:#94a3b8;">1ステップ</span>
+        </div>
+        <div class="micro-steps-list">
+          
+            <div class="micro-step-row ">
+              <span class="step-badge-num ">1</span>
+              <div class="micro-step-content">
+                多気スマートICから伊勢道・東名阪経由で高蔵寺駅へ20:45帰着
+                <span class="skip-tag must">必須</span>
+              </div>
+            </div>
+          
+        </div>
+      </div>
+      
+
+      
+
+      
+
+      
+    </div>
+  
 
   </div>
 </body>
