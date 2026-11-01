@@ -1908,25 +1908,74 @@ header {
           const timeDisplay = end ? (start + '〜' + end) : start;
           const f = item.factors;
 
-          // Micro Stepper (一筆書き立ち回り)
+                    // Micro Stepper (立ち回り・ルート手順) - 統一見出し＆目的連動
           let microFlowHtml = '';
           if (item.tacticsSteps && item.tacticsSteps.length > 0) {
+            // スロット種別に応じたスマートアイコンとサブタイトルの自動決定（統一規律）
+            let blockIcon = '🚶‍♂️';
+            let defaultActionLabel = '推奨立ち回り手順（一筆書き）';
+            let defaultSubtitle = '最短順路・所要時間・スキップ判断';
+
+            if (item.badgeText && (item.badgeText.includes('移動') || item.badgeText.includes('直行'))) {
+              blockIcon = '🚗';
+              defaultActionLabel = '推奨走行ルート＆立ち回り';
+              defaultSubtitle = '高速・有料道路・ETC・休憩判断';
+            } else if (item.badgeText && item.badgeText.includes('帰着')) {
+              blockIcon = '🏁';
+              defaultActionLabel = '推奨帰着ルート＆立ち回り';
+              defaultSubtitle = '高速道合流・休憩判断・無事帰着';
+            } else if (item.type === 'food') {
+              blockIcon = '🍴';
+              defaultActionLabel = '推奨食事動線＆立ち回り';
+              defaultSubtitle = '混雑回避・オーダー順・胃袋温存';
+            } else if (item.type === 'stay') {
+              blockIcon = '🏨';
+              defaultActionLabel = '推奨チェックイン＆館内動線';
+              defaultSubtitle = '割引適用・夕食時間確保・入浴手順';
+            } else if (item.badgeText && item.badgeText.includes('クルーズ')) {
+              blockIcon = '🚢';
+              defaultActionLabel = '推奨乗船手順＆デッキ動線';
+              defaultSubtitle = 'WEB割・出航5分前集合・絶景特化';
+            } else if (item.badgeText && (item.badgeText.includes('参拝') || item.badgeText.includes('禊'))) {
+              blockIcon = '⛩️';
+              defaultActionLabel = '推奨参拝手順（一筆書き）';
+              defaultSubtitle = '母メモ指定順路・手水・スキップ判断';
+            } else if (item.badgeText && item.badgeText.includes('写真')) {
+              blockIcon = '📸';
+              defaultActionLabel = '推奨撮影動線＆即出発手順';
+              defaultSubtitle = '無料P直結・サクッと5分・即移動';
+            } else if (item.badgeText && item.badgeText.includes('絶景')) {
+              blockIcon = '🌅';
+              defaultActionLabel = '推奨展望動線＆鑑賞手順';
+              defaultSubtitle = '日没時刻・夕日星空・足元配慮';
+            }
+
+            const rawTitle = item.tacticsFlowTitle || defaultActionLabel;
+            const cleanTitle = rawTitle.replace(/^[🚗🚶‍♂️🍴🏨🚢⛩️📸🌅🏁]s*/, '');
+            const flowSub = item.tacticsFlowSubtitle || defaultSubtitle;
+
             microFlowHtml = `
               <div class="micro-flow-card">
                 <div class="micro-flow-header">
-                  <span>🚶‍♂️ ${item.tacticsFlowTitle || 'スポット内の一筆書き立ち回り（推奨巡回ルート）'}</span>
-                  <span class="micro-flow-subtitle">右回り・順路ナビ＆スキップ判断</span>
+                  <span>${blockIcon} ${cleanTitle}</span>
+                  <span class="micro-flow-subtitle">${flowSub}</span>
                 </div>
                 <div class="micro-steps-list">
-                  ${item.tacticsSteps.map(s => `
+                  ${item.tacticsSteps.map(s => {
+                    let cleanTag = s.tag || (s.isSkip ? 'スキップ可' : '必須');
+                    if (!cleanTag.startsWith('【') && !cleanTag.endsWith('】')) {
+                      cleanTag = '【' + cleanTag + '】';
+                    }
+                    return `
                     <div class="micro-step-row ${s.isSkip ? 'skippable' : ''}">
                       <span class="step-badge-num ${s.isSkip ? 'opt' : ''}">Step ${s.step}</span>
                       <div class="micro-step-content">
                         ${s.text}
-                        <span class="skip-tag ${s.isSkip ? 'can-skip' : 'must'}">${s.tag}</span>
+                        <span class="skip-tag ${s.isSkip ? 'can-skip' : 'must'}">${cleanTag}</span>
                       </div>
                     </div>
-                  `).join('')}
+                  `;
+                  }).join('')}
                 </div>
               </div>
             `;
