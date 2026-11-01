@@ -24,7 +24,7 @@
       background-color: var(--bg);
       color: var(--text);
       line-height: 1.5;
-      padding-bottom: 60px;
+      padding-bottom: 70px;
     }
     header {
       background: #090d16;
@@ -44,7 +44,7 @@
       font-weight: 700;
       color: var(--primary);
     }
-    .badge-date {
+    .badge-origin {
       font-size: 0.75rem;
       background: #1e293b;
       color: var(--accent);
@@ -116,7 +116,7 @@
       border: 1px solid var(--border);
       border-radius: 8px;
       padding: 8px 12px;
-      margin-bottom: 16px;
+      margin-bottom: 14px;
       font-size: 0.82rem;
       flex-wrap: wrap;
     }
@@ -135,6 +135,30 @@
       color: #000;
       border-color: var(--accent);
       font-weight: 700;
+    }
+
+    /* Day Filter Pills */
+    .day-filter-bar {
+      display: flex;
+      gap: 8px;
+      margin-bottom: 16px;
+    }
+    .day-pill {
+      flex: 1;
+      background: var(--card-bg);
+      border: 1px solid var(--border);
+      color: var(--text-muted);
+      padding: 8px 12px;
+      border-radius: 8px;
+      font-size: 0.82rem;
+      font-weight: 700;
+      cursor: pointer;
+      text-align: center;
+    }
+    .day-pill.active {
+      background: #1e3a8a;
+      color: #93c5fd;
+      border-color: #60a5fa;
     }
 
     /* Summary Card */
@@ -162,17 +186,48 @@
     .badge-2 { background: rgba(56, 189, 248, 0.2); color: #7dd3fc; border: 1px solid #38bdf8; }
     .badge-3 { background: rgba(245, 158, 11, 0.2); color: #fbbf24; border: 1px solid #f59e0b; }
     .summary-desc { font-size: 0.82rem; color: var(--text-muted); margin-bottom: 10px; }
+    
+    .route-links {
+      display: flex;
+      gap: 8px;
+      flex-wrap: wrap;
+    }
     .route-link-btn {
       display: inline-flex;
       align-items: center;
-      gap: 6px;
+      gap: 5px;
       background: #0284c7;
       color: #ffffff;
       text-decoration: none;
-      padding: 6px 12px;
+      padding: 6px 10px;
       border-radius: 6px;
-      font-size: 0.8rem;
+      font-size: 0.78rem;
       font-weight: 600;
+    }
+    .route-link-btn.sub {
+      background: #334155;
+      color: #e2e8f0;
+    }
+
+    /* Day Divider */
+    .day-divider {
+      background: linear-gradient(90deg, #1e3a8a, #0f172a);
+      border-left: 4px solid var(--primary);
+      border-radius: 8px;
+      padding: 10px 14px;
+      margin: 20px 0 12px 0;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    .day-divider-title {
+      font-size: 0.95rem;
+      font-weight: 700;
+      color: #ffffff;
+    }
+    .day-divider-sub {
+      font-size: 0.75rem;
+      color: #93c5fd;
     }
 
     /* Timeline Slot Card */
@@ -298,7 +353,7 @@
     <div class="container" style="padding:0;">
       <div class="header-top">
         <div class="title">🗺️ 三重家族旅行 リアルタイムナビ</div>
-        <div class="badge-date">11/02(月)〜11/03(火)</div>
+        <div class="badge-origin">起点：高蔵寺駅</div>
       </div>
     </div>
   </header>
@@ -309,14 +364,14 @@
     <div class="weather-card">
       <div class="weather-icon">☁️➔🌧️</div>
       <div class="weather-body">
-        <strong>天候予測: 最初は曇り、午後から雨予報</strong><br>
-        午前中の曇天のうちに外観・参拝（内宮、外宮、夫婦岩）を前倒し攻略。雨が本降りになる午後は屋内散策（おかげ横丁・鳥羽水族館・温泉宿）へ即時シフト。
+        <strong>天候予測: 1日目は午前曇り・午後から雨 / 2日目は回復基調</strong><br>
+        1日目午前中のうちに外観・参拝を前倒し攻略。雨が本降りになる午後は屋内散策（おかげ横丁・鳥羽水族館・温泉宿）へ即時シフト。
       </div>
     </div>
 
     <!-- Departure Offset Pill Selector -->
     <div class="controls-bar">
-      <span>🚗 出発時刻（全体時刻が自動スライド）:</span>
+      <span>🚗 高蔵寺駅 出発時刻:</span>
       <div class="time-pills">
         <button class="time-pill" onclick="setDepartureOffset(-60)">6:00発</button>
         <button class="time-pill active" onclick="setDepartureOffset(0)">7:00発（標準）</button>
@@ -344,107 +399,207 @@
       <!-- Injected by JS -->
     </div>
 
-    <!-- Timeline Container (Fully Expanded ①〜⑦) -->
+    <!-- Day Filter Pills -->
+    <div class="day-filter-bar">
+      <button class="day-pill active" id="day-all-btn" onclick="filterDay('all')">全日程（1日目＆2日目）</button>
+      <button class="day-pill" id="day-1-btn" onclick="filterDay('1')">📅 1日目のみ</button>
+      <button class="day-pill" id="day-2-btn" onclick="filterDay('2')">📅 2日目のみ</button>
+    </div>
+
+    <!-- Timeline Container (Separated into Day 1 & Day 2) -->
     <div class="timeline" id="timeline-container">
       <!-- Injected by JS -->
     </div>
 
     <!-- Bottom Actions -->
     <div class="bottom-actions">
-      <button class="share-btn" onclick="copyCurrentPlan()">📋 このプラン（①〜⑦全文）をコピーしてLINE共有</button>
+      <button class="share-btn" onclick="copyCurrentPlan()">📋 このプラン（1日目・2日目全文）をコピーしてLINE共有</button>
     </div>
 
   </div>
 
   <script>
     /**
-     * 3大プラン完全定義（①〜⑦全要素を内包した完全展開構造）
+     * 1日目・2日目の区切りを完全分離した宣言型データ
+     * 起点：高蔵寺駅（愛知県春日井市）
      */
     const TRIP_DATA = {
       baseOffsetMinutes: 0,
       activePlan: '1',
+      activeDayFilter: 'all',
       plans: {
         '1': {
           name: "プラン1：内宮直行ルート（混雑前・雨前先攻）",
           badge: "早朝本命",
           badgeClass: "badge-1",
-          desc: "朝7時（または6時）に出発し、渋滞と午後雨の前に内宮・おかげ横丁を最速攻略するメイン戦略。",
-          overallMap: "https://www.google.com/maps/dir/?api=1&origin=愛知県&destination=鳥羽駅&waypoints=伊勢神宮内宮",
-          items: [
+          desc: "高蔵寺駅を朝7時（または6時）に出発。渋滞と午後雨の前に内宮・おかげ横丁を最速攻略するメイン戦略。",
+          overallMap: "https://www.google.com/maps/dir/?api=1&origin=高蔵寺駅&destination=高蔵寺駅&waypoints=伊勢神宮内宮%7C鳥羽温泉郷%7C鳥羽水族館%7C松阪牛和田金",
+          day1Map: "https://www.google.com/maps/dir/?api=1&origin=高蔵寺駅&destination=鳥羽温泉郷&waypoints=伊勢神宮内宮",
+          day2Map: "https://www.google.com/maps/dir/?api=1&origin=鳥羽温泉郷&destination=高蔵寺駅&waypoints=鳥羽水族館%7C松阪駅",
+          days: [
             {
-              baseStart: "07:00", baseEnd: "08:45",
-              type: "must", badgeClass: "badge-must", badgeText: "🔴 MUST:移動",
-              title: "実家出発 ➔ 伊勢神宮 内宮直行",
-              factors: {
-                overview: "滞在目的: 渋滞回避＆午前中の曇天のうちに内宮・おかげ横丁を先攻攻略<br>・ 一般平均滞在時間: 105分 / 想定滞在時間: 105分",
-                tactics: "7:00発（または6:00前倒し発）で伊勢道直行。直近A駐車場を目指すが、宇治浦田で列があれば即B駐車場（河川敷）へ回送。<br>・ 満車時の切替: 宇治浦田が完全に詰まっている場合は、即座にプラン3（夫婦岩・二見浦）へ迂回。",
-                mustTry: "朝一番の静寂な東名阪〜伊勢道クリア走行、雨天前の神域直行",
-                plusOne: "安濃SA（津ぎょうざ・伊勢茶ソフト・手洗い休憩）",
-                tips: "正宮参拝の前に宇治橋前ロータリーで同乗者・荷物を降ろし、運転手のみB駐車場へ回送すると家族の歩行負担が半減。",
-                transit: "車移動（東名阪道〜伊勢道経由、約110km）。<br>・ 駐車場判定: 市営A駐車場【判定: △（混雑）】/ 市営B駐車場【判定: ◎（収容1500台）】/ 二見迂回【判定: 迂回◎】",
-                skipLimit: "09:00までに内宮駐車場へ入れない場合は即座にプラン3（夫婦岩）へ舵を切る",
-                mapUrl: "https://www.google.com/maps/search/?api=1&query=伊勢市営宇治駐車場"
-              }
+              dayNum: 1,
+              dateStr: "11月2日（月・平日）",
+              subTitle: "高蔵寺発 ➔ 伊勢内宮・おかげ横丁 ➔ 鳥羽・志摩宿泊",
+              items: [
+                {
+                  baseStart: "07:00", baseEnd: "08:45",
+                  type: "must", badgeClass: "badge-must", badgeText: "🔴 MUST:移動",
+                  title: "高蔵寺駅 出発 ➔ 伊勢神宮 内宮直行",
+                  factors: {
+                    overview: "滞在目的: 高蔵寺駅発。東名阪道〜伊勢道経由で渋滞と雨の前に内宮へ直行<br>・ 所要時間: 約105分（距離約135km）",
+                    tactics: "春日井ICまたは松川戸ICから名古屋第二環状〜東名阪道へ。内宮直近A駐車場を目指すが、宇治浦田で混雑していれば即B駐車場（河川敷）へ回送。",
+                    mustTry: "早朝の東名阪クリア走行、雨が降る前の神域直撃",
+                    plusOne: "安濃SA（手洗い休憩・津ぎょうざ）",
+                    tips: "正宮参拝の前に宇治橋前ロータリーで同乗者・荷物を降ろし、運転手のみB駐車場へ回送すると家族の歩行負担が半減。",
+                    transit: "車移動（東名阪道〜伊勢道直通）。駐車場判定: 市営A駐車場【判定: △（混雑）】/ 市営B駐車場【判定: ◎（収容1500台）】",
+                    skipLimit: "09:00までに内宮駐車場へ入れない場合は即座にプラン3（夫婦岩迂回）へ舵を切る",
+                    mapUrl: "https://www.google.com/maps/search/?api=1&query=伊勢市営宇治駐車場"
+                  }
+                },
+                {
+                  baseStart: "08:45", baseEnd: "10:45",
+                  type: "must", badgeClass: "badge-must", badgeText: "⛩️ MUST:参拝",
+                  title: "伊勢神宮 内宮（皇大神宮）参拝",
+                  factors: {
+                    overview: "滞在目的: 天照大御神への正宮参拝、五十鈴川御手洗場での清め、神楽殿拝観<br>・ 一般平均滞在時間: 120分 / 想定滞在時間: 90分",
+                    tactics: "午後からの雨予報に備え、雨脚が強まる前の午前中に屋外参拝を完了。宇治橋大鳥居で一礼し、右側通行で神域へ進む。",
+                    mustTry: "五十鈴川御手洗場の清流での手水、正宮（皇大神宮）の唯一神明造り拝観と厳かな空気感",
+                    plusOne: "風日祈宮、宇治橋大鳥居の擬宝珠（万病息災・安全祈願）",
+                    tips: "玉砂利が続くため歩きやすい靴を推奨。雨雲レーダーで降雨開始時刻をリアルタイム確認。",
+                    transit: "境内徒歩移動（約1.5km平坦路）。車は市営駐車場に留め置き。",
+                    skipLimit: "11:00までに参拝を終えておかげ横丁へ移動（昼食混雑回避のため）",
+                    mapUrl: "https://www.google.com/maps/search/?api=1&query=伊勢神宮+内宮"
+                  }
+                },
+                {
+                  baseStart: "10:45", baseEnd: "13:30",
+                  type: "flex", badgeClass: "badge-flex", badgeText: "🍽️ FLEX:昼食・散策",
+                  title: "おはらい町・おかげ横丁（昼食＆食べ歩き）",
+                  factors: {
+                    overview: "滞在目的: 昼食（伊勢うどん・てこね寿司）＆名物食べ歩き、お土産調達<br>・ 一般平均滞在時間: 150分 / 想定滞在時間: 120分",
+                    tactics: "11時前の開店直撃で赤福本店（座敷イートイン）やふくすけを確保。正午の激混み行列を完全回避。雨が降り始めてもアーケード・各店舗の軒下で快適に滞在。",
+                    mustTry: "赤福本店の番茶付出来立て赤福餅、ふくすけの伊勢うどん、すし久のてこね寿司",
+                    plusOne: "豚捨の熱々ミンチカツ・コロッケ、まるごと果汁店、若松屋のひりょうず",
+                    tips: "午後は雨が強まるため、屋外の夫婦岩は余力時のみとし、早めに宿温泉へ向かう準備。",
+                    transit: "徒歩でおはらい町を散策しながらB駐車場へ戻り出庫（伊勢二見鳥羽ラインへ直通）。",
+                    skipLimit: "14:00までに出庫完了（雨天時は食べ歩きを早めに切り上げ宿へ直行）",
+                    mapUrl: "https://www.google.com/maps/search/?api=1&query=おかげ横丁"
+                  }
+                },
+                {
+                  baseStart: "14:00", baseEnd: "15:00",
+                  type: "opt", badgeClass: "badge-opt", badgeText: "🌊 OPT:景観",
+                  title: "二見興玉神社・夫婦岩（余力時）または宿直行",
+                  factors: {
+                    overview: "滞在目的: 夫婦岩拝観（雨脚次第で立ち寄りまたはスキップ）<br>・ 想定滞在時間: 30分",
+                    tactics: "雨脚が強ければ立ち寄らず宿へ直行。小雨なら無料駐車場から参拝して夫婦岩を拝観。",
+                    mustTry: "二見浦の荒波と夫婦岩の大注連縄、満願蛙像",
+                    plusOne: "二見浦シーパラダイス（屋内ショッピング街併設・雨宿り可）",
+                    tips: "海沿いは突風の可能性があるため傘よりもフード付きレインウェアが有効。",
+                    transit: "車移動: 内宮 ➔ 二見浦（約15分）。駐車場: 二見浦無料駐車場【判定: ◎】",
+                    skipLimit: "本降りならスキップして宿温泉直行ゲート",
+                    mapUrl: "https://www.google.com/maps/search/?api=1&query=二見興玉神社"
+                  }
+                },
+                {
+                  baseStart: "15:30", baseEnd: "翌日",
+                  type: "must", badgeClass: "badge-must", badgeText: "♨️ MUST:宿泊",
+                  title: "鳥羽・志摩 温泉宿チェックイン",
+                  factors: {
+                    overview: "滞在目的: 温泉露天風呂入浴、海の幸夕食、体力完全回復<br>・ 想定滞在時間: 翌朝09:00まで",
+                    tactics: "雨の午後は早めにチェックインして館内でのんびり過ごす。夕食開始時間を事前確保し、22時早め就寝。",
+                    mustTry: "伊勢志摩の旬の海鮮会席（伊勢海老・鮑）、海を一望する展望露天風呂",
+                    plusOne: "鳥羽一番街（お土産下見）、宿のティーラウンジ",
+                    tips: "2日目は祝日のため伊勢方面へ逆戻りせず鳥羽水族館（完全屋内）や松阪へ直行する動線を共有。",
+                    transit: "車移動: 二見 ➔ 鳥羽（約10〜15分）。宿専用駐車場完備【判定: ◎】",
+                    skipLimit: "17:30最終チェックイン（夕食開始厳守）",
+                    mapUrl: "https://www.google.com/maps/search/?api=1&query=鳥羽温泉郷"
+                  }
+                }
+              ]
             },
             {
-              baseStart: "08:45", baseEnd: "10:45",
-              type: "must", badgeClass: "badge-must", badgeText: "⛩️ MUST:参拝",
-              title: "伊勢神宮 内宮（皇大神宮）参拝",
-              factors: {
-                overview: "滞在目的: 天照大御神への正宮参拝、五十鈴川御手洗場での清め、神楽殿拝観<br>・ 一般平均滞在時間: 120分 / 想定滞在時間: 90分",
-                tactics: "午後からの雨予報に備え、雨脚が強まる前の午前中に屋外参拝を完了。宇治橋大鳥居で一礼し、右側通行で神域へ進む。",
-                mustTry: "五十鈴川御手洗場の清流での手水、正宮（皇大神宮）の唯一神明造り拝観と厳かな空気感",
-                plusOne: "風日祈宮（新緑と紅葉の橋）、宇治橋大鳥居の擬宝珠（万病息災・安全祈願）",
-                tips: "砂利道が続くため歩きやすい靴を推奨。雨雲レーダーで降雨開始時刻をリアルタイム確認。",
-                transit: "境内徒歩移動（約1.5km平坦路・玉砂利敷き）。車は市営駐車場にそのまま留め置き。",
-                skipLimit: "11:00までに参拝を終えておかげ横丁へ移動（昼食混雑回避のため）",
-                mapUrl: "https://www.google.com/maps/search/?api=1&query=伊勢神宮+内宮"
-              }
-            },
-            {
-              baseStart: "10:45", baseEnd: "13:30",
-              type: "flex", badgeClass: "badge-flex", badgeText: "🍽️ FLEX:昼食・散策",
-              title: "おはらい町・おかげ横丁（昼食＆食べ歩き）",
-              factors: {
-                overview: "滞在目的: 昼食（伊勢うどん・てこね寿司）＆名物食べ歩き、お土産調達<br>・ 一般平均滞在時間: 150分 / 想定滞在時間: 120分",
-                tactics: "11時前の開店直撃で赤福本店（座敷イートイン）やふくすけを確保。正午の激混み行列を完全回避。雨が降り始めてもアーケード・各店舗の軒下で快適に滞在。",
-                mustTry: "赤福本店の番茶付出来立て赤福餅、ふくすけの伊勢うどん（極太やわらか麺と秘伝たまり醤油）、すし久のてこね寿司（鰹ちらし）",
-                plusOne: "豚捨の熱々ミンチカツ・コロッケ、まるごと果汁店（生搾りオレンジジュース）、若松屋のひりょうず",
-                tips: "午後は雨が強まるため、屋外の夫婦岩は余力時のみとし、早めに宿温泉へ向かう準備。",
-                transit: "徒歩でおはらい町を散策しながらB駐車場へ戻り出庫（伊勢二見鳥羽ラインへ直通）。",
-                skipLimit: "14:00までに出庫完了（雨天時は食べ歩きを早めに切り上げ宿へ直行）",
-                mapUrl: "https://www.google.com/maps/search/?api=1&query=おかげ横丁"
-              }
-            },
-            {
-              baseStart: "14:00", baseEnd: "15:00",
-              type: "opt", badgeClass: "badge-opt", badgeText: "🌊 OPT:景観",
-              title: "二見興玉神社・夫婦岩（または宿直行）",
-              factors: {
-                overview: "滞在目的: 夫婦岩拝観（内宮で立ち寄れなかった場合の回収、または余力時の立ち寄り）<br>・ 一般平均滞在時間: 45分 / 想定滞在時間: 30分",
-                tactics: "雨脚が強ければ立ち寄らず宿へ直行。小雨程度なら無料駐車場から参拝して荒波の夫婦岩を拝観。",
-                mustTry: "夫婦岩（男岩・女岩を結ぶ大注連縄）と二見浦の荒波景観、満願蛙像",
-                plusOne: "二見浦シーパラダイス（屋内ショッピング街併設・雨宿り可）",
-                tips: "海沿いは突風の可能性があるため傘よりもフード付きレインウェアが有効。",
-                transit: "車移動: 内宮 ➔ 二見浦（伊勢二見鳥羽ライン経由、約15分）。駐車場: 二見浦無料駐車場【判定: ◎】",
-                skipLimit: "本降りなら迷わずスキップして宿温泉直行ゲート",
-                mapUrl: "https://www.google.com/maps/search/?api=1&query=二見興玉神社"
-              }
-            },
-            {
-              baseStart: "15:30", baseEnd: "翌日",
-              type: "must", badgeClass: "badge-must", badgeText: "♨️ MUST:宿泊",
-              title: "鳥羽・志摩 温泉宿チェックイン",
-              factors: {
-                overview: "滞在目的: 温泉露天風呂入浴、海の幸夕食、体力完全回復<br>・ 想定滞在時間: 翌朝09:00まで",
-                tactics: "雨の午後は早めにチェックインして館内でのんびり過ごす。夕食開始時間を事前確保し、夜は早めに就寝（22時消灯）。",
-                mustTry: "伊勢志摩の旬の海鮮会席（伊勢海老・鮑）、海を一望する展望露天風呂",
-                plusOne: "鳥羽一番街（お土産下見）、宿のティーラウンジ・温泉卓球",
-                tips: "翌朝（11/3）は祝日のため伊勢方面へ逆戻りせず鳥羽水族館（完全屋内）や松阪へ直行する動線を共有。",
-                transit: "車移動: 二見 ➔ 鳥羽（約10〜15分）。宿専用駐車場完備【判定: ◎】",
-                skipLimit: "17:30最終チェックイン（夕食開始厳守）",
-                mapUrl: "https://www.google.com/maps/search/?api=1&query=鳥羽温泉郷"
-              }
+              dayNum: 2,
+              dateStr: "11月3日（火・祝）",
+              subTitle: "鳥羽水族館（屋内） ➔ 松阪牛ランチ ➔ 高蔵寺駅帰着",
+              items: [
+                {
+                  baseStart: "09:00", baseEnd: "09:30",
+                  type: "must", badgeClass: "badge-must", badgeText: "🚗 MUST:移動",
+                  title: "宿チェックアウト ➔ 鳥羽水族館へ移動",
+                  factors: {
+                    overview: "滞在目的: 朝食後チェックアウト。祝日の混雑前に鳥羽水族館へ移動<br>・ 所要時間: 約15〜20分",
+                    tactics: "祝日の開館時間（09:00）に合わせてスムーズに移動。伊勢方面の渋滞とは逆方向のため道は快適。",
+                    mustTry: "朝の鳥羽湾沿いのドライブ景観",
+                    plusOne: "鳥羽港のフェリー発着風景",
+                    tips: "水族館チケットはWeb事前購入しておくと窓口の列を完全パス可能。",
+                    transit: "車移動: 宿 ➔ 鳥羽水族館。駐車場: 水族館専用駐車場（約500台、1日800円）【判定: ◎】",
+                    skipLimit: "09:45までに駐車場入庫",
+                    mapUrl: "https://www.google.com/maps/search/?api=1&query=鳥羽水族館"
+                  }
+                },
+                {
+                  baseStart: "09:30", baseEnd: "12:00",
+                  type: "flex", badgeClass: "badge-flex", badgeText: "🐬 FLEX:観光",
+                  title: "鳥羽水族館（完全屋内・日本一の飼育種類数）",
+                  factors: {
+                    overview: "滞在目的: 雨や天候に一切左右されない完全屋内でラッコ・ジュゴン・海獣鑑賞<br>・ 想定滞在時間: 150分",
+                    tactics: "順路のない自由観覧形式。入館直後に「ラッコのお食事タイム」やアシカショーの時刻を確認して最優先で回る。",
+                    mustTry: "日本で唯一飼育展示されているジュゴン「セレナ」、国内わずか3頭のラッコの愛らしい仕草",
+                    plusOne: "ミキモト真珠島（徒歩圏内）、鳥羽一番街（駅直結お土産街）",
+                    tips: "昼食は松阪で松阪牛を食べるため、水族館内での間食は軽めにセーブ。",
+                    transit: "館内徒歩観覧。全館バリアフリー・冷暖房完備。",
+                    skipLimit: "12:15までに鳥羽を出発して松阪へ向かう",
+                    mapUrl: "https://www.google.com/maps/search/?api=1&query=鳥羽水族館"
+                  }
+                },
+                {
+                  baseStart: "12:15", baseEnd: "13:00",
+                  type: "must", badgeClass: "badge-must", badgeText: "🚗 MUST:移動",
+                  title: "鳥羽 ➔ 松阪へ移動（伊勢道路・伊勢道経由）",
+                  factors: {
+                    overview: "滞在目的: 鳥羽から松阪へ移動し、本場松阪牛ランチへ直行<br>・ 所要時間: 約45分（距離約40km）",
+                    tactics: "伊勢二見鳥羽ライン〜伊勢道（伊勢IC➔松阪IC）または国道23号バイパスを利用。",
+                    mustTry: "伊勢平野へ抜ける快適なドライブ",
+                    plusOne: "松阪市街地の歴史的町並み",
+                    tips: "ランチ予約店（または一升びん等の回転焼肉）の混雑状況を直前に確認。",
+                    transit: "車移動。松阪市内は道幅が狭い箇所があるためナビ推奨。",
+                    skipLimit: "13:15までに松阪到着",
+                    mapUrl: "https://www.google.com/maps/search/?api=1&query=松阪牛+和田金"
+                  }
+                },
+                {
+                  baseStart: "13:00", baseEnd: "14:30",
+                  type: "must", badgeClass: "badge-must", badgeText: "🥩 MUST:昼食",
+                  title: "松阪エリア 本場松阪牛ランチ（すき焼きまたは回転焼肉）",
+                  factors: {
+                    overview: "滞在目的: 三重家族旅行のフィナーレを飾る本場松阪牛グルメ<br>・ 想定滞在時間: 90分",
+                    tactics: "名店（和田金・牛銀等）は事前予約必須。予約なしの場合は「一升びん（宮町店・回転焼肉席）」が立ち寄りやすく家族連れに最適。",
+                    mustTry: "口の中でとろける極上の松阪牛すき焼き、またはリーズナブルに希少部位を味わえる回転焼肉",
+                    plusOne: "松坂城跡（松阪公園の壮大な石垣）、御城番屋敷（国の重要文化財・武家長屋）",
+                    tips: "夕方の東名阪道（四日市JCT付近）の上り渋滞ピーク（16:30〜19:00）を避けるため、15時前後に高速へ乗るのが鉄則。",
+                    transit: "店舗専用無料駐車場あり【判定: ◎】",
+                    skipLimit: "15:00までに食事を終えて出発",
+                    mapUrl: "https://www.google.com/maps/search/?api=1&query=一升びん+宮町店"
+                  }
+                },
+                {
+                  baseStart: "14:45", baseEnd: "16:45",
+                  type: "must", badgeClass: "badge-must", badgeText: "🚗 MUST:帰着",
+                  title: "松阪IC ➔ 東名阪道 ➔ 高蔵寺駅 帰着",
+                  factors: {
+                    overview: "滞在目的: 伊勢自動車道〜東名阪道〜名二環経由で高蔵寺駅へ無事帰着<br>・ 所要時間: 約105〜120分（距離約120km）",
+                    tactics: "松阪ICから伊勢道へ。亀山JCT〜四日市JCTの渋滞が始まっている場合は新名神（菰野方面）または湾岸線への迂回を検討。",
+                    mustTry: "家族旅行の無事完了と充実の帰還",
+                    plusOne: "御在所SA（お土産最終調達・赤福・伊賀名物）",
+                    tips: "途中で運転手を交代し、疲労を分散。ガソリン残量を確認。",
+                    transit: "高速道路利用（ETC）。勝川ICまたは春日井ICから高蔵寺駅へ直行。",
+                    skipLimit: "18:00前後に高蔵寺駅完全帰着",
+                    mapUrl: "https://www.google.com/maps/search/?api=1&query=高蔵寺駅"
+                  }
+                }
+              ]
             }
           ]
         },
@@ -452,167 +607,349 @@
           name: "プラン2：外宮先拝ルート（伝統の正統参拝順序）",
           badge: "伝統正統派",
           badgeClass: "badge-2",
-          desc: "古来の習わし「外宮先拝」に則り、外宮を先に参拝してから内宮・おかげ横丁へ向かう王道ルート。",
-          overallMap: "https://www.google.com/maps/dir/?api=1&origin=愛知県&destination=鳥羽駅&waypoints=伊勢神宮外宮%7C伊勢神宮内宮",
-          items: [
+          desc: "高蔵寺駅発。古来の習わし「外宮先拝」に則り、外宮を先に参拝してから内宮へ向かう王道ルート。",
+          overallMap: "https://www.google.com/maps/dir/?api=1&origin=高蔵寺駅&destination=高蔵寺駅&waypoints=伊勢神宮外宮%7C伊勢神宮内宮%7C鳥羽温泉郷%7C鳥羽水族館%7C松阪牛和田金",
+          day1Map: "https://www.google.com/maps/dir/?api=1&origin=高蔵寺駅&destination=鳥羽温泉郷&waypoints=伊勢神宮外宮%7C伊勢神宮内宮",
+          day2Map: "https://www.google.com/maps/dir/?api=1&origin=鳥羽温泉郷&destination=高蔵寺駅&waypoints=鳥羽水族館%7C松阪駅",
+          days: [
             {
-              baseStart: "07:00", baseEnd: "08:45",
-              type: "must", badgeClass: "badge-must", badgeText: "🔴 MUST:移動",
-              title: "実家出発 ➔ 伊勢神宮 外宮（豊受大神宮）直行",
-              factors: {
-                overview: "滞在目的: 伊勢ICの渋滞を避け、伊勢西ICまたは伊勢ICから外宮駐車場へ直行<br>・ 一般平均滞在時間: 105分 / 想定滞在時間: 105分",
-                tactics: "外宮周辺は内宮ほど渋滞しないため、朝一番に外宮の無料駐車場へ滑り込むのが最も容易。",
-                mustTry: "伊勢参宮の正統作法である外宮先拝（げくうせんぱい）のスタート",
-                plusOne: "安濃SA休憩",
-                tips: "外宮参拝は手短（45分）に済ませ、10時前には内宮へ向けて出発するのが内宮渋滞回避のカギ。",
-                transit: "車移動（東名阪〜伊勢道）。外宮第1〜第3駐車場（無料・約440台）【判定: ◎】",
-                skipLimit: "09:00までに外宮到着",
-                mapUrl: "https://www.google.com/maps/search/?api=1&query=伊勢神宮+外宮"
-              }
+              dayNum: 1,
+              dateStr: "11月2日（月・平日）",
+              subTitle: "高蔵寺発 ➔ 外宮 ➔ 内宮・おかげ横丁 ➔ 鳥羽・志摩宿泊",
+              items: [
+                {
+                  baseStart: "07:00", baseEnd: "08:45",
+                  type: "must", badgeClass: "badge-must", badgeText: "🔴 MUST:移動",
+                  title: "高蔵寺駅 出発 ➔ 伊勢神宮 外宮（豊受大神宮）直行",
+                  factors: {
+                    overview: "滞在目的: 高蔵寺駅発。伊勢道・伊勢西ICから外宮無料駐車場へ直行<br>・ 所要時間: 約105分（距離約135km）",
+                    tactics: "外宮周辺は内宮ほど混雑しないため、朝一番に外宮駐車場へスムーズに入庫可能。",
+                    mustTry: "伊勢参宮の正統作法「外宮先拝」のスタート",
+                    plusOne: "安濃SA休憩",
+                    tips: "外宮参拝は手短（45分）に済ませ、10時前には内宮へ向けて出発するのが内宮渋滞回避のカギ。",
+                    transit: "外宮第1〜第3駐車場（無料・約440台）【判定: ◎】",
+                    skipLimit: "09:00までに外宮到着",
+                    mapUrl: "https://www.google.com/maps/search/?api=1&query=伊勢神宮+外宮"
+                  }
+                },
+                {
+                  baseStart: "08:45", baseEnd: "09:45",
+                  type: "must", badgeClass: "badge-must", badgeText: "⛩️ MUST:参拝",
+                  title: "外宮（豊受大神宮）参拝",
+                  factors: {
+                    overview: "滞在目的: 衣食住の守り神・豊受大御神への参拝、古殿地・三ツ石拝観<br>・ 想定滞在時間: 45分",
+                    tactics: "表参道火除橋から左側通行で進む。正宮を参拝後、風宮・土宮を巡り10:00前には出庫。",
+                    mustTry: "正宮（豊受大神宮）の厳かな檜造り、三ツ石の注連縄",
+                    plusOne: "赤福 外宮前特設店、豚捨 外宮前店（コロッケ）",
+                    tips: "内宮周辺の渋滞が始まっているため、直近A駐車場は狙わず最初からB駐車場（河川敷）へ直行。",
+                    transit: "外宮 ➔ 内宮（県道12号・御幸道路経由、約4.5km、通常15分）。",
+                    skipLimit: "10:00までに外宮出庫",
+                    mapUrl: "https://www.google.com/maps/search/?api=1&query=伊勢神宮+外宮"
+                  }
+                },
+                {
+                  baseStart: "10:15", baseEnd: "13:45",
+                  type: "must", badgeClass: "badge-must", badgeText: "⛩️ MUST:参拝・昼食",
+                  title: "内宮（皇大神宮）参拝 ＆ おかげ横丁昼食",
+                  factors: {
+                    overview: "滞在目的: 天照大御神への正宮参拝、五十鈴川御手洗場、おかげ横丁ランチ<br>・ 想定滞在時間: 150分",
+                    tactics: "市営B駐車場（河川敷）へ直行。到着後すぐ（11:00前）におかげ横丁で昼食を済ませてから内宮正宮へ参拝。",
+                    mustTry: "赤福本店の出来立て赤福餅、ふくすけ伊勢うどん、すし久てこね寿司",
+                    plusOne: "豚捨ミンチカツ、まるごと果汁店、五十鈴川の清流",
+                    tips: "午後は雨が降るため、昼食後は早めに参拝を済ませて鳥羽方面へ抜ける。",
+                    transit: "駐車場: 市営B駐車場利用【判定: ○】（内宮まで徒歩10分）。",
+                    skipLimit: "14:00までに内宮出庫",
+                    mapUrl: "https://www.google.com/maps/search/?api=1&query=伊勢神宮+内宮"
+                  }
+                },
+                {
+                  baseStart: "14:15", baseEnd: "15:00",
+                  type: "opt", badgeClass: "badge-opt", badgeText: "🌊 OPT:景観",
+                  title: "二見興玉神社・夫婦岩（余力時）または宿直行",
+                  factors: {
+                    overview: "滞在目的: 夫婦岩拝観（雨脚次第で立ち寄りまたはスキップ）<br>・ 想定滞在時間: 30分",
+                    tactics: "雨が強ければ立ち寄らず宿へ直行。小雨なら無料駐車場から夫婦岩を拝観。",
+                    mustTry: "二見浦の荒波と夫婦岩の大注連縄",
+                    plusOne: "二見浦シーパラダイス",
+                    tips: "宿の温泉でゆっくり温まる準備。",
+                    transit: "車移動: 内宮 ➔ 二見浦（約15分）。無料駐車場あり【判定: ◎】",
+                    skipLimit: "本降りならスキップして宿直行",
+                    mapUrl: "https://www.google.com/maps/search/?api=1&query=二見興玉神社"
+                  }
+                },
+                {
+                  baseStart: "15:30", baseEnd: "翌日",
+                  type: "must", badgeClass: "badge-must", badgeText: "♨️ MUST:宿泊",
+                  title: "鳥羽・志摩 温泉宿チェックイン",
+                  factors: {
+                    overview: "滞在目的: 温泉露天風呂、旬の海鮮会席、体力完全回復<br>・ 想定滞在時間: 翌朝09:00まで",
+                    tactics: "早めのチェックインで夕方の露天風呂を確保。22時早め就寝。",
+                    mustTry: "伊勢志摩の旬の海鮮会席（伊勢海老・鮑）、展望露天風呂",
+                    plusOne: "鳥羽一番街、宿のティーラウンジ",
+                    tips: "翌朝（11/3祝日）は鳥羽水族館（屋内）や松阪へ直行する動線を共有。",
+                    transit: "車移動: 二見 ➔ 鳥羽（約10〜15分）。宿専用駐車場完備【判定: ◎】",
+                    skipLimit: "17:30最終チェックイン",
+                    mapUrl: "https://www.google.com/maps/search/?api=1&query=鳥羽温泉郷"
+                  }
+                }
+              ]
             },
             {
-              baseStart: "08:45", baseEnd: "09:45",
-              type: "must", badgeClass: "badge-must", badgeText: "⛩️ MUST:参拝",
-              title: "外宮（豊受大神宮）参拝",
-              factors: {
-                overview: "滞在目的: 衣食住の守り神・豊受大御神への参拝、古殿地・三ツ石拝観<br>・ 一般平均滞在時間: 60分 / 想定滞在時間: 45分",
-                tactics: "表参道火除橋から左側通行で進む。正宮を参拝後、風宮・土宮を巡り10:00前には出庫。",
-                mustTry: "正宮（豊受大神宮）の厳かな檜造り、三ツ石の注連縄",
-                plusOne: "赤福 外宮前特設店、豚捨 外宮前店（コロッケ）",
-                tips: "内宮周辺の渋滞が始まっているため、内宮直近A駐車場は狙わず最初からB駐車場（河川敷）へ直行。",
-                transit: "外宮 ➔ 内宮（県道12号・御幸道路経由、約4.5km、通常15分）。",
-                skipLimit: "10:00までに外宮出庫",
-                mapUrl: "https://www.google.com/maps/search/?api=1&query=伊勢神宮+外宮"
-              }
-            },
-            {
-              baseStart: "10:15", baseEnd: "13:45",
-              type: "must", badgeClass: "badge-must", badgeText: "⛩️ MUST:参拝・昼食",
-              title: "内宮（皇大神宮）参拝 ＆ おかげ横丁昼食",
-              factors: {
-                overview: "滞在目的: 天照大御神への正宮参拝、五十鈴川御手洗場、おはらい町・おかげ横丁ランチ<br>・ 一般平均滞在時間: 180分 / 想定滞在時間: 150分",
-                tactics: "外宮から到着時は市営B駐車場（河川敷）へ直行。宇治橋手前で家族を降ろし運転手のみ回送。<br>・ 到着後すぐ（11:00前）におかげ横丁で昼食（ふくすけ・すし久・赤福）を済ませてから内宮正宮へ参拝。",
-                mustTry: "赤福本店の出来立て赤福餅、ふくすけ伊勢うどん、すし久てこね寿司",
-                plusOne: "豚捨ミンチカツ、まるごと果汁店、五十鈴川の清流",
-                tips: "午後は雨が降るため、昼食後は早めに参拝を済ませて鳥羽方面へ抜ける。",
-                transit: "駐車場: 市営B駐車場利用【判定: ○】（内宮まで徒歩10分）。",
-                skipLimit: "14:00までに内宮出庫",
-                mapUrl: "https://www.google.com/maps/search/?api=1&query=伊勢神宮+内宮"
-              }
-            },
-            {
-              baseStart: "14:15", baseEnd: "15:00",
-              type: "opt", badgeClass: "badge-opt", badgeText: "🌊 OPT:景観",
-              title: "二見興玉神社・夫婦岩（余力時）または宿直行",
-              factors: {
-                overview: "滞在目的: 夫婦岩拝観（雨脚次第で立ち寄りまたはスキップ）<br>・ 一般平均滞在時間: 45分 / 想定滞在時間: 30分",
-                tactics: "雨が強ければ立ち寄らず宿へ直行。小雨なら無料駐車場から夫婦岩を拝観。",
-                mustTry: "二見浦の荒波と夫婦岩の大注連縄",
-                plusOne: "二見浦シーパラダイス（屋内雨宿り）",
-                tips: "宿の温泉でゆっくり温まる準備。",
-                transit: "車移動: 内宮 ➔ 二見浦（約15分）。無料駐車場あり【判定: ◎】",
-                skipLimit: "本降りならスキップして宿直行",
-                mapUrl: "https://www.google.com/maps/search/?api=1&query=二見興玉神社"
-              }
-            },
-            {
-              baseStart: "15:30", baseEnd: "翌日",
-              type: "must", badgeClass: "badge-must", badgeText: "♨️ MUST:宿泊",
-              title: "鳥羽・志摩 温泉宿チェックイン",
-              factors: {
-                overview: "滞在目的: 温泉露天風呂、旬の海鮮会席、体力完全回復<br>・ 想定滞在時間: 翌朝09:00まで",
-                tactics: "早めのチェックインで夕方の露天風呂を確保。22時早め就寝。",
-                mustTry: "伊勢志摩の旬の海鮮会席（伊勢海老・鮑）、展望露天風呂",
-                plusOne: "鳥羽一番街、宿のティーラウンジ",
-                tips: "翌朝（11/3祝日）は鳥羽水族館（屋内）や松阪へ直行する動線を共有。",
-                transit: "車移動: 二見 ➔ 鳥羽（約10〜15分）。宿専用駐車場完備【判定: ◎】",
-                skipLimit: "17:30最終チェックイン",
-                mapUrl: "https://www.google.com/maps/search/?api=1&query=鳥羽温泉郷"
-              }
+              dayNum: 2,
+              dateStr: "11月3日（火・祝）",
+              subTitle: "鳥羽水族館（屋内） ➔ 松阪牛ランチ ➔ 高蔵寺駅帰着",
+              items: [
+                {
+                  baseStart: "09:00", baseEnd: "09:30",
+                  type: "must", badgeClass: "badge-must", badgeText: "🚗 MUST:移動",
+                  title: "宿チェックアウト ➔ 鳥羽水族館へ移動",
+                  factors: {
+                    overview: "滞在目的: 祝日の開館時間（09:00）に合わせて移動<br>・ 所要時間: 約15〜20分",
+                    tactics: "伊勢方面の渋滞を完全に避け、海沿いを快適移動。",
+                    mustTry: "朝の鳥羽湾ドライブ景観",
+                    plusOne: "鳥羽港フェリー風景",
+                    tips: "チケットはWeb事前購入でスムーズ入館。",
+                    transit: "水族館専用駐車場（約500台、1日800円）【判定: ◎】",
+                    skipLimit: "09:45までに駐車場入庫",
+                    mapUrl: "https://www.google.com/maps/search/?api=1&query=鳥羽水族館"
+                  }
+                },
+                {
+                  baseStart: "09:30", baseEnd: "12:00",
+                  type: "flex", badgeClass: "badge-flex", badgeText: "🐬 FLEX:観光",
+                  title: "鳥羽水族館（完全屋内・日本一の飼育種類数）",
+                  factors: {
+                    overview: "滞在目的: 雨天完全回避の屋内でラッコ・ジュゴン・海獣鑑賞<br>・ 想定滞在時間: 150分",
+                    tactics: "入館直後にショーやお食事タイム時刻を確認して最優先で回る。",
+                    mustTry: "ジュゴン「セレナ」、ラッコのパフォーマンス",
+                    plusOne: "ミキモト真珠島、鳥羽一番街",
+                    tips: "松阪牛ランチに備えて間食は控えめに調整。",
+                    transit: "館内徒歩観覧。冷暖房完備。",
+                    skipLimit: "12:15までに鳥羽を出発",
+                    mapUrl: "https://www.google.com/maps/search/?api=1&query=鳥羽水族館"
+                  }
+                },
+                {
+                  baseStart: "12:15", baseEnd: "13:00",
+                  type: "must", badgeClass: "badge-must", badgeText: "🚗 MUST:移動",
+                  title: "鳥羽 ➔ 松阪へ移動（伊勢道経由）",
+                  factors: {
+                    overview: "滞在目的: 鳥羽から松阪へ移動し松阪牛ランチへ直行<br>・ 所要時間: 約45分",
+                    tactics: "伊勢二見鳥羽ライン〜伊勢道（伊勢IC➔松阪IC）を利用。",
+                    mustTry: "伊勢平野のドライブ",
+                    plusOne: "松阪の歴史的町並み",
+                    tips: "ランチ店舗の混雑状況を直前に確認。",
+                    transit: "車移動。",
+                    skipLimit: "13:15までに松阪到着",
+                    mapUrl: "https://www.google.com/maps/search/?api=1&query=松阪牛+和田金"
+                  }
+                },
+                {
+                  baseStart: "13:00", baseEnd: "14:30",
+                  type: "must", badgeClass: "badge-must", badgeText: "🥩 MUST:昼食",
+                  title: "松阪エリア 本場松阪牛ランチ（すき焼きまたは回転焼肉）",
+                  factors: {
+                    overview: "滞在目的: 三重旅行のフィナーレを飾る本場松阪牛グルメ<br>・ 想定滞在時間: 90分",
+                    tactics: "予約なしの場合は一升びん宮町店が入りやすい。",
+                    mustTry: "本場松阪肉のすき焼き・網焼き、希少部位の回転焼肉",
+                    plusOne: "松坂城跡、御城番屋敷",
+                    tips: "夕方の東名阪四日市渋滞を避けるため15時前に高速へ乗るのが鉄則。",
+                    transit: "店舗専用無料駐車場あり【判定: ◎】",
+                    skipLimit: "15:00までに食事を終えて出発",
+                    mapUrl: "https://www.google.com/maps/search/?api=1&query=一升びん+宮町店"
+                  }
+                },
+                {
+                  baseStart: "14:45", baseEnd: "16:45",
+                  type: "must", badgeClass: "badge-must", badgeText: "🚗 MUST:帰着",
+                  title: "松阪IC ➔ 東名阪道 ➔ 高蔵寺駅 帰着",
+                  factors: {
+                    overview: "滞在目的: 伊勢道〜東名阪道〜名二環経由で高蔵寺駅へ無事帰着<br>・ 所要時間: 約105〜120分",
+                    tactics: "四日市JCT付近の渋滞情報に合わせて新名神または伊勢湾岸線を活用。",
+                    mustTry: "旅行の安全完了",
+                    plusOne: "御在所SAお土産調達",
+                    tips: "運転手交代で疲労を軽減。",
+                    transit: "高速利用。春日井ICから高蔵寺駅へ直行。",
+                    skipLimit: "18:00前後に高蔵寺駅完全帰着",
+                    mapUrl: "https://www.google.com/maps/search/?api=1&query=高蔵寺駅"
+                  }
+                }
+              ]
             }
           ]
         },
         '3': {
-          name: "プラン3：夫婦岩・二見迂回ルート（満車・雨天回避型）",
+          name: "プラン3：夫婦岩迂回ルート（満車・雨天回避型）",
           badge: "満車・雨天回避",
           badgeClass: "badge-3",
-          desc: "内宮周辺の渋滞が激しい、または駐車場進入不可時の切替プラン。二見・夫婦岩から入り午後は完全屋内へ。",
-          overallMap: "https://www.google.com/maps/dir/?api=1&origin=愛知県&destination=鳥羽駅&waypoints=二見興玉神社夫婦岩",
-          items: [
+          desc: "高蔵寺駅発。内宮周辺が渋滞、または駐車場進入不可時の切替プラン。二見・夫婦岩から入り午後は完全屋内へ。",
+          overallMap: "https://www.google.com/maps/dir/?api=1&origin=高蔵寺駅&destination=高蔵寺駅&waypoints=二見興玉神社夫婦岩%7C伊勢神宮外宮%7C鳥羽温泉郷%7C鳥羽水族館%7C松阪牛和田金",
+          day1Map: "https://www.google.com/maps/dir/?api=1&origin=高蔵寺駅&destination=鳥羽温泉郷&waypoints=二見興玉神社夫婦岩%7C伊勢神宮外宮",
+          day2Map: "https://www.google.com/maps/dir/?api=1&origin=鳥羽温泉郷&destination=高蔵寺駅&waypoints=鳥羽水族館%7C松阪駅",
+          days: [
             {
-              baseStart: "07:00", baseEnd: "08:45",
-              type: "must", badgeClass: "badge-must", badgeText: "🔴 MUST:移動",
-              title: "実家出発 ➔ 二見興玉神社・夫婦岩へ直行",
-              factors: {
-                overview: "滞在目的: 伊勢IC・伊勢西ICの渋滞をバイパスし、直接二見浦へ直行<br>・ 一般平均滞在時間: 105分 / 想定滞在時間: 105分",
-                tactics: "伊勢二見鳥羽ラインで直接二見浦へ。内宮渋滞を完全無視してスムーズに到達。",
-                mustTry: "伊勢参宮前の禊（みそぎ）の伝統に則った海沿い参拝ルートの再現",
-                plusOne: "安濃SA（手洗い・軽食休憩）",
-                tips: "海沿いは風が強いためウインドブレーカー・雨具を準備。",
-                transit: "車移動: 東名阪道〜伊勢道〜伊勢二見鳥羽ライン。駐車場: 二見浦無料駐車場【判定: ◎（満車リスク極小）】",
-                skipLimit: "09:00までに二見浦到着",
-                mapUrl: "https://www.google.com/maps/search/?api=1&query=二見浦無料駐車場"
-              }
+              dayNum: 1,
+              dateStr: "11月2日（月・平日）",
+              subTitle: "高蔵寺発 ➔ 二見夫婦岩 ➔ 外宮 ➔ 鳥羽・志摩宿泊",
+              items: [
+                {
+                  baseStart: "07:00", baseEnd: "08:45",
+                  type: "must", badgeClass: "badge-must", badgeText: "🔴 MUST:移動",
+                  title: "高蔵寺駅 出発 ➔ 二見興玉神社・夫婦岩へ直行",
+                  factors: {
+                    overview: "滞在目的: 高蔵寺駅発。伊勢IC・内宮の渋滞を完全回避し、二見浦へ直行<br>・ 所要時間: 約105分",
+                    tactics: "伊勢二見鳥羽ラインで直接二見浦へ。内宮渋滞を完全無視してスムーズに到達。",
+                    mustTry: "伊勢参宮前の禊（みそぎ）の伝統に則った海沿い参拝ルート",
+                    plusOne: "安濃SA休憩",
+                    tips: "海沿いは風が強いため雨具を準備。",
+                    transit: "二見浦無料駐車場【判定: ◎（満車リスク極小）】",
+                    skipLimit: "09:00までに二見浦到着",
+                    mapUrl: "https://www.google.com/maps/search/?api=1&query=二見浦無料駐車場"
+                  }
+                },
+                {
+                  baseStart: "08:45", baseEnd: "10:15",
+                  type: "must", badgeClass: "badge-must", badgeText: "🌊 MUST:参拝・景観",
+                  title: "二見興玉神社 参拝 ＆ 夫婦岩散策",
+                  factors: {
+                    overview: "滞在目的: 二見興玉神社参拝、夫婦岩拝観、無事息災祈願<br>・ 想定滞在時間: 45分",
+                    tactics: "曇りのうちに海風を感じながら夫婦岩を拝観。雨脚が強まる前に散策を完了。",
+                    mustTry: "夫婦岩（男岩・女岩を結ぶ大注連縄）、満願蛙像",
+                    plusOne: "御福餅本家（二見名物のお福餅）",
+                    tips: "外宮へ移動。外宮駐車場は無料かつ回転が早いため安全。",
+                    transit: "車移動: 二見 ➔ 外宮（伊勢二見鳥羽ライン経由、約15分）。",
+                    skipLimit: "10:30までに外宮へ向けて出発",
+                    mapUrl: "https://www.google.com/maps/search/?api=1&query=二見興玉神社"
+                  }
+                },
+                {
+                  baseStart: "10:45", baseEnd: "12:15",
+                  type: "flex", badgeClass: "badge-flex", badgeText: "⛩️ FLEX:参拝",
+                  title: "外宮（豊受大神宮）へ移動・参拝",
+                  factors: {
+                    overview: "滞在目的: 豊受大神宮参拝、衣食住の恵みへの感謝<br>・ 想定滞在時間: 45分",
+                    tactics: "表参道駐車場へ直行。無料駐車場が広く回転の早い外宮へ。内宮渋滞を横目に落ち着いて参拝。",
+                    mustTry: "正宮（豊受大神宮）、古殿地、三ツ石",
+                    plusOne: "赤福 外宮前特設店、豚捨 外宮前店（コロッケ）",
+                    tips: "雨が強まる午後に備え、完全屋内施設（鳥羽水族館または鳥羽一番街）へ移動準備。",
+                    transit: "駐車場判定: 外宮第1〜第3駐車場（無料・約440台）【判定: ◎】",
+                    skipLimit: "12:30までに出庫して鳥羽へ移動",
+                    mapUrl: "https://www.google.com/maps/search/?api=1&query=伊勢神宮+外宮"
+                  }
+                },
+                {
+                  baseStart: "12:45", baseEnd: "15:00",
+                  type: "flex", badgeClass: "badge-flex", badgeText: "🍽️ FLEX:昼食・屋内",
+                  title: "鳥羽一番街 または 鳥羽水族館（完全屋内）",
+                  factors: {
+                    overview: "滞在目的: 雨天完全回避の屋内昼食＆水族館鑑賞<br>・ 想定滞在時間: 120分",
+                    tactics: "雨脚が強まる午後は完全屋内の鳥羽エリアへ。濡れずに快適散策。",
+                    mustTry: "鳥羽水族館のラッコお食事タイム、ジュゴン「セレナ」、鳥羽海鮮ランチ",
+                    plusOne: "鳥羽一番街、ミキモト真珠島",
+                    tips: "宿へ向かう前に夜の飲み物やお菓子を調達。",
+                    transit: "水族館専用駐車場（約500台、1日800円）【判定: ◎】",
+                    skipLimit: "15:15までに宿へ移動開始",
+                    mapUrl: "https://www.google.com/maps/search/?api=1&query=鳥羽水族館"
+                  }
+                },
+                {
+                  baseStart: "15:30", baseEnd: "翌日",
+                  type: "must", badgeClass: "badge-must", badgeText: "♨️ MUST:宿泊",
+                  title: "鳥羽・志摩 温泉宿チェックイン",
+                  factors: {
+                    overview: "滞在目的: 温泉入浴、海の幸夕食、体力完全回復<br>・ 想定滞在時間: 翌朝09:00まで",
+                    tactics: "早めのチェックインで雨音を聞きながら露天風呂満喫。内宮参拝は翌朝（11/3早朝）へ順延可能。",
+                    mustTry: "旬の伊勢海老・鮑会席、展望露天風呂",
+                    plusOne: "宿のティーラウンジ、温泉卓球",
+                    tips: "翌朝の内宮早朝アタック（朝7時台参拝）への切り替えシミュレーション。",
+                    transit: "宿専用駐車場完備【判定: ◎】",
+                    skipLimit: "17:30最終チェックイン",
+                    mapUrl: "https://www.google.com/maps/search/?api=1&query=鳥羽温泉郷"
+                  }
+                }
+              ]
             },
             {
-              baseStart: "08:45", baseEnd: "10:15",
-              type: "must", badgeClass: "badge-must", badgeText: "🌊 MUST:参拝・景観",
-              title: "二見興玉神社 参拝 ＆ 夫婦岩散策",
-              factors: {
-                overview: "滞在目的: 二見興玉神社参拝、夫婦岩拝観、無事息災祈願<br>・ 一般平均滞在時間: 60分 / 想定滞在時間: 45分",
-                tactics: "曇りのうちに海風を感じながら夫婦岩を拝観。雨脚が強まる前に散策を完了。",
-                mustTry: "夫婦岩（男岩・女岩を結ぶ大注連縄）、満願蛙像の手水",
-                plusOne: "御福餅本家（二見名物のお福餅）",
-                tips: "外宮へ移動。外宮駐車場は無料かつ回転が早いため内宮より格段に安全。",
-                transit: "車移動: 二見 ➔ 外宮（伊勢二見鳥羽ライン経由、約15分）。",
-                skipLimit: "10:30までに外宮へ向けて出発",
-                mapUrl: "https://www.google.com/maps/search/?api=1&query=二見興玉神社"
-              }
-            },
-            {
-              baseStart: "10:45", baseEnd: "12:15",
-              type: "flex", badgeClass: "badge-flex", badgeText: "⛩️ FLEX:参拝",
-              title: "外宮（豊受大神宮）へ移動・参拝",
-              factors: {
-                overview: "滞在目的: 豊受大神宮参拝、衣食住の恵みへの感謝<br>・ 一般平均滞在時間: 60分 / 想定滞在時間: 45分",
-                tactics: "表参道駐車場へ直行。無料駐車場が広く回転の早い外宮へ。内宮渋滞を横目に落ち着いて参拝。",
-                mustTry: "正宮（豊受大神宮）、古殿地、三ツ石",
-                plusOne: "赤福 外宮前特設店、豚捨 外宮前店（コロッケ）",
-                tips: "雨が強まる午後に備え、完全屋内施設（鳥羽水族館または鳥羽一番街）へ移動準備。",
-                transit: "駐車場判定: 外宮第1〜第3駐車場（無料・約440台）【判定: ◎】",
-                skipLimit: "12:30までに出庫して鳥羽へ移動",
-                mapUrl: "https://www.google.com/maps/search/?api=1&query=伊勢神宮+外宮"
-              }
-            },
-            {
-              baseStart: "12:45", baseEnd: "15:00",
-              type: "flex", badgeClass: "badge-flex", badgeText: "🍽️ FLEX:昼食・屋内",
-              title: "鳥羽一番街 または 鳥羽水族館（完全屋内）",
-              factors: {
-                overview: "滞在目的: 雨天完全回避の屋内昼食（伊勢海老うどん・海鮮丼）＆水族館鑑賞<br>・ 一般平均滞在時間: 150分 / 想定滞在時間: 120分",
-                tactics: "雨脚が強まる午後は完全屋内の鳥羽エリアへ。館内通路で雨に濡れずに快適散策。",
-                mustTry: "鳥羽水族館のラッコお食事タイム、ジュゴン「セレナ」、鳥羽の海鮮ランチ",
-                plusOne: "鳥羽一番街でのお土産調達、ミキモト真珠島",
-                tips: "宿へ向かう前に夜の飲み物やお菓子を調達。",
-                transit: "駐車場判定: 鳥羽水族館専用駐車場（約500台、1日800円）【判定: ◎】",
-                skipLimit: "15:15までに宿へ移動開始",
-                mapUrl: "https://www.google.com/maps/search/?api=1&query=鳥羽水族館"
-              }
-            },
-            {
-              baseStart: "15:30", baseEnd: "翌日",
-              type: "must", badgeClass: "badge-must", badgeText: "♨️ MUST:宿泊",
-              title: "鳥羽・志摩 温泉宿チェックイン",
-              factors: {
-                overview: "滞在目的: 温泉入浴、伊勢志摩の海の幸夕食、体力完全回復<br>・ 想定滞在時間: 翌朝09:00まで",
-                tactics: "早めのチェックインで雨音を聞きながら露天風呂満喫。内宮参拝は翌朝（11/3早朝）へ順延可能。",
-                mustTry: "旬の伊勢海老・鮑会席、展望露天風呂",
-                plusOne: "宿のティーラウンジ、温泉卓球",
-                tips: "翌朝の内宮早朝アタック（朝7時台参拝）への切り替えシミュレーション。",
-                transit: "宿専用駐車場完備【判定: ◎】",
-                skipLimit: "17:30最終チェックイン",
-                mapUrl: "https://www.google.com/maps/search/?api=1&query=鳥羽温泉郷"
-              }
+              dayNum: 2,
+              dateStr: "11月3日（火・祝）",
+              subTitle: "伊勢内宮（早朝参拝） ➔ 松阪牛ランチ ➔ 高蔵寺駅帰着",
+              items: [
+                {
+                  baseStart: "07:30", baseEnd: "08:15",
+                  type: "must", badgeClass: "badge-must", badgeText: "🚗 MUST:移動",
+                  title: "宿早め出発 ➔ 伊勢神宮 内宮へ早朝アタック",
+                  factors: {
+                    overview: "滞在目的: 祝日朝の渋滞前（朝8時前）に内宮駐車場を確保<br>・ 所要時間: 約30分",
+                    tactics: "朝7時半に宿を出発。朝8時前であれば内宮直近のA駐車場にスムーズに入庫可能。",
+                    mustTry: "祝日大渋滞の逆張り早朝アタック",
+                    plusOne: "朝霧の伊勢路ドライブ",
+                    tips: "朝の澄んだ空気の中で宇治橋を渡る。",
+                    transit: "市営A駐車場直行【判定: ◎（朝8時前限定）】",
+                    skipLimit: "08:15までに内宮到着",
+                    mapUrl: "https://www.google.com/maps/search/?api=1&query=伊勢神宮+内宮"
+                  }
+                },
+                {
+                  baseStart: "08:15", baseEnd: "11:30",
+                  type: "must", badgeClass: "badge-must", badgeText: "⛩️ MUST:参拝・昼食",
+                  title: "内宮参拝 ＆ おかげ横丁（開店直後散策）",
+                  factors: {
+                    overview: "滞在目的: 1日目に雨天順延した内宮正宮参拝とおかげ横丁散策<br>・ 想定滞在時間: 180分",
+                    tactics: "朝一番に静寂の正宮を参拝し、9:30開店直後のおかげ横丁で赤福や伊勢うどんを確保。混雑がピークになる11時半前には出庫。",
+                    mustTry: "出来立て赤福餅、ふくすけ伊勢うどん、神宮の朝の神気",
+                    plusOne: "おはらい町の街並み散策",
+                    tips: "正午の混雑に巻き込まれる前に松阪へ脱出。",
+                    transit: "徒歩散策。",
+                    skipLimit: "11:45までに内宮出庫",
+                    mapUrl: "https://www.google.com/maps/search/?api=1&query=おかげ横丁"
+                  }
+                },
+                {
+                  baseStart: "12:00", baseEnd: "12:45",
+                  type: "must", badgeClass: "badge-must", badgeText: "🚗 MUST:移動",
+                  title: "伊勢 ➔ 松阪へ移動",
+                  factors: {
+                    overview: "滞在目的: 伊勢から松阪へ移動し松阪牛ランチへ<br>・ 所要時間: 約35分",
+                    tactics: "伊勢道（伊勢西IC➔松阪IC）経由。",
+                    mustTry: "渋滞と逆方向の快適移動",
+                    plusOne: "松阪市街地散策",
+                    tips: "ランチ店舗の受付へ直行。",
+                    transit: "車移動。",
+                    skipLimit: "13:00までに松阪到着",
+                    mapUrl: "https://www.google.com/maps/search/?api=1&query=松阪牛+和田金"
+                  }
+                },
+                {
+                  baseStart: "13:00", baseEnd: "14:30",
+                  type: "must", badgeClass: "badge-must", badgeText: "🥩 MUST:昼食",
+                  title: "松阪エリア 本場松阪牛ランチ",
+                  factors: {
+                    overview: "滞在目的: 本場松阪牛すき焼き・焼肉グルメ<br>・ 想定滞在時間: 90分",
+                    tactics: "一升びんや和田金で極上ランチを満喫。",
+                    mustTry: "松阪牛すき焼き・網焼き",
+                    plusOne: "松坂城跡石垣",
+                    tips: "15時前に高速へ乗る。",
+                    transit: "店舗駐車場完備。",
+                    skipLimit: "15:00出発",
+                    mapUrl: "https://www.google.com/maps/search/?api=1&query=一升びん+宮町店"
+                  }
+                },
+                {
+                  baseStart: "14:45", baseEnd: "16:45",
+                  type: "must", badgeClass: "badge-must", badgeText: "🚗 MUST:帰着",
+                  title: "松阪IC ➔ 東名阪道 ➔ 高蔵寺駅 帰着",
+                  factors: {
+                    overview: "滞在目的: 高蔵寺駅へ完全帰着<br>・ 所要時間: 約105〜120分",
+                    tactics: "四日市渋滞前にスムーズに通過。",
+                    mustTry: "家族旅行の完遂",
+                    plusOne: "御在所SA休憩",
+                    tips: "安全運転で帰還。",
+                    transit: "高速利用。高蔵寺駅到着。",
+                    skipLimit: "18:00前後に高蔵寺駅帰着",
+                    mapUrl: "https://www.google.com/maps/search/?api=1&query=高蔵寺駅"
+                  }
+                }
+              ]
             }
           ]
         }
@@ -632,8 +969,9 @@
     function renderUI() {
       const plan = TRIP_DATA.plans[TRIP_DATA.activePlan];
       const offset = TRIP_DATA.baseOffsetMinutes;
+      const dayFilter = TRIP_DATA.activeDayFilter;
 
-      // Summary
+      // Summary Card
       const summaryCard = document.getElementById('summary-card');
       summaryCard.innerHTML = `
         <div class="summary-header">
@@ -641,60 +979,81 @@
           <span class="summary-badge ${plan.badgeClass}">${plan.badge}</span>
         </div>
         <p class="summary-desc">${plan.desc}</p>
-        <a href="${plan.overallMap}" target="_blank" class="route-link-btn">🗺️ Googleマップ全体ルートを開く</a>
+        <div class="route-links">
+          <a href="${plan.overallMap}" target="_blank" class="route-link-btn">🗺️ 全体ルート（高蔵寺発着）</a>
+          <a href="${plan.day1Map}" target="_blank" class="route-link-btn sub">🚗 1日目ルート</a>
+          <a href="${plan.day2Map}" target="_blank" class="route-link-btn sub">🚗 2日目ルート</a>
+        </div>
       `;
 
-      // Timeline (Expanded ①〜⑦)
+      // Timeline Container with clear Day 1 & Day 2 Dividers
       const timeline = document.getElementById('timeline-container');
-      timeline.innerHTML = plan.items.map(item => {
-        const start = shiftTime(item.baseStart, offset);
-        const end = shiftTime(item.baseEnd, offset);
-        const timeDisplay = end ? `${start}〜${end}` : start;
-        const f = item.factors;
+      let html = '';
 
-        return `
-          <div class="slot-card ${item.type}">
-            <div class="slot-header">
-              <span class="slot-time">${timeDisplay}</span>
-              <span class="slot-badge ${item.badgeClass}">${item.badgeText}</span>
-            </div>
-            <div class="slot-title">${item.title}</div>
-            
-            <div class="factors-box">
-              <div class="factor-item">
-                <div class="factor-header">① 概要</div>
-                <div class="factor-content">${f.overview}</div>
-              </div>
-              <div class="factor-item">
-                <div class="factor-header success">② 立ち回り＆攻略</div>
-                <div class="factor-content">${f.tactics}</div>
-              </div>
-              <div class="factor-item">
-                <div class="factor-header accent">③ 代替不可名物・限定体験</div>
-                <div class="factor-content">${f.mustTry}</div>
-              </div>
-              <div class="factor-item">
-                <div class="factor-header purple">④ ついでに巡れる名所・スイーツ</div>
-                <div class="factor-content">${f.plusOne}</div>
-              </div>
-              <div class="factor-item">
-                <div class="factor-header">⑤ 次エリア事前Tips</div>
-                <div class="factor-content">${f.tips}</div>
-              </div>
-              <div class="factor-item">
-                <div class="factor-header accent">⑥ 交通・移動・駐車場評価</div>
-                <div class="factor-content">${f.transit}</div>
-              </div>
-              <div class="factor-item">
-                <div class="factor-header danger">⑦ スキップ基準・損切りタイムゲート</div>
-                <div class="factor-content">${f.skipLimit}</div>
-              </div>
-            </div>
+      plan.days.forEach(day => {
+        if (dayFilter !== 'all' && String(day.dayNum) !== dayFilter) return;
 
-            <a href="${f.mapUrl}" target="_blank" class="map-btn-inline">📍 Googleマップでスポットを開く</a>
+        html += `
+          <div class="day-divider">
+            <div>
+              <div class="day-divider-title">📅 ${day.dayNum}日目：${day.dateStr}</div>
+              <div class="day-divider-sub">${day.subTitle}</div>
+            </div>
           </div>
         `;
-      }).join('');
+
+        day.items.forEach(item => {
+          const start = shiftTime(item.baseStart, offset);
+          const end = shiftTime(item.baseEnd, offset);
+          const timeDisplay = end ? `${start}〜${end}` : start;
+          const f = item.factors;
+
+          html += `
+            <div class="slot-card ${item.type}">
+              <div class="slot-header">
+                <span class="slot-time">${timeDisplay}</span>
+                <span class="slot-badge ${item.badgeClass}">${item.badgeText}</span>
+              </div>
+              <div class="slot-title">${item.title}</div>
+              
+              <div class="factors-box">
+                <div class="factor-item">
+                  <div class="factor-header">① 概要</div>
+                  <div class="factor-content">${f.overview}</div>
+                </div>
+                <div class="factor-item">
+                  <div class="factor-header success">② 立ち回り＆攻略</div>
+                  <div class="factor-content">${f.tactics}</div>
+                </div>
+                <div class="factor-item">
+                  <div class="factor-header accent">③ 代替不可名物・限定体験</div>
+                  <div class="factor-content">${f.mustTry}</div>
+                </div>
+                <div class="factor-item">
+                  <div class="factor-header purple">④ ついでに巡れる名所・スイーツ</div>
+                  <div class="factor-content">${f.plusOne}</div>
+                </div>
+                <div class="factor-item">
+                  <div class="factor-header">⑤ 次エリア事前Tips</div>
+                  <div class="factor-content">${f.tips}</div>
+                </div>
+                <div class="factor-item">
+                  <div class="factor-header accent">⑥ 交通・移動・駐車場評価</div>
+                  <div class="factor-content">${f.transit}</div>
+                </div>
+                <div class="factor-item">
+                  <div class="factor-header danger">⑦ スキップ基準・損切りタイムゲート</div>
+                  <div class="factor-content">${f.skipLimit}</div>
+                </div>
+              </div>
+
+              <a href="${f.mapUrl}" target="_blank" class="map-btn-inline">📍 Googleマップでスポットを開く</a>
+            </div>
+          `;
+        });
+      });
+
+      timeline.innerHTML = html;
     }
 
     function switchPlan(planId) {
@@ -713,33 +1072,49 @@
       renderUI();
     }
 
+    function filterDay(dayKey) {
+      TRIP_DATA.activeDayFilter = dayKey;
+      document.getElementById('day-all-btn').classList.toggle('active', dayKey === 'all');
+      document.getElementById('day-1-btn').classList.toggle('active', dayKey === '1');
+      document.getElementById('day-2-btn').classList.toggle('active', dayKey === '2');
+      renderUI();
+    }
+
     function copyCurrentPlan() {
       const plan = TRIP_DATA.plans[TRIP_DATA.activePlan];
       const offset = TRIP_DATA.baseOffsetMinutes;
       const lines = [
-        `【${plan.name}】`,
-        `天候考慮: 午前曇り(屋外参拝優先) / 午後雨(屋内・温泉シフト)`,
+        `【${plan.name}】（起点: 高蔵寺駅）`,
         `全体ルート: ${plan.overallMap}`,
+        `1日目ルート: ${plan.day1Map}`,
+        `2日目ルート: ${plan.day2Map}`,
         "",
         "【スケジュール】"
       ];
-      plan.items.forEach(it => {
-        const s = shiftTime(it.baseStart, offset);
-        const e = shiftTime(it.baseEnd, offset);
-        const f = it.factors;
-        lines.push(`■ ${s}〜${e} ${it.title}`);
-        lines.push(`  ① 概要: ${f.overview.replace(/<br>/g, ' / ')}`);
-        lines.push(`  ② 立ち回り＆攻略: ${f.tactics.replace(/<br>/g, ' / ')}`);
-        lines.push(`  ③ 代替不可名物: ${f.mustTry}`);
-        lines.push(`  ④ ついで名所: ${f.plusOne}`);
-        lines.push(`  ⑤ 事前Tips: ${f.tips}`);
-        lines.push(`  ⑥ 交通・駐車場: ${f.transit.replace(/<br>/g, ' / ')}`);
-        lines.push(`  ⑦ 損切りゲート: ${f.skipLimit}`);
-        lines.push(`  ・ 地図: ${f.mapUrl}`);
-        lines.push(``);
+
+      plan.days.forEach(day => {
+        lines.push(`\n━━━━━━━━━━━━━━━━━━━━━━━━━━━━`);
+        lines.push(`■ ${day.dayNum}日目：${day.dateStr} 【${day.subTitle}】`);
+        lines.push(`━━━━━━━━━━━━━━━━━━━━━━━━━━━━`);
+
+        day.items.forEach(it => {
+          const s = shiftTime(it.baseStart, offset);
+          const e = shiftTime(it.baseEnd, offset);
+          const f = it.factors;
+          lines.push(`\n▶ ${s}〜${e} ${it.title}`);
+          lines.push(`  ① 概要: ${f.overview.replace(/<br>/g, ' / ')}`);
+          lines.push(`  ② 立ち回り＆攻略: ${f.tactics.replace(/<br>/g, ' / ')}`);
+          lines.push(`  ③ 代替不可名物: ${f.mustTry}`);
+          lines.push(`  ④ ついで名所: ${f.plusOne}`);
+          lines.push(`  ⑤ 事前Tips: ${f.tips}`);
+          lines.push(`  ⑥ 交通・駐車場: ${f.transit.replace(/<br>/g, ' / ')}`);
+          lines.push(`  ⑦ 損切りゲート: ${f.skipLimit}`);
+          lines.push(`  ・ 地図: ${f.mapUrl}`);
+        });
       });
+
       navigator.clipboard.writeText(lines.join('\n')).then(() => {
-        alert('選択中プラン（①〜⑦全文）をクリップボードにコピーしました！そのままLINEに貼り付けられます。');
+        alert('1日目・2日目の全日程（①〜⑦完全展開）をコピーしました！そのままLINEに貼り付けられます。');
       }).catch(() => {
         alert('コピーに失敗しました。');
       });
