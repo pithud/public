@@ -4,22 +4,106 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>三重・伊勢志摩 家族旅行 リアルタイム旅程ナビ</title>
+  <script>
+    // Anti-FOUC immediate theme application (Default: light)
+    (function() {
+      var t = localStorage.getItem('trip_nav_theme') || 'light';
+      document.documentElement.setAttribute('data-theme', t);
+    })();
+  </script>
   <style>
-:root {
+:root, [data-theme="light"] {
+  --bg: #f8fafc;
+  --card-bg: #ffffff;
+  --card-inner: #f1f5f9;
+  --header-bg: rgba(255, 255, 255, 0.96);
+  --border: #cbd5e1;
+  --border-subtle: #e2e8f0;
+  --text: #0f172a;
+  --text-muted: #64748b;
+  --primary: #0284c7;
+  --primary-hover: #0369a1;
+  --accent: #d97706;
+  --danger: #dc2626;
+  --success: #059669;
+  --purple: #9333ea;
+  --map-green: #059669;
+  --map-green-hover: #047857;
+  --badge-origin-bg: #f1f5f9;
+  --badge-origin-text: #b45309;
+  --weather-bg: linear-gradient(135deg, #eff6ff, #dbeafe);
+  --weather-border: #93c5fd;
+  --weather-title: #1e40af;
+  --slot-bg-hover: #f1f5f9;
+  --slot-overview-bg: #f8fafc;
+  --slot-overview-text: #1e293b;
+  --lunch-card-bg: #f8fafc;
+  --lunch-desc-text: #475569;
+  --bonus-card-bg: #f8fafc;
+  --bonus-reason-bg: #f1f5f9;
+  --bonus-reason-text: #334155;
+  --drawer-bg: #ffffff;
+  --drawer-title: #0f172a;
+  --version-card-bg: #f8fafc;
+  --version-title: #0f172a;
+  --quick-bar-bg: rgba(255, 255, 255, 0.95);
+  --quick-bar-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
+  --mother-memo-bg: linear-gradient(135deg, #f5f3ff, #ede9fe);
+  --mother-memo-border: #c4b5fd;
+  --mother-memo-title: #7c3aed;
+  --mother-memo-text: #334155;
+  --theme-btn-bg: #e2e8f0;
+  --theme-btn-text: #0f172a;
+  --theme-btn-border: #cbd5e1;
+  --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+  --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.07);
+}
+
+[data-theme="dark"] {
   --bg: #090d16;
   --card-bg: #131c2e;
   --card-inner: #0b1120;
+  --header-bg: rgba(9, 13, 22, 0.95);
   --border: #23354d;
   --border-subtle: #1e293b;
   --text: #f8fafc;
   --text-muted: #94a3b8;
   --primary: #38bdf8;
+  --primary-hover: #7dd3fc;
   --accent: #f59e0b;
   --danger: #ef4444;
   --success: #10b981;
   --purple: #a855f7;
   --map-green: #059669;
   --map-green-hover: #10b981;
+  --badge-origin-bg: #1e293b;
+  --badge-origin-text: #f59e0b;
+  --weather-bg: linear-gradient(135deg, rgba(30, 41, 59, 0.9), rgba(15, 23, 42, 0.95));
+  --weather-border: #3b82f6;
+  --weather-title: #60a5fa;
+  --slot-bg-hover: rgba(255, 255, 255, 0.02);
+  --slot-overview-bg: rgba(15, 23, 42, 0.7);
+  --slot-overview-text: #f1f5f9;
+  --lunch-card-bg: rgba(15, 23, 42, 0.6);
+  --lunch-desc-text: #cbd5e1;
+  --bonus-card-bg: rgba(15, 23, 42, 0.6);
+  --bonus-reason-bg: rgba(0, 0, 0, 0.25);
+  --bonus-reason-text: #cbd5e1;
+  --drawer-bg: #0f172a;
+  --drawer-title: #f8fafc;
+  --version-card-bg: rgba(15, 23, 42, 0.8);
+  --version-title: #ffffff;
+  --quick-bar-bg: rgba(15, 23, 42, 0.92);
+  --quick-bar-shadow: 0 4px 20px rgba(0, 0, 0, 0.5);
+  --mother-memo-bg: linear-gradient(135deg, rgba(88, 28, 135, 0.25), rgba(15, 23, 42, 0.9));
+  --mother-memo-border: rgba(168, 85, 247, 0.4);
+  --mother-memo-title: #c084fc;
+  --mother-memo-text: #e2e8f0;
+  --theme-btn-bg: #1e293b;
+  --theme-btn-text: #f8fafc;
+  --theme-btn-border: #334155;
+  --shadow-sm: none;
+  --shadow-md: none;
 }
 * { box-sizing: border-box; margin: 0; padding: 0; }
 body {
@@ -31,7 +115,7 @@ body {
   -webkit-font-smoothing: antialiased;
 }
 header {
-  background: rgba(9, 13, 22, 0.95);
+  background: var(--header-bg);
   backdrop-filter: blur(8px);
   border-bottom: 1px solid var(--border);
   padding: 12px 16px;
@@ -71,8 +155,8 @@ header {
 
 /* Weather Alert */
 .weather-card {
-  background: linear-gradient(135deg, rgba(30, 41, 59, 0.9), rgba(15, 23, 42, 0.95));
-  border: 1px solid #3b82f6;
+  background: var(--weather-bg);
+  border: 1px solid var(--weather-border);
   border-radius: 12px;
   padding: 12px 14px;
   margin-bottom: 16px;
@@ -82,7 +166,7 @@ header {
   font-size: 0.86rem;
 }
 .weather-icon { font-size: 1.6rem; line-height: 1; }
-.weather-body strong { color: #60a5fa; }
+.weather-body strong { color: var(--weather-title); }
 .weather-sub { color: var(--text-muted); font-size: 0.78rem; margin-top: 4px; }
 
 /* Unified Menu & Control Panel */
@@ -680,7 +764,7 @@ header {
   right: -320px;
   width: 300px;
   height: 100vh;
-  background: #0f172a;
+  background: var(--drawer-bg);
   border-left: 1px solid var(--border);
   box-shadow: -4px 0 25px rgba(0, 0, 0, 0.7);
   z-index: 1001;
@@ -740,7 +824,7 @@ header {
 }
 .version-tag.current { background: #0284c7; color: #fff; }
 .version-tag.archive { background: #334155; color: #94a3b8; }
-.version-title { font-size: 0.85rem; font-weight: 700; color: #fff; margin-bottom: 4px; }
+.version-title { font-size: 0.85rem; font-weight: 700; color: var(--version-title); margin-bottom: 4px; }
 .version-desc { font-size: 0.74rem; color: var(--text-muted); line-height: 1.4; margin-bottom: 8px; }
 .version-link {
   font-size: 0.74rem;
@@ -822,7 +906,7 @@ header {
 .pill-budget { background: rgba(52, 211, 153, 0.2); color: #34d399; }
 .lunch-shop-desc {
   font-size: 0.76rem;
-  color: #cbd5e1;
+  color: var(--lunch-desc-text);
   line-height: 1.4;
   margin-bottom: 6px;
 }
@@ -872,14 +956,14 @@ header {
   bottom: 12px;
   left: 50%;
   transform: translateX(-50%);
-  background: rgba(15, 23, 42, 0.92);
+  background: var(--quick-bar-bg);
   backdrop-filter: blur(8px);
   border: 1px solid var(--border);
   border-radius: 9999px;
   padding: 6px 14px;
   display: flex;
   gap: 8px;
-  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.5);
+  box-shadow: var(--quick-bar-shadow);
   z-index: 100;
 }
 .quick-pill {
@@ -931,8 +1015,12 @@ header {
     <div class="header-top">
       <div class="title">🚗 三重・伊勢志摩 リアルタイムナビ</div>
       <div class="header-right">
+        <button id="theme-toggle-btn" class="theme-toggle-btn" onclick="toggleTheme()" title="ライト/ダークモード切替">
+          <span id="theme-toggle-icon">☀️</span>
+          <span id="theme-toggle-text">ライト</span>
+        </button>
         <div class="badge-origin">起点: 高蔵寺駅</div>
-        <button class="menu-drawer-btn" onclick="toggleDrawer(true)">☰ 履歴 (v5)</button>
+        <button class="menu-drawer-btn" onclick="toggleDrawer(true)">☰ 履歴 (v6)</button>
       </div>
     </div>
   </header>
@@ -949,16 +1037,26 @@ header {
       旅程更新時に過去分が上書き消滅しないよう物理アーカイブされています。いつでも過去プランへ戻せます。
     </div>
 
-    <!-- v5 (Current) -->
+    <!-- v6 (Current) -->
     <div class="version-card current">
-      <span class="version-tag current">🟢 現在表示中 (v5)</span>
+      <span class="version-tag current">🟢 現在表示中 (v6)</span>
+      <div class="version-title">v6: ライト/ダークモード切替完備（デフォルト: ライト）</div>
+      <div class="version-desc">
+        ・日中・屋外での圧倒的な視認性を誇るライトモードをデフォルト採用<br>
+        ・ヘッダーのトグルボタンでダークモードと瞬時切替（選択状態は永続保存）<br>
+        ・全スロットのタイトル・サブタイトル・ブロック見出し統一規律を完全継承
+      </div>
+    </div>
+
+    <!-- v5 (Archive) -->
+    <div class="version-card">
+      <span class="version-tag archive">📄 アーカイブ (v5)</span>
       <div class="version-title">v5: 統一見出し＆ベストプラクティス完全準拠版</div>
       <div class="version-desc">
-        ・不自然な「右回り」等の文脈不一致サブタイトルを完全撤廃<br>
-        ・全スロットのタイトル・サブタイトル・ブロック見出しを統一規律化<br>
-        ・立ち回りステップのタグ（【必須】/【推奨】/【スキップ可】）の表記統一<br>
-        ・プラン2（予備プラン）の全バッジを【目的】形式に統一
+        ・不自然な「右回り」等の文脈不一致サブタイトル完全撤廃<br>
+        ・全スロット見出し統一規律＆目的別アイコン連動
       </div>
+      <a href="archive/v5.html" target="_blank" class="version-link">このバージョンを開く ↗</a>
     </div>
 
     <!-- v4 (Archive) -->
@@ -2333,8 +2431,38 @@ header {
       }
     }
 
-    // Initial render
-    document.addEventListener('DOMContentLoaded', renderUI);
+    // Theme Management Functions (Default: Light, persistent in localStorage)
+    function getStoredTheme() {
+      return localStorage.getItem('trip_nav_theme') || 'light';
+    }
+
+    function applyTheme(theme) {
+      document.documentElement.setAttribute('data-theme', theme);
+      localStorage.setItem('trip_nav_theme', theme);
+      const icon = document.getElementById('theme-toggle-icon');
+      const text = document.getElementById('theme-toggle-text');
+      if (icon && text) {
+        if (theme === 'dark') {
+          icon.textContent = '🌙';
+          text.textContent = 'ダーク';
+        } else {
+          icon.textContent = '☀️';
+          text.textContent = 'ライト';
+        }
+      }
+    }
+
+    function toggleTheme() {
+      const current = document.documentElement.getAttribute('data-theme') || 'light';
+      const next = current === 'dark' ? 'light' : 'dark';
+      applyTheme(next);
+    }
+
+    // Initial render & theme sync
+    document.addEventListener('DOMContentLoaded', () => {
+      applyTheme(getStoredTheme());
+      renderUI();
+    });
   </script>
 </body>
 </html>
