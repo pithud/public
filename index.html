@@ -1,0 +1,532 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>三重・伊勢志摩 家族旅行 リアルタイム旅程ナビ</title>
+  <style>
+    :root {
+      --bg: #0f172a;
+      --card-bg: #1e293b;
+      --card-inner: #0f172a;
+      --border: #334155;
+      --text: #f8fafc;
+      --text-muted: #94a3b8;
+      --primary: #38bdf8;
+      --accent: #f59e0b;
+      --danger: #ef4444;
+      --success: #10b981;
+      --purple: #a855f7;
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Hiragino Sans", "Hiragino Kaku Gothic ProN", Meiryo, sans-serif;
+      background-color: var(--bg);
+      color: var(--text);
+      line-height: 1.5;
+      padding-bottom: 60px;
+    }
+    header {
+      background: #090d16;
+      border-bottom: 1px solid var(--border);
+      padding: 14px 16px;
+      position: sticky;
+      top: 0;
+      z-index: 100;
+    }
+    .header-top {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    .title {
+      font-size: 1.1rem;
+      font-weight: 700;
+      color: var(--primary);
+    }
+    .badge-date {
+      font-size: 0.75rem;
+      background: #1e293b;
+      color: var(--accent);
+      padding: 3px 8px;
+      border-radius: 9999px;
+      border: 1px solid var(--border);
+    }
+    .container {
+      max-width: 680px;
+      margin: 0 auto;
+      padding: 14px 16px;
+    }
+    /* Weather Alert */
+    .weather-card {
+      background: linear-gradient(135deg, rgba(30, 41, 59, 0.9), rgba(15, 23, 42, 0.9));
+      border: 1px solid #3b82f6;
+      border-radius: 12px;
+      padding: 12px 14px;
+      margin-bottom: 14px;
+      display: flex;
+      align-items: flex-start;
+      gap: 10px;
+      font-size: 0.88rem;
+    }
+    .weather-icon { font-size: 1.5rem; line-height: 1; }
+    .weather-body strong { color: #60a5fa; }
+
+    /* Switch Tabs */
+    .tab-group {
+      display: flex;
+      gap: 8px;
+      margin-bottom: 12px;
+    }
+    .tab-btn {
+      flex: 1;
+      background: var(--card-bg);
+      border: 1px solid var(--border);
+      color: var(--text-muted);
+      padding: 10px 8px;
+      border-radius: 10px;
+      font-size: 0.88rem;
+      font-weight: 600;
+      cursor: pointer;
+      text-align: center;
+      transition: all 0.2s;
+    }
+    .tab-btn.active {
+      background: #0284c7;
+      color: #ffffff;
+      border-color: #38bdf8;
+      box-shadow: 0 0 12px rgba(56, 189, 248, 0.3);
+    }
+    .tab-btn small {
+      display: block;
+      font-size: 0.72rem;
+      font-weight: 400;
+      opacity: 0.85;
+      margin-top: 2px;
+    }
+
+    /* Departure Time Selector */
+    .depart-toggle {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      background: var(--card-bg);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 8px 12px;
+      margin-bottom: 16px;
+      font-size: 0.82rem;
+    }
+    .time-pills { display: flex; gap: 6px; }
+    .time-pill {
+      background: #0f172a;
+      border: 1px solid var(--border);
+      color: var(--text-muted);
+      padding: 4px 10px;
+      border-radius: 6px;
+      font-size: 0.8rem;
+      cursor: pointer;
+    }
+    .time-pill.active {
+      background: var(--accent);
+      color: #000;
+      border-color: var(--accent);
+      font-weight: 700;
+    }
+
+    /* Plan Summary Card */
+    .summary-card {
+      background: var(--card-bg);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 14px;
+      margin-bottom: 16px;
+    }
+    .summary-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 8px;
+    }
+    .summary-title { font-size: 0.98rem; font-weight: 700; color: #ffffff; }
+    .summary-badge {
+      font-size: 0.72rem;
+      padding: 2px 8px;
+      border-radius: 6px;
+      font-weight: 600;
+    }
+    .badge-a { background: rgba(16, 185, 129, 0.2); color: #34d399; border: 1px solid #10b981; }
+    .badge-b { background: rgba(245, 158, 11, 0.2); color: #fbbf24; border: 1px solid #f59e0b; }
+    .summary-desc { font-size: 0.82rem; color: var(--text-muted); margin-bottom: 10px; }
+    .route-link-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      background: #0284c7;
+      color: #ffffff;
+      text-decoration: none;
+      padding: 6px 12px;
+      border-radius: 6px;
+      font-size: 0.8rem;
+      font-weight: 600;
+    }
+
+    /* Timeline */
+    .timeline {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+    .slot-card {
+      background: var(--card-bg);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 12px 14px;
+      position: relative;
+    }
+    .slot-card.must { border-left: 4px solid var(--danger); }
+    .slot-card.flex { border-left: 4px solid var(--primary); }
+    .slot-card.opt { border-left: 4px solid var(--purple); }
+
+    .slot-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 6px;
+    }
+    .slot-time {
+      font-size: 0.88rem;
+      font-weight: 700;
+      color: var(--accent);
+      font-family: monospace;
+    }
+    .slot-title {
+      font-size: 0.95rem;
+      font-weight: 700;
+      color: #ffffff;
+      margin-bottom: 6px;
+    }
+    .slot-badge {
+      font-size: 0.7rem;
+      padding: 1px 6px;
+      border-radius: 4px;
+      font-weight: 600;
+    }
+    .slot-details {
+      font-size: 0.82rem;
+      color: #cbd5e1;
+      display: flex;
+      flex-direction: column;
+      gap: 5px;
+    }
+    .detail-row {
+      display: flex;
+      align-items: flex-start;
+      gap: 6px;
+    }
+    .detail-tag {
+      font-size: 0.7rem;
+      background: #0f172a;
+      color: #94a3b8;
+      padding: 1px 5px;
+      border-radius: 4px;
+      flex-shrink: 0;
+      margin-top: 1px;
+    }
+    .map-btn-mini {
+      display: inline-block;
+      margin-top: 6px;
+      font-size: 0.76rem;
+      color: var(--primary);
+      text-decoration: underline;
+    }
+
+    /* Bottom Nav / Share */
+    .bottom-actions {
+      margin-top: 24px;
+      text-align: center;
+    }
+    .share-btn {
+      background: #06c755;
+      color: #fff;
+      border: none;
+      padding: 10px 20px;
+      border-radius: 9999px;
+      font-size: 0.88rem;
+      font-weight: 700;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+    }
+  </style>
+</head>
+<body>
+
+  <header>
+    <div class="container" style="padding:0;">
+      <div class="header-top">
+        <div class="title">🗺️ 三重家族旅行 ナビ</div>
+        <div class="badge-date">11/02(月)〜11/03(火)</div>
+      </div>
+    </div>
+  </header>
+
+  <div class="container">
+
+    <!-- Weather Forecast Indicator -->
+    <div class="weather-card">
+      <div class="weather-icon">☁️➔🌧️</div>
+      <div class="weather-body">
+        <strong>天候予測: 最初は曇り、午後から雨予報</strong><br>
+        午前中に外観・参拝（内宮または夫婦岩）を前倒し攻略。雨が本降りになる午後は屋内散策（おかげ横丁・鳥羽水族館・温泉）へ即時シフト。
+      </div>
+    </div>
+
+    <!-- Departure Offset Pill Selector -->
+    <div class="depart-toggle">
+      <span>🚗 出発時刻設定（全体が自動スライド）:</span>
+      <div class="time-pills">
+        <button class="time-pill" onclick="setDepartureOffset(-60)">6:00発</button>
+        <button class="time-pill active" onclick="setDepartureOffset(0)">7:00発（標準）</button>
+      </div>
+    </div>
+
+    <!-- Plan Tabs -->
+    <div class="tab-group">
+      <button class="tab-btn active" id="tab-a" onclick="switchPlan('A')">
+        ⛩️ プランA：内宮直撃
+        <small>渋滞前・雨前に内宮先攻</small>
+      </button>
+      <button class="tab-btn" id="tab-b" onclick="switchPlan('B')">
+        🌊 プランB：夫婦岩迂回
+        <small>内宮満車・雨天時BCP</small>
+      </button>
+    </div>
+
+    <!-- Active Plan Summary -->
+    <div class="summary-card" id="summary-card">
+      <!-- Injected by JS -->
+    </div>
+
+    <!-- Timeline Container -->
+    <div class="timeline" id="timeline-container">
+      <!-- Injected by JS -->
+    </div>
+
+    <!-- Bottom Actions -->
+    <div class="bottom-actions">
+      <button class="share-btn" onclick="copyCurrentPlan()">📋 このプランをコピーしてLINE共有</button>
+    </div>
+
+  </div>
+
+  <script>
+    /**
+     * 宣言型旅程データ (工数最小化・即時変更可能構造)
+     */
+    const TRIP_DATA = {
+      baseOffsetMinutes: 0, // 0 = 7:00発基準, -60 = 6:00発
+      activePlan: 'A',
+      plans: {
+        A: {
+          name: "プランA：内宮直行・早朝逃げ切りルート",
+          badge: "推奨本命",
+          badgeClass: "badge-a",
+          desc: "朝7時（または6時）に出発し、渋滞と午後雨の前に内宮・おかげ横丁を最速攻略するメイン戦略。",
+          overallMap: "https://www.google.com/maps/dir/?api=1&origin=愛知県&destination=鳥羽駅&waypoints=伊勢神宮内宮",
+          items: [
+            {
+              baseStart: "07:00", baseEnd: "08:45",
+              type: "must", badge: "🔴 移動",
+              title: "実家出発 ➔ 伊勢神宮内宮へ直行",
+              desc: "東名阪道〜伊勢道経由。内宮直近の市営A駐車場を目指すが、宇治浦田で列があれば即B駐車場（河川敷）へ回送。",
+              parking: "市営A駐車場（空車時）またはB駐車場（河川敷）直行",
+              map: "https://www.google.com/maps/search/?api=1&query=伊勢市営宇治駐車場"
+            },
+            {
+              baseStart: "08:45", baseEnd: "10:45",
+              type: "must", badge: "⛩️ 参拝",
+              title: "伊勢神宮 内宮 参拝",
+              desc: "宇治橋・五十鈴川御手洗場・正宮。雨が降る前の曇り空のうちに静寂な神域を巡る。",
+              parking: "家族は宇治橋前ドロップオフ可（歩行負担半減）",
+              map: "https://www.google.com/maps/search/?api=1&query=伊勢神宮+内宮"
+            },
+            {
+              baseStart: "10:45", baseEnd: "13:30",
+              type: "flex", badge: "🍽️ 昼食・散策",
+              title: "おはらい町・おかげ横丁（昼食＆食べ歩き）",
+              desc: "昼の混雑ピーク前に赤福本店、伊勢うどん（ふくすけ）、てこね寿司を確保。アーケード・店舗下で雨天も快適。",
+              parking: "B駐車場まで徒歩でおはらい町を散策しながら戻る",
+              map: "https://www.google.com/maps/search/?api=1&query=おかげ横丁"
+            },
+            {
+              baseStart: "14:00", baseEnd: "15:00",
+              type: "opt", badge: "🌊 ついで",
+              title: "二見興玉神社・夫婦岩（余力時）または外宮",
+              desc: "雨脚が弱ければ夫婦岩へ立ち寄り。雨が強い場合はそのまま宿へ直行。",
+              parking: "無料駐車場あり",
+              map: "https://www.google.com/maps/search/?api=1&query=夫婦岩"
+            },
+            {
+              baseStart: "15:30", baseEnd: "翌日",
+              type: "must", badge: "♨️ 宿泊",
+              title: "鳥羽・志摩 温泉宿チェックイン",
+              desc: "雨の午後は早めにチェックインし、温泉露天風呂と伊勢志摩の海の幸夕食で完全リカバリー。",
+              parking: "宿専用駐車場",
+              map: "https://www.google.com/maps/search/?api=1&query=鳥羽温泉郷"
+            }
+          ]
+        },
+        B: {
+          name: "プランB：夫婦岩・二見迂回ルート（内宮満車・雨天時BCP）",
+          badge: "満車・雨天BCP",
+          badgeClass: "badge-b",
+          desc: "内宮周辺の渋滞が激しい、または内宮駐車場進入不可時の即時切替プラン。二見・夫婦岩から入り午後は屋内へ。",
+          overallMap: "https://www.google.com/maps/dir/?api=1&origin=愛知県&destination=鳥羽駅&waypoints=二見興玉神社夫婦岩",
+          items: [
+            {
+              baseStart: "07:00", baseEnd: "08:45",
+              type: "must", badge: "🔴 移動",
+              title: "実家出発 ➔ 二見興玉神社・夫婦岩へ直行",
+              desc: "伊勢IC・伊勢西ICの渋滞をバイパスし、伊勢二見鳥羽ラインで直接二見浦へ直行。",
+              parking: "二見浦無料駐車場（スムーズ駐車可能）",
+              map: "https://www.google.com/maps/search/?api=1&query=二見浦無料駐車場"
+            },
+            {
+              baseStart: "08:45", baseEnd: "10:15",
+              type: "must", badge: "🌊 参拝・景観",
+              title: "二見興玉神社 参拝 ＆ 夫婦岩散策",
+              desc: "古来の伊勢参宮前の禊（みそぎ）の地。曇りのうちに海風を感じながら夫婦岩を拝観。",
+              parking: "境内すぐ横に無料駐車可",
+              map: "https://www.google.com/maps/search/?api=1&query=二見興玉神社"
+            },
+            {
+              baseStart: "10:45", baseEnd: "12:15",
+              type: "flex", badge: "⛩️ 参拝",
+              title: "外宮（豊受大神宮）へ移動・参拝",
+              desc: "無料駐車場が広く回転の早い外宮へ。内宮渋滞を横目に落ち着いて参拝。",
+              parking: "外宮第1〜第3駐車場（無料・約440台）",
+              map: "https://www.google.com/maps/search/?api=1&query=伊勢神宮+外宮"
+            },
+            {
+              baseStart: "12:45", baseEnd: "15:00",
+              type: "flex", badge: "🍽️ 屋内昼食",
+              title: "鳥羽一番街 または 鳥羽水族館（完全屋内）",
+              desc: "雨脚が強まる午後は完全屋内施設へ。名物伊勢海老うどんや海鮮ランチを楽しんだ後、水族館鑑賞。",
+              parking: "各施設専用駐車場",
+              map: "https://www.google.com/maps/search/?api=1&query=鳥羽水族館"
+            },
+            {
+              baseStart: "15:30", baseEnd: "翌日",
+              type: "must", badge: "♨️ 宿泊",
+              title: "鳥羽・志摩 温泉宿チェックイン",
+              desc: "早めのチェックインで温泉三昧。内宮参拝は翌朝（11/3早朝）へ順延も可能。",
+              parking: "宿専用駐車場",
+              map: "https://www.google.com/maps/search/?api=1&query=鳥羽温泉郷"
+            }
+          ]
+        }
+      }
+    };
+
+    function shiftTime(timeStr, offsetMinutes) {
+      if (!timeStr || timeStr === "翌日") return timeStr;
+      const [h, m] = timeStr.split(':').map(Number);
+      let totalM = h * 60 + m + offsetMinutes;
+      if (totalM < 0) totalM += 24 * 60;
+      const newH = Math.floor(totalM / 60) % 24;
+      const newM = totalM % 60;
+      return `${String(newH).padStart(2, '0')}:${String(newM).padStart(2, '0')}`;
+    }
+
+    function renderUI() {
+      const plan = TRIP_DATA.plans[TRIP_DATA.activePlan];
+      const offset = TRIP_DATA.baseOffsetMinutes;
+
+      // Summary
+      const summaryCard = document.getElementById('summary-card');
+      summaryCard.innerHTML = `
+        <div class="summary-header">
+          <div class="summary-title">${plan.name}</div>
+          <span class="summary-badge ${plan.badgeClass}">${plan.badge}</span>
+        </div>
+        <p class="summary-desc">${plan.desc}</p>
+        <a href="${plan.overallMap}" target="_blank" class="route-link-btn">🗺️ Googleマップ全体ルートを開く</a>
+      `;
+
+      // Timeline
+      const timeline = document.getElementById('timeline-container');
+      timeline.innerHTML = plan.items.map(item => {
+        const start = shiftTime(item.baseStart, offset);
+        const end = shiftTime(item.baseEnd, offset);
+        const timeDisplay = end ? `${start}〜${end}` : start;
+
+        return `
+          <div class="slot-card ${item.type}">
+            <div class="slot-header">
+              <span class="slot-time">${timeDisplay}</span>
+              <span class="slot-badge">${item.badge}</span>
+            </div>
+            <div class="slot-title">${item.title}</div>
+            <div class="slot-details">
+              <div class="detail-row">
+                <span class="detail-tag">行動</span>
+                <span>${item.desc}</span>
+              </div>
+              <div class="detail-row">
+                <span class="detail-tag">🅿️</span>
+                <span>${item.parking}</span>
+              </div>
+            </div>
+            <a href="${item.map}" target="_blank" class="map-btn-mini">📍 Googleマップで場所を確認</a>
+          </div>
+        `;
+      }).join('');
+    }
+
+    function switchPlan(planId) {
+      TRIP_DATA.activePlan = planId;
+      document.getElementById('tab-a').classList.toggle('active', planId === 'A');
+      document.getElementById('tab-b').classList.toggle('active', planId === 'B');
+      renderUI();
+    }
+
+    function setDepartureOffset(mins) {
+      TRIP_DATA.baseOffsetMinutes = mins;
+      const pills = document.querySelectorAll('.time-pill');
+      pills[0].classList.toggle('active', mins === -60);
+      pills[1].classList.toggle('active', mins === 0);
+      renderUI();
+    }
+
+    function copyCurrentPlan() {
+      const plan = TRIP_DATA.plans[TRIP_DATA.activePlan];
+      const offset = TRIP_DATA.baseOffsetMinutes;
+      const lines = [
+        `【${plan.name}】`,
+        `天候考慮: 午前曇り(屋外参拝優先) / 午後雨(屋内・温泉シフト)`,
+        `全体ルート: ${plan.overallMap}`,
+        "",
+        "【タイムライン】"
+      ];
+      plan.items.forEach(it => {
+        const s = shiftTime(it.baseStart, offset);
+        const e = shiftTime(it.baseEnd, offset);
+        lines.push(`■ ${s}〜${e} ${it.title}`);
+        lines.push(`  ・ 行動: ${it.desc}`);
+        lines.push(`  ・ 駐車場: ${it.parking}`);
+        lines.push(`  ・ 地図: ${it.map}`);
+      });
+      navigator.clipboard.writeText(lines.join('\n')).then(() => {
+        alert('プランテキストをクリップボードにコピーしました！そのままLINEに貼り付けられます。');
+      }).catch(() => {
+        alert('コピーに失敗しました。');
+      });
+    }
+
+    // Initial render
+    document.addEventListener('DOMContentLoaded', renderUI);
+  </script>
+</body>
+</html>
