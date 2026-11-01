@@ -73,10 +73,10 @@
     .weather-icon { font-size: 1.5rem; line-height: 1; }
     .weather-body strong { color: #60a5fa; }
 
-    /* Switch Tabs */
+    /* Switch Tabs (3 Plans) */
     .tab-group {
       display: flex;
-      gap: 8px;
+      gap: 6px;
       margin-bottom: 12px;
     }
     .tab-btn {
@@ -84,9 +84,9 @@
       background: var(--card-bg);
       border: 1px solid var(--border);
       color: var(--text-muted);
-      padding: 10px 8px;
+      padding: 10px 4px;
       border-radius: 10px;
-      font-size: 0.88rem;
+      font-size: 0.84rem;
       font-weight: 600;
       cursor: pointer;
       text-align: center;
@@ -100,7 +100,7 @@
     }
     .tab-btn small {
       display: block;
-      font-size: 0.72rem;
+      font-size: 0.7rem;
       font-weight: 400;
       opacity: 0.85;
       margin-top: 2px;
@@ -158,8 +158,9 @@
       border-radius: 6px;
       font-weight: 600;
     }
-    .badge-a { background: rgba(16, 185, 129, 0.2); color: #34d399; border: 1px solid #10b981; }
-    .badge-b { background: rgba(245, 158, 11, 0.2); color: #fbbf24; border: 1px solid #f59e0b; }
+    .badge-1 { background: rgba(16, 185, 129, 0.2); color: #34d399; border: 1px solid #10b981; }
+    .badge-2 { background: rgba(56, 189, 248, 0.2); color: #7dd3fc; border: 1px solid #38bdf8; }
+    .badge-3 { background: rgba(245, 158, 11, 0.2); color: #fbbf24; border: 1px solid #f59e0b; }
     .summary-desc { font-size: 0.82rem; color: var(--text-muted); margin-bottom: 10px; }
     .route-link-btn {
       display: inline-flex;
@@ -221,7 +222,7 @@
       margin-bottom: 12px;
     }
 
-    /* 7 Factors Grid (Expanded) */
+    /* 7 Factors Grid */
     .factors-box {
       background: var(--card-inner);
       border: 1px solid rgba(255, 255, 255, 0.08);
@@ -254,14 +255,6 @@
       color: #e2e8f0;
       line-height: 1.45;
       padding-left: 20px;
-    }
-    .factor-content ul {
-      list-style-type: disc;
-      padding-left: 16px;
-      margin-top: 2px;
-    }
-    .factor-content li {
-      margin-bottom: 2px;
     }
 
     .map-btn-inline {
@@ -317,7 +310,7 @@
       <div class="weather-icon">☁️➔🌧️</div>
       <div class="weather-body">
         <strong>天候予測: 最初は曇り、午後から雨予報</strong><br>
-        午前中の曇天のうちに外観・参拝（内宮または夫婦岩）を前倒し攻略。雨が本降りになる午後は屋内散策（おかげ横丁・鳥羽水族館・温泉宿）へ即時シフト。
+        午前中の曇天のうちに外観・参拝（内宮、外宮、夫婦岩）を前倒し攻略。雨が本降りになる午後は屋内散策（おかげ横丁・鳥羽水族館・温泉宿）へ即時シフト。
       </div>
     </div>
 
@@ -330,15 +323,19 @@
       </div>
     </div>
 
-    <!-- Plan Tabs -->
+    <!-- Plan Tabs (3 Plans) -->
     <div class="tab-group">
-      <button class="tab-btn active" id="tab-a" onclick="switchPlan('A')">
-        ⛩️ プランA：内宮直撃
-        <small>渋滞前・雨前先攻</small>
+      <button class="tab-btn active" id="tab-1" onclick="switchPlan('1')">
+        ⛩️ プラン1：内宮直行
+        <small>混雑前・雨前先攻</small>
       </button>
-      <button class="tab-btn" id="tab-b" onclick="switchPlan('B')">
-        🌊 プランB：夫婦岩迂回
-        <small>内宮満車・雨天時BCP</small>
+      <button class="tab-btn" id="tab-2" onclick="switchPlan('2')">
+        🌲 プラン2：外宮先拝
+        <small>伝統の正統順序</small>
+      </button>
+      <button class="tab-btn" id="tab-3" onclick="switchPlan('3')">
+        🌊 プラン3：夫婦岩迂回
+        <small>満車・雨天回避</small>
       </button>
     </div>
 
@@ -361,16 +358,16 @@
 
   <script>
     /**
-     * 宣言型旅程データ（①〜⑦全要素を内包した完全展開構造）
+     * 3大プラン完全定義（①〜⑦全要素を内包した完全展開構造）
      */
     const TRIP_DATA = {
       baseOffsetMinutes: 0,
-      activePlan: 'A',
+      activePlan: '1',
       plans: {
-        A: {
-          name: "プランA：内宮直行・早朝逃げ切りルート",
-          badge: "推奨本命",
-          badgeClass: "badge-a",
+        '1': {
+          name: "プラン1：内宮直行ルート（混雑前・雨前先攻）",
+          badge: "早朝本命",
+          badgeClass: "badge-1",
           desc: "朝7時（または6時）に出発し、渋滞と午後雨の前に内宮・おかげ横丁を最速攻略するメイン戦略。",
           overallMap: "https://www.google.com/maps/dir/?api=1&origin=愛知県&destination=鳥羽駅&waypoints=伊勢神宮内宮",
           items: [
@@ -380,12 +377,12 @@
               title: "実家出発 ➔ 伊勢神宮 内宮直行",
               factors: {
                 overview: "滞在目的: 渋滞回避＆午前中の曇天のうちに内宮・おかげ横丁を先攻攻略<br>・ 一般平均滞在時間: 105分 / 想定滞在時間: 105分",
-                tactics: "7:00発（または6:00前倒し発）で伊勢道直行。直近A駐車場を目指すが、宇治浦田で列があれば即B駐車場（河川敷）へ回送。<br>・ 満車・大渋滞時の即時切替: 宇治浦田が完全に詰まっている場合は、即座に「プランB（夫婦岩・二見浦）」へ迂回。",
+                tactics: "7:00発（または6:00前倒し発）で伊勢道直行。直近A駐車場を目指すが、宇治浦田で列があれば即B駐車場（河川敷）へ回送。<br>・ 満車時の切替: 宇治浦田が完全に詰まっている場合は、即座にプラン3（夫婦岩・二見浦）へ迂回。",
                 mustTry: "朝一番の静寂な東名阪〜伊勢道クリア走行、雨天前の神域直行",
                 plusOne: "安濃SA（津ぎょうざ・伊勢茶ソフト・手洗い休憩）",
                 tips: "正宮参拝の前に宇治橋前ロータリーで同乗者・荷物を降ろし、運転手のみB駐車場へ回送すると家族の歩行負担が半減。",
-                transit: "車移動（東名阪道〜伊勢道経由、約110km）。<br>・ 駐車場判定: 市営A駐車場【判定: △（混雑）】/ 市営B駐車場【判定: ◎（収容1500台）】/ 二見迂回【判定: BCP◎】",
-                skipLimit: "09:00までに内宮駐車場へ入れない場合は即座にプランB（二見興玉神社・夫婦岩）へ舵を切る",
+                transit: "車移動（東名阪道〜伊勢道経由、約110km）。<br>・ 駐車場判定: 市営A駐車場【判定: △（混雑）】/ 市営B駐車場【判定: ◎（収容1500台）】/ 二見迂回【判定: 迂回◎】",
+                skipLimit: "09:00までに内宮駐車場へ入れない場合は即座にプラン3（夫婦岩）へ舵を切る",
                 mapUrl: "https://www.google.com/maps/search/?api=1&query=伊勢市営宇治駐車場"
               }
             },
@@ -451,11 +448,95 @@
             }
           ]
         },
-        B: {
-          name: "プランB：夫婦岩・二見迂回ルート（内宮満車・雨天時BCP）",
-          badge: "満車・雨天BCP",
-          badgeClass: "badge-b",
-          desc: "内宮周辺の渋滞が激しい、または内宮駐車場進入不可時の即時切替プラン。二見・夫婦岩から入り午後は完全屋内へ。",
+        '2': {
+          name: "プラン2：外宮先拝ルート（伝統の正統参拝順序）",
+          badge: "伝統正統派",
+          badgeClass: "badge-2",
+          desc: "古来の習わし「外宮先拝」に則り、外宮を先に参拝してから内宮・おかげ横丁へ向かう王道ルート。",
+          overallMap: "https://www.google.com/maps/dir/?api=1&origin=愛知県&destination=鳥羽駅&waypoints=伊勢神宮外宮%7C伊勢神宮内宮",
+          items: [
+            {
+              baseStart: "07:00", baseEnd: "08:45",
+              type: "must", badgeClass: "badge-must", badgeText: "🔴 MUST:移動",
+              title: "実家出発 ➔ 伊勢神宮 外宮（豊受大神宮）直行",
+              factors: {
+                overview: "滞在目的: 伊勢ICの渋滞を避け、伊勢西ICまたは伊勢ICから外宮駐車場へ直行<br>・ 一般平均滞在時間: 105分 / 想定滞在時間: 105分",
+                tactics: "外宮周辺は内宮ほど渋滞しないため、朝一番に外宮の無料駐車場へ滑り込むのが最も容易。",
+                mustTry: "伊勢参宮の正統作法である外宮先拝（げくうせんぱい）のスタート",
+                plusOne: "安濃SA休憩",
+                tips: "外宮参拝は手短（45分）に済ませ、10時前には内宮へ向けて出発するのが内宮渋滞回避のカギ。",
+                transit: "車移動（東名阪〜伊勢道）。外宮第1〜第3駐車場（無料・約440台）【判定: ◎】",
+                skipLimit: "09:00までに外宮到着",
+                mapUrl: "https://www.google.com/maps/search/?api=1&query=伊勢神宮+外宮"
+              }
+            },
+            {
+              baseStart: "08:45", baseEnd: "09:45",
+              type: "must", badgeClass: "badge-must", badgeText: "⛩️ MUST:参拝",
+              title: "外宮（豊受大神宮）参拝",
+              factors: {
+                overview: "滞在目的: 衣食住の守り神・豊受大御神への参拝、古殿地・三ツ石拝観<br>・ 一般平均滞在時間: 60分 / 想定滞在時間: 45分",
+                tactics: "表参道火除橋から左側通行で進む。正宮を参拝後、風宮・土宮を巡り10:00前には出庫。",
+                mustTry: "正宮（豊受大神宮）の厳かな檜造り、三ツ石の注連縄",
+                plusOne: "赤福 外宮前特設店、豚捨 外宮前店（コロッケ）",
+                tips: "内宮周辺の渋滞が始まっているため、内宮直近A駐車場は狙わず最初からB駐車場（河川敷）へ直行。",
+                transit: "外宮 ➔ 内宮（県道12号・御幸道路経由、約4.5km、通常15分）。",
+                skipLimit: "10:00までに外宮出庫",
+                mapUrl: "https://www.google.com/maps/search/?api=1&query=伊勢神宮+外宮"
+              }
+            },
+            {
+              baseStart: "10:15", baseEnd: "13:45",
+              type: "must", badgeClass: "badge-must", badgeText: "⛩️ MUST:参拝・昼食",
+              title: "内宮（皇大神宮）参拝 ＆ おかげ横丁昼食",
+              factors: {
+                overview: "滞在目的: 天照大御神への正宮参拝、五十鈴川御手洗場、おはらい町・おかげ横丁ランチ<br>・ 一般平均滞在時間: 180分 / 想定滞在時間: 150分",
+                tactics: "外宮から到着時は市営B駐車場（河川敷）へ直行。宇治橋手前で家族を降ろし運転手のみ回送。<br>・ 到着後すぐ（11:00前）におかげ横丁で昼食（ふくすけ・すし久・赤福）を済ませてから内宮正宮へ参拝。",
+                mustTry: "赤福本店の出来立て赤福餅、ふくすけ伊勢うどん、すし久てこね寿司",
+                plusOne: "豚捨ミンチカツ、まるごと果汁店、五十鈴川の清流",
+                tips: "午後は雨が降るため、昼食後は早めに参拝を済ませて鳥羽方面へ抜ける。",
+                transit: "駐車場: 市営B駐車場利用【判定: ○】（内宮まで徒歩10分）。",
+                skipLimit: "14:00までに内宮出庫",
+                mapUrl: "https://www.google.com/maps/search/?api=1&query=伊勢神宮+内宮"
+              }
+            },
+            {
+              baseStart: "14:15", baseEnd: "15:00",
+              type: "opt", badgeClass: "badge-opt", badgeText: "🌊 OPT:景観",
+              title: "二見興玉神社・夫婦岩（余力時）または宿直行",
+              factors: {
+                overview: "滞在目的: 夫婦岩拝観（雨脚次第で立ち寄りまたはスキップ）<br>・ 一般平均滞在時間: 45分 / 想定滞在時間: 30分",
+                tactics: "雨が強ければ立ち寄らず宿へ直行。小雨なら無料駐車場から夫婦岩を拝観。",
+                mustTry: "二見浦の荒波と夫婦岩の大注連縄",
+                plusOne: "二見浦シーパラダイス（屋内雨宿り）",
+                tips: "宿の温泉でゆっくり温まる準備。",
+                transit: "車移動: 内宮 ➔ 二見浦（約15分）。無料駐車場あり【判定: ◎】",
+                skipLimit: "本降りならスキップして宿直行",
+                mapUrl: "https://www.google.com/maps/search/?api=1&query=二見興玉神社"
+              }
+            },
+            {
+              baseStart: "15:30", baseEnd: "翌日",
+              type: "must", badgeClass: "badge-must", badgeText: "♨️ MUST:宿泊",
+              title: "鳥羽・志摩 温泉宿チェックイン",
+              factors: {
+                overview: "滞在目的: 温泉露天風呂、旬の海鮮会席、体力完全回復<br>・ 想定滞在時間: 翌朝09:00まで",
+                tactics: "早めのチェックインで夕方の露天風呂を確保。22時早め就寝。",
+                mustTry: "伊勢志摩の旬の海鮮会席（伊勢海老・鮑）、展望露天風呂",
+                plusOne: "鳥羽一番街、宿のティーラウンジ",
+                tips: "翌朝（11/3祝日）は鳥羽水族館（屋内）や松阪へ直行する動線を共有。",
+                transit: "車移動: 二見 ➔ 鳥羽（約10〜15分）。宿専用駐車場完備【判定: ◎】",
+                skipLimit: "17:30最終チェックイン",
+                mapUrl: "https://www.google.com/maps/search/?api=1&query=鳥羽温泉郷"
+              }
+            }
+          ]
+        },
+        '3': {
+          name: "プラン3：夫婦岩・二見迂回ルート（満車・雨天回避型）",
+          badge: "満車・雨天回避",
+          badgeClass: "badge-3",
+          desc: "内宮周辺の渋滞が激しい、または駐車場進入不可時の切替プラン。二見・夫婦岩から入り午後は完全屋内へ。",
           overallMap: "https://www.google.com/maps/dir/?api=1&origin=愛知県&destination=鳥羽駅&waypoints=二見興玉神社夫婦岩",
           items: [
             {
@@ -618,8 +699,9 @@
 
     function switchPlan(planId) {
       TRIP_DATA.activePlan = planId;
-      document.getElementById('tab-a').classList.toggle('active', planId === 'A');
-      document.getElementById('tab-b').classList.toggle('active', planId === 'B');
+      document.getElementById('tab-1').classList.toggle('active', planId === '1');
+      document.getElementById('tab-2').classList.toggle('active', planId === '2');
+      document.getElementById('tab-3').classList.toggle('active', planId === '3');
       renderUI();
     }
 
@@ -657,7 +739,7 @@
         lines.push(``);
       });
       navigator.clipboard.writeText(lines.join('\n')).then(() => {
-        alert('①〜⑦完全展開プランをクリップボードにコピーしました！そのままLINEに貼り付けられます。');
+        alert('選択中プラン（①〜⑦全文）をクリップボードにコピーしました！そのままLINEに貼り付けられます。');
       }).catch(() => {
         alert('コピーに失敗しました。');
       });
