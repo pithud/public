@@ -736,6 +736,128 @@
   </div>
 
   <script>
+    const COMMON_DAY2 = {
+              dayNum: 2,
+              dateStr: "11月3日（火・祝）",
+              subTitle: "鳥羽発 ➔ 鳥羽水族館 ➔ 鳥羽一番街 ➔ ミキモト真珠島 ➔ 高蔵寺駅帰着",
+              macroRoute: ["鳥羽 戸田家", "鳥羽水族館", "鳥羽一番街（海鮮昼食）", "ミキモト真珠島", "亀山PA", "御在所SA", "高蔵寺駅"],
+              items: [
+                {
+                  baseStart: "08:45", baseEnd: "12:15",
+                  avgDuration: "240分", estDuration: "200分",
+                  type: "must", badgeClass: "badge-must", badgeText: "🐬 MUST:水族館",
+                  title: "鳥羽水族館（日本一の飼育種類数・全天候型）",
+                  tacticsFlowTitle: "水族館内の一筆書き立ち回り（自由導線攻略）",
+                  tacticsSteps: [
+                    { step: 1, text: "開館直後に『極地の海』へ直行し、混雑前にラッコの遊泳・お食事タイムを確保。", tag: "必須", isSkip: false },
+                    { step: 2, text: "隣の『人魚の海』へ進み、国内唯一のジュゴン『セレナ』をじっくり鑑賞。", tag: "必須", isSkip: false },
+                    { step: 3, text: "パフォーマンススタジアムへ移動し、アシカショー観覧（約15分）。", tag: "必須", isSkip: false },
+                    { step: 4, text: "『コーラルリーフ・ダイビング』大水槽・スナメリ・カピバラを巡回。", tag: "おすすめ", isSkip: false },
+                    { step: 5, text: "館外連絡デッキの海獣の王国（トド・アザラシ）。", tag: "雨天時スキップ可", isSkip: true },
+                    { step: 6, text: "メインショップでお土産を購入し、12:15に駐車場を出庫。", tag: "必須", isSkip: false }
+                  ],
+                  bonusSpots: [
+                    { name: "鳥羽城跡（城山公園）", desc: "九鬼嘉隆が築城した水軍の城。水族館裏手から鳥羽湾を一望", mapUrl: "https://www.google.com/maps/search/?api=1&query=鳥羽城跡" },
+                    { name: "イルカ島（志摩マリンレジャー）", desc: "水族館前から観光遊覧船で渡れるイルカのテーマアイランド", mapUrl: "https://www.google.com/maps/search/?api=1&query=イルカ島+鳥羽" }
+                  ],
+                  factors: {
+                    overview: "滞在目的: 飼育種数日本一（約1,200種）。ジュゴン、ラッコ、スナメリ、アシカショー観覧<br>・ 想定滞在時間: 200分",
+                    tactics: "祝日のため開館直後（09:00前）に入館。順路のない自由導線のため、人気が集中するラッコのお食事タイムとアシカショーを最優先で時間確認。",
+                    mustTry: "国内唯一飼育のジュゴン「セレナ」、ラッコの貝殻割りジャンプ、セイウチふれあいタイム",
+                    plusOne: "館内メインショップ（ラッコ・ジュゴングッズ限定販売）",
+                    tips: "全館完全屋内構造のため、雨でも寒さでも全く問題なし。コインロッカーに手荷物を預けて身軽に行動。",
+                    transit: "戸田家から車で約5分（徒歩でも10分程度）。専用駐車場（1日1,000円、約500台収容）。",
+                    skipLimit: "12:30以降は駐車場出庫口が混み始めるため、12:15には退出",
+                    mapUrl: "https://www.google.com/maps/search/?api=1&query=鳥羽水族館"
+                  }
+                },
+                {
+                  baseStart: "12:30", baseEnd: "14:00",
+                  avgDuration: "90分", estDuration: "90分",
+                  type: "must", badgeClass: "badge-must", badgeText: "🦞 MUST:海鮮昼食",
+                  title: "鳥羽駅前 昼食（海鮮食堂 漣 または 鳥羽一番街）",
+                  tacticsFlowTitle: "祝日昼の待ち時間短縮立ち回り",
+                  tacticsSteps: [
+                    { step: 1, text: "佐田浜第1駐車場に駐車（最初の1時間無料）。", tag: "必須", isSkip: false },
+                    { step: 2, text: "『漣 鳥羽本店』の店頭へ向かいウェイティングボードに名前を記入。", tag: "必須", isSkip: false },
+                    { step: 3, text: "待ち時間が40分以上の場合は、向かいの『鳥羽一番街』3Fレストラン街へ即時切り替え。", tag: "混雑回避判断", isSkip: false },
+                    { step: 4, text: "名物の開き大海老フライまたは海鮮丼を堪能。", tag: "必須", isSkip: false },
+                    { step: 5, text: "食後に鳥羽一番街1F〜2Fで赤福や真珠小物を散策。", tag: "混雑時スキップ可", isSkip: true }
+                  ],
+                  bonusSpots: [
+                    { name: "鳥羽一番街 3階展望レストラン街", desc: "鳥羽湾の港を行き交う船を見下ろしながら海鮮重や定食を楽しめる", mapUrl: "https://www.google.com/maps/search/?api=1&query=鳥羽一番街" },
+                    { name: "海の駅 黒潮パールロード店", desc: "鳥羽から車で15分。生簀から引き上げた活魚の豪快海鮮丼で有名", mapUrl: "https://www.google.com/maps/search/?api=1&query=海の駅+黒潮+パールロード店" }
+                  ],
+                  factors: {
+                    overview: "滞在目的: 鳥羽名物の開き大海老フライ、伊勢湾の獲れたて海鮮丼、焼き牡蠣の昼食<br>・ 想定滞在時間: 90分",
+                    tactics: "開き大海老フライの名店『漣（さざなみ）鳥羽本店』または鳥羽駅前『鳥羽一番街』レストラン街へ。祝日昼のため名簿記入を迅速に。",
+                    mustTry: "漣（さざなみ）の「名物・開き海老フライ定食」（うちわのような巨大エビフライ）",
+                    plusOne: "鳥羽一番街3F味の街「えびすや」（てこね寿司・あおさ汁）",
+                    tips: "漣が長蛇の列の場合は鳥羽一番街へ移動すれば複数の店舗から選べて回転も速い。",
+                    transit: "水族館から車で3分（または徒歩移動）。佐田浜第1駐車場（1時間無料）。",
+                    skipLimit: "13:30までに着席できない場合はテイクアウト弁当に切り替え真珠島へ",
+                    mapUrl: "https://www.google.com/maps/search/?api=1&query=海鮮食堂+漣+鳥羽本店"
+                  }
+                },
+                {
+                  baseStart: "14:15", baseEnd: "15:45",
+                  avgDuration: "100分", estDuration: "90分",
+                  type: "flex", badgeClass: "badge-flex", badgeText: "💎 FLEX:真珠文化",
+                  title: "ミキモト真珠島（世界初真珠養殖成功の地）",
+                  tacticsFlowTitle: "島内の一筆書き見学順路（海女実演連動）",
+                  tacticsSteps: [
+                    { step: 1, text: "屋根付きの真珠橋を渡り島内へ入場。", tag: "必須", isSkip: false },
+                    { step: 2, text: "海女実演スタンドへ直行し、毎時20分頃の素潜り実演を見学（屋根付き席）。", tag: "必須", isSkip: false },
+                    { step: 3, text: "真珠博物館で『真珠五重塔』『地球儀』の超絶工芸品を鑑賞。", tag: "必須", isSkip: false },
+                    { step: 4, text: "御木本幸吉記念館：創業者の不屈の生涯展示。", tag: "時短時スキップ可", isSkip: true },
+                    { step: 5, text: "パールプラザでお土産を物色し、佐田浜駐車場へ戻る。", tag: "おすすめ", isSkip: false }
+                  ],
+                  bonusSpots: [
+                    { name: "御木本幸吉記念館", desc: "『世界中の女性の首を真珠で飾って見せる』と誓った創業者の生涯展示", mapUrl: "https://www.google.com/maps/search/?api=1&query=御木本幸吉記念館" },
+                    { name: "日和山展望台", desc: "鳥羽駅から徒歩15分。鳥羽湾の絶景と方角石が残る隠れたパノラマ台", mapUrl: "https://www.google.com/maps/search/?api=1&query=日和山展望台+鳥羽" }
+                  ],
+                  factors: {
+                    overview: "滞在目的: 御木本幸吉の記念館、真珠博物館、伝統の白磯着をまとった海女の実演見学<br>・ 想定滞在時間: 90分",
+                    tactics: "鳥羽駅から連絡橋（真珠橋）を渡って入場。海女の実演時間（毎時20分頃）に合わせてスタンド席へ。博物館でアンティークジュエリーを鑑賞。",
+                    mustTry: "海女スタンドからの素潜り実演（強風時以外毎日開催）、真珠博物館の豪華工芸品",
+                    plusOne: "パールプラザ（本真珠アクセサリー・ミキモトコスメティックス）",
+                    tips: "海女実演スタンドには屋根があるため小雨でも問題なく見学可能。",
+                    transit: "鳥羽駅から徒歩約5分。佐田浜駐車場からそのまま徒歩アクセス可能。",
+                    skipLimit: "帰路渋滞を警戒して早めに帰りたい場合は見学時間を60分に短縮",
+                    mapUrl: "https://www.google.com/maps/search/?api=1&query=ミキモト真珠島"
+                  }
+                },
+                {
+                  baseStart: "16:00", baseEnd: "18:30",
+                  avgDuration: "180分", estDuration: "150分",
+                  type: "must", badgeClass: "badge-must", badgeText: "🚗 MUST:帰路",
+                  title: "鳥羽 出発 ➔ 亀山PA・御在所SA ➔ 高蔵寺駅 帰着",
+                  tacticsFlowTitle: "祝日上り渋滞回避の一筆書き帰還ルート",
+                  tacticsSteps: [
+                    { step: 1, text: "鳥羽を出発し、伊勢二見鳥羽ラインから伊勢道へ進入。", tag: "必須", isSkip: false },
+                    { step: 2, text: "亀山JCT手前の嬉野PAまたは亀山PAでトイレ休憩＆東名阪の渋滞情報確認。", tag: "必須", isSkip: false },
+                    { step: 3, text: "渋滞が20km以上の激しい場合は、新名神・鈴鹿PAルートへの迂回を判断。", tag: "渋滞回避判断", isSkip: false },
+                    { step: 4, text: "御在所SA上りで夕食（名古屋飯）または安永餅購入。", tag: "状況次第スキップ可", isSkip: true },
+                    { step: 5, text: "名古屋第二環状自動車道〜春日井ICを下りて高蔵寺駅へ無事帰着。", tag: "必須", isSkip: false }
+                  ],
+                  bonusSpots: [
+                    { name: "亀山PA 上り", desc: "三重のB級グルメ『亀山みそ焼きうどん』の本場定食が味わえるPA", mapUrl: "https://www.google.com/maps/search/?api=1&query=亀山PA+上り" },
+                    { name: "御在所SA 上り", desc: "三重・名古屋のグルメが集結する中京圏屈指の巨大SA。夕食・給油に最適", mapUrl: "https://www.google.com/maps/search/?api=1&query=御在所SA+上り" }
+                  ],
+                  factors: {
+                    overview: "滞在目的: 安全運転での帰路走行。祝日夕方の東名阪渋滞を見越した早めの帰投<br>・ 所要時間: 約150分（距離約135km）",
+                    tactics: "伊勢二見鳥羽ラインから伊勢道へ。亀山JCT〜四日市ICの上り線渋滞情報をナビで常時確認。渋滞が20km以上の場合は新名神・鈴鹿PAルートへの迂回を検討。",
+                    mustTry: "亀山PA名物「みそ焼きうどん」、御在所SA上り「安永餅」「伊勢名物お土産買い足し」",
+                    plusOne: "湾岸長島PA（足湯とナガシマスパーランド夜景）",
+                    tips: "祝日夕方は四日市付近で渋滞が頻発するため、ドライバー交代またはSAでの早めの夕食休憩を推奨。",
+                    transit: "高速道路走行（伊勢道〜東名阪道〜名古屋第二環状〜春日井IC〜高蔵寺駅）。",
+                    skipLimit: "渋滞が30分以上延びる場合は御在所SAで夕食をとってピークをやり過ごす",
+                    mapUrl: "https://www.google.com/maps/search/?api=1&query=高蔵寺駅"
+                  }
+                }
+              ]
+            };
+
     const TRIP_DATA = {
       baseOffsetMinutes: 0,
       activePlan: '1',
@@ -898,127 +1020,7 @@
                 }
               ]
             },
-            {
-              dayNum: 2,
-              dateStr: "11月3日（火・祝）",
-              subTitle: "鳥羽発 ➔ 鳥羽水族館 ➔ 鳥羽一番街 ➔ ミキモト真珠島 ➔ 高蔵寺駅帰着",
-              macroRoute: ["鳥羽 戸田家", "鳥羽水族館", "鳥羽一番街（海鮮昼食）", "ミキモト真珠島", "亀山PA", "御在所SA", "高蔵寺駅"],
-              items: [
-                {
-                  baseStart: "08:45", baseEnd: "12:15",
-                  avgDuration: "240分", estDuration: "200分",
-                  type: "must", badgeClass: "badge-must", badgeText: "🐬 MUST:水族館",
-                  title: "鳥羽水族館（日本一の飼育種類数・全天候型）",
-                  tacticsFlowTitle: "水族館内の一筆書き立ち回り（自由導線攻略）",
-                  tacticsSteps: [
-                    { step: 1, text: "開館直後に『極地の海』へ直行し、混雑前にラッコの遊泳・お食事タイムを確保。", tag: "必須", isSkip: false },
-                    { step: 2, text: "隣の『人魚の海』へ進み、国内唯一のジュゴン『セレナ』をじっくり鑑賞。", tag: "必須", isSkip: false },
-                    { step: 3, text: "パフォーマンススタジアムへ移動し、アシカショー観覧（約15分）。", tag: "必須", isSkip: false },
-                    { step: 4, text: "『コーラルリーフ・ダイビング』大水槽・スナメリ・カピバラを巡回。", tag: "おすすめ", isSkip: false },
-                    { step: 5, text: "館外連絡デッキの海獣の王国（トド・アザラシ）。", tag: "雨天時スキップ可", isSkip: true },
-                    { step: 6, text: "メインショップでお土産を購入し、12:15に駐車場を出庫。", tag: "必須", isSkip: false }
-                  ],
-                  bonusSpots: [
-                    { name: "鳥羽城跡（城山公園）", desc: "九鬼嘉隆が築城した水軍の城。水族館裏手から鳥羽湾を一望", mapUrl: "https://www.google.com/maps/search/?api=1&query=鳥羽城跡" },
-                    { name: "イルカ島（志摩マリンレジャー）", desc: "水族館前から観光遊覧船で渡れるイルカのテーマアイランド", mapUrl: "https://www.google.com/maps/search/?api=1&query=イルカ島+鳥羽" }
-                  ],
-                  factors: {
-                    overview: "滞在目的: 飼育種数日本一（約1,200種）。ジュゴン、ラッコ、スナメリ、アシカショー観覧<br>・ 想定滞在時間: 200分",
-                    tactics: "祝日のため開館直後（09:00前）に入館。順路のない自由導線のため、人気が集中するラッコのお食事タイムとアシカショーを最優先で時間確認。",
-                    mustTry: "国内唯一飼育のジュゴン「セレナ」、ラッコの貝殻割りジャンプ、セイウチふれあいタイム",
-                    plusOne: "館内メインショップ（ラッコ・ジュゴングッズ限定販売）",
-                    tips: "全館完全屋内構造のため、雨でも寒さでも全く問題なし。コインロッカーに手荷物を預けて身軽に行動。",
-                    transit: "戸田家から車で約5分（徒歩でも10分程度）。専用駐車場（1日1,000円、約500台収容）。",
-                    skipLimit: "12:30以降は駐車場出庫口が混み始めるため、12:15には退出",
-                    mapUrl: "https://www.google.com/maps/search/?api=1&query=鳥羽水族館"
-                  }
-                },
-                {
-                  baseStart: "12:30", baseEnd: "14:00",
-                  avgDuration: "90分", estDuration: "90分",
-                  type: "must", badgeClass: "badge-must", badgeText: "🦞 MUST:海鮮昼食",
-                  title: "鳥羽駅前 昼食（海鮮食堂 漣 または 鳥羽一番街）",
-                  tacticsFlowTitle: "祝日昼の待ち時間短縮立ち回り",
-                  tacticsSteps: [
-                    { step: 1, text: "佐田浜第1駐車場に駐車（最初の1時間無料）。", tag: "必須", isSkip: false },
-                    { step: 2, text: "『漣 鳥羽本店』の店頭へ向かいウェイティングボードに名前を記入。", tag: "必須", isSkip: false },
-                    { step: 3, text: "待ち時間が40分以上の場合は、向かいの『鳥羽一番街』3Fレストラン街へ即時切り替え。", tag: "混雑回避判断", isSkip: false },
-                    { step: 4, text: "名物の開き大海老フライまたは海鮮丼を堪能。", tag: "必須", isSkip: false },
-                    { step: 5, text: "食後に鳥羽一番街1F〜2Fで赤福や真珠小物を散策。", tag: "混雑時スキップ可", isSkip: true }
-                  ],
-                  bonusSpots: [
-                    { name: "鳥羽一番街 3階展望レストラン街", desc: "鳥羽湾の港を行き交う船を見下ろしながら海鮮重や定食を楽しめる", mapUrl: "https://www.google.com/maps/search/?api=1&query=鳥羽一番街" },
-                    { name: "海の駅 黒潮パールロード店", desc: "鳥羽から車で15分。生簀から引き上げた活魚の豪快海鮮丼で有名", mapUrl: "https://www.google.com/maps/search/?api=1&query=海の駅+黒潮+パールロード店" }
-                  ],
-                  factors: {
-                    overview: "滞在目的: 鳥羽名物の開き大海老フライ、伊勢湾の獲れたて海鮮丼、焼き牡蠣の昼食<br>・ 想定滞在時間: 90分",
-                    tactics: "開き大海老フライの名店『漣（さざなみ）鳥羽本店』または鳥羽駅前『鳥羽一番街』レストラン街へ。祝日昼のため名簿記入を迅速に。",
-                    mustTry: "漣（さざなみ）の「名物・開き海老フライ定食」（うちわのような巨大エビフライ）",
-                    plusOne: "鳥羽一番街3F味の街「えびすや」（てこね寿司・あおさ汁）",
-                    tips: "漣が長蛇の列の場合は鳥羽一番街へ移動すれば複数の店舗から選べて回転も速い。",
-                    transit: "水族館から車で3分（または徒歩移動）。佐田浜第1駐車場（1時間無料）。",
-                    skipLimit: "13:30までに着席できない場合はテイクアウト弁当に切り替え真珠島へ",
-                    mapUrl: "https://www.google.com/maps/search/?api=1&query=海鮮食堂+漣+鳥羽本店"
-                  }
-                },
-                {
-                  baseStart: "14:15", baseEnd: "15:45",
-                  avgDuration: "100分", estDuration: "90分",
-                  type: "flex", badgeClass: "badge-flex", badgeText: "💎 FLEX:真珠文化",
-                  title: "ミキモト真珠島（世界初真珠養殖成功の地）",
-                  tacticsFlowTitle: "島内の一筆書き見学順路（海女実演連動）",
-                  tacticsSteps: [
-                    { step: 1, text: "屋根付きの真珠橋を渡り島内へ入場。", tag: "必須", isSkip: false },
-                    { step: 2, text: "海女実演スタンドへ直行し、毎時20分頃の素潜り実演を見学（屋根付き席）。", tag: "必須", isSkip: false },
-                    { step: 3, text: "真珠博物館で『真珠五重塔』『地球儀』の超絶工芸品を鑑賞。", tag: "必須", isSkip: false },
-                    { step: 4, text: "御木本幸吉記念館：創業者の不屈の生涯展示。", tag: "時短時スキップ可", isSkip: true },
-                    { step: 5, text: "パールプラザでお土産を物色し、佐田浜駐車場へ戻る。", tag: "おすすめ", isSkip: false }
-                  ],
-                  bonusSpots: [
-                    { name: "御木本幸吉記念館", desc: "『世界中の女性の首を真珠で飾って見せる』と誓った創業者の生涯展示", mapUrl: "https://www.google.com/maps/search/?api=1&query=御木本幸吉記念館" },
-                    { name: "日和山展望台", desc: "鳥羽駅から徒歩15分。鳥羽湾の絶景と方角石が残る隠れたパノラマ台", mapUrl: "https://www.google.com/maps/search/?api=1&query=日和山展望台+鳥羽" }
-                  ],
-                  factors: {
-                    overview: "滞在目的: 御木本幸吉の記念館、真珠博物館、伝統の白磯着をまとった海女の実演見学<br>・ 想定滞在時間: 90分",
-                    tactics: "鳥羽駅から連絡橋（真珠橋）を渡って入場。海女の実演時間（毎時20分頃）に合わせてスタンド席へ。博物館でアンティークジュエリーを鑑賞。",
-                    mustTry: "海女スタンドからの素潜り実演（強風時以外毎日開催）、真珠博物館の豪華工芸品",
-                    plusOne: "パールプラザ（本真珠アクセサリー・ミキモトコスメティックス）",
-                    tips: "海女実演スタンドには屋根があるため小雨でも問題なく見学可能。",
-                    transit: "鳥羽駅から徒歩約5分。佐田浜駐車場からそのまま徒歩アクセス可能。",
-                    skipLimit: "帰路渋滞を警戒して早めに帰りたい場合は見学時間を60分に短縮",
-                    mapUrl: "https://www.google.com/maps/search/?api=1&query=ミキモト真珠島"
-                  }
-                },
-                {
-                  baseStart: "16:00", baseEnd: "18:30",
-                  avgDuration: "180分", estDuration: "150分",
-                  type: "must", badgeClass: "badge-must", badgeText: "🚗 MUST:帰路",
-                  title: "鳥羽 出発 ➔ 亀山PA・御在所SA ➔ 高蔵寺駅 帰着",
-                  tacticsFlowTitle: "祝日上り渋滞回避の一筆書き帰還ルート",
-                  tacticsSteps: [
-                    { step: 1, text: "鳥羽を出発し、伊勢二見鳥羽ラインから伊勢道へ進入。", tag: "必須", isSkip: false },
-                    { step: 2, text: "亀山JCT手前の嬉野PAまたは亀山PAでトイレ休憩＆東名阪の渋滞情報確認。", tag: "必須", isSkip: false },
-                    { step: 3, text: "渋滞が20km以上の激しい場合は、新名神・鈴鹿PAルートへの迂回を判断。", tag: "渋滞回避判断", isSkip: false },
-                    { step: 4, text: "御在所SA上りで夕食（名古屋飯）または安永餅購入。", tag: "状況次第スキップ可", isSkip: true },
-                    { step: 5, text: "名古屋第二環状自動車道〜春日井ICを下りて高蔵寺駅へ無事帰着。", tag: "必須", isSkip: false }
-                  ],
-                  bonusSpots: [
-                    { name: "亀山PA 上り", desc: "三重のB級グルメ『亀山みそ焼きうどん』の本場定食が味わえるPA", mapUrl: "https://www.google.com/maps/search/?api=1&query=亀山PA+上り" },
-                    { name: "御在所SA 上り", desc: "三重・名古屋のグルメが集結する中京圏屈指の巨大SA。夕食・給油に最適", mapUrl: "https://www.google.com/maps/search/?api=1&query=御在所SA+上り" }
-                  ],
-                  factors: {
-                    overview: "滞在目的: 安全運転での帰路走行。祝日夕方の東名阪渋滞を見越した早めの帰投<br>・ 所要時間: 約150分（距離約135km）",
-                    tactics: "伊勢二見鳥羽ラインから伊勢道へ。亀山JCT〜四日市ICの上り線渋滞情報をナビで常時確認。渋滞が20km以上の場合は新名神・鈴鹿PAルートへの迂回を検討。",
-                    mustTry: "亀山PA名物「みそ焼きうどん」、御在所SA上り「安永餅」「伊勢名物お土産買い足し」",
-                    plusOne: "湾岸長島PA（足湯とナガシマスパーランド夜景）",
-                    tips: "祝日夕方は四日市付近で渋滞が頻発するため、ドライバー交代またはSAでの早めの夕食休憩を推奨。",
-                    transit: "高速道路走行（伊勢道〜東名阪道〜名古屋第二環状〜春日井IC〜高蔵寺駅）。",
-                    skipLimit: "渋滞が30分以上延びる場合は御在所SAで夕食をとってピークをやり過ごす",
-                    mapUrl: "https://www.google.com/maps/search/?api=1&query=高蔵寺駅"
-                  }
-                }
-              ]
-            }
+            COMMON_DAY2
           ]
         },
         '2': {
@@ -1195,7 +1197,7 @@
                 }
               ]
             },
-            TRIP_DATA.plans['1'].days[1]
+            COMMON_DAY2
           ]
         },
         '3': {
@@ -1347,7 +1349,7 @@
                 }
               ]
             },
-            TRIP_DATA.plans['1'].days[1]
+            COMMON_DAY2
           ]
         }
       }
