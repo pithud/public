@@ -765,6 +765,68 @@ header {
   border-left: 3px solid #38bdf8;
 }
 
+
+/* Lunch 3-Genre Cards & Star Ratings */
+.lunch-genre-section {
+  background: rgba(245, 158, 11, 0.06);
+  border: 1px solid rgba(245, 158, 11, 0.3);
+  border-radius: 10px;
+  padding: 12px;
+  margin-bottom: 12px;
+}
+.lunch-genre-header {
+  font-size: 0.82rem;
+  font-weight: 800;
+  color: #fbbf24;
+  margin-bottom: 8px;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+.lunch-options-grid {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+.lunch-shop-card {
+  background: var(--card-inner);
+  border: 1px solid var(--border-subtle);
+  border-radius: 8px;
+  padding: 10px;
+}
+.lunch-shop-top {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  margin-bottom: 4px;
+}
+.lunch-shop-name {
+  font-size: 0.86rem;
+  font-weight: 800;
+  color: #ffffff;
+}
+.lunch-shop-meta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  margin-bottom: 6px;
+}
+.shop-meta-pill {
+  font-size: 0.72rem;
+  font-weight: 700;
+  padding: 1px 6px;
+  border-radius: 4px;
+}
+.pill-rating { background: rgba(245, 158, 11, 0.2); color: #fbbf24; }
+.pill-time { background: rgba(56, 189, 248, 0.2); color: #38bdf8; }
+.pill-budget { background: rgba(52, 211, 153, 0.2); color: #34d399; }
+.lunch-shop-desc {
+  font-size: 0.76rem;
+  color: #cbd5e1;
+  line-height: 1.4;
+  margin-bottom: 6px;
+}
+
 /* 3 Action Blocks inside expanded slot */
 .action-block-card {
   background: var(--card-inner);
@@ -870,7 +932,7 @@ header {
       <div class="title">🚗 三重・伊勢志摩 リアルタイムナビ</div>
       <div class="header-right">
         <div class="badge-origin">起点: 高蔵寺駅</div>
-        <button class="menu-drawer-btn" onclick="toggleDrawer(true)">☰ 履歴 (v3)</button>
+        <button class="menu-drawer-btn" onclick="toggleDrawer(true)">☰ 履歴 (v4)</button>
       </div>
     </div>
   </header>
@@ -887,15 +949,26 @@ header {
       旅程更新時に過去分が上書き消滅しないよう物理アーカイブされています。いつでも過去プランへ戻せます。
     </div>
 
-    <!-- v3 (Current) -->
+    <!-- v4 (Current) -->
     <div class="version-card current">
-      <span class="version-tag current">🟢 現在表示中 (v3)</span>
+      <span class="version-tag current">🟢 現在表示中 (v4)</span>
+      <div class="version-title">v4: 目的バッジ＆昼食3ジャンル3択完備版</div>
+      <div class="version-desc">
+        ・見出しを【目的】バッジ化（昼食/参拝/移動/宿泊等）<br>
+        ・昼食：伊勢うどん/軽食/てこね寿司の3大ジャンル各店（おすすめ度★・所要時間・予算・マップ付き）<br>
+        ・スイーツ・名所にもおすすめ度・所要時間を完備
+      </div>
+    </div>
+
+    <!-- v3 (Archive) -->
+    <div class="version-card">
+      <span class="version-tag archive">📄 アーカイブ (v3)</span>
       <div class="version-title">v3: ベストプラクティス3層再編版</div>
       <div class="version-desc">
         ・07:00発固定、全枠折りたたみ<br>
-        ・概要の複数行可読化（省略なし）<br>
-        ・展開後は「立ち回り・寄り道判定・必須スペック」の3大アクションブロックに凝縮
+        ・概要の複数行可読化、3大アクションブロック
       </div>
+      <a href="archive/v3.html" target="_blank" class="version-link">このバージョンを開く ↗</a>
     </div>
 
     <!-- v2 (Archive) -->
@@ -903,8 +976,7 @@ header {
       <span class="version-tag archive">📄 アーカイブ (v2)</span>
       <div class="version-title">v2: 高機能SPA復元版</div>
       <div class="version-desc">
-        ・母メモ骨格＋7-Factor詳細分析アコーディオン<br>
-        ・06:00/07:00出発時刻切替スイッチあり
+        ・母メモ骨格＋7-Factor詳細分析アコーディオン
       </div>
       <a href="archive/v2.html" target="_blank" class="version-link">このバージョンを開く ↗</a>
     </div>
@@ -1047,7 +1119,7 @@ header {
                 {
                   baseStart: "07:00", baseEnd: "09:30",
                   avgDuration: "148分", estDuration: "150分（母メモ: 2時間28分、片道4,200円）",
-                  type: "must", badgeClass: "badge-must", badgeText: "🔴 MUST:移動",
+                  type: "must", badgeClass: "badge-must", badgeText: "🚗 【移動】高蔵寺 ➔ 二見浦",
                   title: "高蔵寺駅 出発 ➔ 二見浦・夫婦岩直行",
                   tacticsFlowTitle: "高速道路移動の立ち回り（母メモ指定）",
                   tacticsSteps: [
@@ -1074,7 +1146,7 @@ header {
                 {
                   baseStart: "09:30", baseEnd: "10:30",
                   avgDuration: "60分", estDuration: "60分（母メモ: 1時間位観光 ➜ 10:30発）",
-                  type: "must", badgeClass: "badge-must", badgeText: "🌊 MUST:禊・参拝",
+                  type: "must", badgeClass: "badge-must", badgeText: "⛩️ 【参拝・禊】夫婦岩＆興玉神社",
                   title: "❶ 二見浦・二見興玉神社・夫婦岩 観光（約1時間）",
                   tacticsFlowTitle: "海岸参道と夫婦岩の一筆書き順路",
                   tacticsSteps: [
@@ -1101,7 +1173,7 @@ header {
                 {
                   baseStart: "10:30", baseEnd: "10:55",
                   avgDuration: "20分", estDuration: "20〜25分（母メモ: 車で20分位）",
-                  type: "must", badgeClass: "badge-must", badgeText: "🔴 MUST:移動",
+                  type: "must", badgeClass: "badge-must", badgeText: "🚗 【移動】バイパス経由 ➔ 外宮",
                   title: "二見浦 ➔ 伊勢二見鳥羽ライン ➔ 外宮へ移動",
                   tacticsFlowTitle: "伊勢市街直通バイパス移動",
                   tacticsSteps: [
@@ -1125,7 +1197,7 @@ header {
                 {
                   baseStart: "10:55", baseEnd: "11:05",
                   avgDuration: "10分", estDuration: "10分（母メモ: 鳥居の直ぐ近くに停める。写真だけ撮る。5分）",
-                  type: "must", badgeClass: "badge-must", badgeText: "📸 MUST:写真撮影（5分）",
+                  type: "must", badgeClass: "badge-must", badgeText: "📸 【観光・写真】外宮鳥居前5分",
                   title: "❷ 伊勢神宮 外宮【写真だけ5分サクッと撮影】",
                   tacticsFlowTitle: "母メモ完全指定：鳥居前記念撮影＆即出発",
                   tacticsSteps: [
@@ -1150,7 +1222,7 @@ header {
                 {
                   baseStart: "11:05", baseEnd: "11:15",
                   avgDuration: "10分", estDuration: "8〜10分（母メモ: 車で8分位で内宮着）",
-                  type: "must", badgeClass: "badge-must", badgeText: "🔴 MUST:移動",
+                  type: "must", badgeClass: "badge-must", badgeText: "🚗 【移動】御幸道路 ➔ 内宮",
                   title: "外宮 ➔ 御幸道路 ➔ 内宮へ移動",
                   tacticsFlowTitle: "御幸道路経由の内宮アクセス",
                   tacticsSteps: [
@@ -1174,7 +1246,7 @@ header {
                 {
                   baseStart: "11:15", baseEnd: "12:30",
                   avgDuration: "75分", estDuration: "75分（母メモ: 宇治浦田P、五十鈴川御手洗、瀧祭神、正宮）",
-                  type: "must", badgeClass: "badge-must", badgeText: "⛩️ MUST:参拝（内宮本殿）",
+                  type: "must", badgeClass: "badge-must", badgeText: "⛩️ 【参拝】内宮・皇大神宮＆瀧祭神",
                   title: "❸ 伊勢神宮 内宮（皇大神宮）参拝 ＆ 瀧祭神",
                   tacticsFlowTitle: "母メモ指定：五十鈴川御手洗場 ➜ 瀧祭神 ➜ 正宮参拝順路",
                   tacticsSteps: [
@@ -1204,7 +1276,7 @@ header {
                 {
                   baseStart: "12:30", baseEnd: "13:00",
                   avgDuration: "30分", estDuration: "30分（母メモ: 〜5分で猿田彦神社へ、宇治浦田P利用）",
-                  type: "must", badgeClass: "badge-must", badgeText: "⛩️ MUST:確定参拝（猿田彦）",
+                  type: "must", badgeClass: "badge-must", badgeText: "⛩️ 【参拝】猿田彦神社・方位石",
                   title: "❹ 猿田彦神社 参拝【確定】（みちひらきの大神・方位石）",
                   tacticsFlowTitle: "宇治浦田駐車場から徒歩5分の一筆書き参拝",
                   tacticsSteps: [
@@ -1231,7 +1303,7 @@ header {
                 {
                   baseStart: "13:00", baseEnd: "14:30",
                   avgDuration: "90分", estDuration: "90分（母メモ: おかげ横丁昼食散策、赤福白あん購入、14:30出発）",
-                  type: "food", badgeClass: "badge-food", badgeText: "🍴 MUST:昼食・お土産・散策",
+                  type: "food", badgeClass: "badge-food", badgeText: "🍴 【昼食・散策】横丁昼飯＆白あん赤福",
                   title: "❺ おはらい町・おかげ横丁 昼食・散策 ＆ 赤福本店（白あん赤福購入）",
                   tacticsFlowTitle: "横丁散策・昼食・赤福白あんテイクアウトの一筆書き",
                   tacticsSteps: [
@@ -1241,12 +1313,31 @@ header {
                     { step: 4, text: "創業1775年『へんばや商店 おはらい町店』で名物へんば餅、または『五十鈴川カフェ』で伊勢茶スイーツを補足。", tag: "補足スイーツ", isSkip: true },
                     { step: 5, text: "宇治浦田駐車場へ戻り、母メモ指定通り14:30に車で出発。", tag: "14:30発厳守", isSkip: false }
                   ],
+                  lunchGenres: [
+                    {
+                      genre: "ジャンルA：本場・名物伊勢うどん（やわらか極太麺）",
+                      shops: [
+                        { name: "ふくすけ（おかげ横丁）", rating: "★★★★★", time: "⏱ 25分", budget: "¥550〜", desc: "横丁中心。自家製たまり醤油ダレと鰹節の天然出汁。回転早く手軽に本場伊勢うどんを味わえます。", mapUrl: "https://www.google.com/maps/search/?api=1&query=ふくすけ+おかげ横丁" },
+                        { name: "伊勢うどん まるみつ（円座町）", rating: "★★★★☆", time: "⏱ 40分", budget: "¥500〜", desc: "内宮混雑完全回避！車15分南下の円座町。地元民御用達の手打ち麺。てこね寿司セットも500円台。", mapUrl: "https://www.google.com/maps/search/?api=1&query=伊勢うどん+まるみつ+伊勢市円座町" }
+                      ]
+                    },
+                    {
+                      genre: "ジャンルB：行列ゼロ・サクッと軽食（夜バイキング温存最優先）",
+                      shops: [
+                        { name: "豚捨 おかげ横丁店（コロッケ）", rating: "★★★★★", time: "⏱ 15分", budget: "¥130〜", desc: "創業明治42年の老舗精肉店。熱々サクサクの黒毛和牛コロッケ。食べ歩きで胃袋と時間を温存可能。", mapUrl: "https://www.google.com/maps/search/?api=1&query=豚捨+おかげ横丁" }
+                      ]
+                    },
+                    {
+                      genre: "ジャンルC：伊勢の郷土料理（てこね寿司）",
+                      shops: [
+                        { name: "すし久（おはらい町・五十鈴川沿い）", rating: "★★★★☆", time: "⏱ 45分", budget: "¥1,400〜", desc: "五十鈴川の清流を望む歴史ある料理旅館。鰹の醤油漬けと酢飯の伝統郷土料理「てこね寿し」元祖。", mapUrl: "https://www.google.com/maps/search/?api=1&query=すし久+伊勢" }
+                      ]
+                    }
+                  ],
                   bonusSpots: [
-                    { name: "赤福本店（白餅黒餅）", desc: "白小豆を使用した白あん×黒糖黒あんの限定折箱「白餅黒餅」（母メモ指定）。", mapUrl: "https://www.google.com/maps/search/?api=1&query=赤福本店" },
-                    { name: "伊勢うどん まるみつ（円座町）", desc: "内宮混雑完全回避！車15分南下の円座町。手打ち麺と天然出汁、うどん＋てこね寿司が500円台。", mapUrl: "https://www.google.com/maps/search/?api=1&query=伊勢うどん+まるみつ+伊勢市円座町" },
-                    { name: "へんばや商店 おはらい町店", desc: "創業1775年。香ばしい焼き目の団子餅。地元民が赤福以上と絶賛する伊勢二大名菓。", mapUrl: "https://www.google.com/maps/search/?api=1&query=へんばや商店+おはらい町店" },
-                    { name: "五十鈴川カフェ", desc: "五十鈴川のせせらぎ絶景カフェ。和三盆と伊勢茶のロールケーキ、雪鍋アイス。", mapUrl: "https://www.google.com/maps/search/?api=1&query=五十鈴川カフェ" },
-                    { name: "豚捨 おかげ横丁店", desc: "黒毛和牛コロッケ（130円）。熱々サクサクで夜バイキング前の胃袋温存に最高。", mapUrl: "https://www.google.com/maps/search/?api=1&query=豚捨+おかげ横丁" }
+                    { name: "赤福本店（白餅黒餅）", rating: "★★★★★", time: "⏱ 10分", desc: "母メモ指定！白小豆白あんと黒糖黒あんの限定折箱。売り切れ前に横丁到着後すぐテイクアウト購入。", mapUrl: "https://www.google.com/maps/search/?api=1&query=赤福本店" },
+                    { name: "へんばや商店 おはらい町店", rating: "★★★★★", time: "⏱ 10分", desc: "創業1775年。香ばしい焼き目の団子餅。地元民が赤福以上と絶賛する伊勢二大名菓（お土産最適）。", mapUrl: "https://www.google.com/maps/search/?api=1&query=へんばや商店+おはらい町店" },
+                    { name: "五十鈴川カフェ", rating: "★★★★☆", time: "⏱ 30分", desc: "五十鈴川のせせらぎ絶景テラス席。和三盆と伊勢茶のロールケーキで優雅に休憩。", mapUrl: "https://www.google.com/maps/search/?api=1&query=五十鈴川カフェ" }
                   ],
                   factors: {
                     overview: "滞在目的: おはらい町・おかげ横丁での昼食・散策と赤福本店白あんバージョン購入（母メモ指定）。<br>・ 想定滞在時間: 90分（14:30出発）",
@@ -1288,7 +1379,7 @@ header {
                 {
                   baseStart: "15:30", baseEnd: "16:00",
                   avgDuration: "30分", estDuration: "30分（母メモ: 15:30宿着、チェックイン、スクショ500円引、16:00出発）",
-                  type: "stay", badgeClass: "badge-stay", badgeText: "🏨 MUST:宿チェックイン",
+                  type: "stay", badgeClass: "badge-stay", badgeText: "🏨 【チェックイン】大江戸温泉Premium",
                   title: "❼ 大江戸温泉物語 プレミアム伊勢志摩 チェックイン",
                   tacticsFlowTitle: "母メモ完全指定：チェックイン＆500円引＆19時夕食確保",
                   tacticsSteps: [
@@ -1421,7 +1512,7 @@ header {
                 {
                   baseStart: "09:30", baseEnd: "10:20",
                   avgDuration: "50分", estDuration: "50分（母メモ: 1便09:30発、1周50分、WEB割1900円➜1800円×4人）",
-                  type: "activity", badgeClass: "badge-activity", badgeText: "🚢 MUST:英虞湾クルーズ",
+                  type: "activity", badgeClass: "badge-activity", badgeText: "🚢 【クルーズ】賢島エスペランサ50分",
                   title: "❶ 賢島エスパーニャクルーズ（あご湾遊覧船エスペランサ）",
                   tacticsFlowTitle: "母メモ完全指定：WEB割1,800円＆英虞湾50分周遊クルーズ",
                   tacticsSteps: [
@@ -1944,11 +2035,43 @@ header {
                   <!-- Block 1: 立ち回り（3〜4ステップ） -->
                   ${microFlowHtml}
 
-                  <!-- Block 2: 寄り道判定（なぜ行くか・どうするか） -->
+                  <!-- 昼食スロット専用：3大名物ジャンル・選択肢カード -->
+                  ${item.lunchGenres && item.lunchGenres.length > 0 ? `
+                    <div class="lunch-genre-section">
+                      <div class="lunch-genre-header">
+                        <span>🍴 昼食候補：現地で選べる3大名物ジャンル（夜バイキング温存）</span>
+                      </div>
+                      <div class="lunch-options-grid">
+                        ${item.lunchGenres.map(g => `
+                          <div style="margin-bottom:6px;">
+                            <div style="font-size:0.78rem; font-weight:800; color:#fcd34d; margin-bottom:4px;">${g.genre}</div>
+                            <div style="display:flex; flex-direction:column; gap:6px;">
+                              ${g.shops.map(sh => `
+                                <div class="lunch-shop-card">
+                                  <div class="lunch-shop-top">
+                                    <div class="lunch-shop-name">📍 ${sh.name}</div>
+                                    <a href="${sh.mapUrl}" target="_blank" class="bonus-spot-map">🗺️ 地図 ↗</a>
+                                  </div>
+                                  <div class="lunch-shop-meta">
+                                    <span class="shop-meta-pill pill-rating">おすすめ度: ${sh.rating}</span>
+                                    <span class="shop-meta-pill pill-time">${sh.time}</span>
+                                    <span class="shop-meta-pill pill-budget">${sh.budget}</span>
+                                  </div>
+                                  <div class="lunch-shop-desc">${sh.desc}</div>
+                                </div>
+                              `).join('')}
+                            </div>
+                          </div>
+                        `).join('')}
+                      </div>
+                    </div>
+                  ` : ''}
+
+                  <!-- Block 2: 寄り道判定（スイーツ・名所・採否基準） -->
                   ${item.bonusSpots && item.bonusSpots.length > 0 ? `
                     <div class="action-block-card">
                       <div class="action-block-title bonus">
-                        <span>🌟 ついで・寄り道スポット（採否判定と理由）</span>
+                        <span>🌟 ついで名所・スイーツ（おすすめ度・所要時間付き）</span>
                         <span class="bonus-decision-badge">時間余裕で判断</span>
                       </div>
                       <div style="display:flex; flex-direction:column; gap:8px;">
@@ -1957,6 +2080,10 @@ header {
                             <div style="display:flex; justify-content:space-between; align-items:center;">
                               <div style="font-size:0.84rem; font-weight:700; color:#fff;">📍 ${sp.name}</div>
                               <a href="${sp.mapUrl}" target="_blank" class="bonus-spot-map">🗺️ 地図 ↗</a>
+                            </div>
+                            <div style="display:flex; gap:6px; margin:4px 0;">
+                              ${sp.rating ? '<span class="shop-meta-pill pill-rating">おすすめ度: ' + sp.rating + '</span>' : ''}
+                              ${sp.time ? '<span class="shop-meta-pill pill-time">' + sp.time + '</span>' : ''}
                             </div>
                             <div class="bonus-reason-box">
                               <strong>💡 寄り道判断:</strong> ${sp.desc}
