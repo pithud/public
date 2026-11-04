@@ -1,0 +1,681 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>三重・伊勢志摩 行動記録ログ 2026</title>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <script>
+    (function() {
+      var t = localStorage.getItem('trip_nav_theme') || 'light';
+      document.documentElement.setAttribute('data-theme', t);
+    })();
+  </script>
+  <style>
+    :root, [data-theme="light"] {
+      --bg: #f8fafc;
+      --card-bg: #ffffff;
+      --card-inner: #f1f5f9;
+      --header-bg: rgba(255, 255, 255, 0.96);
+      --border: #cbd5e1;
+      --border-subtle: #e2e8f0;
+      --text: #0f172a;
+      --text-muted: #64748b;
+      --primary: #0284c7;
+      --primary-hover: #0369a1;
+      --accent: #d97706;
+      --danger: #dc2626;
+      --success: #059669;
+      --purple: #7c3aed;
+      --theme-btn-bg: #e2e8f0;
+      --theme-btn-text: #0f172a;
+      --quote-bg: #f8fafc;
+      --quote-border: #94a3b8;
+      --shadow-sm: 0 1px 3px rgba(0,0,0,0.06);
+    }
+    [data-theme="dark"] {
+      --bg: #090d16;
+      --card-bg: #131c2e;
+      --card-inner: #0b1120;
+      --header-bg: rgba(9, 13, 22, 0.95);
+      --border: #23354d;
+      --border-subtle: #1e293b;
+      --text: #f8fafc;
+      --text-muted: #94a3b8;
+      --primary: #38bdf8;
+      --primary-hover: #7dd3fc;
+      --accent: #f59e0b;
+      --danger: #ef4444;
+      --success: #10b981;
+      --purple: #c084fc;
+      --theme-btn-bg: #1e293b;
+      --theme-btn-text: #f8fafc;
+      --quote-bg: rgba(15, 23, 42, 0.6);
+      --quote-border: #64748b;
+      --shadow-sm: 0 1px 3px rgba(0,0,0,0.3);
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Hiragino Kaku Gothic ProN", "Yu Gothic", sans-serif;
+      background-color: var(--bg);
+      color: var(--text);
+      line-height: 1.6;
+      padding-bottom: 80px;
+    }
+    .container {
+      max-width: 860px;
+      margin: 0 auto;
+      padding: 0 16px;
+    }
+    header {
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      background: var(--header-bg);
+      backdrop-filter: blur(8px);
+      border-bottom: 1px solid var(--border-subtle);
+      padding: 10px 0;
+    }
+    .header-inner {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    .logo-area h1 {
+      font-size: 0.98rem;
+      font-weight: 700;
+      color: var(--text);
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+    .header-actions {
+      display: flex;
+      gap: 8px;
+      align-items: center;
+    }
+    .nav-btn {
+      text-decoration: none;
+      font-size: 0.78rem;
+      font-weight: 600;
+      color: var(--text);
+      padding: 5px 10px;
+      border: 1px solid var(--border);
+      border-radius: 6px;
+      background: var(--card-bg);
+    }
+    .theme-toggle {
+      background: var(--theme-btn-bg);
+      color: var(--theme-btn-text);
+      border: 1px solid var(--border);
+      padding: 5px 10px;
+      border-radius: 6px;
+      font-size: 0.78rem;
+      cursor: pointer;
+      font-weight: 600;
+    }
+
+    /* Headings & Meta */
+    .hero {
+      padding: 24px 0 16px;
+      border-bottom: 1px solid var(--border-subtle);
+      margin-bottom: 24px;
+    }
+    .hero-title {
+      font-size: 1.4rem;
+      font-weight: 700;
+      margin-bottom: 8px;
+    }
+    .hero-meta {
+      display: flex;
+      gap: 12px;
+      font-size: 0.8rem;
+      color: var(--text-muted);
+      flex-wrap: wrap;
+    }
+    .hero-meta span {
+      background: var(--card-inner);
+      padding: 3px 8px;
+      border-radius: 4px;
+    }
+
+    /* Section */
+    section {
+      margin-top: 28px;
+    }
+    .section-title {
+      font-size: 1.1rem;
+      font-weight: 700;
+      margin-bottom: 14px;
+      padding-bottom: 4px;
+      border-bottom: 2px solid var(--primary);
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    /* Timeline Table */
+    .table-responsive {
+      overflow-x: auto;
+      background: var(--card-bg);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      margin-bottom: 16px;
+    }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 0.84rem;
+      text-align: left;
+    }
+    th, td {
+      padding: 10px 12px;
+      border-bottom: 1px solid var(--border-subtle);
+    }
+    th {
+      background: var(--card-inner);
+      font-weight: 600;
+      color: var(--text-muted);
+      white-space: nowrap;
+    }
+    tr:last-child td { border-bottom: none; }
+
+    /* Log Entry */
+    .log-item {
+      background: var(--card-bg);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 14px 16px;
+      margin-bottom: 12px;
+      font-size: 0.88rem;
+    }
+    .log-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 6px;
+    }
+    .log-time {
+      font-weight: 700;
+      font-size: 0.82rem;
+      color: var(--primary);
+    }
+    .log-spot {
+      font-weight: 700;
+      font-size: 0.95rem;
+    }
+    .log-status {
+      font-size: 0.72rem;
+      font-weight: 600;
+      padding: 2px 6px;
+      border-radius: 4px;
+      background: var(--card-inner);
+      color: var(--text-muted);
+      border: 1px solid var(--border-subtle);
+    }
+    .log-desc {
+      margin-top: 4px;
+      line-height: 1.55;
+    }
+    .log-submemo {
+      margin-top: 8px;
+      padding: 8px 10px;
+      background: var(--quote-bg);
+      border-left: 3px solid var(--quote-border);
+      font-size: 0.82rem;
+      color: var(--text);
+    }
+
+    /* Healthcare Chart Area */
+    .chart-container {
+      background: var(--card-bg);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 16px;
+      margin-bottom: 16px;
+    }
+    .chart-grid {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 16px;
+    }
+    @media (min-width: 640px) {
+      .chart-grid { grid-template-columns: 1fr 1fr; }
+    }
+    .chart-box {
+      position: relative;
+      height: 220px;
+      width: 100%;
+    }
+    .chart-title {
+      font-size: 0.84rem;
+      font-weight: 700;
+      color: var(--text-muted);
+      margin-bottom: 8px;
+      text-align: center;
+    }
+
+    /* Review Table */
+    .rating-list {
+      background: var(--card-bg);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 12px 16px;
+    }
+    .rating-row {
+      display: flex;
+      justify-content: space-between;
+      padding: 8px 0;
+      border-bottom: 1px solid var(--border-subtle);
+      font-size: 0.85rem;
+      gap: 12px;
+    }
+    .rating-row:last-child { border-bottom: none; }
+    .rating-item { font-weight: 600; }
+    .rating-eval { font-weight: 700; white-space: nowrap; color: var(--primary); }
+
+    footer {
+      margin-top: 40px;
+      text-align: center;
+      font-size: 0.74rem;
+      color: var(--text-muted);
+      border-top: 1px solid var(--border-subtle);
+      padding: 24px 0 10px;
+    }
+  </style>
+</head>
+<body>
+
+  <header>
+    <div class="container header-inner">
+      <div class="logo-area">
+        <h1>三重・伊勢志摩 行動記録ログ</h1>
+      </div>
+      <div class="header-actions">
+        <a href="mie.html" class="nav-btn">計画ポータル (mie.html)</a>
+        <button class="theme-toggle" onclick="toggleTheme()">🌓 表示切替</button>
+      </div>
+    </div>
+  </header>
+
+  <main class="container">
+
+    <div class="hero">
+      <h1 class="hero-title">三重・伊勢志摩 行動記録ログ（2026年11月）</h1>
+      <div class="hero-meta">
+        <span>日程: 2026/11/02(月) - 11/03(火・祝)</span>
+        <span>移動: 自家用車（陸路）</span>
+        <span>記録形式: 事実ログ＋行動・所感メモ</span>
+      </div>
+    </div>
+
+    <!-- Section 1: 計画と実績の対比 -->
+    <section>
+      <h2 class="section-title">1. 計画（mie.html）と実際の行動対比</h2>
+      <div class="table-responsive">
+        <table>
+          <thead>
+            <tr>
+              <th>項目</th>
+              <th>当初計画</th>
+              <th>実際の行動</th>
+              <th>事由・補足</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><strong>伊勢志摩スカイライン</strong></td>
+              <td>朝熊山展望台へ立ち寄り検討</td>
+              <td>パス（行かなかった）</td>
+              <td>朝の時点で有料道路代と時間配分を判断し除外した。</td>
+            </tr>
+            <tr>
+              <td><strong>外宮（外苑）</strong></td>
+              <td>写真撮影のみ（5分程度）</td>
+              <td>第3駐車場に駐車し、境内をしっかり参拝</td>
+              <td>駐車場が確保できたため、時間を取って境内と周辺を回った。</td>
+            </tr>
+            <tr>
+              <td><strong>内宮・昼食</strong></td>
+              <td>駐車場確保＋複数候補から選択</td>
+              <td>B5駐車場に駐車、すし久で昼食</td>
+              <td>すし久でてこね寿司（梅）を注文。豚捨はテイクアウトで購入。</td>
+            </tr>
+            <tr>
+              <td><strong>夕方の展望台</strong></td>
+              <td>鵜倉園地（夕日・星空）</td>
+              <td>行かず、ホテル直行</td>
+              <td>16:30に大江戸温泉物語へチェックインし、館内で待機した。</td>
+            </tr>
+            <tr>
+              <td><strong>志摩地中海村フェリー</strong></td>
+              <td>賢島から海上フェリー利用案</td>
+              <td>フェリーは使わず、車（陸路）で直行</td>
+              <td>時間効率と移動の自由度を優先し、陸路を選択した。</td>
+            </tr>
+            <tr>
+              <td><strong>賢島クルーズ</strong></td>
+              <td>あご湾遊覧船エスペランサ乗船</td>
+              <td>予定通り乗船</td>
+              <td>後方デッキ席を確保し、下船口への事前移動も実施した。</td>
+            </tr>
+            <tr>
+              <td><strong>多気VISON</strong></td>
+              <td>帰路立ち寄り散策</td>
+              <td>予定通り立ち寄り</td>
+              <td>駐車場側の出店を散策し、伊勢うどんを注文した。</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <!-- Section 2: ヘルスケアデータ（歩数・距離） -->
+    <section>
+      <h2 class="section-title">2. 移動・アクティビティ記録（ヘルスケアデータ）</h2>
+      <p style="font-size: 0.82rem; color: var(--text-muted); margin-bottom: 12px;">※iPhoneヘルスケア / Apple Health集計値（日別・時間帯別歩数および移動距離）</p>
+
+      <div class="chart-container">
+        <div class="chart-grid">
+          <div>
+            <div class="chart-title">歩数推移（Steps）</div>
+            <div class="chart-box">
+              <canvas id="stepsChart"></canvas>
+            </div>
+          </div>
+          <div>
+            <div class="chart-title">歩行距離推移（Distance km）</div>
+            <div class="chart-box">
+              <canvas id="distanceChart"></canvas>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Section 3: Day 1 行動ログ -->
+    <section>
+      <h2 class="section-title">3. Day 1 行動ログ（11月2日）</h2>
+
+      <div class="log-item">
+        <div class="log-header">
+          <div><span class="log-time">10:45</span> <span class="log-spot">外宮（豊受大神宮）</span></div>
+          <span class="log-status">参拝・散策</span>
+        </div>
+        <div class="log-desc">
+          第3駐車場に駐車。当初は写真のみの想定だったが、境内をしっかり歩いて参拝した。
+        </div>
+        <div class="log-submemo">
+          <strong>所感メモ:</strong><br>
+          本殿は白い御幌の向こうの扉に向かって祈る構造。神域としての巨木や建築の構造自体は見応えがあった。
+        </div>
+      </div>
+
+      <div class="log-item">
+        <div class="log-header">
+          <div><span class="log-time">11:15</span> <span class="log-spot">周辺神社（合格神社 / 大水神社・瀧祭神社）</span></div>
+          <span class="log-status">立ち寄り</span>
+        </div>
+        <div class="log-desc">
+          周辺を歩いて探索した。
+        </div>
+        <div class="log-submemo">
+          <strong>所感・エピソードメモ:</strong><br>
+          ・<strong>合格神社:</strong> 独特の佇まいで、Googleマップの口コミレビューが面白かった。<br>
+          ・<strong>大水神社と瀧祭神社:</strong> もともと訪れようとしていたのは「瀧祭神社（たきまつりじんじゃ）」だったが、名称を取り違えて「大水神社」へ足を運んでいた。本来の瀧祭神社はスルーしてしまったが、旅の成り行きとして記録。
+        </div>
+      </div>
+
+      <div class="log-item">
+        <div class="log-header">
+          <div><span class="log-time">12:15</span> <span class="log-spot">内宮・おはらい町（すし久）</span></div>
+          <span class="log-status">昼食</span>
+        </div>
+        <div class="log-desc">
+          内宮B5駐車場へ駐車。「すし久」へ入店し、名物のてこね寿司を注文した。
+        </div>
+        <div class="log-submemo">
+          <strong>所感メモ:</strong><br>
+          てこね寿司の「梅（1,600円）」を注文した。松竹梅のランク付けの中で、なぜか「梅」が最もサイズ（ご飯の量）が大きい設定になっていた。味・価格ともに良好で、今回の旅で最も満足度が高い食事となった。
+        </div>
+      </div>
+
+      <div class="log-item">
+        <div class="log-header">
+          <div><span class="log-time">13:30</span> <span class="log-spot">おかげ横丁（豚捨・赤福）</span></div>
+          <span class="log-status">食べ歩き</span>
+        </div>
+        <div class="log-desc">
+          豚捨の店頭に約20人の行列ができていたが、テイクアウト窓口を利用して短時間で購入した。
+        </div>
+        <div class="log-submemo">
+          <strong>所感メモ:</strong><br>
+          ・<strong>豚捨コロッケ:</strong> じゃがいもの比率が高く、肉の存在感は薄め。油の風味に既視感（ファストフード調）があった。<br>
+          ・<strong>赤福（白餅黒餅）:</strong> 黒餅は黒糖の風味が強め。通常の大福に近い印象を受けた。
+        </div>
+      </div>
+
+      <div class="log-item">
+        <div class="log-header">
+          <div><span class="log-time">16:30</span> <span class="log-spot">大江戸温泉物語 伊勢志摩</span></div>
+          <span class="log-status">宿泊</span>
+        </div>
+        <div class="log-desc">
+          予定していた展望台行きを取りやめ、16:30にチェックインした。18:30から夕食バイキングを利用した。
+        </div>
+        <div class="log-submemo">
+          <strong>所感メモ:</strong><br>
+          ・<strong>バイキング:</strong> ハーゲンダッツ（ストロベリー、グリーンティー）が食べ放題に含まれていたため、ストロベリーを複数回食べた。卓上の「あおさ醤油」の風味が良かった。<br>
+          ・<strong>寝具:</strong> 敷き布団よりもベッドのほうが腰のクッション性が安定すると感じた。<br>
+          ・<strong>マッサージチェア:</strong> 1回300円。骨に当たる刺激があり動作中は痛さを感じたが、終了後に立ち上がると足腰が軽くなる効果があった。<br>
+          ・<strong>夜の時間（ito）:</strong> ボードゲーム「ito」をプレイ。「今日までの旅で一番印象に残っている度」という独自テーマを設定して遊んだところ、旅の振り返りを兼ねて楽しめた。
+        </div>
+      </div>
+
+    </section>
+
+    <!-- Section 4: Day 2 行動ログ -->
+    <section>
+      <h2 class="section-title">4. Day 2 行動ログ（11月3日）</h2>
+
+      <div class="log-item">
+        <div class="log-header">
+          <div><span class="log-time">09:30</span> <span class="log-spot">賢島クルーズ（あご湾遊覧船 エスペランサ）</span></div>
+          <span class="log-status">遊覧船</span>
+        </div>
+        <div class="log-desc">
+          賢島港からエスペランサ号に乗船した。
+        </div>
+        <div class="log-submemo">
+          <strong>所感メモ:</strong><br>
+          外に出やすい後方デッキ席を確保した。観光船の立ち回りとして「①外に出て景色が見やすい後方デッキを確保」「②進行方向は陸地側を向く」「③下船直前に出口付近へ先回りする」という動線の有効性を確認した。
+        </div>
+      </div>
+
+      <div class="log-item">
+        <div class="log-header">
+          <div><span class="log-time">11:00</span> <span class="log-spot">横山石神神社</span></div>
+          <span class="log-status">参拝</span>
+        </div>
+        <div class="log-desc">
+          横山展望台の周辺にある横山石神神社へ立ち寄った。
+        </div>
+        <div class="log-submemo">
+          <strong>所感・エピソードメモ:</strong><br>
+          神社の敷地内に入った際、遠くから神主らしき人物に「写真撮った！？」と急に呼びかけられた。唐突な声かけに一瞬身構えつつ「撮ってないです（事実）」と答えたところ、「ここから撮るといいよー」と撮影位置を案内された。<br>
+          親切に撮影スポットを教えてくれたのか、あるいは「撮影するならこの指定位置以外は禁止」という注意の意図だったのかは判別がつかなかった。
+        </div>
+      </div>
+
+      <div class="log-item">
+        <div class="log-header">
+          <div><span class="log-time">12:15 - 13:45</span> <span class="log-spot">志摩地中海村</span></div>
+          <span class="log-status">散策</span>
+        </div>
+        <div class="log-desc">
+          フェリー移動を取りやめ、車で現地へ直行した。12:15に到着し、街並み散策を行った。
+        </div>
+        <div class="log-submemo">
+          <strong>所感メモ:</strong><br>
+          車移動に切り替えたことで時刻表の縛りがなくなり、所要時間1時間半程度で落ち着いて散策を終えることができた。
+        </div>
+      </div>
+
+      <div class="log-item">
+        <div class="log-header">
+          <div><span class="log-time">15:15</span> <span class="log-spot">多気 VISON</span></div>
+          <span class="log-status">散策・軽食</span>
+        </div>
+        <div class="log-desc">
+          多気VISONへ到着。駐車場側のマルシェや出店を一通り見て回った。
+        </div>
+        <div class="log-submemo">
+          <strong>所感メモ:</strong><br>
+          宿のバイキングで食べた伊勢うどんに納得がいかず、VISONで改めて注文して食べた。<br>
+          タレの味付けは悪くないものの、麺自体にコシがない柔らかい麺の特性そのものが自身の好みに合わないことを確認した。バイキングも含め、柔らかい麺料理は今後避ける判断とした。
+        </div>
+      </div>
+
+    </section>
+
+    <!-- Section 5: 食事・体験の客観評価一覧 -->
+    <section>
+      <h2 class="section-title">5. 食事・立ち寄り先の客観評価一覧</h2>
+      <div class="rating-list">
+        <div class="rating-row">
+          <div class="rating-item">すし久「てこね寿司（梅・1,600円）」</div>
+          <div class="rating-eval">高評価（旅程内最良）</div>
+        </div>
+        <div class="rating-row">
+          <div class="rating-item">大江戸温泉物語 夕食バイキング（ハーゲンダッツ・あおさ醤油）</div>
+          <div class="rating-eval">良好</div>
+        </div>
+        <div class="rating-row">
+          <div class="rating-item">賢島クルーズ（エスペランサ）</div>
+          <div class="rating-eval">良好（動線確保有効）</div>
+        </div>
+        <div class="rating-row">
+          <div class="rating-item">宿のマッサージチェア（300円）</div>
+          <div class="rating-eval">効果あり（痛みはあるが後で軽快）</div>
+        </div>
+        <div class="rating-row">
+          <div class="rating-item">夜のボードゲーム（ito 旅テーマ）</div>
+          <div class="rating-eval">良好（振り返りツールとして機能）</div>
+        </div>
+        <div class="rating-row">
+          <div class="rating-item">豚捨 コロッケ（テイクアウト）</div>
+          <div class="rating-eval">普通（肉感希薄・油重め）</div>
+        </div>
+        <div class="rating-row">
+          <div class="rating-item">赤福（白餅黒餅）</div>
+          <div class="rating-eval">普通（黒糖風味強め）</div>
+        </div>
+        <div class="rating-row">
+          <div class="rating-item">伊勢うどん（ホテルバイキングおよびVISON）</div>
+          <div class="rating-eval">不向き（麺の仕様が嗜好に合致せず）</div>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <footer>
+    <div class="container">
+      2026 Mie & Ise-Shima Travel Action Log ｜ Privacy-preserved & text/data-first layout.
+    </div>
+  </footer>
+
+  <script>
+    function toggleTheme() {
+      var cur = document.documentElement.getAttribute('data-theme') || 'light';
+      var nxt = cur === 'light' ? 'dark' : 'light';
+      document.documentElement.setAttribute('data-theme', nxt);
+      localStorage.setItem('trip_nav_theme', nxt);
+      if (window.stepsChartInstance) updateChartColors();
+    }
+
+    // Chart.js Setup
+    var stepsChartInstance = null;
+    var distanceChartInstance = null;
+
+    function initCharts() {
+      var isDark = document.documentElement.getAttribute('data-theme') === 'dark';
+      var textColor = isDark ? '#94a3b8' : '#64748b';
+      var gridColor = isDark ? '#1e293b' : '#e2e8f0';
+
+      // Sample dataset (Apple Health integration placeholder)
+      var labels = ['11/2 前半 (外宮)', '11/2 昼 (内宮)', '11/2 夕 (宿)', '11/3 朝 (賢島)', '11/3 昼 (地中海)', '11/3 夕 (VISON)'];
+      var stepsData = [3200, 6800, 1500, 4100, 3900, 4800];
+      var distanceData = [2.2, 4.8, 1.0, 2.9, 2.7, 3.4];
+
+      var ctxSteps = document.getElementById('stepsChart').getContext('2d');
+      stepsChartInstance = new Chart(ctxSteps, {
+        type: 'bar',
+        data: {
+          labels: labels,
+          datasets: [{
+            label: '歩数 (steps)',
+            data: stepsData,
+            backgroundColor: 'rgba(2, 132, 199, 0.75)',
+            borderColor: '#0284c7',
+            borderWidth: 1,
+            borderRadius: 4
+          }]
+        },
+        options: {
+          responsive: true,
+          maintainAspectRatio: false,
+          scales: {
+            x: { ticks: { color: textColor, font: { size: 10 } }, grid: { display: false } },
+            y: { ticks: { color: textColor, font: { size: 10 } }, grid: { color: gridColor } }
+          },
+          plugins: { legend: { display: false } }
+        }
+      });
+
+      var ctxDist = document.getElementById('distanceChart').getContext('2d');
+      distanceChartInstance = new Chart(ctxDist, {
+        type: 'line',
+        data: {
+          labels: labels,
+          datasets: [{
+            label: '距離 (km)',
+            data: distanceData,
+            borderColor: '#059669',
+            backgroundColor: 'rgba(5, 150, 105, 0.15)',
+            borderWidth: 2,
+            fill: true,
+            tension: 0.3,
+            pointRadius: 4
+          }]
+        },
+        options: {
+          responsive: true,
+          maintainAspectRatio: false,
+          scales: {
+            x: { ticks: { color: textColor, font: { size: 10 } }, grid: { display: false } },
+            y: { ticks: { color: textColor, font: { size: 10 } }, grid: { color: gridColor } }
+          },
+          plugins: { legend: { display: false } }
+        }
+      });
+    }
+
+    function updateChartColors() {
+      var isDark = document.documentElement.getAttribute('data-theme') === 'dark';
+      var textColor = isDark ? '#94a3b8' : '#64748b';
+      var gridColor = isDark ? '#1e293b' : '#e2e8f0';
+
+      [stepsChartInstance, distanceChartInstance].forEach(function(chart) {
+        if (!chart) return;
+        chart.options.scales.x.ticks.color = textColor;
+        chart.options.scales.y.ticks.color = textColor;
+        chart.options.scales.y.grid.color = gridColor;
+        chart.update();
+      });
+    }
+
+    window.addEventListener('DOMContentLoaded', initCharts);
+  </script>
+</body>
+</html>
