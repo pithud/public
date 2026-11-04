@@ -181,7 +181,7 @@ header {
 .menu-panel-header {
   font-size: 0.95rem;
   font-weight: 700;
-  color: #ffffff;
+  color: var(--text);
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -455,7 +455,7 @@ header {
 .slot-time {
   font-size: 1.05rem;
   font-weight: 800;
-  color: #ffffff;
+  color: var(--text);
   font-variant-numeric: tabular-nums;
 }
 .slot-badge {
@@ -481,7 +481,7 @@ header {
 .slot-title {
   font-size: 1.05rem;
   font-weight: 800;
-  color: #ffffff;
+  color: var(--text);
 }
 .duration-pill {
   font-size: 0.74rem;
@@ -788,7 +788,7 @@ header {
 .drawer-title {
   font-size: 1rem;
   font-weight: 800;
-  color: #fff;
+  color: var(--text);
   display: flex;
   align-items: center;
   gap: 6px;
@@ -840,10 +840,10 @@ header {
 /* Slot Summary Text - Multi-line readable (Zero Ellipsis) */
 .slot-summary-overview {
   font-size: 0.84rem;
-  color: #e2e8f0;
+  color: var(--slot-overview-text);
   line-height: 1.5;
   margin-top: 6px;
-  background: rgba(15, 23, 42, 0.5);
+  background: var(--slot-overview-bg);
   padding: 6px 10px;
   border-radius: 6px;
   border-left: 3px solid #38bdf8;
@@ -887,7 +887,7 @@ header {
 .lunch-shop-name {
   font-size: 0.86rem;
   font-weight: 800;
-  color: #ffffff;
+  color: var(--text);
 }
 .lunch-shop-meta {
   display: flex;
@@ -1957,7 +1957,7 @@ header {
       summaryContainer.innerHTML = `
         <div class="summary-card" style="background:var(--card-bg); border:1px solid var(--border); border-radius:12px; padding:14px; margin-bottom:16px;">
           <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:8px;">
-            <div style="font-size:1.02rem; font-weight:800; color:#fff;">${plan.name}</div>
+            <div style="font-size:1.02rem; font-weight:800; color:var(--text);">${plan.name}</div>
             <span class="summary-badge ${plan.badgeClass}" style="font-size:0.74rem; padding:3px 10px; border-radius:9999px; font-weight:800;">${plan.badge}</span>
           </div>
           <p style="font-size:0.84rem; color:var(--text-muted); line-height:1.5; margin-bottom:12px;">${plan.desc}</p>
@@ -2247,9 +2247,9 @@ header {
                       </div>
                       <div style="display:flex; flex-direction:column; gap:8px;">
                         ${item.bonusSpots.map(sp => `
-                          <div style="background:rgba(15,23,42,0.6); border:1px solid var(--border-subtle); border-radius:6px; padding:8px 10px;">
+                          <div style="background:var(--card-inner); border:1px solid var(--border-subtle); border-radius:6px; padding:8px 10px;">
                             <div style="display:flex; justify-content:space-between; align-items:center;">
-                              <div style="font-size:0.84rem; font-weight:700; color:#fff;">📍 ${sp.name}</div>
+                              <div style="font-size:0.84rem; font-weight:700; color:var(--text);">📍 ${sp.name}</div>
                               <a href="${sp.mapUrl}" target="_blank" class="bonus-spot-map">🗺️ 地図 ↗</a>
                             </div>
                             <div style="display:flex; gap:6px; margin:4px 0;">
