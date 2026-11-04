@@ -140,8 +140,8 @@ header {
 }
 .badge-origin {
   font-size: 0.72rem;
-  background: #1e293b;
-  color: var(--accent);
+  background: var(--badge-origin-bg);
+  color: var(--badge-origin-text);
   padding: 3px 8px;
   border-radius: 9999px;
   border: 1px solid var(--border);
@@ -2190,8 +2190,8 @@ header {
 
                   <!-- 概要（複数行折り返し可読・省略三点リーダー完全禁止） -->
                   <div class="slot-summary-overview">
-                    <div style="font-size:0.75rem; font-weight:800; color:#38bdf8; margin-bottom:2px;">【この枠の目的・やること】</div>
-                    <div style="font-size:0.82rem; color:#f1f5f9; line-height:1.45;">${f.overview.replace(/<br\s*\/?>/g, ' ｜ ')}</div>
+                    <div style="font-size:0.75rem; font-weight:800; color:var(--primary); margin-bottom:2px;">【この枠の目的・やること】</div>
+                    <div style="font-size:0.82rem; color:var(--slot-overview-text); line-height:1.45;">${f.overview.replace(/<br\s*\/?>/g, ' ｜ ')}</div>
                   </div>
 
                   <div class="slot-expand-hint">
@@ -2284,8 +2284,8 @@ header {
                         <span class="factor-bullet-text"><strong>同行者（母）配慮・Tips:</strong> ${f.tips}</span>
                       </div>
                       <div class="factor-bullet-line">
-                        <span class="factor-bullet-dot" style="color:#ef4444;">•</span>
-                        <span class="factor-bullet-text" style="color:#fca5a5;"><strong>損切りリミット:</strong> ${f.skipLimit}</span>
+                        <span class="factor-bullet-dot" style="color:var(--danger);">•</span>
+                        <span class="factor-bullet-text" style="color:var(--danger);"><strong>損切りリミット:</strong> ${f.skipLimit}</span>
                       </div>
                     </div>
                   </div>
