@@ -5,7 +5,6 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>愛知・犬山・名古屋 リアルタイム旅程ナビ（11/7〜11/8）</title>
   <script>
-    // Anti-FOUC immediate theme application (Default: light)
     (function() {
       var t = localStorage.getItem('trip_nav_theme') || 'light';
       document.documentElement.setAttribute('data-theme', t);
@@ -29,1014 +28,542 @@
   --purple: #9333ea;
   --map-green: #059669;
   --map-green-hover: #047857;
-  --badge-origin-bg: #f1f5f9;
-  --badge-origin-text: #b45309;
   --weather-bg: linear-gradient(135deg, #eff6ff, #dbeafe);
-  --weather-border: #93c5fd;
-  --weather-title: #1e40af;
-  --slot-bg-hover: #f1f5f9;
-  --slot-overview-bg: #f8fafc;
-  --slot-overview-text: #1e293b;
-  --lunch-card-bg: #f8fafc;
-  --lunch-desc-text: #475569;
-  --bonus-card-bg: #f8fafc;
-  --bonus-reason-bg: #f1f5f9;
-  --bonus-reason-text: #334155;
-  --drawer-bg: #ffffff;
-  --drawer-title: #0f172a;
-  --version-card-bg: #f8fafc;
-  --version-title: #0f172a;
-  --quick-bar-bg: rgba(255, 255, 255, 0.95);
-  --quick-bar-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
-  
-  
-  
-  
-  --theme-btn-bg: #e2e8f0;
-  --theme-btn-text: #0f172a;
-  --theme-btn-border: #cbd5e1;
-  --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
-  --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.07);
+  --weather-border: #bfdbfe;
+  --weather-text: #1e3a8a;
+  --summary-bg: #f1f5f9;
+  --summary-border: #cbd5e1;
+  --summary-title: #0f172a;
+  --summary-text: #334155;
+  --summary-time-bg: #e2e8f0;
+  --summary-time-text: #334155;
+  --shadow-sm: 0 1px 2px rgba(0,0,0,0.05);
+  --shadow-md: 0 4px 6px -1px rgba(0,0,0,0.08), 0 2px 4px -2px rgba(0,0,0,0.05);
 }
 
 [data-theme="dark"] {
   --bg: #090d16;
-  --card-bg: #131c2e;
-  --card-inner: #0b1120;
-  --header-bg: rgba(9, 13, 22, 0.95);
-  --border: #23354d;
+  --card-bg: #0f172a;
+  --card-inner: #1e293b;
+  --header-bg: rgba(15, 23, 42, 0.96);
+  --border: #334155;
   --border-subtle: #1e293b;
   --text: #f8fafc;
   --text-muted: #94a3b8;
   --primary: #38bdf8;
-  --primary-hover: #7dd3fc;
+  --primary-hover: #0284c7;
   --accent: #f59e0b;
   --danger: #ef4444;
   --success: #10b981;
   --purple: #a855f7;
-  --map-green: #059669;
-  --map-green-hover: #10b981;
-  --badge-origin-bg: #1e293b;
-  --badge-origin-text: #f59e0b;
-  --weather-bg: linear-gradient(135deg, rgba(30, 41, 59, 0.9), rgba(15, 23, 42, 0.95));
-  --weather-border: #3b82f6;
-  --weather-title: #60a5fa;
-  --slot-bg-hover: rgba(255, 255, 255, 0.02);
-  --slot-overview-bg: rgba(15, 23, 42, 0.7);
-  --slot-overview-text: #f1f5f9;
-  --lunch-card-bg: rgba(15, 23, 42, 0.6);
-  --lunch-desc-text: #cbd5e1;
-  --bonus-card-bg: rgba(15, 23, 42, 0.6);
-  --bonus-reason-bg: rgba(0, 0, 0, 0.25);
-  --bonus-reason-text: #cbd5e1;
-  --drawer-bg: #0f172a;
-  --drawer-title: #f8fafc;
-  --version-card-bg: rgba(15, 23, 42, 0.8);
-  --version-title: #ffffff;
-  --quick-bar-bg: rgba(15, 23, 42, 0.92);
-  --quick-bar-shadow: 0 4px 20px rgba(0, 0, 0, 0.5);
-  
-  
-  
-  
-  --theme-btn-bg: #1e293b;
-  --theme-btn-text: #f8fafc;
-  --theme-btn-border: #334155;
-  --shadow-sm: none;
-  --shadow-md: none;
+  --map-green: #10b981;
+  --map-green-hover: #059669;
+  --weather-bg: linear-gradient(135deg, rgba(30, 58, 138, 0.25), rgba(15, 23, 42, 0.9));
+  --weather-border: rgba(56, 189, 248, 0.4);
+  --weather-text: #e0f2fe;
+  --summary-bg: rgba(30, 41, 59, 0.7);
+  --summary-border: rgba(71, 85, 105, 0.5);
+  --summary-title: #f8fafc;
+  --summary-text: #cbd5e1;
+  --summary-time-bg: #1e293b;
+  --summary-time-text: #94a3b8;
+  --shadow-sm: 0 1px 2px rgba(0,0,0,0.3);
+  --shadow-md: 0 4px 6px -1px rgba(0,0,0,0.4);
 }
-* { box-sizing: border-box; margin: 0; padding: 0; }
+
+* { box-sizing: border-box; margin: 0; padding: 0; -webkit-tap-highlight-color: transparent; }
 body {
-  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Hiragino Sans", "Hiragino Kaku Gothic ProN", Meiryo, sans-serif;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
   background-color: var(--bg);
   color: var(--text);
   line-height: 1.5;
-  padding-bottom: 80px;
-  -webkit-font-smoothing: antialiased;
+  padding-bottom: 70px;
 }
+
 header {
-  background: var(--header-bg);
-  backdrop-filter: blur(8px);
-  border-bottom: 1px solid var(--border);
-  padding: 12px 16px;
   position: sticky;
   top: 0;
   z-index: 100;
+  background-color: var(--header-bg);
+  backdrop-filter: blur(10px);
+  border-bottom: 1px solid var(--border);
+  padding: 10px 16px;
+  box-shadow: var(--shadow-sm);
 }
+
 .header-top {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  max-width: 760px;
-  margin: 0 auto;
+  gap: 8px;
 }
+
 .title {
   font-size: 1.05rem;
-  font-weight: 700;
+  font-weight: 800;
   color: var(--primary);
   display: flex;
   align-items: center;
   gap: 6px;
-}
-.badge-origin {
-  font-size: 0.72rem;
-  background: #1e293b;
-  color: var(--accent);
-  padding: 3px 8px;
-  border-radius: 9999px;
-  border: 1px solid var(--border);
-  font-weight: 600;
-}
-.container {
-  max-width: 760px;
-  margin: 0 auto;
-  padding: 14px 16px;
+  letter-spacing: -0.02em;
 }
 
-/* Weather Alert */
-.weather-card {
-  background: var(--weather-bg);
-  border: 1px solid var(--weather-border);
-  border-radius: 12px;
-  padding: 12px 14px;
-  margin-bottom: 16px;
+.header-right {
   display: flex;
-  align-items: flex-start;
-  gap: 12px;
-  font-size: 0.86rem;
-}
-.weather-icon { font-size: 1.6rem; line-height: 1; }
-.weather-body strong { color: var(--weather-title); }
-.weather-sub { color: var(--text-muted); font-size: 0.78rem; margin-top: 4px; }
-
-/* Unified Menu & Control Panel */
-.menu-panel {
-  background: var(--card-bg);
-  border: 1px solid var(--border);
-  border-radius: 14px;
-  padding: 16px;
-  margin-bottom: 18px;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
-}
-.menu-panel-header {
-  font-size: 0.95rem;
-  font-weight: 700;
-  color: #ffffff;
-  display: flex;
-  justify-content: space-between;
   align-items: center;
-  margin-bottom: 14px;
-  border-bottom: 1px solid var(--border-subtle);
-  padding-bottom: 10px;
+  gap: 6px;
 }
-.copy-btn {
-  background: #1e293b;
-  border: 1px solid var(--primary);
-  color: var(--primary);
-  font-size: 0.74rem;
-  font-weight: 600;
-  padding: 5px 12px;
+
+.theme-toggle-btn {
+  background: var(--card-inner);
+  border: 1px solid var(--border);
+  color: var(--text);
+  padding: 4px 8px;
   border-radius: 6px;
+  font-size: 0.75rem;
+  font-weight: 700;
   cursor: pointer;
-  transition: all 0.2s;
   display: flex;
   align-items: center;
   gap: 4px;
 }
-.copy-btn:hover { background: var(--primary); color: #090d16; }
-.menu-section-label {
+
+.badge-origin {
+  font-size: 0.7rem;
+  background: var(--card-inner);
+  color: var(--accent);
+  padding: 3px 8px;
+  border-radius: 9999px;
+  font-weight: 700;
+  border: 1px solid var(--border);
+  white-space: nowrap;
+}
+
+.container {
+  max-width: 760px;
+  margin: 0 auto;
+  padding: 12px 14px;
+}
+
+.weather-card {
+  background: var(--weather-bg);
+  border: 1px solid var(--weather-border);
+  border-radius: 10px;
+  padding: 10px 14px;
+  margin-bottom: 12px;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  color: var(--weather-text);
+  box-shadow: var(--shadow-sm);
+}
+.weather-icon { font-size: 1.8rem; line-height: 1; }
+.weather-body { font-size: 0.82rem; }
+.weather-body strong { font-size: 0.88rem; display: block; margin-bottom: 2px; }
+.weather-sub { font-size: 0.74rem; opacity: 0.9; line-height: 1.35; }
+
+.menu-panel {
+  background: var(--card-bg);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 12px 14px;
+  margin-bottom: 16px;
+  box-shadow: var(--shadow-sm);
+}
+
+.menu-panel-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 10px;
+  font-size: 0.85rem;
+  font-weight: 800;
+  color: var(--text);
+}
+
+.copy-btn {
+  background: var(--primary);
+  color: #fff;
+  border: none;
+  border-radius: 6px;
+  padding: 6px 12px;
   font-size: 0.78rem;
+  font-weight: 700;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  transition: all 0.15s;
+}
+.copy-btn:hover { background: var(--primary-hover); }
+
+.menu-section-label {
+  font-size: 0.72rem;
   font-weight: 700;
   color: var(--text-muted);
   text-transform: uppercase;
-  letter-spacing: 0.5px;
-  margin-bottom: 8px;
+  margin-bottom: 6px;
+  letter-spacing: 0.03em;
 }
 
-/* Plan Switcher */
-.plan-group {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 8px;
-  margin-bottom: 14px;
-}
-.plan-btn {
-  background: var(--card-inner);
-  border: 1px solid var(--border);
-  color: var(--text-muted);
-  padding: 10px 12px;
-  border-radius: 8px;
-  cursor: pointer;
-  text-align: left;
-  font-size: 0.85rem;
-  font-weight: 700;
-  transition: all 0.15s ease;
-  display: flex;
-  flex-direction: column;
-  gap: 2px;
-}
-.plan-btn:hover { border-color: var(--primary); color: #fff; }
-.plan-btn.active {
-  background: #0369a1;
-  border-color: #38bdf8;
-  color: #ffffff;
-  box-shadow: 0 0 10px rgba(56, 189, 248, 0.25);
-}
-.plan-btn small {
-  font-size: 0.72rem;
-  font-weight: 500;
-  opacity: 0.85;
-}
-
-/* Controls Grid */
 .controls-grid {
   display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 12px;
-  margin-bottom: 14px;
+  grid-template-columns: 1.2fr 1fr;
+  gap: 8px;
+  margin-bottom: 10px;
 }
+
 .segmented-control {
   display: flex;
   background: var(--card-inner);
   border: 1px solid var(--border);
   border-radius: 8px;
   padding: 3px;
-  gap: 3px;
+  gap: 2px;
 }
+
 .segment-btn {
   flex: 1;
   background: transparent;
   border: none;
   color: var(--text-muted);
-  padding: 6px 0;
   font-size: 0.78rem;
-  font-weight: 600;
+  font-weight: 700;
+  padding: 6px 4px;
   border-radius: 6px;
   cursor: pointer;
   transition: all 0.15s;
-  text-align: center;
 }
-.segment-btn:hover { color: #fff; }
 .segment-btn.active {
-  background: #2563eb;
-  color: #ffffff;
-  font-weight: 700;
+  background: var(--card-bg);
+  color: var(--primary);
+  box-shadow: 0 1px 3px rgba(0,0,0,0.1);
 }
 
-/* Map Action Card */
-.map-action-card {
-  background: var(--card-inner);
-  border: 1px solid var(--border);
-  border-radius: 10px;
-  padding: 12px;
-}
-.map-action-card-header {
-  font-size: 0.78rem;
-  color: #6ee7b7;
-  font-weight: 600;
-  margin-bottom: 8px;
-  display: flex;
-  align-items: center;
-  gap: 6px;
-}
-.map-btn-row {
-  display: flex;
+.map-buttons-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
   gap: 8px;
 }
-.map-route-btn {
-  flex: 1;
-  background: #065f46;
-  border: 1px solid #10b981;
-  color: #ffffff;
-  text-decoration: none;
-  font-size: 0.78rem;
-  font-weight: 700;
-  padding: 8px 10px;
-  border-radius: 6px;
-  text-align: center;
+
+.map-link-btn {
   display: flex;
   align-items: center;
   justify-content: center;
   gap: 6px;
-  transition: all 0.2s;
+  padding: 7px 10px;
+  border-radius: 6px;
+  font-size: 0.75rem;
+  font-weight: 700;
+  text-decoration: none;
+  background: rgba(16, 185, 129, 0.1);
+  color: var(--map-green);
+  border: 1px solid var(--map-green);
+  transition: all 0.15s;
 }
-.map-route-btn:hover { background: #047857; }
-.map-route-btn.secondary {
-  background: #1e3a8a;
-  border-color: #3b82f6;
+.map-link-btn:hover {
+  background: var(--map-green);
+  color: #fff;
 }
-.map-route-btn.secondary:hover { background: #1d4ed8; }
 
-/* Day Divider */
-.day-divider {
+.day-header {
+  background: var(--card-bg);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 12px 14px;
+  margin: 16px 0 10px;
+  box-shadow: var(--shadow-sm);
+}
+.day-header-top {
   display: flex;
   justify-content: space-between;
-  align-items: center;
-  border-bottom: 2px solid var(--border);
-  padding-bottom: 8px;
-  margin: 24px 0 14px 0;
+  align-items: baseline;
+  margin-bottom: 4px;
 }
-.day-divider-title {
-  font-size: 1.1rem;
-  font-weight: 800;
-  color: var(--primary);
-}
-.day-divider-sub {
-  font-size: 0.8rem;
-  color: var(--text-muted);
-  margin-top: 2px;
-}
+.day-title { font-size: 1.02rem; font-weight: 800; color: var(--primary); }
+.day-date { font-size: 0.78rem; font-weight: 700; color: var(--text-muted); }
+.day-sub { font-size: 0.8rem; color: var(--text); line-height: 1.4; margin-bottom: 8px; }
 
-/* Macro Flow Box */
 .macro-flow-box {
-  background: var(--card-bg);
-  border: 1px dashed var(--border);
-  border-radius: 10px;
-  padding: 10px 12px;
-  margin-bottom: 16px;
-}
-.macro-flow-title {
-  font-size: 0.76rem;
-  font-weight: 700;
-  color: var(--text-muted);
-  margin-bottom: 6px;
-}
-.macro-flow-steps {
-  display: flex;
-  flex-wrap: wrap;
-  align-items: center;
-  gap: 6px;
-}
-.macro-step-badge {
-  font-size: 0.75rem;
   background: var(--card-inner);
-  border: 1px solid var(--border);
-  padding: 3px 8px;
-  border-radius: 6px;
-  color: var(--text);
-  font-weight: 600;
+  border-radius: 8px;
+  padding: 8px 10px;
+  font-size: 0.74rem;
+  color: var(--text-muted);
+  line-height: 1.4;
 }
-.macro-step-badge.origin {
-  background: rgba(245, 158, 11, 0.2);
-  border-color: var(--accent);
-  color: #fbbf24;
-}
-.macro-step-arrow {
-  color: #475569;
-  font-size: 0.7rem;
+.macro-flow-label { font-weight: 700; color: var(--primary); margin-bottom: 2px; }
+
+.timeline-slot {
+  margin-bottom: 12px;
 }
 
-/* Slot Card */
 .slot-card {
   background: var(--card-bg);
   border: 1px solid var(--border);
   border-radius: 12px;
-  margin-bottom: 14px;
-  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
   overflow: hidden;
-  transition: all 0.2s ease;
+  box-shadow: var(--shadow-sm);
+  transition: all 0.2s;
 }
-.slot-card.must { border-left: 4px solid var(--danger); }
-.slot-card.activity { border-left: 4px solid var(--primary); }
-.slot-card.stay { border-left: 4px solid var(--purple); }
-.slot-card.food { border-left: 4px solid var(--accent); }
+.slot-card:hover {
+  border-color: var(--primary);
+  box-shadow: var(--shadow-md);
+}
 
-/* Collapsible Slot Container */
-.slot-details {
-  border: none;
-  width: 100%;
-}
 .slot-summary {
   list-style: none;
   cursor: pointer;
-  padding: 14px;
+  padding: 12px 14px;
+  background: var(--summary-bg);
+  border-bottom: 1px solid var(--summary-border);
   user-select: none;
-  transition: background 0.15s;
 }
-.slot-summary::-webkit-details-marker {
-  display: none;
-}
-.slot-summary:hover {
-  background: rgba(255, 255, 255, 0.02);
-}
-.slot-details[open] .slot-summary {
-  border-bottom: 1px solid var(--border-subtle);
-  background: rgba(0, 0, 0, 0.15);
-}
-.slot-body {
-  padding: 14px;
-  background: rgba(11, 17, 32, 0.4);
-}
-.slot-expand-hint {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  margin-top: 8px;
-  padding-top: 6px;
-  border-top: 1px dashed rgba(255, 255, 255, 0.07);
-  font-size: 0.72rem;
-  color: var(--primary);
-  font-weight: 600;
-}
-.slot-details[open] .slot-expand-arrow {
-  transform: rotate(180deg);
-}
-.slot-expand-arrow {
-  display: inline-block;
-  transition: transform 0.2s ease;
-}
+.slot-summary::-webkit-details-marker { display: none; }
 
-.slot-header {
+.slot-top-row {
   display: flex;
   justify-content: space-between;
   align-items: center;
+  gap: 8px;
   margin-bottom: 6px;
 }
-.slot-time {
-  font-size: 1.05rem;
+
+.slot-time-badge {
+  font-family: monospace, ui-monospace, SFMono-Regular;
+  font-size: 0.88rem;
   font-weight: 800;
-  color: #ffffff;
-  font-variant-numeric: tabular-nums;
+  color: var(--primary);
+  letter-spacing: -0.02em;
 }
-.slot-badge {
-  font-size: 0.72rem;
-  font-weight: 700;
+
+.badge-tag {
+  font-size: 0.7rem;
+  font-weight: 800;
   padding: 2px 8px;
   border-radius: 9999px;
-  border: 1px solid transparent;
+  text-transform: uppercase;
 }
-.badge-must { background: rgba(239, 68, 68, 0.15); color: #f87171; border-color: #ef4444; }
-.badge-activity { background: rgba(56, 189, 248, 0.15); color: #38bdf8; border-color: #0284c7; }
-.badge-stay { background: rgba(168, 85, 247, 0.15); color: #c084fc; border-color: #a855f7; }
-.badge-food { background: rgba(245, 158, 11, 0.15); color: #fbbf24; border-color: #f59e0b; }
+.badge-must { background: rgba(220, 38, 38, 0.12); color: var(--danger); border: 1px solid rgba(220, 38, 38, 0.3); }
+.badge-transit { background: rgba(56, 189, 248, 0.12); color: var(--primary); border: 1px solid rgba(56, 189, 248, 0.3); }
 
-.slot-title-row {
-  display: flex;
-  justify-content: space-between;
-  align-items: baseline;
-  flex-wrap: wrap;
-  gap: 6px;
-  margin-bottom: 10px;
-}
 .slot-title {
-  font-size: 1.05rem;
+  font-size: 0.95rem;
   font-weight: 800;
-  color: #ffffff;
+  color: var(--summary-title);
+  line-height: 1.35;
+  margin-bottom: 6px;
 }
-.duration-pill {
-  font-size: 0.74rem;
-  color: var(--text-muted);
-  display: flex;
-  gap: 6px;
-}
-.duration-est { color: #38bdf8; font-weight: 700; }
 
-/* Micro Flow Stepper */
-.micro-flow-card {
-  background: var(--card-inner);
-  border: 1px solid var(--border);
-  border-radius: 8px;
-  padding: 10px;
-  margin-bottom: 10px;
+.slot-overview-text {
+  font-size: 0.78rem;
+  color: var(--summary-text);
+  line-height: 1.45;
+  margin-bottom: 6px;
 }
-.micro-flow-header {
-  font-size: 0.76rem;
-  font-weight: 700;
-  color: #38bdf8;
-  margin-bottom: 8px;
+
+.slot-expand-hint {
   display: flex;
   justify-content: space-between;
   align-items: center;
-}
-.micro-flow-subtitle {
   font-size: 0.7rem;
-  color: var(--text-muted);
-  font-weight: 500;
-}
-.micro-steps-list {
-  display: flex;
-  flex-direction: column;
-  gap: 6px;
-}
-.micro-step-row {
-  display: flex;
-  align-items: flex-start;
-  gap: 8px;
-  font-size: 0.8rem;
-  line-height: 1.4;
-}
-.step-badge-num {
-  font-size: 0.68rem;
   font-weight: 700;
-  background: #1e293b;
-  color: #94a3b8;
-  padding: 1px 6px;
-  border-radius: 4px;
-  white-space: nowrap;
-}
-.step-badge-num.opt {
-  background: #334155;
-  color: #cbd5e1;
-}
-.micro-step-content {
-  flex: 1;
-  color: #e2e8f0;
-}
-.skip-tag {
-  font-size: 0.66rem;
-  font-weight: 700;
-  padding: 1px 6px;
-  border-radius: 4px;
-  margin-left: 6px;
-  white-space: nowrap;
-}
-.skip-tag.must { background: #991b1b; color: #fee2e2; }
-.skip-tag.recommend { background: #065f46; color: #d1fae5; }
-.skip-tag.can-skip { background: #334155; color: #94a3b8; }
-
-/* Bonus Spots Container */
-.bonus-spots-container {
-  background: rgba(168, 85, 247, 0.08);
-  border: 1px dashed rgba(168, 85, 247, 0.35);
-  border-radius: 8px;
-  padding: 10px;
-  margin-bottom: 10px;
-}
-.bonus-spots-list {
-  display: grid;
-  grid-template-columns: 1fr;
-  gap: 6px;
-}
-.bonus-spot-card {
-  background: var(--card-inner);
-  border: 1px solid rgba(255, 255, 255, 0.06);
-  border-radius: 6px;
-  padding: 8px 10px;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  gap: 8px;
-}
-.bonus-spot-info {
-  flex: 1;
-}
-.bonus-spot-name {
-  font-size: 0.82rem;
-  font-weight: 700;
-  color: #f1f5f9;
-}
-.bonus-spot-desc {
-  font-size: 0.74rem;
-  color: #94a3b8;
-  margin-top: 2px;
-}
-.bonus-spot-map {
-  font-size: 0.72rem;
-  color: #c084fc;
-  text-decoration: none;
-  font-weight: 700;
-  padding: 4px 8px;
-  background: rgba(168, 85, 247, 0.15);
-  border-radius: 4px;
-  white-space: nowrap;
-}
-.bonus-spot-map:hover { background: rgba(168, 85, 247, 0.3); }
-
-/* Collapsible 7 Factors */
-.factors-collapse {
-  background: var(--card-inner);
-  border: 1px solid var(--border);
-  border-radius: 8px;
-  padding: 8px 10px;
-  margin-bottom: 10px;
-}
-.factors-summary {
-  font-size: 0.78rem;
-  font-weight: 700;
-  color: var(--text-muted);
-  cursor: pointer;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  user-select: none;
-}
-.factors-box {
-  margin-top: 10px;
-  display: grid;
-  grid-template-columns: 1fr;
-  gap: 8px;
-  border-top: 1px solid var(--border-subtle);
-  padding-top: 8px;
-}
-.factor-item {
-  font-size: 0.78rem;
-  line-height: 1.45;
-}
-.factor-header {
-  font-size: 0.74rem;
-  font-weight: 800;
   color: var(--primary);
-  margin-bottom: 2px;
+  padding-top: 4px;
+  border-top: 1px dashed var(--border-subtle);
 }
-.factor-header.success { color: #34d399; }
-.factor-header.accent { color: #fbbf24; }
-.factor-header.purple { color: #c084fc; }
-.factor-header.danger { color: #f87171; }
-.factor-content {
-  color: #cbd5e1;
-}
-.factor-bullet-line {
-  display: flex;
-  align-items: flex-start;
-  gap: 6px;
-  margin-bottom: 3px;
-  line-height: 1.45;
-}
-.factor-bullet-dot {
-  color: var(--primary);
-  font-weight: 800;
-  font-size: 0.85rem;
-  line-height: 1.2;
-}
-.factor-bullet-text {
-  flex: 1;
-  color: #e2e8f0;
-}
-.section-divider-tag {
-  font-size: 0.74rem;
-  font-weight: 700;
-  color: #94a3b8;
-  margin: 12px 0 6px 0;
-  display: flex;
-  align-items: center;
-  gap: 6px;
-}
-.section-divider-tag::before, .section-divider-tag::after {
-  content: "";
-  flex: 1;
-  height: 1px;
-  background: var(--border-subtle);
-}
+.slot-expand-arrow { transition: transform 0.2s; }
+details[open] .slot-expand-arrow { transform: rotate(180deg); }
 
-/* Mother Memo Collapsible */
-
-
-
-
-
-/* Spot Bottom Actions */
-.spot-bottom-actions {
-  display: flex;
-  justify-content: flex-end;
-}
-.map-btn-spot {
-  font-size: 0.75rem;
-  color: #38bdf8;
-  text-decoration: none;
-  font-weight: 600;
-  display: inline-flex;
-  align-items: center;
-  gap: 4px;
-}
-.map-btn-spot:hover { text-decoration: underline; color: #7dd3fc; }
-
-
-/* Navigation Header & Drawer Menu */
-.header-right {
-  display: flex;
-  align-items: center;
-  gap: 8px;
-}
-.menu-drawer-btn {
-  background: #1e293b;
-  border: 1px solid var(--border);
-  color: #38bdf8;
-  font-size: 0.8rem;
-  font-weight: 700;
-  padding: 5px 12px;
-  border-radius: 6px;
-  cursor: pointer;
-  display: flex;
-  align-items: center;
-  gap: 6px;
-  transition: all 0.2s;
-}
-.menu-drawer-btn:hover { background: #334155; border-color: var(--primary); }
-.drawer-overlay {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100vw;
-  height: 100vh;
-  background: rgba(0, 0, 0, 0.7);
-  backdrop-filter: blur(4px);
-  z-index: 1000;
-  display: none;
-  opacity: 0;
-  transition: opacity 0.25s ease;
-}
-.drawer-overlay.active {
-  display: block;
-  opacity: 1;
-}
-.drawer-content {
-  position: fixed;
-  top: 0;
-  right: -320px;
-  width: 300px;
-  height: 100vh;
-  background: var(--drawer-bg);
-  border-left: 1px solid var(--border);
-  box-shadow: -4px 0 25px rgba(0, 0, 0, 0.7);
-  z-index: 1001;
-  padding: 20px;
+.slot-body {
+  padding: 12px 14px;
   display: flex;
   flex-direction: column;
-  gap: 16px;
-  transition: right 0.25s ease;
-  overflow-y: auto;
-}
-.drawer-content.active {
-  right: 0;
-}
-.drawer-header {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  border-bottom: 1px solid var(--border);
-  padding-bottom: 12px;
-}
-.drawer-title {
-  font-size: 1rem;
-  font-weight: 800;
-  color: #fff;
-  display: flex;
-  align-items: center;
-  gap: 6px;
-}
-.drawer-close {
-  background: transparent;
-  border: none;
-  color: var(--text-muted);
-  font-size: 1.2rem;
-  cursor: pointer;
-  padding: 4px;
-}
-.drawer-close:hover { color: #fff; }
-.version-card {
-  background: var(--card-inner);
-  border: 1px solid var(--border);
-  border-radius: 8px;
-  padding: 12px;
-  margin-bottom: 10px;
-  transition: border-color 0.15s;
-}
-.version-card.current {
-  border-color: #38bdf8;
-  background: rgba(56, 189, 248, 0.08);
-}
-.version-tag {
-  font-size: 0.68rem;
-  font-weight: 800;
-  padding: 2px 6px;
-  border-radius: 4px;
-  display: inline-block;
-  margin-bottom: 4px;
-}
-.version-tag.current { background: #0284c7; color: #fff; }
-.version-tag.archive { background: #334155; color: #94a3b8; }
-.version-title { font-size: 0.85rem; font-weight: 700; color: var(--version-title); margin-bottom: 4px; }
-.version-desc { font-size: 0.74rem; color: var(--text-muted); line-height: 1.4; margin-bottom: 8px; }
-.version-link {
-  font-size: 0.74rem;
-  color: #38bdf8;
-  text-decoration: none;
-  font-weight: 600;
-  display: inline-flex;
-  align-items: center;
-  gap: 4px;
-}
-.version-link:hover { text-decoration: underline; }
-
-/* Slot Summary Text - Multi-line readable (Zero Ellipsis) */
-.slot-summary-overview {
-  font-size: 0.84rem;
-  color: #e2e8f0;
-  line-height: 1.5;
-  margin-top: 6px;
-  background: rgba(15, 23, 42, 0.5);
-  padding: 6px 10px;
-  border-radius: 6px;
-  border-left: 3px solid #38bdf8;
+  gap: 10px;
 }
 
-
-/* Lunch 3-Genre Cards & Star Ratings */
-.lunch-genre-section {
-  background: rgba(245, 158, 11, 0.06);
-  border: 1px solid rgba(245, 158, 11, 0.3);
-  border-radius: 10px;
-  padding: 12px;
-  margin-bottom: 12px;
-}
-.lunch-genre-header {
-  font-size: 0.82rem;
-  font-weight: 800;
-  color: #fbbf24;
-  margin-bottom: 8px;
-  display: flex;
-  align-items: center;
-  gap: 6px;
-}
-.lunch-options-grid {
-  display: flex;
-  flex-direction: column;
-  gap: 8px;
-}
-.lunch-shop-card {
-  background: var(--card-inner);
-  border: 1px solid var(--border-subtle);
-  border-radius: 8px;
-  padding: 10px;
-}
-.lunch-shop-top {
-  display: flex;
-  justify-content: space-between;
-  align-items: flex-start;
-  margin-bottom: 4px;
-}
-.lunch-shop-name {
-  font-size: 0.86rem;
-  font-weight: 800;
-  color: #ffffff;
-}
-.lunch-shop-meta {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 6px;
-  margin-bottom: 6px;
-}
-.shop-meta-pill {
-  font-size: 0.72rem;
-  font-weight: 700;
-  padding: 1px 6px;
-  border-radius: 4px;
-}
-.pill-rating { background: rgba(245, 158, 11, 0.2); color: #fbbf24; }
-.pill-time { background: rgba(56, 189, 248, 0.2); color: #38bdf8; }
-.pill-budget { background: rgba(52, 211, 153, 0.2); color: #34d399; }
-.lunch-shop-desc {
-  font-size: 0.76rem;
-  color: var(--lunch-desc-text);
-  line-height: 1.4;
-  margin-bottom: 6px;
-}
-
-/* 3 Action Blocks inside expanded slot */
 .action-block-card {
   background: var(--card-inner);
   border: 1px solid var(--border);
   border-radius: 8px;
   padding: 10px 12px;
-  margin-bottom: 10px;
 }
+
 .action-block-title {
-  font-size: 0.8rem;
+  font-size: 0.82rem;
   font-weight: 800;
   margin-bottom: 8px;
   display: flex;
+  justify-content: space-between;
   align-items: center;
+}
+.action-block-title.tactics { color: var(--primary); }
+.action-block-title.bonus { color: var(--purple); }
+.action-block-title.spec { color: var(--accent); }
+
+.micro-step-list {
+  display: flex;
+  flex-direction: column;
   gap: 6px;
 }
-.action-block-title.walk { color: #38bdf8; }
-.action-block-title.bonus { color: #c084fc; }
-.action-block-title.spec { color: #34d399; }
 
-.bonus-decision-badge {
-  font-size: 0.7rem;
-  font-weight: 700;
-  padding: 2px 6px;
-  border-radius: 4px;
-  background: rgba(192, 132, 252, 0.2);
-  color: #e9d5ff;
-  border: 1px solid rgba(192, 132, 252, 0.4);
-}
-.bonus-reason-box {
-  font-size: 0.76rem;
-  color: #cbd5e1;
-  background: rgba(0, 0, 0, 0.25);
-  padding: 6px 8px;
-  border-radius: 6px;
-  margin-top: 4px;
-  line-height: 1.45;
-}
-
-/* Quick Jump Sticky Bar */
-.quick-bar {
-  position: fixed;
-  bottom: 12px;
-  left: 50%;
-  transform: translateX(-50%);
-  background: var(--quick-bar-bg);
-  backdrop-filter: blur(8px);
-  border: 1px solid var(--border);
-  border-radius: 9999px;
-  padding: 6px 14px;
+.micro-step-row {
   display: flex;
   gap: 8px;
-  box-shadow: var(--quick-bar-shadow);
-  z-index: 100;
+  font-size: 0.8rem;
+  align-items: baseline;
+  line-height: 1.4;
 }
-.quick-pill {
+.step-num {
+  font-size: 0.68rem;
+  font-weight: 800;
+  background: var(--primary);
+  color: #fff;
+  border-radius: 4px;
+  padding: 1px 5px;
+  white-space: nowrap;
+}
+.step-tag-must {
+  font-size: 0.65rem;
+  font-weight: 800;
+  color: var(--danger);
+  border: 1px solid var(--danger);
+  border-radius: 3px;
+  padding: 0 4px;
+  margin-left: 4px;
+}
+.step-tag-opt {
+  font-size: 0.65rem;
+  font-weight: 800;
+  color: var(--text-muted);
+  border: 1px solid var(--border);
+  border-radius: 3px;
+  padding: 0 4px;
+  margin-left: 4px;
+}
+
+.bonus-item {
+  background: var(--card-bg);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  padding: 8px 10px;
+  margin-bottom: 6px;
+}
+.bonus-item-top {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 2px;
+}
+.bonus-item-name { font-size: 0.82rem; font-weight: 700; color: var(--text); }
+.bonus-map-link { font-size: 0.72rem; color: var(--map-green); font-weight: 700; text-decoration: none; }
+.bonus-item-desc { font-size: 0.75rem; color: var(--text-muted); line-height: 1.35; }
+
+.spec-line {
+  display: flex;
+  font-size: 0.76rem;
+  gap: 6px;
+  margin-bottom: 4px;
+  line-height: 1.4;
+}
+.spec-label { font-weight: 800; color: var(--text); min-width: 90px; }
+.spec-val { color: var(--text-muted); }
+.spec-danger { color: var(--danger); font-weight: 700; }
+
+.slot-map-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  background: var(--map-green);
+  color: #fff;
+  text-decoration: none;
+  font-size: 0.8rem;
+  font-weight: 700;
+  padding: 8px 12px;
+  border-radius: 6px;
+  margin-top: 4px;
+}
+.slot-map-btn:hover { background: var(--map-green-hover); }
+
+/* Quick Bar */
+.quick-bar {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  z-index: 100;
+  background: var(--header-bg);
+  backdrop-filter: blur(10px);
+  border-top: 1px solid var(--border);
+  padding: 8px 16px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  box-shadow: 0 -2px 10px rgba(0,0,0,0.06);
+}
+.quick-title {
   font-size: 0.76rem;
   font-weight: 700;
   color: var(--text-muted);
-  text-decoration: none;
-  padding: 4px 10px;
-  border-radius: 9999px;
-  border: 1px solid transparent;
-  transition: all 0.15s;
 }
-.quick-pill:hover { color: #fff; border-color: var(--border); }
-
-/* Mother Memo Callout in Summary */
-
-
-
-  content: "🟣 ";
+.quick-btn-group {
+  display: flex;
+  gap: 8px;
+}
+.quick-btn {
+  background: var(--card-inner);
+  border: 1px solid var(--border);
+  color: var(--text);
   font-size: 0.75rem;
+  font-weight: 700;
+  padding: 5px 10px;
+  border-radius: 6px;
+  text-decoration: none;
+  cursor: pointer;
 }
-</style>
+.quick-btn.primary {
+  background: var(--primary);
+  color: #fff;
+  border-color: var(--primary);
+}
+  </style>
 </head>
 <body>
 
   <header>
     <div class="header-top">
-      <div class="title">🏯 愛知・犬山・名古屋 リアルタイムナビ</div>
+      <div class="title">🏯 愛知・犬山 リアルタイムナビ</div>
       <div class="header-right">
-        <button id="theme-toggle-btn" class="theme-toggle-btn" onclick="toggleTheme()" title="ライト/ダークモード切替">
-          <span id="theme-toggle-icon">☀️</span>
-          <span id="theme-toggle-text">ライト</span>
+        <button id="theme-toggle-btn" class="theme-toggle-btn" onclick="toggleTheme()" title="ライト/ダーク切替">
+          <span id="theme-icon">☀️</span>
+          <span id="theme-text">ライト</span>
         </button>
         <div class="badge-origin">起点: 高蔵寺（実家）</div>
-        <button class="menu-drawer-btn" onclick="toggleDrawer(true)">☰ 旅程ガイド</button>
       </div>
     </div>
   </header>
 
-  <!-- Drawer Menu for Version History -->
-  <div class="drawer-overlay" id="drawer-overlay" onclick="toggleDrawer(false)"></div>
-  <div class="drawer-content" id="drawer-content">
-    <div class="drawer-header">
-      <div class="drawer-title">📚 旅程バージョン履歴</div>
-      <button class="drawer-close" onclick="toggleDrawer(false)">✕</button>
-    </div>
-    
-    <div style="font-size:0.75rem; color:var(--text-muted); line-height:1.4;">
-      旅程更新時に過去分が上書き消滅しないよう物理アーカイブされています。いつでも過去プランへ戻せます。
-    </div>
-
-    <div class="version-card current">
-      <span class="version-tag current">🟢 決定版旅程</span>
-      <div class="version-title">愛知・犬山・名古屋 リアルタイムナビ</div>
-      <div class="version-desc">
-        ・11/7: 高蔵寺カラオケ ➔ 名駅小倉トースト ➔ 熱田神宮・草薙館 ➔ 夢を語れ愛知<br>
-        ・11/8: 家族車で犬山フル攻略（国宝犬山城・如庵・城下町・桃太郎神社・寂光院） ➔ 実家直帰（17:00帰着）<br>
-        ・不要な名古屋名物外食・人混み・移動ロスを完全排除した純化フォーマット
-      </div>
-    </div>
-
-    <div style="margin-top:auto; padding-top:14px; border-top:1px solid var(--border);">
-      <button class="copy-btn" style="width:100%; justify-content:center;" onclick="copyCurrentPlan(); toggleDrawer(false);">
-        📋 全行程をLINE用にコピー
-      </button>
-    </div>
-  </div>
-
   <div class="container">
-    <!-- Weather Alert -->
+    <!-- Weather Card -->
     <div class="weather-card">
       <div class="weather-icon">🌤️</div>
       <div class="weather-body">
-        <strong>11/7（金）秋晴れ ＆ 11/8（土）行楽日和</div>
+        <strong>11/7（金）秋晴れ ＆ 11/8（土）行楽日和</strong>
         <div class="weather-sub">11/7は平日午後の静寂を活かして熱田神宮・名刀鑑賞＆夢を語れ夜直撃。11/8は朝08:30発で犬山エリア（犬山城・国宝如庵・城下町・桃太郎神社・寂光院）をフル満喫し、17:00には実家へ直帰します。</div>
       </div>
     </div>
 
-    <!-- Unified Menu & Control Panel -->
+    <!-- Navigation Control Panel -->
     <div class="menu-panel">
       <div class="menu-panel-header">
-        <span>🎛️ 操作・ナビゲーション総合メニュー</span>
-        <button class="copy-btn" onclick="copyCurrentPlan()">📋 全行程コピー（LINE共有用）</button>
+        <span>🎛️ 旅程ナビゲーション</span>
+        <button class="copy-btn" onclick="copyCurrentPlan()">📋 全行程コピー（LINE共有）</button>
       </div>
 
-      <!-- Section 1: Settings Switcher -->
-      <div class="menu-section-label">⚙️ 旅程切り替え（プラン・出発時刻・表示日）</div>
-      
-      <!-- Controls Grid (Day Filter & Key Info) -->
-      <div class="controls-grid" style="grid-template-columns: 1fr 1fr;">
+      <div class="controls-grid">
         <div>
-          <div class="menu-section-label">📅 日程絞り込み表示</div>
+          <div class="menu-section-label">📅 表示日程切り替え</div>
           <div class="segmented-control">
             <button class="segment-btn active" id="day-all-btn" onclick="filterDay('all')">全日程</button>
             <button class="segment-btn" id="day-1-btn" onclick="filterDay('1')">11/7（金）</button>
@@ -1047,979 +574,590 @@ header {
           <div class="menu-section-label">⏰ 出発スケジュール</div>
           <div class="segmented-control" style="background:rgba(56, 189, 248, 0.08); border-color:#0284c7;">
             <div style="flex:1; text-align:center; padding:6px 0; font-size:0.75rem; font-weight:700; color:var(--primary);">
-              11/7: 09:00カラオケ / 11/8: 08:30家発
+              11/7 09:00 / 11/8 08:30
             </div>
           </div>
         </div>
       </div>
 
-      <!-- Section 2: Google Maps Navigation Route -->
-      <div class="menu-section-label" style="margin-top: 14px;">🗺️ Googleマップ 連動ナビ（タップで順番通りナビ開始）</div>
-      <div class="map-action-card">
-        <div class="map-action-card-header">
-          <span>📲 カーナビ連動：全経由地が自動設定されたマップが開きます</span>
-        </div>
-        <div class="map-btn-row">
-          <a id="btn-day1-map" href="#" target="_blank" class="map-route-btn">
-            🚗 【1日目】全ルートナビ（高蔵寺➜二見浦➜外宮➜内宮➜宿） ↗
+      <div>
+        <div class="menu-section-label">🗺️ 全体ルートマップ（Google Maps）</div>
+        <div class="map-buttons-grid">
+          <a href="https://www.google.com/maps/dir/?api=1&origin=高蔵寺駅&destination=夢を語れ+愛知&waypoints=名古屋駅%7C熱田神宮" target="_blank" class="map-link-btn">
+            🗺️ 1日目 全体ルート ↗
           </a>
-          <a id="btn-day2-map" href="#" target="_blank" class="map-route-btn secondary">
-            🚗 【2日目】全ルートナビ（宿➜賢島➜地中海村➜VISON） ↗
+          <a href="https://www.google.com/maps/dir/?api=1&origin=高蔵寺駅&destination=高蔵寺駅&waypoints=国宝犬山城%7C有楽苑%7C犬山城下町%7C桃太郎神社%7C寂光院" target="_blank" class="map-link-btn">
+            🗺️ 2日目 全体ルート ↗
           </a>
         </div>
       </div>
     </div>
 
-    <!-- Dynamic Summary Card -->
-    <div id="summary-container"></div>
-
-    <!-- Dynamic Timeline Slots -->
-    <div class="timeline" id="timeline-container"></div>
+    <!-- Timeline Render Target -->
+    <main id="timeline-container"></main>
   </div>
 
-  <!-- Sticky Quick Jump Bar -->
+  <!-- Bottom Quick Bar -->
   <div class="quick-bar">
-    <a href="#" class="quick-pill" onclick="window.scrollTo({top:0, behavior:'smooth'}); return false;">⬆ 操作メニュー</a>
-    <a href="#day-1-header" class="quick-pill">📅 1日目</a>
-    <a href="#day-2-header" class="quick-pill">📅 2日目</a>
+    <div class="quick-title">愛知・犬山ナビ（11/7〜11/8）</div>
+    <div class="quick-btn-group">
+      <button class="quick-btn" onclick="window.scrollTo({top:0, behavior:'smooth'})">⬆ 上部へ</button>
+      <button class="quick-btn primary" onclick="copyCurrentPlan()">📋 LINEコピー</button>
+    </div>
   </div>
 
   <script>
-    // 旅程データ定義
-    
-const TRIP_DATA = {
-      baseOffsetMinutes: 0,
-      activePlan: '1',
+    const TRIP_DATA = {
       activeDayFilter: 'all',
-      plans: {
-        '1': {
-          name: "【本命】11/7小倉トースト＆名刀＆夢を語れ ＋ 11/8犬山フル満喫（城・国宝如庵・桃太郎神社・寂光院）➔直帰",
-          badge: "★ 本命ハイブリッド案",
-          badgeClass: "badge-must",
-          desc: "名古屋名物（ひつまぶし・味噌カツ・手羽先等）は完全不要とし唯一の関心である『小倉トースト』のみに集中。11/7昼に名駅の名店で極上小倉トーストを堪能後、熱田神宮・草薙館と夜の『夢を語れ 愛知』を完全攻略。11/8は朝08:30発で犬山エリア（国宝犬山城・国宝如庵・城下町・桃太郎神社・寂光院）を余すことなく巡り、名駅への寄り道を完全排除して夕方17:00に家族車で実家へ直帰する最高効率旅程。",
-          day1Map: "https://www.google.com/maps/dir/?api=1&origin=高蔵寺駅&destination=夢を語れ+愛知&waypoints=名古屋駅%7C熱田神宮",
-          day2Map: "https://www.google.com/maps/dir/?api=1&origin=高蔵寺駅&destination=高蔵寺駅&waypoints=国宝犬山城%7C有楽苑%7C犬山城下町%7C桃太郎神社%7C寂光院",
-          days: [
+      days: [
+        {
+          dayNum: 1,
+          dateStr: "11月7日（金・平日）",
+          subTitle: "高蔵寺カラオケ ➔ 名駅小倉トースト ➔ 熱田神宮・草薙館 ➔ 夢を語れ愛知（夜直撃）",
+          macroRoute: ["高蔵寺カラオケ", "JR快速移動", "名駅小倉トースト（BUCYO/アロマ）", "熱田神宮・信長塀", "草薙館（名刀鑑賞）", "夢を語れ愛知（18:00開店直撃）", "実家帰還"],
+          items: [
             {
-              dayNum: 1,
-              dateStr: "11月7日（金・平日）",
-              subTitle: "高蔵寺カラオケ ➔ 名駅小倉トースト ➔ 熱田神宮・草薙館 ➔ 夢を語れ愛知（夜直撃）",
-              macroRoute: ["高蔵寺カラオケ", "JR快速移動", "名駅小倉トースト（BUCYO/アロマ）", "熱田神宮・信長塀", "草薙館（名刀鑑賞）", "夢を語れ愛知（18:00開店）", "実家帰還"],
-              items: [
-                {
-                  baseStart: "09:00", baseEnd: "12:00",
-                  avgDuration: "180分", estDuration: "180分（固定予定）",
-                  type: "must", badgeClass: "badge-must", badgeText: "🎤 【固定予定】高蔵寺カラオケ",
-                  title: "高蔵寺カラオケ（09:00〜12:00）",
-                  tacticsFlowTitle: "午前固定予定の立ち回り",
-                  tacticsSteps: [
-                    { step: 1, text: "09:00に入店。午前中のカラオケを予定通り満喫。", tag: "固定", isSkip: false },
-                    { step: 2, text: "12:00ジャストに退店・精算を完了。", tag: "時間厳守", isSkip: false },
-                    { step: 3, text: "高蔵寺駅へ徒歩移動し、12:20〜12:30頃のJR中央本線快速（名古屋方面行き）に乗車。", tag: "移動", isSkip: false }
-                  ],
-                  bonusSpots: [],
-                  factors: {
-                    overview: "滞在目的: 高蔵寺での午前カラオケ固定枠（09:00〜12:00）。<br>・ 終了後速やかにJR中央線快速へ乗車し名古屋駅へ向かう。",
-                    tactics: "12:00退店を厳守。高蔵寺駅からのJR中央線快速（約26分、420円）に乗ることで12:56に名古屋駅着となる。",
-                    mustTry: "午後の名刀・二郎系に向けたコンディション調整",
-                    plusOne: "高蔵寺駅改札前の売店・コンビニ",
-                    tips: "昼食は名駅まで我慢し、小倉トーストを狙う。",
-                    transit: "高蔵寺駅まで徒歩 ➔ JR中央線快速（所要26分、420円）。",
-                    skipLimit: "12:30までに高蔵寺駅を出発する",
-                    mapUrl: "https://www.google.com/maps/search/?api=1&query=高蔵寺駅"
-                  }
-                },
-                {
-                  baseStart: "12:00", baseEnd: "12:56",
-                  avgDuration: "56分", estDuration: "56分（JR中央本線快速26分）",
-                  type: "transit", badgeClass: "badge-transit", badgeText: "🚆 【移動】高蔵寺 ➔ 名古屋駅",
-                  title: "JR中央本線快速で名古屋駅へ直行（所要26分）",
-                  tacticsFlowTitle: "JR快速アクセスの立ち回り",
-                  tacticsSteps: [
-                    { step: 1, text: "高蔵寺駅のJR改札を通過（Suica/TOICA利用可）。", tag: "入場", isSkip: false },
-                    { step: 2, text: "JR中央本線「快速・名古屋行き」に乗車（大曽根・千種・金山経由）。", tag: "快速乗車", isSkip: false },
-                    { step: 3, text: "12:56 名古屋駅に到着。桜通口または新幹線口（エスカ）へ向かう。", tag: "到着", isSkip: false }
-                  ],
-                  bonusSpots: [],
-                  factors: {
-                    overview: "滞在目的: 高蔵寺から名古屋都心部への幹線移動。<br>・ 所要時間: 快速でわずか26分（各停でも32分）。",
-                    tactics: "快速に乗車することで停車駅をスキップし最速で名駅にインする。",
-                    mustTry: "車窓の庄内川・千種都心ビュー",
-                    plusOne: "大曽根駅（徳川美術館の最寄り駅だが今回は名駅直行）",
-                    tips: "昼のピーク過ぎ（13:00前）に名駅に到着できる絶好のタイミング。",
-                    transit: "JR中央本線快速（高蔵寺 ➔ 名古屋、運賃420円）。",
-                    skipLimit: "13:00までに名駅改札を出る",
-                    mapUrl: "https://www.google.com/maps/search/?api=1&query=名古屋駅"
-                  }
-                },
-                {
-                  baseStart: "13:00", baseEnd: "14:00",
-                  avgDuration: "60分", estDuration: "60分（喫茶・軽食）",
-                  type: "must", badgeClass: "badge-must", badgeText: "☕ 【喫茶】名駅 小倉トースト＆珈琲",
-                  title: "名駅 小倉トースト ＆ 珈琲タイム（BUCYO COFFEE または エスカ・アロマ珈琲）",
-                  tacticsFlowTitle: "小倉トースト名店セレクト立ち回り",
-                  tacticsSteps: [
-                    { step: 1, text: "【味重視】桜通口から徒歩10分の「BUCYO COFFEE」へ。自家製極上粒あんと厚切りトースト（またはカイザーパン）を注文。", tag: "味最高峰", isSkip: false },
-                    { step: 2, text: "【タイパ重視】新幹線口直結のエスカ地下街「アロマ珈琲」へ。昭和純喫茶の厚切りバタートースト＆別添え小倉あんをサクッと注文。", tag: "駅直結", isSkip: true },
-                    { step: 3, text: "淹れたて深煎り珈琲とともに小倉トーストを堪能。夜の二郎系に備え胃袋を休める。", tag: "胃袋調整", isSkip: false },
-                    { step: 4, text: "14:00までに退店し、JR在来線（東海道線）ホームへ向かう。", tag: "出発", isSkip: false }
-                  ],
-                  bonusSpots: [
-                    { name: "BUCYO COFFEE", desc: "名駅南。自家製あんこの豆感が際立つ全国屈指の小倉トースト名店。珈琲も本格派。", mapUrl: "https://www.google.com/maps/search/?api=1&query=BUCYO+COFFEE" },
-                    { name: "アロマ珈琲 エスカ店", desc: "名駅エスカ地下街直結。昭和レトロな純喫茶で厚切りトースト＆小倉あん。", mapUrl: "https://www.google.com/maps/search/?api=1&query=アロマ珈琲+エスカ店" }
-                  ],
-                  factors: {
-                    overview: "滞在目的: 名古屋独自の名物「小倉トースト」を名店で味わう。<br>・ 夜に控える『夢を語れ』完食に向けて昼の重食を徹底排除。",
-                    tactics: "天候や気分で選定。時間に余裕があればBUCYO COFFEE一択。移動ゼロならエスカのアロマ珈琲。",
-                    mustTry: "厚切りトーストの香ばしさと自家製小倉あんの絶妙な甘み",
-                    plusOne: "自家焙煎深煎りブレンド珈琲",
-                    tips: "昼に味噌カツやひつまぶしを食べると夜の二郎系で詰むため、トースト1枚が黄金解。",
-                    transit: "名駅から徒歩（BUCYOは徒歩約10分、アロマはエスカ地下街直結徒歩2分）。",
-                    skipLimit: "14:00には名駅JRホームへ戻る",
-                    mapUrl: "https://www.google.com/maps/search/?api=1&query=BUCYO+COFFEE"
-                  }
-                },
-                {
-                  baseStart: "14:05", baseEnd: "14:20",
-                  avgDuration: "15分", estDuration: "15分（JR東海道線8分＋徒歩）",
-                  type: "transit", badgeClass: "badge-transit", badgeText: "🚆 【移動】名古屋 ➔ 熱田神宮",
-                  title: "JR東海道線で熱田駅へ移動（所要8分）",
-                  tacticsFlowTitle: "熱田駅からの神域アプローチ",
-                  tacticsSteps: [
-                    { step: 1, text: "名古屋駅・東海道線（岡崎・豊橋方面行き各停・快速等）に乗車。", tag: "乗車", isSkip: false },
-                    { step: 2, text: "3駅・所要8分で「熱田駅」に到着（運賃190円）。", tag: "熱田駅着", isSkip: false },
-                    { step: 3, text: "熱田駅西口を出て徒歩約3分で熱田神宮の東門・静寂の森へ入る。", tag: "神域イン", isSkip: false }
-                  ],
-                  bonusSpots: [],
-                  factors: {
-                    overview: "滞在目的: 名駅から熱田神宮への最速・最安アクセス。<br>・ 所要時間: 電車8分＋徒歩3分。",
-                    tactics: "名鉄神宮前駅でも良いが、名駅でのJR乗り継ぎならJR熱田駅が最もスムーズ。",
-                    mustTry: "鳥居をくぐった瞬間の静謐な空気感",
-                    plusOne: "神宮前駅西口の商業施設「あつたnagAya」",
-                    tips: "熱田駅西口から神宮東門は目と鼻の先。",
-                    transit: "JR東海道本線（名古屋 ➔ 熱田、190円）。",
-                    skipLimit: "14:20までに熱田神宮境内に入る",
-                    mapUrl: "https://www.google.com/maps/search/?api=1&query=熱田駅"
-                  }
-                },
-                {
-                  baseStart: "14:20", baseEnd: "16:45",
-                  avgDuration: "145分", estDuration: "145分（参拝・草薙館鑑賞）",
-                  type: "must", badgeClass: "badge-must", badgeText: "⛩️ 【参拝・名刀】熱田神宮＆草薙館",
-                  title: "熱田神宮 本殿・信長塀参拝 ＆ 剣の宝庫「草薙館」名刀鑑賞",
-                  tacticsFlowTitle: "神域参拝と名刀体験の完全順路",
-                  tacticsSteps: [
-                    { step: 1, text: "東門から巨木が茂る参道を進み手水舎で清める。織田信長が桶狭間の大勝後に奉納した「信長塀」を見学。", tag: "信長塀", isSkip: false },
-                    { step: 2, text: "本宮（本殿）へ参拝。三種の神器「草薙神剣（くさなぎのみつるぎ）」が鎮座する最高格式の神域に祈願。", tag: "本宮参拝", isSkip: false },
-                    { step: 3, text: "境内の刀剣専門展示施設「草薙館」（入館料500円）へ入館。", tag: "草薙館", isSkip: false },
-                    { step: 4, text: "国宝・重要文化財の名刀群、および刃長2m超の「次郎太刀」を鑑賞。同重量の模擬刀を実際に両手で握り、武士の刀の重みを体感。", tag: "名刀体験", isSkip: false },
-                    { step: 5, text: "境内南門または東門へ戻り、16:45にタクシー乗車待機。", tag: "退出", isSkip: false }
-                  ],
-                  bonusSpots: [
-                    { name: "信長塀（のぶながべい）", desc: "日本三大土塀の一つ。桶狭間の戦い直前に必勝祈願した織田信長が大勝の御礼に奉納。", mapUrl: "https://www.google.com/maps/search/?api=1&query=信長塀" },
-                    { name: "剣の宝庫 草薙館", desc: "名刀・大太刀の実物展示と、同重量の模擬刀を実際に持ち上げる体験コーナーが圧巻。", mapUrl: "https://www.google.com/maps/search/?api=1&query=剣の宝庫+草薙館" },
-                    { name: "きよめ餅総本家", desc: "熱田神宮名物の羽二重餅。お土産に最適。", mapUrl: "https://www.google.com/maps/search/?api=1&query=きよめ餅総本家" }
-                  ],
-                  factors: {
-                    overview: "滞在目的: 三種の神器を祀る熱田神宮参拝と、全国屈指の名刀コレクション「草薙館」の鑑賞。<br>・ 想定滞在時間: 約2時間15分（平日は非常に静か）。",
-                    tactics: "本宮参拝後に草薙館へじっくり入る。大太刀（次郎太刀）の展示と持ち上げ体験は必見。",
-                    mustTry: "次郎太刀の実寸迫力、信長塀の瓦土層、樹齢千年の大楠",
-                    plusOne: "宮きしめん神宮店（※夜の二郎系のため食べるならハーフかパス推奨）",
-                    tips: "草薙館の入館は16:30まで。早めに草薙館に入ると安心。",
-                    transit: "境内徒歩移動。敷地内は完全平坦で歩きやすい。",
-                    skipLimit: "16:45までに神宮を出て滝子へ向かう",
-                    mapUrl: "https://www.google.com/maps/search/?api=1&query=熱田神宮"
-                  }
-                },
-                {
-                  baseStart: "16:45", baseEnd: "17:30",
-                  avgDuration: "45分", estDuration: "45分（タクシー8分＋整流時間）",
-                  type: "transit", badgeClass: "badge-transit", badgeText: "🚕 【移動】熱田 ➔ 瑞穂区滝子",
-                  title: "熱田神宮から瑞穂区滝子（夢を語れ愛知）へ移動",
-                  tacticsFlowTitle: "夜の部直撃アクセスの立ち回り",
-                  tacticsSteps: [
-                    { step: 1, text: "熱田神宮東門または南門からタクシーに乗車（「滝子の名古屋市大キャンパス前まで」と指定）。", tag: "タクシー推奨", isSkip: false },
-                    { step: 2, text: "約8〜10分で瑞穂区竹田町・滝子交差点南へ到着（運賃約1,200円）。", tag: "直通着", isSkip: false },
-                    { step: 3, text: "（市バスの場合）神宮東門から「栄21」系統で「滝子」下車徒歩2分。", tag: "市バス代替", isSkip: true },
-                    { step: 4, text: "「夢を語れ 愛知」の青い看板を確認し、17:40頃に店頭へ到着。", tag: "店頭着", isSkip: false }
-                  ],
-                  bonusSpots: [],
-                  factors: {
-                    overview: "滞在目的: 熱田神宮から「夢を語れ 愛知」への短距離移動。<br>・ 地下鉄だと乗り換えが発生するため、タクシー直行が圧倒的に快適。",
-                    tactics: "タクシーで約2.5km、10分以内。17:40に到着すれば18:00開店の先頭集団に入れる。",
-                    mustTry: "タクシー車窓からの名古屋下町・住宅街の街並み",
-                    plusOne: "近隣コンビニでの黒烏龍茶調達",
-                    tips: "二郎系直撃前に黒烏龍茶を買っておくと胃もたれを防止できる。",
-                    transit: "タクシー（所要約8〜10分、約1,200円）。",
-                    skipLimit: "17:45までに店頭に到着し並びに接続する",
-                    mapUrl: "https://www.google.com/maps/search/?api=1&query=夢を語れ+愛知"
-                  }
-                },
-                {
-                  baseStart: "17:40", baseEnd: "19:00",
-                  avgDuration: "80分", estDuration: "80分（並び＋実食）",
-                  type: "must", badgeClass: "badge-must", badgeText: "🍜 【夕食・麺】夢を語れ 愛知",
-                  title: "『夢を語れ 愛知』夜の部直撃（18:00開店・東京未展開の希少直系）",
-                  tacticsFlowTitle: "富士丸・ラーメン荘直系の実食立ち回り",
-                  tacticsSteps: [
-                    { step: 1, text: "17:40〜17:45着。18:00開店の列に並びファーストロット（またはセカンド）を確保。", tag: "開店直撃", isSkip: false },
-                    { step: 2, text: "券売機で「ラーメン」を購入。麺量は並で300g。少なめ希望は食券提出時に「麺200gで」と申告。", tag: "食券購入", isSkip: false },
-                    { step: 3, text: "無料トッピングコール（ニンニク・アブラ）。別皿で供される甘辛味付きアブラを受け取る。", tag: "コール", isSkip: false },
-                    { step: 4, text: "クタヤサイ、ホロホロの分厚い豚、ワシワシの極太縮れ麺を堪能。麺を別皿アブラに潜らせてすする。", tag: "実食", isSkip: false },
-                    { step: 5, text: "完食後、ドンブリとコップをカウンター上に上げ、ダスターで拭いて退店。", tag: "退店", isSkip: false }
-                  ],
-                  bonusSpots: [],
-                  factors: {
-                    overview: "滞在目的: 東京に常設店のない「夢を語れ」直系青看板店舗での本格二郎系実食。<br>・ 営業時間: 18:00〜21:00（木曜定休）。",
-                    tactics: "18:00開店直撃が最も並びが短い。昼を小倉トーストのみに抑えた成果をここで爆発させる。",
-                    mustTry: "富士丸直系の甘口豚骨醤油スープ、別皿味付けアブラ、極太縮れ麺",
-                    plusOne: "汁なし（提供日であればこちらも絶品）",
-                    tips: "ロットを乱さないよう無理のない麺量を申告すること（自信がなければ200g推奨）。",
-                    transit: "地下鉄桜通線「桜山駅」徒歩約11分（名古屋市立大学滝子キャンパス前）。",
-                    skipLimit: "19:00までに退店し、桜山駅へ向かう",
-                    mapUrl: "https://www.google.com/maps/search/?api=1&query=夢を語れ+愛知"
-                  }
-                },
-                {
-                  baseStart: "19:15", baseEnd: "20:00",
-                  avgDuration: "45分", estDuration: "45分（地下鉄桜通線＋JR中央線）",
-                  type: "transit", badgeClass: "badge-transit", badgeText: "🏠 【帰路】桜山 ➔ 実家帰還",
-                  title: "地下鉄桜通線「桜山駅」からJR中央線乗り換えで実家へ帰還",
-                  tacticsFlowTitle: "帰路スムーズ乗り継ぎの立ち回り",
-                  tacticsSteps: [
-                    { step: 1, text: "夢を語れを出て北東へ徒歩約11分、地下鉄桜通線「桜山駅」へ。", tag: "桜山駅へ", isSkip: false },
-                    { step: 2, text: "桜通線（名古屋・太閤通方面行き）に乗車。今池で東山線、または名古屋駅でJR中央線へ乗り換え。", tag: "地下鉄乗車", isSkip: false },
-                    { step: 3, text: "JR中央本線快速で高蔵寺駅へ戻り、実家へ帰還。", tag: "帰着", isSkip: false }
-                  ],
-                  bonusSpots: [],
-                  factors: {
-                    overview: "滞在目的: 1日目行程終了後の実家へのスムーズな帰還。",
-                    tactics: "桜山駅から桜通線1本で名駅へ直通（約17分）できるため、迷わずJR中央線に接続できる。",
-                    mustTry: "車内での満腹余韻",
-                    plusOne: "名駅構内での夜スイーツ・お茶",
-                    tips: "翌日の犬山（家族車）に備えて早めに休息。",
-                    transit: "地下鉄桜通線（桜山 ➔ 名古屋、270円）＋ JR中央線快速（名古屋 ➔ 高蔵寺、420円）。",
-                    skipLimit: "20:30までに実家へ帰着",
-                    mapUrl: "https://www.google.com/maps/search/?api=1&query=桜山駅"
-                  }
-                }
-              ]
+              time: "09:00 - 12:00",
+              duration: "180分",
+              badge: "固定予定",
+              badgeType: "must",
+              title: "高蔵寺カラオケ（09:00〜12:00）",
+              overview: "高蔵寺での午前カラオケ固定枠。終了後速やかにJR中央本線快速へ乗車し名古屋駅へ向かう。",
+              tacticsTitle: "午前固定予定の立ち回り",
+              tactics: [
+                { step: 1, text: "09:00に入店。午前中のカラオケを予定通り満喫。", must: true },
+                { step: 2, text: "12:00ジャストに退店・精算を完了。", must: true },
+                { step: 3, text: "高蔵寺駅へ徒歩移動し、12:20〜12:30頃のJR中央本線快速に乗車。", must: true }
+              ],
+              bonusSpots: [],
+              specs: {
+                transit: "高蔵寺駅まで徒歩 ➔ JR中央線快速（所要26分、420円）",
+                highlight: "午後の名刀・二郎系に向けたコンディション調整",
+                tips: "昼食は名駅まで我慢し、小倉トーストを狙う。",
+                skipLimit: "12:30までに高蔵寺駅を出発する"
+              },
+              mapUrl: "https://www.google.com/maps/search/?api=1&query=高蔵寺駅"
             },
             {
-              dayNum: 2,
-              dateStr: "11月8日（土・休日）",
-              subTitle: "犬山フル満喫（国宝犬山城 ➔ 国宝茶室如庵 ➔ 城下町昼食 ➔ 桃太郎神社 ➔ 寂光院） ➔ 家族車で実家直帰（17:00帰着）",
-              macroRoute: ["実家発（家族車）", "国宝犬山城（天守登閣）", "有楽苑（国宝茶室如庵）", "犬山城下町（家族昼食）", "桃太郎神社（浅野祥雲彫刻）", "寂光院（尾張のもみじ寺）", "家族車で実家直帰（所要35分）"],
-              items: [
-                {
-                  baseStart: "08:30", baseEnd: "09:15",
-                  avgDuration: "45分", estDuration: "45分（自家用車移動約35分＋駐車）",
-                  type: "transit", badgeClass: "badge-transit", badgeText: "🚗 【移動】実家 ➔ 犬山城",
-                  title: "実家から家族車で国宝犬山城へ直行（車約35分）",
-                  tacticsFlowTitle: "土曜混雑前の一番乗り立ち回り",
-                  tacticsSteps: [
-                    { step: 1, text: "実家を08:30に出発。国道19号から尾張パークウェイまたは県道経由で犬山方面へ。", tag: "出発", isSkip: false },
-                    { step: 2, text: "犬山城第1駐車場（普通車500円）またはキャッスルパーキングへ09:15に入庫。開門直後で満車リスク完全ゼロ。", tag: "P確保", isSkip: false },
-                    { step: 3, text: "家族とともに城下町北端から登城坂へ向かう。", tag: "登城へ", isSkip: false }
-                  ],
-                  bonusSpots: [],
-                  factors: {
-                    overview: "滞在目的: 家族車による犬山への快適アクセス。<br>・ 08:30発により土曜の駐車場渋滞を完全回避。",
-                    tactics: "08:30発で09:15着。第1駐車場（城前）に余裕で駐車可能。",
-                    mustTry: "木曽川沿いの朝の清々しいドライブ",
-                    plusOne: "尾張パークウェイの爽快な景色",
-                    tips: "車に不要な荷物を置いて身軽に登城する。",
-                    transit: "自家用車移動（高蔵寺・春日井方面 ➔ 犬山、約20km）。",
-                    skipLimit: "09:20までに犬山城登城口へ入る",
-                    mapUrl: "https://www.google.com/maps/search/?api=1&query=犬山城第1駐車場"
-                  }
-                },
-                {
-                  baseStart: "09:15", baseEnd: "11:00",
-                  avgDuration: "105分", estDuration: "105分（天守登閣・三光稲荷神社）",
-                  type: "must", badgeClass: "badge-must", badgeText: "🏯 【城郭・絶景】国宝 犬山城登閣",
-                  title: "国宝 犬山城 登閣 ＋ 三光稲荷神社（銭洗・ハート絵馬）",
-                  tacticsFlowTitle: "現存天守最上階と神社参拝の一筆書き順路",
-                  tacticsSteps: [
-                    { step: 1, text: "登城道沿いの「三光稲荷神社」へ参拝。銭洗池でお金を清め、ピンクのハート絵馬トンネルを見学。", tag: "三光稲荷", isSkip: false },
-                    { step: 2, text: "犬山城本丸へ入場（入場券550円購入）。現存12天守かつ国宝5城の勇姿を撮影。", tag: "本丸入場", isSkip: false },
-                    { step: 3, text: "靴を脱いで天守内部へ。朝イチのため急階段（傾斜50度）の渋滞なくスムーズに最上階へ。", tag: "天守登閣", isSkip: false },
-                    { step: 4, text: "最上階の高欄（手すりの低い回廊）を一周。足元の木曽川断崖絶壁と濃尾平野の360度パノラマ絶景を体感。", tag: "絶景パノラマ", isSkip: false },
-                    { step: 5, text: "天守を下り、城前広場を経て東隣の「有楽苑」へ徒歩移動。", tag: "有楽苑へ", isSkip: false }
-                  ],
-                  bonusSpots: [
-                    { name: "三光稲荷神社", desc: "犬山城の麓にある歴史ある神社。銭洗池で清めたお金は福徳をもたらすとされる。", mapUrl: "https://www.google.com/maps/search/?api=1&query=三光稲荷神社" },
-                    { name: "針綱神社", desc: "犬山城の守護神。織田信康が安産・延命を祈願した名刹。", mapUrl: "https://www.google.com/maps/search/?api=1&query=針綱神社" }
-                  ],
-                  factors: {
-                    overview: "滞在目的: 織田信長叔父築城の現存最古級天守登閣と木曽川パノラマ絶景。<br>・ 朝イチ入場により混雑ゼロで高欄を独占可能。",
-                    tactics: "急階段は手すりをしっかり握る。高欄の外回廊はスリル満点で唯一無二の体験。",
-                    mustTry: "天守最上階から見下ろす木曽川のライン川に似た大河景観",
-                    plusOne: "城門前の五平餅",
-                    tips: "靴を脱いで持ち歩くスタイル。厚手の靴下があると快適。",
-                    transit: "城内徒歩移動。急勾配階段あり。",
-                    skipLimit: "11:00には城を出て有楽苑へ向かう",
-                    mapUrl: "https://www.google.com/maps/search/?api=1&query=国宝犬山城"
-                  }
-                },
-                {
-                  baseStart: "11:05", baseEnd: "12:15",
-                  avgDuration: "70分", estDuration: "70分（国宝茶室鑑賞＋呈茶）",
-                  type: "must", badgeClass: "badge-must", badgeText: "🍵 【国宝茶室】有楽苑（如庵）",
-                  title: "有楽苑 国宝茶室「如庵（じょあん）」鑑賞 ＆ 庭園呈茶体験",
-                  tacticsFlowTitle: "武将茶人・織田有楽斎の美学に浸る順路",
-                  tacticsSteps: [
-                    { step: 1, text: "犬山城から東へ徒歩約5分、名鉄犬山ホテル跡地「有楽苑」へ入園（入園料1,200円、呈茶付きセット推奨）。", tag: "入園", isSkip: false },
-                    { step: 2, text: "織田信長の実弟・織田有楽斎（長益）が建てた【国宝茶室 如庵】の外観・内部を鑑賞（日本に3つしかない国宝茶室の1つ）。", tag: "国宝如庵", isSkip: false },
-                    { step: 3, text: "重要文化財「旧正伝院書院」および「弘庵」を巡り、手入れの行き届いた日本庭園を散策。", tag: "重文書院", isSkip: false },
-                    { step: 4, text: "重要文化財の茶室にて季節の和菓子とお抹茶をいただき、優雅に一息。", tag: "呈茶一服", isSkip: false },
-                    { step: 5, text: "12:15に苑を出て、徒歩で犬山城下町の本町通りへ向かう。", tag: "城下町へ", isSkip: false }
-                  ],
-                  bonusSpots: [
-                    { name: "ホテルインディゴ犬山有楽苑", desc: "隣接する外資系リゾートホテル。木曽川と犬山城を望むモダン建築。", mapUrl: "https://www.google.com/maps/search/?api=1&query=ホテルインディゴ犬山有楽苑" }
-                  ],
-                  factors: {
-                    overview: "滞在目的: 織田信長の実弟・織田有楽斎が遺した国宝茶室「如庵」の鑑賞と呈茶体験。<br>・ 犬山城のすぐ隣で移動負荷ゼロ。武将文化の最高峰に触れられる。",
-                    tactics: "犬山城の勇壮な天守から一転、静寂の数寄屋建築と日本庭園でコントラストを味わう。",
-                    mustTry: "如庵の有楽窓（竹の格子窓）と暦張り、季節の和菓子とお抹茶",
-                    plusOne: "旧正伝院書院の狩野山楽・山雪の襖絵",
-                    tips: "犬山城入場券とのセット割や割引がないか窓口で確認。",
-                    transit: "犬山城から徒歩約5分。平坦な庭園路。",
-                    skipLimit: "12:15には城下町へ移動する",
-                    mapUrl: "https://www.google.com/maps/search/?api=1&query=有楽苑"
-                  }
-                },
-                {
-                  baseStart: "12:20", baseEnd: "13:45",
-                  avgDuration: "85分", estDuration: "85分（家族昼食＋城下町散策）",
-                  type: "must", badgeClass: "badge-must", badgeText: "🍴 【昼食・散策】犬山城下町",
-                  title: "犬山城下町（本町通り） 家族昼食 ＆ 五平餅・飛騨牛串食べ歩き・町並み散策",
-                  tacticsFlowTitle: "城下町名物グルメと町家散策の立ち回り",
-                  tacticsSteps: [
-                    { step: 1, text: "有楽苑から本町通り（城下町メインストリート）へ徒歩移動。", tag: "本町通り", isSkip: false },
-                    { step: 2, text: "登録有形文化財「山田五平餅店」で手作りの香ばしいだんご型五平餅（ごま・くるみ・落花生だれ）を味わう。", tag: "五平餅", isSkip: false },
-                    { step: 3, text: "「犬山牛太郎」の飛騨牛にぎり寿しや、町家カフェで家族ゆったり昼食。", tag: "家族昼食", isSkip: false },
-                    { step: 4, text: "「どんでん館（犬山祭の車山展示）」や「昭和横丁」をぶらりと散策・お土産調達。", tag: "町並み散策", isSkip: false },
-                    { step: 5, text: "13:45に駐車場へ戻り、家族車で木曽川沿いの「桃太郎神社」へ向かう。", tag: "車へ戻る", isSkip: false }
-                  ],
-                  bonusSpots: [
-                    { name: "山田五平餅店", desc: "城下町名物。登録有形文化財の町家で焼きたてのごまだれ団子型五平餅。", mapUrl: "https://www.google.com/maps/search/?api=1&query=山田五平餅店" },
-                    { name: "犬山牛太郎", desc: "飛騨牛にぎり寿しの人気店。わさび醤油と塩しょうがの2貫盛り。", mapUrl: "https://www.google.com/maps/search/?api=1&query=犬山牛太郎" },
-                    { name: "どんでん館", desc: "犬山祭で曳かれる高さ8mの巨大な車山（山車）を4輌常設展示。", mapUrl: "https://www.google.com/maps/search/?api=1&query=どんでん館" }
-                  ],
-                  factors: {
-                    overview: "滞在目的: 江戸情緒残る城下町での家族昼食と名物食べ歩き。<br>・ 時間に余裕を持たせ、食事だけでなく史料館や町家散策も満喫。",
-                    tactics: "12時台後半は混み合うが、店を選べば回転は速い。五平餅はテイクアウト推奨。",
-                    mustTry: "山田五平餅店の焼きたて五平餅、飛騨牛炙り寿司、芳川屋のフルーツパフェ",
-                    plusOne: "犬山特産のげんこつ飴",
-                    tips: "車は第1駐車場に停めたまま徒歩で城下町を往復できる。",
-                    transit: "城下町徒歩散策（平坦な一本道）。",
-                    skipLimit: "13:50までに車へ戻る",
-                    mapUrl: "https://www.google.com/maps/search/?api=1&query=犬山城下町"
-                  }
-                },
-                {
-                  baseStart: "14:00", baseEnd: "15:00",
-                  avgDuration: "60分", estDuration: "60分（車移動10分＋境内見学・撮影）",
-                  type: "must", badgeClass: "badge-must", badgeText: "👹 【奇観・撮影】桃太郎神社",
-                  title: "桃太郎神社 浅野祥雲コンクリート彫刻群の鑑賞＆写真撮影",
-                  tacticsFlowTitle: "全国屈指の珍スポット完全回収の立ち回り",
-                  tacticsSteps: [
-                    { step: 1, text: "犬山城駐車場を出発し、木曽川沿いの県道を東へ約10分車で直行。", tag: "車移動10分", isSkip: false },
-                    { step: 2, text: "桃太郎神社無料駐車場に車を入庫。", tag: "無料P", isSkip: false },
-                    { step: 3, text: "境内へ。コンクリート造形作家・浅野祥雲による極彩色の実物大彫刻群（泣き叫ぶ赤鬼・青鬼、桃から生まれた桃太郎、猿・雉・犬）を撮影。", tag: "写真撮影", isSkip: false },
-                    { step: 4, text: "桃形の鳥居や宝物館（大人200円、鬼のミイラの写真等）を面白く鑑賞。", tag: "珍スポット", isSkip: false },
-                    { step: 5, text: "15:00に車を出し、すぐ隣の「寂光院」へ移動（車で3分）。", tag: "寂光院へ", isSkip: false }
-                  ],
-                  bonusSpots: [
-                    { name: "桃太郎神社 宝物館", desc: "鬼の角や鬼のミイラの写真が展示されたシュールな資料館（200円）。", mapUrl: "https://www.google.com/maps/search/?api=1&query=桃太郎神社+宝物館" }
-                  ],
-                  factors: {
-                    overview: "滞在目的: 浅野祥雲の最高傑作とされるコンクリート彫刻群が林立するカルト珍スポット。<br>・ 車がないとアクセスが極めて困難なため、家族車の機動力を最大活用。",
-                    tactics: "境内各所にリアルでシュールな表情の鬼や動物たちが配置されている。写真映え抜群。",
-                    mustTry: "涙を流して懺悔するやさしい鬼の像、桃から飛び出す桃太郎像",
-                    plusOne: "おみくじ・桃太郎みやげ",
-                    tips: "入場無料（宝物館のみ200円）。家族全員で笑顔で写真が撮れる名所。",
-                    transit: "車移動（犬山城 ➔ 桃太郎神社、約4km・約10分）。無料駐車場完備。",
-                    skipLimit: "15:05までに寂光院へ向かう",
-                    mapUrl: "https://www.google.com/maps/search/?api=1&query=桃太郎神社+犬山"
-                  }
-                },
-                {
-                  baseStart: "15:05", baseEnd: "16:20",
-                  avgDuration: "75分", estDuration: "75分（車移動3分＋境内参詣・絶景鑑賞）",
-                  type: "must", badgeClass: "badge-must", badgeText: "🍁 【名刹・絶景】寂光院（もみじ寺）",
-                  title: "寂光院（尾張のもみじ寺） 信長ゆかりの巨石霊場参詣 ＆ 木曽川眺望",
-                  tacticsFlowTitle: "白鳳時代の古刹と紅葉・巨石を巡る順路",
-                  tacticsSteps: [
-                    { step: 1, text: "桃太郎神社から車で約3分、寂光院駐車場（無料）へ入庫。", tag: "到着", isSkip: false },
-                    { step: 2, text: "スロープカー（ケーブルカー風・片道200円）に乗車、または七面坂の階段参道（約300段）を上がり本堂へ。", tag: "本堂へ", isSkip: false },
-                    { step: 3, text: "白鳳時代（654年）創建の本堂へ参拝。織田信長公が清洲城から参詣した歴史に触れる。", tag: "本堂参拝", isSkip: false },
-                    { step: 4, text: "展望台から木曽川の流れと犬山城・濃尾平野を遠望。境内を彩る約1000本のもみじと巨石の景観を堪能。", tag: "絶景展望", isSkip: false },
-                    { step: 5, text: "16:20に下山・駐車場を出発。犬山観光を完璧に完遂し、名古屋駅へ向かう。", tag: "名古屋へ", isSkip: false }
-                  ],
-                  bonusSpots: [
-                    { name: "スロープカー（寂光院）", desc: "山麓から本堂までを約4分で結ぶ小型モノレール。足腰の負担を軽減できる。", mapUrl: "https://www.google.com/maps/search/?api=1&query=寂光院+スロープカー" },
-                    { name: "犬山頭首工（ライン大橋）", desc: "木曽川の雄大な水流を堰き止める大堰。車窓からの眺めが圧巻。", mapUrl: "https://www.google.com/maps/search/?api=1&query=犬山頭首工" }
-                  ],
-                  factors: {
-                    overview: "滞在目的: 織田信長公も崇敬した「尾張のもみじ寺」参詣と、山頂展望台からの大パノラマ。<br>・ 桃太郎神社と隣接しており、車ならわずか3分で接続できる隠れた名所。",
-                    tactics: "階段が約300段あるが、スロープカー（200円）を使えば楽に本堂まで行ける。",
-                    mustTry: "本堂展望台からの木曽川大パノラマ、境内の巨石信仰遺構、千本もみじの森",
-                    plusOne: "寺務所の御朱印",
-                    tips: "足元はスニーカー推奨。スロープカーは片道利用も可能。",
-                    transit: "車移動（桃太郎神社 ➔ 寂光院、約1km・約3分）。無料駐車場あり。",
-                    skipLimit: "16:30には寂光院を出発する",
-                    mapUrl: "https://www.google.com/maps/search/?api=1&query=寂光院+犬山"
-                  }
-                },
-                {
-                  baseStart: "16:25", baseEnd: "17:05",
-                  avgDuration: "40分", estDuration: "40分（自家用車移動約35分）",
-                  type: "transit", badgeClass: "badge-transit", badgeText: "🏠 【直帰】犬山 ➔ 実家帰還",
-                  title: "名駅寄り道を完全排除し、家族車で実家へ直帰（所要約35分・17:00帰着）",
-                  tacticsFlowTitle: "名駅人混み完全回避・最高効率直帰の立ち回り",
-                  tacticsSteps: [
-                    { step: 1, text: "名古屋名物（ひつまぶし・手羽先等）は完全不要のため、名駅への電車移動や人混みを完全パス。", tag: "名駅パス", isSkip: false },
-                    { step: 2, text: "寂光院から家族車でそのまま県道・尾張パークウェイ・国道19号経由で高蔵寺（実家）へ直行。", tag: "車直行35分", isSkip: false },
-                    { step: 3, text: "わずか35〜40分の快適なドライブで、17:05には実家へ無事帰還。", tag: "17時帰着", isSkip: false },
-                    { step: 4, text: "夜は実家で家族とゆったり過ごすか、近場で気兼ねなく食事を済ませる。", tag: "完全くつろぎ", isSkip: false }
-                  ],
-                  bonusSpots: [],
-                  factors: {
-                    overview: "滞在目的: 名古屋駅への無駄な寄り道を完全排除した最高効率の実家直帰。<br>・ 17:00には帰着できるため、旅の疲労を一切残さず完全くつろぎモードへ。",
-                    tactics: "犬山から高蔵寺は車なら約20km・35分至近。名駅へ迂回するより1時間以上早く帰れる。",
-                    mustTry: "全行程を無駄なく完遂した圧倒的スマート感",
-                    plusOne: "実家でのゆったりした夜の時間",
-                    tips: "名古屋めし（ひつまぶし・味噌カツ・手羽先等）はスキップし、小倉トーストのみに絞った潔い勝利。",
-                    transit: "自家用車移動（犬山 ➔ 高蔵寺・実家、約20km・約35分）。",
-                    skipLimit: "17:15までに実家へ帰着",
-                    mapUrl: "https://www.google.com/maps/search/?api=1&query=高蔵寺駅"
-                  }
-                }
-              ]
+              time: "12:00 - 12:56",
+              duration: "56分",
+              badge: "移動",
+              badgeType: "transit",
+              title: "JR中央本線快速で名古屋駅へ直行（所要26分）",
+              overview: "高蔵寺から名古屋都心部への幹線移動。快速乗車により最速で名駅にイン。",
+              tacticsTitle: "JR快速アクセスの立ち回り",
+              tactics: [
+                { step: 1, text: "高蔵寺駅のJR改札を通過（交通系IC利用可）。", must: true },
+                { step: 2, text: "JR中央本線「快速・名古屋行き」に乗車（大曽根・千種・金山経由）。", must: true },
+                { step: 3, text: "12:56 名古屋駅に到着。桜通口または新幹線口（エスカ）へ向かう。", must: true }
+              ],
+              bonusSpots: [],
+              specs: {
+                transit: "JR中央本線快速（高蔵寺 ➔ 名古屋、運賃420円）",
+                highlight: "車窓の庄内川・千種都心ビュー",
+                tips: "昼のピーク過ぎ（13:00前）に名駅に到着できる絶好のタイミング。",
+                skipLimit: "13:00までに名駅改札を出る"
+              },
+              mapUrl: "https://www.google.com/maps/search/?api=1&query=名古屋駅"
+            },
+            {
+              time: "13:00 - 14:00",
+              duration: "60分",
+              badge: "喫茶・名物",
+              badgeType: "must",
+              title: "名駅 小倉トースト ＆ 珈琲タイム（BUCYO COFFEE または エスカ・アロマ珈琲）",
+              overview: "名古屋独自の名物『小倉トースト』を名店で味わう。夜の二郎系に備え昼の重食を完全排除。",
+              tacticsTitle: "小倉トースト名店セレクト立ち回り",
+              tactics: [
+                { step: 1, text: "【味重視】桜通口から徒歩10分の「BUCYO COFFEE」へ。自家製極上粒あんと厚切りトーストを注文。", must: true },
+                { step: 2, text: "【タイパ重視】新幹線口直結のエスカ地下街「アロマ珈琲」へ。昭和純喫茶の厚切りバタートースト＆小倉あんを注文。", must: false },
+                { step: 3, text: "淹れたて深煎り珈琲とともに小倉トーストを堪能。夜の二郎系に備え胃袋を休める。", must: true },
+                { step: 4, text: "14:00までに退店し、JR在来線（東海道線）ホームへ向かう。", must: true }
+              ],
+              bonusSpots: [
+                { name: "BUCYO COFFEE", desc: "名駅南。自家製あんこの豆感が際立つ全国屈指の小倉トースト名店。珈琲も本格派。", mapUrl: "https://www.google.com/maps/search/?api=1&query=BUCYO+COFFEE" },
+                { name: "アロマ珈琲 エスカ店", desc: "名駅エスカ地下街直結。昭和レトロな純喫茶で厚切りトースト＆小倉あん。", mapUrl: "https://www.google.com/maps/search/?api=1&query=アロマ珈琲+エスカ店" }
+              ],
+              specs: {
+                transit: "名駅から徒歩（BUCYOは徒歩約10分、アロマはエスカ直結徒歩2分）",
+                highlight: "厚切りトーストの香ばしさと自家製小倉あんの絶妙な甘み",
+                tips: "昼に味噌カツやひつまぶしを食べると夜の二郎系で詰むため、トースト1枚が黄金解。",
+                skipLimit: "14:00には名駅JRホームへ戻る"
+              },
+              mapUrl: "https://www.google.com/maps/search/?api=1&query=BUCYO+COFFEE"
+            },
+            {
+              time: "14:05 - 14:20",
+              duration: "15分",
+              badge: "移動",
+              badgeType: "transit",
+              title: "JR東海道線で熱田駅へ移動（所要8分）",
+              overview: "名駅から熱田神宮への最速・最安アクセス。電車8分＋徒歩3分。",
+              tacticsTitle: "熱田駅からの神域アプローチ",
+              tactics: [
+                { step: 1, text: "名古屋駅・東海道線（岡崎・豊橋方面行き）に乗車。", must: true },
+                { step: 2, text: "3駅・所要8分で「熱田駅」に到着（運賃190円）。", must: true },
+                { step: 3, text: "熱田駅西口を出て徒歩約3分で熱田神宮の東門・静寂の森へ入る。", must: true }
+              ],
+              bonusSpots: [],
+              specs: {
+                transit: "JR東海道本線（名古屋 ➔ 熱田、190円）",
+                highlight: "鳥居をくぐった瞬間の静謐な空気感",
+                tips: "熱田駅西口から神宮東門は目と鼻の先。",
+                skipLimit: "14:20までに熱田神宮境内に入る"
+              },
+              mapUrl: "https://www.google.com/maps/search/?api=1&query=熱田駅"
+            },
+            {
+              time: "14:20 - 16:45",
+              duration: "145分",
+              badge: "参拝・名刀",
+              badgeType: "must",
+              title: "熱田神宮 本殿・信長塀参拝 ＆ 剣の宝庫「草薙館」名刀鑑賞",
+              overview: "三種の神器を祀る熱田神宮参拝と、全国屈指の名刀コレクション「草薙館」の鑑賞。平日の午後は静謐そのもの。",
+              tacticsTitle: "神域参拝と名刀体験の完全順路",
+              tactics: [
+                { step: 1, text: "東門から巨木が茂る参道を進み手水舎で清める。織田信長が桶狭間の大勝後に奉納した「信長塀」を見学。", must: true },
+                { step: 2, text: "本宮（本殿）へ参拝。三種の神器「草薙神剣」が鎮座する最高格式の神域に祈願。", must: true },
+                { step: 3, text: "境内の刀剣専門展示施設「草薙館」（入館料500円）へ入館。", must: true },
+                { step: 4, text: "国宝・重要文化財の名刀群、および刃長2m超の「次郎太刀」を鑑賞。同重量の模擬刀を実際に両手で握り、武士の刀の重みを体感。", must: true },
+                { step: 5, text: "境内南門または東門へ戻り、16:45にタクシー乗車待機。", must: true }
+              ],
+              bonusSpots: [
+                { name: "信長塀", desc: "日本三大土塀の一つ。桶狭間の戦い直前に必勝祈願した織田信長が大勝の御礼に奉納。", mapUrl: "https://www.google.com/maps/search/?api=1&query=信長塀" },
+                { name: "剣の宝庫 草薙館", desc: "名刀・大太刀の実物展示と、同重量の模擬刀を実際に持ち上げる体験コーナーが圧巻。", mapUrl: "https://www.google.com/maps/search/?api=1&query=剣の宝庫+草薙館" },
+                { name: "きよめ餅総本家", desc: "熱田神宮名物の羽二重餅。お土産に最適。", mapUrl: "https://www.google.com/maps/search/?api=1&query=きよめ餅総本家" }
+              ],
+              specs: {
+                transit: "境内徒歩移動。平坦で歩きやすい。",
+                highlight: "次郎太刀の実寸迫力、信長塀の瓦土層、樹齢千年の大楠",
+                tips: "草薙館の入館は16:30まで。早めに入館すると安心。",
+                skipLimit: "16:45までに神宮を出て滝子へ向かう"
+              },
+              mapUrl: "https://www.google.com/maps/search/?api=1&query=熱田神宮"
+            },
+            {
+              time: "16:45 - 17:30",
+              duration: "45分",
+              badge: "移動",
+              badgeType: "transit",
+              title: "熱田神宮から瑞穂区滝子（夢を語れ愛知）へ移動",
+              overview: "熱田神宮から「夢を語れ 愛知」への短距離移動。地下鉄よりタクシー直行が圧倒的に快適。",
+              tacticsTitle: "夜の部直撃アクセスの立ち回り",
+              tactics: [
+                { step: 1, text: "熱田神宮東門または南門からタクシーに乗車（「滝子の名古屋市大前まで」と指定）。", must: true },
+                { step: 2, text: "約8〜10分で瑞穂区竹田町・滝子交差点南へ到着（運賃約1,200円）。", must: true },
+                { step: 3, text: "（市バスの場合）神宮東門から「栄21」系統で「滝子」下車徒歩2分。", must: false },
+                { step: 4, text: "「夢を語れ 愛知」の青い看板を確認し、17:40頃に店頭へ到着。", must: true }
+              ],
+              bonusSpots: [],
+              specs: {
+                transit: "タクシー（所要約8〜10分、約1,200円）",
+                highlight: "タクシー車窓からの名古屋下町・住宅街の街並み",
+                tips: "二郎系直撃前に近隣コンビニで黒烏龍茶を買っておくと胃もたれ防止に有効。",
+                skipLimit: "17:45までに店頭に到着し並びに接続する"
+              },
+              mapUrl: "https://www.google.com/maps/search/?api=1&query=夢を語れ+愛知"
+            },
+            {
+              time: "17:40 - 19:00",
+              duration: "80分",
+              badge: "夕食・麺",
+              badgeType: "must",
+              title: "『夢を語れ 愛知』夜の部直撃（18:00開店・東京未展開の直系枠）",
+              overview: "東京に常設店のない「夢を語れ」直系青看板店舗での本格二郎系実食。18:00夜の部開店直撃。",
+              tacticsTitle: "ラーメン荘直系の実食立ち回り",
+              tactics: [
+                { step: 1, text: "17:40〜17:45着。18:00開店の列に並びファーストロット（またはセカンド）を確保。", must: true },
+                { step: 2, text: "券売機で「ラーメン」を購入。麺量は並で300g。少なめ希望は食券提出時に「麺200gで」と申告。", must: true },
+                { step: 3, text: "無料トッピングコール（ニンニク・アブラ）。別皿で供される甘辛味付きアブラを受け取る。", must: true },
+                { step: 4, text: "クタヤサイ、ホロホロの分厚い豚、ワシワシの極太縮れ麺を堪能。麺を別皿アブラに潜らせてすする。", must: true },
+                { step: 5, text: "完食後、ドンブリとコップをカウンター上に上げ、ダスターで拭いて退店。", must: true }
+              ],
+              bonusSpots: [],
+              specs: {
+                transit: "地下鉄桜通線「桜山駅」徒歩約11分（名古屋市立大学滝子キャンパス前）",
+                highlight: "富士丸直系の甘口豚骨醤油スープ、別皿味付けアブラ、極太縮れ麺",
+                tips: "ロットを乱さないよう無理のない麺量を申告すること（自信がなければ200g推奨）。",
+                skipLimit: "19:00までに退店し、桜山駅へ向かう"
+              },
+              mapUrl: "https://www.google.com/maps/search/?api=1&query=夢を語れ+愛知"
+            },
+            {
+              time: "19:15 - 20:00",
+              duration: "45分",
+              badge: "帰路",
+              badgeType: "transit",
+              title: "地下鉄桜通線「桜山駅」からJR中央線乗り換えで実家へ帰還",
+              overview: "1日目行程終了後の実家へのスムーズな帰還。桜山駅から桜通線1本で名駅へ直通可能。",
+              tacticsTitle: "帰路スムーズ乗り継ぎの立ち回り",
+              tactics: [
+                { step: 1, text: "夢を語れを出て北東へ徒歩約11分、地下鉄桜通線「桜山駅」へ。", must: true },
+                { step: 2, text: "桜通線（名古屋・太閤通方面行き）に乗車。名古屋駅でJR中央線へ乗り換え。", must: true },
+                { step: 3, text: "JR中央本線快速で高蔵寺駅へ戻り、実家へ帰還。", must: true }
+              ],
+              bonusSpots: [],
+              specs: {
+                transit: "地下鉄桜通線（桜山 ➔ 名古屋、270円）＋ JR中央線快速（名古屋 ➔ 高蔵寺、420円）",
+                highlight: "車内での満腹余韻",
+                tips: "翌日の犬山（家族車08:30発）に備えて早めに休息。",
+                skipLimit: "20:30までに実家へ帰着"
+              },
+              mapUrl: "https://www.google.com/maps/search/?api=1&query=桜山駅"
+            }
+          ]
+        },
+        {
+          dayNum: 2,
+          dateStr: "11月8日（土・休日）",
+          subTitle: "犬山フル満喫（国宝犬山城 ➔ 国宝茶室如庵 ➔ 城下町昼食 ➔ 桃太郎神社 ➔ 寂光院） ➔ 家族車で実家直帰（17:00帰着）",
+          macroRoute: ["実家発（家族車08:30）", "国宝犬山城（天守登閣）", "有楽苑（国宝茶室如庵）", "犬山城下町（家族昼食）", "桃太郎神社（浅野祥雲彫刻）", "寂光院（尾張のもみじ寺）", "家族車で実家直帰（所要35分）"],
+          items: [
+            {
+              time: "08:30 - 09:15",
+              duration: "45分",
+              badge: "移動",
+              badgeType: "transit",
+              title: "実家から家族車で国宝犬山城へ直行（車約35分）",
+              overview: "家族車による犬山への快適アクセス。08:30発により土曜の駐車場渋滞を完全回避。",
+              tacticsTitle: "土曜混雑前の一番乗り立ち回り",
+              tactics: [
+                { step: 1, text: "実家を08:30に出発。国道19号から尾張パークウェイまたは県道経由で犬山方面へ。", must: true },
+                { step: 2, text: "犬山城第1駐車場（普通車500円）またはキャッスルパーキングへ09:15に入庫。開門直後で満車リスク完全ゼロ。", must: true },
+                { step: 3, text: "家族とともに城下町北端から登城坂へ向かう。", must: true }
+              ],
+              bonusSpots: [],
+              specs: {
+                transit: "自家用車移動（高蔵寺・春日井方面 ➔ 犬山、約20km・約35分）",
+                highlight: "木曽川沿いの朝の清々しいドライブ",
+                tips: "車に不要な荷物を置いて身軽に登城する。",
+                skipLimit: "09:20までに犬山城登城口へ入る"
+              },
+              mapUrl: "https://www.google.com/maps/search/?api=1&query=犬山城第1駐車場"
+            },
+            {
+              time: "09:15 - 11:00",
+              duration: "105分",
+              badge: "城郭・絶景",
+              badgeType: "must",
+              title: "国宝 犬山城 登閣 ＋ 三光稲荷神社（銭洗・ハート絵馬）",
+              overview: "織田信長叔父築城の現存最古級天守登閣と木曽川パノラマ絶景。朝イチ入場により混雑ゼロで高欄を独占可能。",
+              tacticsTitle: "現存天守最上階と神社参拝の一筆書き順路",
+              tactics: [
+                { step: 1, text: "登城道沿いの「三光稲荷神社」へ参拝。銭洗池でお金を清め、ピンクのハート絵馬トンネルを見学。", must: true },
+                { step: 2, text: "犬山城本丸へ入場（入場券550円購入）。現存12天守かつ国宝5城の勇姿を撮影。", must: true },
+                { step: 3, text: "靴を脱いで天守内部へ。朝イチのため急階段（傾斜50度）の渋滞なくスムーズに最上階へ。", must: true },
+                { step: 4, text: "最上階の高欄（手すりの低い回廊）を一周。足元の木曽川断崖絶壁と濃尾平野の360度パノラマ絶景を体感。", must: true },
+                { step: 5, text: "天守を下り、城前広場を経て東隣の「有楽苑」へ徒歩移動。", must: true }
+              ],
+              bonusSpots: [
+                { name: "三光稲荷神社", desc: "犬山城の麓にある歴史ある神社。銭洗池で清めたお金は福徳をもたらすとされる。", mapUrl: "https://www.google.com/maps/search/?api=1&query=三光稲荷神社" },
+                { name: "針綱神社", desc: "犬山城の守護神。織田信康が安産・延命を祈願した名刹。", mapUrl: "https://www.google.com/maps/search/?api=1&query=針綱神社" }
+              ],
+              specs: {
+                transit: "城内徒歩移動。急勾配階段あり。",
+                highlight: "天守最上階から見下ろす木曽川のライン川に似た大河景観",
+                tips: "靴を脱いで持ち歩くスタイル。厚手の靴下があると快適。",
+                skipLimit: "11:00には城を出て有楽苑へ向かう"
+              },
+              mapUrl: "https://www.google.com/maps/search/?api=1&query=国宝犬山城"
+            },
+            {
+              time: "11:05 - 12:15",
+              duration: "70分",
+              badge: "国宝茶室",
+              badgeType: "must",
+              title: "有楽苑 国宝茶室「如庵（じょあん）」鑑賞 ＆ 庭園呈茶体験",
+              overview: "織田信長の実弟・織田有楽斎が遺した国宝茶室「如庵」の鑑賞と呈茶体験。犬山城のすぐ隣で移動負荷ゼロ。",
+              tacticsTitle: "武将茶人・織田有楽斎の美学に浸る順路",
+              tactics: [
+                { step: 1, text: "犬山城から東へ徒歩約5分、有楽苑へ入園（入園料1,200円、呈茶付きセット推奨）。", must: true },
+                { step: 2, text: "織田信長の実弟・織田有楽斎（長益）が建てた【国宝茶室 如庵】の外観・内部を鑑賞（日本に3つしかない国宝茶室の1つ）。", must: true },
+                { step: 3, text: "重要文化財「旧正伝院書院」および「弘庵」を巡り、手入れの行き届いた日本庭園を散策。", must: true },
+                { step: 4, text: "重要文化財の茶室にて季節の和菓子とお抹茶をいただき、優雅に一息。", must: true },
+                { step: 5, text: "12:15に苑を出て、徒歩で犬山城下町の本町通りへ向かう。", must: true }
+              ],
+              bonusSpots: [
+                { name: "ホテルインディゴ犬山有楽苑", desc: "隣接する外資系リゾートホテル。木曽川と犬山城を望むモダン建築。", mapUrl: "https://www.google.com/maps/search/?api=1&query=ホテルインディゴ犬山有楽苑" }
+              ],
+              specs: {
+                transit: "犬山城から徒歩約5分。平坦な庭園路。",
+                highlight: "如庵の有楽窓（竹の格子窓）と暦張り、季節の和菓子とお抹茶",
+                tips: "静寂の数寄屋建築と日本庭園で心洗われるひととき。",
+                skipLimit: "12:15には城下町へ移動する"
+              },
+              mapUrl: "https://www.google.com/maps/search/?api=1&query=有楽苑"
+            },
+            {
+              time: "12:20 - 13:45",
+              duration: "85分",
+              badge: "昼食・散策",
+              badgeType: "must",
+              title: "犬山城下町（本町通り） 家族昼食 ＆ 五平餅・飛騨牛串食べ歩き・町並み散策",
+              overview: "江戸情緒残る城下町での家族昼食と名物食べ歩き。時間に余裕を持たせ、食事だけでなく史料館や町家散策も満喫。",
+              tacticsTitle: "城下町名物グルメと町家散策の立ち回り",
+              tactics: [
+                { step: 1, text: "有楽苑から本町通り（城下町メインストリート）へ徒歩移動。", must: true },
+                { step: 2, text: "登録有形文化財「山田五平餅店」で手作りの香ばしいだんご型五平餅（ごま・くるみ・落花生だれ）を味わう。", must: true },
+                { step: 3, text: "「犬山牛太郎」の飛騨牛にぎり寿しや、町家カフェで家族ゆったり昼食。", must: true },
+                { step: 4, text: "「どんでん館（犬山祭の車山展示）」や「昭和横丁」をぶらりと散策・お土産調達。", must: true },
+                { step: 5, text: "13:45に駐車場へ戻り、家族車で木曽川沿いの「桃太郎神社」へ向かう。", must: true }
+              ],
+              bonusSpots: [
+                { name: "山田五平餅店", desc: "城下町名物。登録有形文化財の町家で焼きたてのごまだれ団子型五平餅。", mapUrl: "https://www.google.com/maps/search/?api=1&query=山田五平餅店" },
+                { name: "犬山牛太郎", desc: "飛騨牛にぎり寿しの人気店。わさび醤油と塩しょうがの2貫盛り。", mapUrl: "https://www.google.com/maps/search/?api=1&query=犬山牛太郎" },
+                { name: "どんでん館", desc: "犬山祭で曳かれる高さ8mの巨大な車山（山車）を4輌常設展示。", mapUrl: "https://www.google.com/maps/search/?api=1&query=どんでん館" }
+              ],
+              specs: {
+                transit: "城下町徒歩散策（平坦な一本道）",
+                highlight: "山田五平餅店の焼きたて五平餅、飛騨牛炙り寿司、芳川屋のフルーツパフェ",
+                tips: "車は第1駐車場に停めたまま徒歩で城下町を往復できる。",
+                skipLimit: "13:50までに車へ戻る"
+              },
+              mapUrl: "https://www.google.com/maps/search/?api=1&query=犬山城下町"
+            },
+            {
+              time: "14:00 - 15:00",
+              duration: "60分",
+              badge: "奇観・撮影",
+              badgeType: "must",
+              title: "桃太郎神社 浅野祥雲コンクリート彫刻群の鑑賞＆写真撮影",
+              overview: "浅野祥雲の最高傑作とされるコンクリート彫刻群が林立するカルト珍スポット。家族車の機動力を最大活用。",
+              tacticsTitle: "全国屈指の珍スポット完全回収の立ち回り",
+              tactics: [
+                { step: 1, text: "犬山城駐車場を出発し、木曽川沿いの県道を東へ約10分車で直行。", must: true },
+                { step: 2, text: "桃太郎神社無料駐車場に車を入庫。", must: true },
+                { step: 3, text: "境内へ。コンクリート造形作家・浅野祥雲による極彩色の実物大彫刻群（泣き叫ぶ赤鬼・青鬼、桃から生まれた桃太郎、猿・雉・犬）を撮影。", must: true },
+                { step: 4, text: "桃形の鳥居や宝物館（大人200円、鬼のミイラの写真等）を面白く鑑賞。", must: true },
+                { step: 5, text: "15:00に車を出し、すぐ隣の「寂光院」へ移動（車で3分）。", must: true }
+              ],
+              bonusSpots: [
+                { name: "桃太郎神社 宝物館", desc: "鬼の角や鬼のミイラの写真が展示されたシュールな資料館（200円）。", mapUrl: "https://www.google.com/maps/search/?api=1&query=桃太郎神社+宝物館" }
+              ],
+              specs: {
+                transit: "車移動（犬山城 ➔ 桃太郎神社、約4km・約10分）。無料駐車場完備。",
+                highlight: "涙を流して懺悔するやさしい鬼の像、桃から飛び出す桃太郎像",
+                tips: "入場無料（宝物館のみ200円）。家族全員で笑顔で写真が撮れる名所。",
+                skipLimit: "15:05までに寂光院へ向かう"
+              },
+              mapUrl: "https://www.google.com/maps/search/?api=1&query=桃太郎神社+犬山"
+            },
+            {
+              time: "15:05 - 16:20",
+              duration: "75分",
+              badge: "名刹・絶景",
+              badgeType: "must",
+              title: "寂光院（尾張のもみじ寺） 信長ゆかりの巨石霊場参詣 ＆ 木曽川眺望",
+              overview: "織田信長公も崇敬した「尾張のもみじ寺」参詣と、山頂展望台からの大パノラマ。桃太郎神社から車でわずか3分。",
+              tacticsTitle: "白鳳時代の古刹と紅葉・巨石を巡る順路",
+              tactics: [
+                { step: 1, text: "桃太郎神社から車で約3分、寂光院駐車場（無料）へ入庫。", must: true },
+                { step: 2, text: "スロープカー（ケーブルカー風・片道200円）に乗車、または七面坂の階段参道（約300段）を上がり本堂へ。", must: true },
+                { step: 3, text: "白鳳時代（654年）創建の本堂へ参拝。織田信長公が清洲城から参詣した歴史に触れる。", must: true },
+                { step: 4, text: "展望台から木曽川の流れと犬山城・濃尾平野を遠望。境内を彩る約1000本のもみじと巨石の景観を堪能。", must: true },
+                { step: 5, text: "16:20に下山・駐車場を出発。名駅への無駄な寄り道を完全排除し、家族車でそのまま実家へ直帰。", must: true }
+              ],
+              bonusSpots: [
+                { name: "スロープカー（寂光院）", desc: "山麓から本堂までを約4分で結ぶ小型モノレール。足腰の負担を軽減できる。", mapUrl: "https://www.google.com/maps/search/?api=1&query=寂光院+スロープカー" },
+                { name: "犬山頭首工（ライン大橋）", desc: "木曽川の雄大な水流を堰き止める大堰。車窓からの眺めが圧巻。", mapUrl: "https://www.google.com/maps/search/?api=1&query=犬山頭首工" }
+              ],
+              specs: {
+                transit: "車移動（桃太郎神社 ➔ 寂光院、約1km・約3分）。無料駐車場あり。",
+                highlight: "本堂展望台からの木曽川大パノラマ、境内の巨石信仰遺構、千本もみじの森",
+                tips: "足元はスニーカー推奨。スロープカーは片道利用も可能。",
+                skipLimit: "16:25には寂光院を出発する"
+              },
+              mapUrl: "https://www.google.com/maps/search/?api=1&query=寂光院+犬山"
+            },
+            {
+              time: "16:25 - 17:05",
+              duration: "40分",
+              badge: "直帰",
+              badgeType: "transit",
+              title: "名駅寄り道を完全排除し、家族車で実家へ直帰（所要約35分・17:00帰着）",
+              overview: "名古屋駅への無駄な寄り道を完全排除した最高効率の実家直帰。17:00には帰着できるため旅の疲労ゼロ。",
+              tacticsTitle: "名駅人混み完全回避・最高効率直帰の立ち回り",
+              tactics: [
+                { step: 1, text: "名古屋名物（ひつまぶし・手羽先等）は完全不要のため、名駅への電車移動や人混みを完全パス。", must: true },
+                { step: 2, text: "寂光院から家族車でそのまま県道・尾張パークウェイ・国道19号経由で高蔵寺（実家）へ直行。", must: true },
+                { step: 3, text: "わずか35〜40分の快適なドライブで、17:05には実家へ無事帰還。", must: true },
+                { step: 4, text: "夜は実家で家族とゆったり過ごすか、近場で気兼ねなく食事を済ませる。", must: true }
+              ],
+              bonusSpots: [],
+              specs: {
+                transit: "自家用車移動（犬山 ➔ 高蔵寺・実家、約20km・約35分）",
+                highlight: "全行程を無駄なく完遂した圧倒的スマート感",
+                tips: "名古屋めしはスキップし、小倉トーストのみに絞った潔い勝利。",
+                skipLimit: "17:15までに実家へ帰着"
+              },
+              mapUrl: "https://www.google.com/maps/search/?api=1&query=高蔵寺駅"
             }
           ]
         }
-      }
+      ]
     };
 
-function shiftTime(baseStr, offsetMinutes) {
-      if (!baseStr) return '';
-      const [h, m] = baseStr.split(':').map(Number);
-      const total = h * 60 + m + offsetMinutes;
-      const newH = Math.floor(total / 60) % 24;
-      const newM = total % 60;
-      return String(newH).padStart(2, '0') + ':' + String(newM).padStart(2, '0');
-    }
-
     function renderUI() {
-      const plan = TRIP_DATA.plans[TRIP_DATA.activePlan];
-      const offset = TRIP_DATA.baseOffsetMinutes;
-      const dayFilter = TRIP_DATA.activeDayFilter;
+      const container = document.getElementById('timeline-container');
+      container.innerHTML = '';
 
-      // Update Top Route Action Buttons
-      const btnDay1 = document.getElementById('btn-day1-map');
-      const btnDay2 = document.getElementById('btn-day2-map');
-      if (btnDay1) btnDay1.href = plan.day1Map;
-      if (btnDay2) btnDay2.href = plan.day2Map;
+      TRIP_DATA.days.forEach(day => {
+        if (TRIP_DATA.activeDayFilter !== 'all' && TRIP_DATA.activeDayFilter !== String(day.dayNum)) {
+          return;
+        }
 
-      // Summary Card (with Mother Points Callout)
-      const summaryContainer = document.getElementById('summary-container');
-      summaryContainer.innerHTML = `
-        <div class="summary-card" style="background:var(--card-bg); border:1px solid var(--border); border-radius:12px; padding:14px; margin-bottom:16px;">
-          <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:8px;">
-            <div style="font-size:1.02rem; font-weight:800; color:#fff;">${plan.name}</div>
-            <span class="summary-badge ${plan.badgeClass}" style="font-size:0.74rem; padding:3px 10px; border-radius:9999px; font-weight:800;">${plan.badge}</span>
-          </div>
-          <p style="font-size:0.84rem; color:var(--text-muted); line-height:1.5; margin-bottom:12px;">${plan.desc}</p>
+        const dayEl = document.createElement('div');
+        dayEl.className = 'day-section';
 
-          
-          </div>
-        </div>
-      `;
-
-      // Timeline Container
-      const timeline = document.getElementById('timeline-container');
-      let html = '';
-
-      plan.days.forEach(day => {
-        if (dayFilter !== 'all' && String(day.dayNum) !== dayFilter) return;
-
-        const anchorId = 'day-' + day.dayNum + '-header';
-        
-        // Render Macro Route Flow
-        let macroStepsHtml = '';
-        if (day.macroRoute && day.macroRoute.length > 0) {
-          macroStepsHtml = `
-            <div class="macro-flow-box">
-              <div class="macro-flow-title">
-                <span>🧭 ${day.dayNum}日目の全体一筆書きルート（広域巡回順）</span>
+        let slotsHtml = day.items.map(item => {
+          const tacticsHtml = item.tactics && item.tactics.length > 0 ? `
+            <div class="action-block-card">
+              <div class="action-block-title tactics">
+                <span>🚶‍♂️ ${item.tacticsTitle || '立ち回り順路・推奨ステップ'}</span>
               </div>
-              <div class="macro-flow-steps">
-                ${day.macroRoute.map((st, idx) => `
-                  <span class="macro-step-badge ${idx === 0 || idx === day.macroRoute.length - 1 ? 'origin' : ''}">${st}</span>
-                  ${idx < day.macroRoute.length - 1 ? '<span class="macro-step-arrow">➔</span>' : ''}
+              <div class="micro-step-list">
+                ${item.tactics.map(s => `
+                  <div class="micro-step-row">
+                    <span class="step-num">Step ${s.step}</span>
+                    <div>
+                      ${s.text}
+                      ${s.must ? '<span class="step-tag-must">必須</span>' : '<span class="step-tag-opt">任意</span>'}
+                    </div>
+                  </div>
                 `).join('')}
               </div>
             </div>
-          `;
-        }
+          ` : '';
 
-        html += `
-          <div class="day-divider" id="${anchorId}">
-            <div>
-              <div class="day-divider-title">📅 ${day.dayNum}日目：${day.dateStr}</div>
-              <div class="day-divider-sub">${day.subTitle}</div>
+          const bonusHtml = item.bonusSpots && item.bonusSpots.length > 0 ? `
+            <div class="action-block-card">
+              <div class="action-block-title bonus">
+                <span>🌟 ついで名所・寄り道スポット</span>
+              </div>
+              ${item.bonusSpots.map(b => `
+                <div class="bonus-item">
+                  <div class="bonus-item-top">
+                    <span class="bonus-item-name">📍 ${b.name}</span>
+                    <a href="${b.mapUrl}" target="_blank" class="bonus-map-link">地図 ↗</a>
+                  </div>
+                  <div class="bonus-item-desc">${b.desc}</div>
+                </div>
+              `).join('')}
             </div>
-            <a href="${day.dayNum === 1 ? plan.day1Map : plan.day2Map}" target="_blank" class="quick-pill" style="color:#6ee7b7; border-color:#059669; font-size:0.75rem;">
-              🗺️ ${day.dayNum}日目全ナビ ↗
-            </a>
-          </div>
-          ${macroStepsHtml}
-        `;
+          ` : '';
 
-        day.items.forEach(item => {
-          const start = shiftTime(item.baseStart, offset);
-          const end = shiftTime(item.baseEnd, offset);
-          const timeDisplay = end ? (start + '〜' + end) : start;
-          const f = item.factors;
-
-                    // Micro Stepper (立ち回り・ルート手順) - 統一見出し＆目的連動
-          let microFlowHtml = '';
-          if (item.tacticsSteps && item.tacticsSteps.length > 0) {
-            // スロット種別に応じたスマートアイコンとサブタイトルの自動決定（統一規律）
-            let blockIcon = '🚶‍♂️';
-            let defaultActionLabel = '推奨立ち回り手順（一筆書き）';
-            let defaultSubtitle = '最短順路・所要時間・スキップ判断';
-
-            if (item.badgeText && (item.badgeText.includes('移動') || item.badgeText.includes('直行'))) {
-              blockIcon = '🚗';
-              defaultActionLabel = '推奨走行ルート＆立ち回り';
-              defaultSubtitle = '高速・有料道路・ETC・休憩判断';
-            } else if (item.badgeText && item.badgeText.includes('帰着')) {
-              blockIcon = '🏁';
-              defaultActionLabel = '推奨帰着ルート＆立ち回り';
-              defaultSubtitle = '高速道合流・休憩判断・無事帰着';
-            } else if (item.type === 'food') {
-              blockIcon = '🍴';
-              defaultActionLabel = '推奨食事動線＆立ち回り';
-              defaultSubtitle = '混雑回避・オーダー順・胃袋温存';
-            } else if (item.type === 'stay') {
-              blockIcon = '🏨';
-              defaultActionLabel = '推奨チェックイン＆館内動線';
-              defaultSubtitle = '割引適用・夕食時間確保・入浴手順';
-            } else if (item.badgeText && item.badgeText.includes('クルーズ')) {
-              blockIcon = '🚢';
-              defaultActionLabel = '推奨乗船手順＆デッキ動線';
-              defaultSubtitle = 'WEB割・出航5分前集合・絶景特化';
-            } else if (item.badgeText && (item.badgeText.includes('参拝') || item.badgeText.includes('禊'))) {
-              blockIcon = '⛩️';
-              defaultActionLabel = '推奨参拝手順（一筆書き）';
-              defaultSubtitle = '立ち回り順路・推奨ステップ';
-            } else if (item.badgeText && item.badgeText.includes('写真')) {
-              blockIcon = '📸';
-              defaultActionLabel = '推奨撮影動線＆即出発手順';
-              defaultSubtitle = '無料P直結・サクッと5分・即移動';
-            } else if (item.badgeText && item.badgeText.includes('絶景')) {
-              blockIcon = '🌅';
-              defaultActionLabel = '推奨展望動線＆鑑賞手順';
-              defaultSubtitle = '日没時刻・夕日星空・足元配慮';
-            }
-
-            const rawTitle = item.tacticsFlowTitle || defaultActionLabel;
-            const cleanTitle = rawTitle.replace(/^[🚗🚶‍♂️🍴🏨🚢⛩️📸🌅🏁]s*/, '');
-            const flowSub = item.tacticsFlowSubtitle || defaultSubtitle;
-
-            microFlowHtml = `
-              <div class="micro-flow-card">
-                <div class="micro-flow-header">
-                  <span>${blockIcon} ${cleanTitle}</span>
-                  <span class="micro-flow-subtitle">${flowSub}</span>
-                </div>
-                <div class="micro-steps-list">
-                  ${item.tacticsSteps.map(s => {
-                    let cleanTag = s.tag || (s.isSkip ? 'スキップ可' : '必須');
-                    if (!cleanTag.startsWith('【') && !cleanTag.endsWith('】')) {
-                      cleanTag = '【' + cleanTag + '】';
-                    }
-                    return `
-                    <div class="micro-step-row ${s.isSkip ? 'skippable' : ''}">
-                      <span class="step-badge-num ${s.isSkip ? 'opt' : ''}">Step ${s.step}</span>
-                      <div class="micro-step-content">
-                        ${s.text}
-                        <span class="skip-tag ${s.isSkip ? 'can-skip' : 'must'}">${cleanTag}</span>
-                      </div>
-                    </div>
-                  `;
-                  }).join('')}
-                </div>
+          const specsHtml = item.specs ? `
+            <div class="action-block-card">
+              <div class="action-block-title spec">
+                <span>📋 必須アクションスペック</span>
               </div>
-            `;
-          }
-
-          // Bonus Spots
-          let bonusSpotsHtml = '';
-          if (item.bonusSpots && item.bonusSpots.length > 0) {
-            bonusSpotsHtml = `
-              <div class="bonus-spots-container">
-                <div style="font-size:0.78rem; font-weight:700; color:#a855f7; margin-bottom:6px; display:flex; align-items:center; gap:4px;">
-                  <span>🌟 ついで名所・寄り道スポット（個別マップ付き）</span>
-                </div>
-                <div class="bonus-spots-list">
-                  ${item.bonusSpots.map(sp => `
-                    <div class="bonus-spot-card">
-                      <div class="bonus-spot-info">
-                        <div class="bonus-spot-name">📍 ${sp.name}</div>
-                        <div class="bonus-spot-desc">${sp.desc}</div>
-                      </div>
-                      <a href="${sp.mapUrl}" target="_blank" class="bonus-spot-map">🗺️ 地図 ↗</a>
-                    </div>
-                  `).join('')}
-                </div>
-              </div>
-            `;
-          }
-
-          // Bullet formatting helper for 7 Factors
-          function toBullets(text) {
-            if (!text) return '';
-            const rawLines = text
-              .split(/<br\s*\/?>|\n/)
-              .map(s => s.trim())
-              .filter(Boolean);
-            if (rawLines.length === 0) return '';
-            return rawLines.map(line => {
-              const cleaned = line.replace(/^[・\-\*]\s*/, '').trim();
-              return '<div class="factor-bullet-line"><span class="factor-bullet-dot">•</span><span class="factor-bullet-text">' + cleaned + '</span></div>';
-            }).join('');
-          }
-
-          // 7 Factors with increased itemization and bullet points
-          const factorsHtml = `
-            <div class="factors-collapse" style="margin-top:10px;">
-              <div class="factors-summary" style="cursor:default; margin-bottom:6px; color:#38bdf8;">
-                <span>📋 7つの詳細分析スペック（箇条書き項目化）</span>
-              </div>
-              <div class="factors-box" style="border-top:1px solid var(--border-subtle); padding-top:8px;">
-                <div class="factor-item">
-                  <div class="factor-header">① 概要・目的（何をする場所か）</div>
-                  <div class="factor-content">${toBullets(f.overview)}</div>
-                </div>
-                <div class="factor-item">
-                  <div class="factor-header success">② 立ち回り＆基本戦略（最速・最適手順）</div>
-                  <div class="factor-content">${toBullets(f.tactics)}</div>
-                </div>
-                <div class="factor-item">
-                  <div class="factor-header accent">③ 代替不可名物・限定体験（ここでしか味わえないもの）</div>
-                  <div class="factor-content">${toBullets(f.mustTry)}</div>
-                </div>
-                <div class="factor-item">
-                  <div class="factor-header purple">④ ついでに巡れる名所・スイーツ（立ち寄り推奨）</div>
-                  <div class="factor-content">${toBullets(f.plusOne)}</div>
-                </div>
-                <div class="factor-item">
-                  <div class="factor-header">⑤ 事前Tips・同行者配慮（歩行・トイレ・準備）</div>
-                  <div class="factor-content">${toBullets(f.tips)}</div>
-                </div>
-                <div class="factor-item">
-                  <div class="factor-header accent">⑥ 交通・移動・駐車場評価（料金・ルート・入庫性）</div>
-                  <div class="factor-content">${toBullets(f.transit)}</div>
-                </div>
-                <div class="factor-item">
-                  <div class="factor-header danger">⑦ スキップ基準・損切りタイムゲート（遅延時の判断）</div>
-                  <div class="factor-content">${toBullets(f.skipLimit)}</div>
-                </div>
-              </div>
+              <div class="spec-line"><span class="spec-label">移動・アクセス:</span><span class="spec-val">${item.specs.transit}</span></div>
+              <div class="spec-line"><span class="spec-label">見どころ:</span><span class="spec-val">${item.specs.highlight}</span></div>
+              <div class="spec-line"><span class="spec-label">現地Tips:</span><span class="spec-val">${item.specs.tips}</span></div>
+              <div class="spec-line"><span class="spec-label">損切りリミット:</span><span class="spec-val spec-danger">${item.specs.skipLimit}</span></div>
             </div>
-          `;
+          ` : '';
 
-          // Quick summary line for collapsed view
-          const quickSummary = f.overview.split(/<br\s*\/?>|\n/)[0].replace(/^[・\-\*]\s*/, '').replace(/^滞在目的:\s*/, '');
-
-          html += `
-            <div class="slot-card ${item.type}">
-              <details class="slot-details">
+          return `
+            <div class="timeline-slot">
+              <details class="slot-card" open>
                 <summary class="slot-summary">
-                  <div class="slot-header">
-                    <span class="slot-time">${timeDisplay}</span>
-                    <span class="slot-badge ${item.badgeClass}">${item.badgeText}</span>
+                  <div class="slot-top-row">
+                    <span class="slot-time-badge">${item.time} (${item.duration})</span>
+                    <span class="badge-tag badge-${item.badgeType}">${item.badge}</span>
                   </div>
-                  
-                  <div class="slot-title-row" style="margin-bottom:4px;">
-                    <div class="slot-title">${item.title}</div>
-                    <div class="duration-pill">
-                      <span class="duration-avg">⏱ 平均: ${item.avgDuration}</span>
-                      <span style="color:#475569;">|</span>
-                      <span class="duration-est">🎯 今回予想: ${item.estDuration}</span>
-                    </div>
-                  </div>
-
-                  <!-- 概要（複数行折り返し可読・省略三点リーダー完全禁止） -->
-                  <div class="slot-summary-overview">
-                    <div style="font-size:0.75rem; font-weight:800; color:#38bdf8; margin-bottom:2px;">【この枠の目的・やること】</div>
-                    <div style="font-size:0.82rem; color:#f1f5f9; line-height:1.45;">${f.overview.replace(/<br\s*\/?>/g, ' ｜ ')}</div>
-                  </div>
-
+                  <div class="slot-title">${item.title}</div>
+                  <div class="slot-overview-text">${item.overview}</div>
                   <div class="slot-expand-hint">
-                    <span>タップして詳細（一筆書き立ち回り・寄り道判定・スペック）を展開</span>
-                    <span class="slot-expand-arrow">▼</span>
+                    <span>詳細（立ち回り・スペック）を展開中</span>
+                    <span class="slot-expand-arrow">▲</span>
                   </div>
                 </summary>
-
                 <div class="slot-body">
-                  <div class="section-divider-tag">ー 3大アクションブロック ー</div>
-
-                  <!-- Block 1: 立ち回り（3〜4ステップ） -->
-                  ${microFlowHtml}
-
-                  <!-- 昼食スロット専用：3大名物ジャンル・選択肢カード -->
-                  ${item.lunchGenres && item.lunchGenres.length > 0 ? `
-                    <div class="lunch-genre-section">
-                      <div class="lunch-genre-header">
-                        <span>🍴 昼食候補：現地で選べる3大名物ジャンル（夜バイキング温存）</span>
-                      </div>
-                      <div class="lunch-options-grid">
-                        ${item.lunchGenres.map(g => `
-                          <div style="margin-bottom:6px;">
-                            <div style="font-size:0.78rem; font-weight:800; color:#fcd34d; margin-bottom:4px;">${g.genre}</div>
-                            <div style="display:flex; flex-direction:column; gap:6px;">
-                              ${g.shops.map(sh => `
-                                <div class="lunch-shop-card">
-                                  <div class="lunch-shop-top">
-                                    <div class="lunch-shop-name">📍 ${sh.name}</div>
-                                    <a href="${sh.mapUrl}" target="_blank" class="bonus-spot-map">🗺️ 地図 ↗</a>
-                                  </div>
-                                  <div class="lunch-shop-meta">
-                                    <span class="shop-meta-pill pill-rating">おすすめ度: ${sh.rating}</span>
-                                    <span class="shop-meta-pill pill-time">${sh.time}</span>
-                                    <span class="shop-meta-pill pill-budget">${sh.budget}</span>
-                                  </div>
-                                  <div class="lunch-shop-desc">${sh.desc}</div>
-                                </div>
-                              `).join('')}
-                            </div>
-                          </div>
-                        `).join('')}
-                      </div>
-                    </div>
-                  ` : ''}
-
-                  <!-- Block 2: 寄り道判定（スイーツ・名所・採否基準） -->
-                  ${item.bonusSpots && item.bonusSpots.length > 0 ? `
-                    <div class="action-block-card">
-                      <div class="action-block-title bonus">
-                        <span>🌟 ついで名所・スイーツ（おすすめ度・所要時間付き）</span>
-                        <span class="bonus-decision-badge">時間余裕で判断</span>
-                      </div>
-                      <div style="display:flex; flex-direction:column; gap:8px;">
-                        ${item.bonusSpots.map(sp => `
-                          <div style="background:rgba(15,23,42,0.6); border:1px solid var(--border-subtle); border-radius:6px; padding:8px 10px;">
-                            <div style="display:flex; justify-content:space-between; align-items:center;">
-                              <div style="font-size:0.84rem; font-weight:700; color:#fff;">📍 ${sp.name}</div>
-                              <a href="${sp.mapUrl}" target="_blank" class="bonus-spot-map">🗺️ 地図 ↗</a>
-                            </div>
-                            <div style="display:flex; gap:6px; margin:4px 0;">
-                              ${sp.rating ? '<span class="shop-meta-pill pill-rating">おすすめ度: ' + sp.rating + '</span>' : ''}
-                              ${sp.time ? '<span class="shop-meta-pill pill-time">' + sp.time + '</span>' : ''}
-                            </div>
-                            <div class="bonus-reason-box">
-                              <strong>💡 寄り道判断:</strong> ${sp.desc}
-                            </div>
-                          </div>
-                        `).join('')}
-                      </div>
-                    </div>
-                  ` : ''}
-
-                  <!-- Block 3: 必須スペック（交通・料金・雨天・損切り） -->
-                  <div class="action-block-card">
-                    <div class="action-block-title spec">
-                      <span>📋 必須アクションスペック（移動・名物・損切り）</span><span class="bonus-decision-badge" style="background:rgba(56,189,248,0.15); color:#38bdf8; border-color:#0284c7;">事前確認必須</span>
-                    </div>
-                    <div style="display:flex; flex-direction:column; gap:6px; font-size:0.78rem;">
-                      <div class="factor-bullet-line">
-                        <span class="factor-bullet-dot">•</span>
-                        <span class="factor-bullet-text"><strong>移動・駐車場:</strong> ${f.transit.replace(/<br\s*\/?>/g, ' / ')}</span>
-                      </div>
-                      <div class="factor-bullet-line">
-                        <span class="factor-bullet-dot">•</span>
-                        <span class="factor-bullet-text"><strong>限定名物:</strong> ${f.mustTry}</span>
-                      </div>
-                      <div class="factor-bullet-line">
-                        <span class="factor-bullet-dot">•</span>
-                        <span class="factor-bullet-text"><strong>現地Tips・注意事項:</strong> ${f.tips}</span>
-                      </div>
-                      <div class="factor-bullet-line">
-                        <span class="factor-bullet-dot" style="color:#ef4444;">•</span>
-                        <span class="factor-bullet-text" style="color:#fca5a5;"><strong>損切りリミット:</strong> ${f.skipLimit}</span>
-                      </div>
-                    </div>
-                  </div>
-
-                  <!-- 7つの詳細分析スペック（深掘り開閉） -->
-                  <details class="factors-collapse" style="margin-top:8px;">
-                    <summary class="factors-summary">
-                      <span style="font-size:0.75rem; color:var(--text-muted);">📑 さらに詳しい7つの分析スペックを見る</span>
-                      <span style="font-size:0.7rem; color:#38bdf8;">展開 ▾</span>
-                    </summary>
-                    <div class="factors-box">
-                      <div class="factor-item">
-                        <div class="factor-header">① 概要・目的</div>
-                        <div class="factor-content">${toBullets(f.overview)}</div>
-                      </div>
-                      <div class="factor-item">
-                        <div class="factor-header success">② 立ち回り＆戦略</div>
-                        <div class="factor-content">${toBullets(f.tactics)}</div>
-                      </div>
-                      <div class="factor-item">
-                        <div class="factor-header accent">③ 代替不可名物</div>
-                        <div class="factor-content">${toBullets(f.mustTry)}</div>
-                      </div>
-                      <div class="factor-item">
-                        <div class="factor-header purple">④ ついで名所</div>
-                        <div class="factor-content">${toBullets(f.plusOne)}</div>
-                      </div>
-                      <div class="factor-item">
-                        <div class="factor-header">⑤ 事前Tips</div>
-                        <div class="factor-content">${toBullets(f.tips)}</div>
-                      </div>
-                      <div class="factor-item">
-                        <div class="factor-header accent">⑥ 交通・移動・駐車場</div>
-                        <div class="factor-content">${toBullets(f.transit)}</div>
-                      </div>
-                      <div class="factor-item">
-                        <div class="factor-header danger">⑦ 損切りタイムゲート</div>
-                        <div class="factor-content">${toBullets(f.skipLimit)}</div>
-                      </div>
-                    </div>
-                  </details>
-
-                  <div class="spot-bottom-actions" style="margin-top:12px;">
-                    <a href="${f.mapUrl}" target="_blank" class="map-btn-spot">
-                      📍 このスポットをGoogleマップで開く ↗
-                    </a>
-                  </div>
+                  ${tacticsHtml}
+                  ${bonusHtml}
+                  ${specsHtml}
+                  ${item.mapUrl ? `<a href="${item.mapUrl}" target="_blank" class="slot-map-btn">🗺️ Googleマップで開く ↗</a>` : ''}
                 </div>
               </details>
             </div>
           `;
-        });
+        }).join('');
+
+        dayEl.innerHTML = `
+          <div class="day-header">
+            <div class="day-header-top">
+              <div class="day-title">Day ${day.dayNum}</div>
+              <div class="day-date">${day.dateStr}</div>
+            </div>
+            <div class="day-sub">${day.subTitle}</div>
+            <div class="macro-flow-box">
+              <div class="macro-flow-label">【マクロ行程フロー】</div>
+              <div>${day.macroRoute.join(' ➔ ')}</div>
+            </div>
+          </div>
+          <div class="slots-container">${slotsHtml}</div>
+        `;
+
+        container.appendChild(dayEl);
       });
-
-      timeline.innerHTML = html;
-    }
-
-    function switchPlan(planId) {
-      TRIP_DATA.activePlan = planId;
-      document.getElementById('plan-btn-1').classList.toggle('active', planId === '1');
-      document.getElementById('plan-btn-2').classList.toggle('active', planId === '2');
-      renderUI();
-    }
-
-    function setDepartureOffset(mins) {
-      TRIP_DATA.baseOffsetMinutes = mins;
-      const pills = document.querySelectorAll('.segment-btn.time');
-      pills[0].classList.toggle('active', mins === -60);
-      pills[1].classList.toggle('active', mins === 0);
-      renderUI();
     }
 
     function filterDay(dayKey) {
       TRIP_DATA.activeDayFilter = dayKey;
-      document.getElementById('day-all-btn').classList.toggle('active', dayKey === 'all');
-      document.getElementById('day-1-btn').classList.toggle('active', dayKey === '1');
-      document.getElementById('day-2-btn').classList.toggle('active', dayKey === '2');
+      document.querySelectorAll('.segment-btn').forEach(btn => btn.classList.remove('active'));
+      const activeBtn = document.getElementById('day-' + dayKey + '-btn');
+      if (activeBtn) activeBtn.classList.add('active');
       renderUI();
     }
 
     function copyCurrentPlan() {
-      const plan = TRIP_DATA.plans[TRIP_DATA.activePlan];
-      const offset = TRIP_DATA.baseOffsetMinutes;
-      const lines = [
-        '【' + plan.name + '】（起点: 高蔵寺駅）',
-        '🚗 1日目全ルート: ' + plan.day1Map,
-        '🚗 2日目全ルート: ' + plan.day2Map,
-        "",
-      ];
+      let text = "🏯 【愛知・犬山・名古屋 決定版リアルタイム旅程】\n\n";
+      
+      TRIP_DATA.days.forEach(day => {
+        text += "========================================\n";
+        text += "■ " + day.dateStr + " (Day " + day.dayNum + ")\n";
+        text += "ルート: " + day.macroRoute.join(' ➔ ') + "\n";
+        text += "========================================\n\n";
 
-        lines.push('・ ' + mp);
-      });
-
-      lines.push("", "【スケジュール】");
-
-      plan.days.forEach(day => {
-        lines.push('\n━━━━━━━━━━━━━━━━━━━━━━━━━━━━');
-        lines.push('■ ' + day.dayNum + '日目：' + day.dateStr + ' 【' + day.subTitle + '】');
-        if (day.macroRoute) {
-          lines.push('🧭 全体一筆書き順路: ' + day.macroRoute.join(' ➔ '));
-        }
-        lines.push('━━━━━━━━━━━━━━━━━━━━━━━━━━━━');
-
-        day.items.forEach(it => {
-          const s = shiftTime(it.baseStart, offset);
-          const e = shiftTime(it.baseEnd, offset);
-          const f = it.factors;
-          lines.push('\n▶ ' + s + '〜' + e + ' ' + it.title);
-          lines.push('  ⏱ 平均所要: ' + it.avgDuration + ' ｜ 🎯 今回予想: ' + it.estDuration);
-          
-          if (it.tacticsSteps && it.tacticsSteps.length > 0) {
-            lines.push('  🚶‍♂️ 一筆書き立ち回り（順路＆スキップ判断）:');
-            it.tacticsSteps.forEach(st => {
-              lines.push('     - Step ' + st.step + ': ' + st.text + ' [' + st.tag + ']');
+        day.items.forEach(item => {
+          text += "【" + item.time + "】 " + item.title + "\n";
+          text += "・概要: " + item.overview + "\n";
+          if (item.tactics && item.tactics.length > 0) {
+            text += "・立ち回り:\n";
+            item.tactics.forEach(t => {
+              text += "   " + t.step + ". " + t.text + (t.must ? " [必須]" : " [任意]") + "\n";
             });
           }
-
-          if (it.bonusSpots && it.bonusSpots.length > 0) {
-            lines.push('  🌟 ついで名所マップ:');
-            it.bonusSpots.forEach(sp => {
-              lines.push('     - ' + sp.name + ': ' + sp.mapUrl);
-            });
+          if (item.specs) {
+            text += "・移動: " + item.specs.transit + "\n";
+            text += "・Tips: " + item.specs.tips + "\n";
+            text += "・リミット: " + item.specs.skipLimit + "\n";
           }
-
-          lines.push('  ① 概要: ' + f.overview.replace(/<br>/g, ' / '));
-          lines.push('  ② 立ち回り＆戦略: ' + f.tactics.replace(/<br>/g, ' / '));
-          lines.push('  ③ 代替不可名物: ' + f.mustTry);
-          lines.push('  ④ ついで名所: ' + f.plusOne);
-          lines.push('  ⑤ 事前Tips: ' + f.tips);
-          lines.push('  ⑥ 交通・駐車場: ' + f.transit.replace(/<br>/g, ' / '));
-          lines.push('  ⑦ 損切りゲート: ' + f.skipLimit);
-          lines.push('  ・ 地図: ' + f.mapUrl);
+          text += "\n";
         });
       });
 
-      navigator.clipboard.writeText(lines.join('\n')).then(() => {
-        alert('全日程の旅程テキストをコピーしました！そのままLINE等に貼り付けられます。');
-      }).catch(() => {
-        alert('コピーに失敗しました。');
-      });
-    }
-
-    // Drawer open/close
-    function toggleDrawer(open) {
-      const overlay = document.getElementById('drawer-overlay');
-      const content = document.getElementById('drawer-content');
-      if (open) {
-        overlay.classList.add('active');
-        content.classList.add('active');
+      if (navigator.clipboard) {
+        navigator.clipboard.writeText(text).then(() => {
+          alert('全日程の旅程テキストをコピーしました！そのままLINE等に貼り付けられます。');
+        }).catch(() => {
+          prompt('以下のテキストをコピーしてください:', text);
+        });
       } else {
-        overlay.classList.remove('active');
-        content.classList.remove('active');
+        prompt('以下のテキストをコピーしてください:', text);
       }
     }
 
-    // Theme Management Functions (Default: Light, persistent in localStorage)
-    function getStoredTheme() {
-      return localStorage.getItem('trip_nav_theme') || 'light';
-    }
-
-    function applyTheme(theme) {
-      document.documentElement.setAttribute('data-theme', theme);
-      localStorage.setItem('trip_nav_theme', theme);
-      const icon = document.getElementById('theme-toggle-icon');
-      const text = document.getElementById('theme-toggle-text');
+    function toggleTheme() {
+      const current = document.documentElement.getAttribute('data-theme') || 'light';
+      const next = current === 'dark' ? 'light' : 'dark';
+      document.documentElement.setAttribute('data-theme', next);
+      localStorage.setItem('trip_nav_theme', next);
+      const icon = document.getElementById('theme-icon');
+      const text = document.getElementById('theme-text');
       if (icon && text) {
-        if (theme === 'dark') {
+        if (next === 'dark') {
           icon.textContent = '🌙';
           text.textContent = 'ダーク';
         } else {
@@ -2029,15 +1167,15 @@ function shiftTime(baseStr, offsetMinutes) {
       }
     }
 
-    function toggleTheme() {
-      const current = document.documentElement.getAttribute('data-theme') || 'light';
-      const next = current === 'dark' ? 'light' : 'dark';
-      applyTheme(next);
-    }
-
-    // Initial render & theme sync
     document.addEventListener('DOMContentLoaded', () => {
-      applyTheme(getStoredTheme());
+      const stored = localStorage.getItem('trip_nav_theme') || 'light';
+      document.documentElement.setAttribute('data-theme', stored);
+      const icon = document.getElementById('theme-icon');
+      const text = document.getElementById('theme-text');
+      if (icon && text) {
+        icon.textContent = stored === 'dark' ? '🌙' : '☀️';
+        text.textContent = stored === 'dark' ? 'ダーク' : 'ライト';
+      }
       renderUI();
     });
   </script>
