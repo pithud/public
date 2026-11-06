@@ -421,22 +421,31 @@ header {
 
 .day-route-map-btn {
   font-size: 0.73rem;
-  font-weight: 600;
-  color: var(--accent-primary);
-  background: var(--accent-primary-soft);
-  border: 1px solid var(--accent-primary-border);
-  padding: 5px 11px;
+  font-weight: 700;
+  color: #ffffff;
+  background: #1a73e8;
+  border: 1px solid #1a73e8;
+  padding: 5px 12px;
   border-radius: 9999px;
   text-decoration: none;
   display: inline-flex;
   align-items: center;
   gap: 4px;
+  box-shadow: 0 2px 6px rgba(26, 115, 232, 0.28);
   transition: all 0.15s ease;
 }
 
+[data-theme="dark"] .day-route-map-btn {
+  background: #0284c7;
+  border-color: #0284c7;
+  box-shadow: 0 2px 8px rgba(2, 132, 199, 0.35);
+}
+
 .day-route-map-btn:hover {
-  background: var(--accent-primary);
+  background: #1557b0;
+  border-color: #1557b0;
   color: #ffffff;
+  transform: translateY(-1px);
 }
 
 .day-subtitle-text {
@@ -662,22 +671,38 @@ header {
 }
 
 .spot-map-pill {
-  font-size: 0.71rem;
-  font-weight: 600;
-  color: var(--text-secondary);
-  background: var(--bg-subtle);
-  border: 1px solid var(--border-hairline);
-  padding: 4px 10px;
+  font-size: 0.72rem;
+  font-weight: 700;
+  color: #1a73e8;
+  background: rgba(26, 115, 232, 0.08);
+  border: 1px solid rgba(26, 115, 232, 0.28);
+  padding: 4px 11px;
   border-radius: 9999px;
   text-decoration: none;
   white-space: nowrap;
   flex-shrink: 0;
   transition: all 0.15s ease;
+  display: inline-flex;
+  align-items: center;
+  gap: 3px;
+}
+
+[data-theme="dark"] .spot-map-pill {
+  color: #38bdf8;
+  background: rgba(56, 189, 248, 0.12);
+  border-color: rgba(56, 189, 248, 0.3);
 }
 
 .spot-map-pill:hover {
-  color: var(--text-primary);
-  border-color: var(--border-strong);
+  background: #1a73e8;
+  color: #ffffff;
+  border-color: #1a73e8;
+}
+
+[data-theme="dark"] .spot-map-pill:hover {
+  background: #38bdf8;
+  color: #09090b;
+  border-color: #38bdf8;
 }
 
 .spot-overview {
@@ -729,16 +754,21 @@ body.compact-mode .slot-details-body {
   width: 20px;
   height: 20px;
   border-radius: 50%;
-  background: var(--bg-subtle);
-  color: var(--text-secondary);
+  background: rgba(37, 99, 235, 0.1);
+  color: var(--accent-primary);
   font-size: 0.68rem;
-  font-weight: 700;
+  font-weight: 800;
   font-variant-numeric: tabular-nums;
   display: inline-flex;
   align-items: center;
   justify-content: center;
   flex-shrink: 0;
   margin-top: 2px;
+}
+
+[data-theme="dark"] .cp-num {
+  background: rgba(56, 189, 248, 0.16);
+  color: #38bdf8;
 }
 
 .cp-content {
@@ -797,21 +827,38 @@ body.compact-mode .slot-details-body {
 }
 
 .cp-pin-link {
-  font-size: 0.68rem;
-  font-weight: 600;
-  color: var(--accent-primary);
-  background: var(--accent-primary-soft);
-  border: 1px solid var(--accent-primary-border);
-  padding: 2px 8px;
+  font-size: 0.72rem;
+  font-weight: 700;
+  color: #d93025;
+  background: rgba(217, 48, 37, 0.08);
+  border: 1px solid rgba(217, 48, 37, 0.28);
+  padding: 3px 9px;
   border-radius: 6px;
   text-decoration: none;
   white-space: nowrap;
   flex-shrink: 0;
+  transition: all 0.15s ease;
+  display: inline-flex;
+  align-items: center;
+  gap: 2px;
+}
+
+[data-theme="dark"] .cp-pin-link {
+  color: #f87171;
+  background: rgba(248, 113, 113, 0.12);
+  border-color: rgba(248, 113, 113, 0.32);
 }
 
 .cp-pin-link:hover {
-  background: var(--accent-primary);
+  background: #d93025;
   color: #ffffff;
+  border-color: #d93025;
+}
+
+[data-theme="dark"] .cp-pin-link:hover {
+  background: #ef4444;
+  color: #ffffff;
+  border-color: #ef4444;
 }
 
 .cp-desc {
@@ -1790,6 +1837,11 @@ body.compact-mode .slot-details-body {
           ],
           "bonusSpots": [
             {
+              "name": "犬山 猿田彦神社（みちひらきの神）",
+              "desc": "三光稲荷神社境内に鎮座する独立社。万人万事を善導する道開きの神。交通・道中安全を祈願。",
+              "mapUrl": "https://www.google.com/maps/search/?api=1&query=犬山+猿田彦神社"
+            },
+            {
               "name": "三光稲荷神社（銭洗稲荷・ハート絵馬）",
               "desc": "犬山城の登城口にある古社。銭洗池の御神水でお金を洗うと何倍にもなって返るとされる。ピンクのハート絵馬が鮮やか。",
               "mapUrl": "https://www.google.com/maps/search/?api=1&query=三光稲荷神社"
@@ -1827,6 +1879,12 @@ body.compact-mode .slot-details-body {
               "desc": "下城後、登城口にある古社へ立ち寄り。御神水でお金を洗うと何倍にもなって返るとされる「銭洗池」体験と鮮やかなピンクのハート絵馬トンネル散策（混雑時や足元疲労時は短縮・スキップ可）。",
               "must": false,
               "mapUrl": "https://www.google.com/maps/search/?api=1&query=三光稲荷神社"
+            },
+            {
+              "title": "猿田彦神社（三光稲荷境内すぐ・みちひらきの大神・所要3分）",
+              "desc": "三光稲荷神社のすぐ隣に鎮座する「みちひらき（道開き）の神様」。古来より万人万事を良い方向へ導き、道中安全・開運・事業発展のご利益。通り道沿いのため3分でサッと参拝可能（スキップ可）。",
+              "must": false,
+              "mapUrl": "https://www.google.com/maps/search/?api=1&query=犬山+猿田彦神社"
             },
             {
               "title": "針綱神社（犬山城守護神・犬山祭主幹社）",
