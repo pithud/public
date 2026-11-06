@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
-  <title>愛知・犬山・名古屋 旅程ナビ（11/7〜11/8） (BETA)</title>
+  <title>愛知・犬山・名古屋 旅程ナビ（11/7〜11/8）</title>
   <script>
     (function() {
       var t = localStorage.getItem('trip_nav_theme') || 'light';
@@ -946,15 +946,15 @@ body.compact-mode .slot-details-body {
         <div class="segmented-pill-group" id="cat-segments">
           <button class="seg-btn active-cat" type="button" id="cat-all-btn" onclick="filterCategory('all')">
             <span>すべて</span>
-            <span class="seg-count" id="count-all">0</span>
+            <span class="seg-count" id="count-all">15</span>
           </button>
           <button class="seg-btn" type="button" id="cat-sightseeing-btn" onclick="filterCategory('sightseeing')">
             <span>🏛️ 観光</span>
-            <span class="seg-count" id="count-sightseeing">0</span>
+            <span class="seg-count" id="count-sightseeing">5</span>
           </button>
           <button class="seg-btn" type="button" id="cat-food-btn" onclick="filterCategory('food')">
             <span>🍴 飯・喫茶</span>
-            <span class="seg-count" id="count-food">0</span>
+            <span class="seg-count" id="count-food">3</span>
           </button>
         </div>
       </div>
@@ -963,8 +963,10 @@ body.compact-mode .slot-details-body {
 
   <!-- Main Mobile Workspace -->
   <main class="main-wrapper">
+    <!-- Horizontal Swipe Quick-Jump Spot Bar -->
     <nav class="quick-jump-bar" id="quick-jump-bar" aria-label="主要スポットへジャンプ"></nav>
 
+    <!-- Intuitive Guide Legend -->
     <div class="legend-bar">
       <div class="legend-items">
         <span class="legend-item">
@@ -973,12 +975,13 @@ body.compact-mode .slot-details-body {
         </span>
         <span class="legend-item">
           <span class="cp-badge skippable">スキップ可</span>
-          <span>ついで寄り道・代替候補（タップで打消し）</span>
+          <span>ついで寄り道・代替候補（バッジをタップで打消し可）</span>
         </span>
       </div>
       <span style="font-size:0.71rem; color:var(--text-tertiary);">全詳細デフォルト展開</span>
     </div>
 
+    <!-- Dynamic Timeline Container -->
     <div id="timeline-container"></div>
   </main>
 
@@ -1066,16 +1069,14 @@ body.compact-mode .slot-details-body {
       "dayNum": 1,
       "shortLabel": "11/7(金) 名駅・熱田",
       "dateStr": "2026年11月7日 (金)",
-      "subTitle": "高蔵寺カラオケ ➔ 大曽根乗換 ➔ 名古屋城本丸御殿 ➔ 久屋大通・加藤珈琲店 ➔ 熱田神宮・草薙館 ➔ 夢を語れ愛知",
+      "subTitle": "高蔵寺カラオケ ➔ 大曽根乗換 ➔ 名古屋城本丸御殿 ➔ 熱田神宮・草薙館 ➔ 夢を語れ愛知（小倉トーストは現地自由選択）",
       "macroRoute": [
         "高蔵寺カラオケ",
-        "JR中央線（高蔵寺➔大曽根）",
-        "名城線（大曽根➔名古屋城）",
-        "名古屋城・本丸御殿",
-        "久屋大通 加藤珈琲店（小倉トースト）",
-        "名城線直通（熱田神宮）",
-        "熱田神宮・草薙館",
-        "夢を語れ愛知"
+        "大曽根乗換（名城線）",
+        "名古屋城・本丸御殿（16:00最終入場）",
+        "小倉トースト（各観光地で前後自由選択）",
+        "熱田神宮・草薙館（16:00最終入館）",
+        "夢を語れ愛知（夜フリー）"
       ],
       "fullMapUrl": "https://www.google.com/maps/dir/?api=1&origin=高蔵寺駅&destination=夢を語れ+愛知&waypoints=大曽根駅|名古屋城|加藤珈琲店|熱田神宮|草薙館",
       "items": [
@@ -1242,23 +1243,23 @@ body.compact-mode .slot-details-body {
         },
         {
           "id": "d1-nagoya-castle",
-          "time": "12:55 - 14:15",
-          "duration": "1時間20分",
-          "badge": "国宝級復元御殿・金シャチ",
+          "time": "13:00 - 14:30",
+          "duration": "1時間30分",
+          "badge": "【必見】16:00最終入場",
           "badgeType": "sightseeing",
           "category": "sightseeing",
-          "title": "名古屋城 本丸御殿（絢爛障壁画）＆ 金シャチ・本丸散策",
-          "overview": "近世城郭の最高峰。10年の歳月と名工の技で蘇った「本丸御殿」（玄関・表書院・上洛殿の金箔障壁画）をじっくり45分鑑賞し、本丸広場から金シャチ・天守閣外観を巡る充実の散策。",
+          "title": "名古屋城 本丸御殿（絢爛金箔障壁画）＆ 金シャチ・本丸散策",
+          "overview": "近世城郭の最高峰。16:30完全閉門・本丸御殿16:00最終入場のため日中真っ先に訪問。10年の歳月で完全復元された本丸御殿（表書院・上洛殿の金箔障壁画）をじっくり鑑賞し、本丸広場から金シャチ・巨城の外観を堪能。",
           "tacticsTitle": "本丸御殿＆城内攻略",
           "tactics": [
             {
               "step": 1,
-              "text": "東門から入城（観覧券500円）し、二之丸庭園を横目に本丸へ進む。",
+              "text": "東門から入城（観覧券500円）し、二之丸庭園を通り本丸御殿へ。",
               "must": true
             },
             {
               "step": 2,
-              "text": "「本丸御殿」に入場。玄関の勇壮な虎豹図、表書院の花鳥画、将軍専用の超豪華「上洛殿」の極彩色欄間と金箔天井を鑑賞（約45分）。",
+              "text": "「本丸御殿」に入場。狩野派の虎豹図、将軍専用の最高格式「上洛殿」の極彩色欄間と金箔天井を鑑賞（約45分）。",
               "must": true
             },
             {
@@ -1268,7 +1269,7 @@ body.compact-mode .slot-details-body {
             },
             {
               "step": 4,
-              "text": "東門へ戻り、金シャチ横丁（宗春ゾーン）を通過して名古屋城駅へ（14:15退城）。",
+              "text": "東門へ戻る。お腹の具合に応じて「金シャチ横丁」で小倉スイーツ休憩するか、名城線で久屋大通/熱田へ移動。",
               "must": true
             }
           ],
@@ -1284,19 +1285,19 @@ body.compact-mode .slot-details-body {
               "mapUrl": "https://www.google.com/maps/search/?api=1&query=名古屋城+大天守"
             },
             {
-              "name": "金シャチ横丁（宗春ゾーン）",
-              "desc": "東門前の飲食商業エリア。和モダンなカフェや土産が揃う。",
-              "mapUrl": "https://www.google.com/maps/search/?api=1&query=金シャチ横丁+宗春ゾーン"
+              "name": "金シャチ横丁（宗春ゾーン / 義直ゾーン）",
+              "desc": "東門前・正門前の飲食商業エリア。和カフェ・小倉スイーツ・お土産が揃う。",
+              "mapUrl": "https://www.google.com/maps/search/?api=1&query=金シャチ横丁"
             }
           ],
           "factors": {
-            "overview": "徳川家康の天下普請による尾張徳川家の本拠。本丸御殿の復元美は世界遺産級。",
-            "tactics": "混雑する午後ピーク前（13時台前半）に御殿内部を見学できるため極めて快適。",
-            "mustTry": "上洛殿の金箔壁画と、釘隠し・天井格子の超絶技巧ディテール。",
+            "overview": "徳川家康の天下普請による尾張徳川家の本拠。本丸御殿の内装美は世界遺産級。",
+            "tactics": "13時台の入城で混雑を回避し、ゆったり90分鑑賞。",
+            "mustTry": "上洛殿の金箔壁画と精緻な天井格子・彫刻欄間の超絶技巧。",
             "plusOne": "本丸御殿内でのスマホ写真撮影（フラッシュ禁止）。",
-            "tips": "御殿内は靴を脱いで見学（靴下着用）。荷物は100円返却式ロッカーへ。",
+            "tips": "御殿内は靴下着用必須。手荷物は100円返却式ロッカーへ。",
             "transit": "東門を出て地下鉄名城線「名古屋城駅」7番出口へ徒歩3分。",
-            "skipLimit": "14:15までに東門を出れば、次の久屋大通・加藤珈琲店へ余裕で接続。"
+            "skipLimit": "本丸御殿は16:00最終入場・16:30閉門のため13時台の訪問が鉄則。"
           },
           "mapUrl": "https://www.google.com/maps/search/?api=1&query=名古屋城",
           "checkpoints": [
@@ -1319,175 +1320,186 @@ body.compact-mode .slot-details-body {
               "mapUrl": "https://www.google.com/maps/search/?api=1&query=名古屋城+大天守"
             },
             {
-              "title": "東門 ➔ 金シャチ横丁（宗春ゾーン）通過 ➔ 名古屋城駅",
-              "desc": "14:15までに東門を出て、地下鉄「名古屋城駅」7番出口へ移動。",
-              "must": true,
+              "title": "東門 ➔ 金シャチ横丁（宗春ゾーン）チェック ➔ 名古屋城駅",
+              "desc": "東門から退出。金シャチ横丁でサッと小倉スイーツにするか、名城線で久屋大通/熱田へ進む。",
+              "must": false,
               "mapUrl": "https://www.google.com/maps/search/?api=1&query=金シャチ横丁+宗春ゾーン"
             }
           ]
         },
         {
-          "id": "d1-kato-coffee",
-          "time": "14:25 - 15:15",
-          "duration": "50分",
-          "badge": "百名店・小倉トースト",
+          "id": "d1-ogura-buffer",
+          "time": "随時（前後自由）",
+          "duration": "40〜50分",
+          "badge": "【自由選択】各エリア候補",
           "badgeType": "food",
           "category": "food",
-          "title": "久屋大通「加藤珈琲店」小倉トースト ＆ スペシャルティ珈琲",
-          "overview": "食べログ喫茶百名店。名城線沿線随一の珈琲の名店にて、厚切りトーストにたっぷり盛られた自家製小倉餡と上質な珈琲を堪能。夜の二郎系（18:00）まで2時間45分の消化インターバルを確保し胃袋も万全。",
-          "tacticsTitle": "加藤珈琲店 立ち回り手順",
+          "title": "小倉トースト ＆ 喫茶ブレイク（観光の前後・現地判断で選択）",
+          "overview": "夜の二郎系や帰宅時間に縛られないため、小倉トーストはお腹の空き具合と観光進行に合わせて3大エリアから前後どこでも立ち寄り可能。各エリアの厳選候補を常備。",
+          "tacticsTitle": "3大エリア別・厳選候補一覧",
           "tactics": [
             {
               "step": 1,
-              "text": "名古屋城駅から名城線左回りでわずか1駅（2分）の「久屋大通駅」で下車（3B出口徒歩2分）。",
-              "must": true
+              "text": "【名古屋城・久屋大通エリア】「加藤珈琲店」（久屋大通駅徒歩2分・食べログ百名店、厚切り小倉トーストと極上自家焙煎珈琲）または金シャチ横丁。",
+              "must": false
             },
             {
               "step": 2,
-              "text": "名物「名古屋カラスコ（小倉トースト）」または厚切り小倉トーストと、世界最高峰の自家焙煎珈琲を注文。",
-              "must": true
+              "text": "【熱田神宮エリア】「きよめ餅総本家 喫茶部」（名物羽二重餅とお茶、17:00L.O.）または「あつた nagAya」（神宮前駅西口最新スイーツ）、「みなと珈琲店」。",
+              "must": false
             },
             {
               "step": 3,
-              "text": "15:15までに会計を済ませ、久屋大通駅の名城線ホームへ戻る。",
-              "must": true
+              "text": "【名駅・栄エリア】「喫茶 アロマ珈琲」（エスカ直結）または「BUCYO COFFEE」（名駅南・自家製あんこ）。",
+              "must": false
             }
           ],
           "bonusSpots": [
             {
               "name": "加藤珈琲店（久屋大通店）",
-              "desc": "食べログ喫茶百名店。世界各国のスペシャルティコーヒー豆と極上小倉トーストが絶賛される名喫茶。",
+              "desc": "食べログ百名店。名古屋城から名城線1駅（2分）。全国屈指のスペシャルティ珈琲と小倉トースト。",
               "mapUrl": "https://www.google.com/maps/search/?api=1&query=加藤珈琲店+久屋大通"
             },
             {
-              "name": "久屋大通公園（Hisaya-odori Park）",
-              "desc": "中部電力MIRAI TOWER（旧テレビ塔）を望む緑豊かな都会のオアシス。",
-              "mapUrl": "https://www.google.com/maps/search/?api=1&query=Hisaya-odori+Park"
+              "name": "きよめ餅総本家 喫茶部（熱田神宮前）",
+              "desc": "熱田名物きよめ餅をその場で味わえる甘味処（17:00L.O.）。",
+              "mapUrl": "https://www.google.com/maps/search/?api=1&query=きよめ餅総本家"
+            },
+            {
+              "name": "あつた nagAya（神宮前駅西口）",
+              "desc": "2024年秋開業の最新木造商業施設。地域の和カフェやスイーツが並ぶ。",
+              "mapUrl": "https://www.google.com/maps/search/?api=1&query=あつた+nagAya"
+            },
+            {
+              "name": "喫茶 アロマ珈琲（エスカ地下街店）",
+              "desc": "新幹線口エスカ直結。昭和レトロな極厚切り小倉トースト。",
+              "mapUrl": "https://www.google.com/maps/search/?api=1&query=アロマ珈琲+エスカ"
             }
           ],
           "factors": {
-            "overview": "名駅のBUCYO/アロマに匹敵する名古屋最高峰の喫茶店。名城線沿線に位置するため移動効率が最高。",
-            "tactics": "14時半は昼のピークが引いて落ち着く時間帯。カウンターやテーブルで至福のひととき。",
-            "mustTry": "こんがり焼かれた厚切りバタートーストに甘さ控えめの極上小倉餡＋淹れたてスペシャルティ珈琲。",
-            "plusOne": "店頭で販売されている自家焙煎コーヒー豆（お土産に最適）。",
-            "tips": "店内は落ち着いたクラシック空間。支払いは各種キャッシュレス対応。",
-            "transit": "地下鉄名城線「久屋大通駅」3B出口から東へ徒歩2分。",
-            "skipLimit": "15:15までに退店できれば、15:35には熱田神宮西駅へ余裕で到着可能。"
+            "overview": "小倉トーストを固定枠にせず、名古屋城の前、間、熱田神宮の後など、現地の空腹度に合わせて自在にチョイス。",
+            "tactics": "名古屋城の後に久屋大通の加藤珈琲店に寄るのが最も動線効率が高い（名城線1本）。",
+            "mustTry": "加藤珈琲店の厚切り小倉トースト（上品な粒あんとバターの極上バランス）。",
+            "plusOne": "熱田神宮門前でのきよめ餅テイクアウト。",
+            "tips": "喫茶店は夕方（17:00〜18:00）に閉まる店が多いため、14時〜16時台の利用が確実。",
+            "transit": "すべて名城線沿線（名古屋城駅・久屋大通駅・熱田神宮西駅・神宮前駅）で完結。",
+            "skipLimit": "お腹が空いていなければスキップして二郎系へ直行も可能。"
           },
           "mapUrl": "https://www.google.com/maps/search/?api=1&query=加藤珈琲店+久屋大通",
           "checkpoints": [
             {
-              "title": "名古屋城駅 ➔ 名城線で1駅・2分で「久屋大通駅」へ",
-              "desc": "名古屋城駅から名城線左回りで1駅・2分。3B出口を出て徒歩2分で加藤珈琲店へ。",
-              "must": true,
-              "mapUrl": "https://www.google.com/maps/dir/?api=1&origin=名古屋城駅&destination=久屋大通駅"
-            },
-            {
-              "title": "加藤珈琲店 小倉トースト ＆ 自家焙煎珈琲を堪能",
-              "desc": "食べログ百名店の極上小倉トーストと淹れたて珈琲で至福のブレイク（約40分）。18時の二郎系まで約3時間空くため胃袋も安心。",
-              "must": true,
+              "title": "【候補1・最推奨】加藤珈琲店（久屋大通・百名店）",
+              "desc": "名城線1駅・久屋大通駅3B出口徒歩2分。全国屈指の自家焙煎珈琲と極上小倉トースト（約40分）。",
+              "must": false,
               "mapUrl": "https://www.google.com/maps/search/?api=1&query=加藤珈琲店+久屋大通"
             },
             {
-              "title": "15:15 会計完了 ➔ 久屋大通駅名城線ホームへ",
-              "desc": "会計を済ませ久屋大通駅へ戻り、熱田神宮西駅方面の電車に乗車。",
-              "must": true
+              "title": "【候補2・熱田神宮】きよめ餅総本家 喫茶部 または あつた nagAya",
+              "desc": "熱田神宮参拝の直前・直後に門前で和スイーツブレイク（喫茶は17:00L.O.）。",
+              "must": false,
+              "mapUrl": "https://www.google.com/maps/search/?api=1&query=きよめ餅総本家"
+            },
+            {
+              "title": "【候補3・名駅】喫茶 アロマ珈琲（エスカ直結）",
+              "desc": "新幹線口エスカ地下街のクラシック名喫茶。極厚切りトースト。",
+              "must": false,
+              "mapUrl": "https://www.google.com/maps/search/?api=1&query=アロマ珈琲+エスカ"
             }
           ]
         },
         {
-          "id": "d1-meijo-atsuta",
-          "time": "15:20 - 15:35",
-          "duration": "15分",
+          "id": "d1-meijo-move",
+          "time": "14:40 - 15:00",
+          "duration": "20分",
           "badge": "名城線直通",
           "badgeType": "transit",
           "category": "transit",
-          "title": "地下鉄名城線 久屋大通駅 ➔ 熱田神宮西駅（直通15分）",
-          "overview": "久屋大通駅から熱田神宮西駅へ、名城線（左回り・栄・金山方面）で乗り換えなし一本直通（7駅・約15分・270円）。",
+          "title": "地下鉄名城線 名古屋城駅 ➔ 熱田神宮西駅（直通17分）",
+          "overview": "名古屋城駅から熱田神宮西駅へ名城線（左回り・栄・金山方面）で直通17分（乗り換えなし・270円）。※途中の久屋大通で加藤珈琲店に下車・再乗車も自在。",
           "tacticsTitle": "名城線ダイレクトアクセス",
           "tactics": [
             {
               "step": 1,
-              "text": "久屋大通駅から名城線左回りホームへ。電車に乗車。",
+              "text": "名古屋城駅7番出口から名城線改札へ。左回り（2番ホーム）に乗車。",
               "must": true
             },
             {
               "step": 2,
-              "text": "栄・矢場町・上前津・金山を通り、わずか15分で「熱田神宮西駅」に到着。",
+              "text": "加藤珈琲店に寄る場合は1駅目の「久屋大通駅」で下車。直行する場合はそのまま乗車（栄・金山経由）。",
               "must": true
             },
             {
               "step": 3,
-              "text": "2番出口を出て徒歩1分で熱田神宮西門へ直結。",
+              "text": "「熱田神宮西駅」に到着。2番出口を出て徒歩1分で熱田神宮西門へ直結。",
               "must": true
             }
           ],
           "bonusSpots": [],
           "factors": {
-            "overview": "都心・久屋大通から熱田神宮への一直線ワープ。乗り換えゼロで座って休憩できる。",
-            "tactics": "進行方向後ろ寄りに乗ると熱田神宮西駅2番出口階段に近い。",
-            "mustTry": "車内での草薙館の展示事前チェック。",
-            "plusOne": "熱田神宮西駅の静かな出口周辺。",
-            "tips": "2番出口を出れば西門の鳥居は目の前。",
-            "transit": "地下鉄名城線左回りで約15分、270円。",
-            "skipLimit": "15:35までに熱田神宮西駅に着けば草薙館最終入場（16:00）に余裕で間に合う。"
+            "overview": "名古屋城から熱田神宮への最短直通背骨ルート。名城線の環状運転をフル活用。",
+            "tactics": "乗り換え不要で座って脚を休められる。途中下車（久屋大通・栄）も自由。",
+            "mustTry": "熱田神宮西駅出口を出て即座に現れる神宮の鬱蒼とした神池・社叢林のコントラスト。",
+            "plusOne": "車内での草薙館の展示事前チェック。",
+            "tips": "熱田神宮西駅の2番出口が西門至近。",
+            "transit": "地下鉄名城線左回りで17分、270円。",
+            "skipLimit": "草薙館の最終入館（16:00）に間に合うよう15:40までに熱田神宮西駅へ。"
           },
-          "mapUrl": "https://www.google.com/maps/dir/?api=1&origin=久屋大通駅&destination=熱田神宮西駅",
+          "mapUrl": "https://www.google.com/maps/dir/?api=1&origin=名古屋城駅&destination=熱田神宮西駅",
           "checkpoints": [
             {
-              "title": "久屋大通駅 ➔ 名城線左回りで熱田神宮西駅へ直通",
-              "desc": "乗り換えなし7駅・約15分（270円）。座って脚を休めながら移動。",
+              "title": "名古屋城駅 ➔ 名城線左回りに乗車（熱田神宮西駅まで直通17分）",
+              "desc": "乗り換えなし直通8駅・約17分（270円）。久屋大通で途中下車も可能。",
               "must": true
             },
             {
               "title": "熱田神宮西駅 2番出口 ➔ 西門から境内へ直行",
               "desc": "2番出口を出て徒歩1分で西門鳥居。草薙館へ向かう。",
               "must": true,
-              "mapUrl": "https://www.google.com/maps/dir/?api=1&origin=久屋大通駅&destination=熱田神宮西駅"
+              "mapUrl": "https://www.google.com/maps/dir/?api=1&origin=名古屋城駅&destination=熱田神宮西駅"
             }
           ]
         },
         {
           "id": "d1-atsuta-jingu",
-          "time": "15:40 - 16:45",
-          "duration": "1時間05分",
-          "badge": "名刀鑑賞＆本宮参拝",
+          "time": "15:00 - 16:45",
+          "duration": "1時間45分",
+          "badge": "【必見】草薙館16:00最終入館",
           "badgeType": "temple",
           "category": "sightseeing",
           "title": "熱田神宮 剣の宝庫「草薙館」名刀鑑賞 ＆ 本殿・信長塀参拝",
-          "overview": "三種の神器を祀る熱田神宮。15:45に「草薙館」（最終入館16:00）へ余裕を持って入館し、国宝級名刀鑑賞と次郎太刀重量体験を満喫。夕暮れの静謐な本宮拝殿参拝と信長塀を巡る充実の1時間05分。",
+          "overview": "三種の神器（草薙神剣）を祀る古社。境内参拝は24時間可能だが、名刀展示の「草薙館」は16:00最終入館・16:30閉館。草薙館で国宝級名刀鑑賞と次郎太刀重量体験を満喫し、夕暮れの静謐な本宮拝殿参拝と信長塀をゆったり散策。",
           "tacticsTitle": "草薙館優先＆熱田神宮 攻略手順",
           "tactics": [
             {
               "step": 1,
-              "text": "西門から草薙館へ直行（15:45着・入館料500円）。最終入館16:00に対して15分以上の余裕あり。",
+              "text": "西門から草薙館へ直行（入館料500円）。16:00最終入館に余裕を持って入館。",
               "must": true
             },
             {
               "step": 2,
-              "text": "名刀展示を鑑賞し、体験コーナーで刃長166cm・5kgの「次郎太刀」実物大レプリカを持ち上げる（約35分）。",
+              "text": "草薙館で名刀展示を鑑賞し、体験コーナーで刃長166cm・5kgの「次郎太刀」実物大レプリカを持ち上げる（約35分）。",
               "must": true
             },
             {
               "step": 3,
-              "text": "本宮拝殿へ進み参拝。樹齢千年超の御神木「大楠」を仰ぐ（約15分）。",
+              "text": "本宮拝殿へ進み参拝。樹齢千年超の御神木「大楠」を仰ぐ（約20分）。",
               "must": true
             },
             {
               "step": 4,
-              "text": "織田信長が桶狭間戦勝御礼に奉納した「信長塀」の瓦土構造を観察（約10分）。",
+              "text": "織田信長奉納の「信長塀」の瓦土構造を観察（約10分）。",
               "must": true
             },
             {
               "step": 5,
-              "text": "16:45に南門または東門へ移動し、瑞穂区滝子への移動を開始。",
-              "must": true
+              "text": "門前のきよめ餅総本家やあつたnagAyaで甘味・土産を散策（自由）。",
+              "must": false
             }
           ],
           "bonusSpots": [
             {
               "name": "剣の宝庫 草薙館（熱田神宮宝物館隣）",
-              "desc": "熱田神宮所蔵の名刀を展示。次郎太刀・太郎太刀のスケール感と重量体験は必見。",
+              "desc": "熱田神宮所蔵の名刀を展示。次郎太刀・太郎太刀のスケール感と重量体験は必見（16:00最終入館）。",
               "mapUrl": "https://www.google.com/maps/search/?api=1&query=剣の宝庫+草薙館"
             },
             {
@@ -1497,35 +1509,35 @@ body.compact-mode .slot-details-body {
             },
             {
               "name": "きよめ餅総本家",
-              "desc": "熱田神宮名物の羽二重餅。お土産・小休憩に最適。",
+              "desc": "熱田神宮名物の羽二重餅。お土産・喫茶に最適。",
               "mapUrl": "https://www.google.com/maps/search/?api=1&query=きよめ餅総本家"
             },
             {
-              "name": "熱田神宮 大楠（弘法大師お手植え）",
-              "desc": "手水舎北側にある樹齢1000年以上の御神木。神聖なパワースポット。",
-              "mapUrl": "https://www.google.com/maps/search/?api=1&query=熱田神宮+大楠"
+              "name": "あつた nagAya",
+              "desc": "神宮前駅西口の最新商業施設。和カフェ・テイクアウトスイーツが豊富。",
+              "mapUrl": "https://www.google.com/maps/search/?api=1&query=あつた+nagAya"
             }
           ],
           "factors": {
             "overview": "草薙神剣を祀る伊勢神宮に次ぐ古社。草薙館の名刀鑑賞と信長塀が二大主目的。",
-            "tactics": "15:45到着で草薙館に先に入館することで、最終入館制限を完全にクリア。",
+            "tactics": "境内は24時間開放だが、草薙館が16:00最終入館。到着後真っ先に草薙館へ入館するのが鉄則。",
             "mustTry": "草薙館の体験コーナーで次郎太刀（重さ約5kg）を持ち上げる体験。",
-            "plusOne": "熱田名物「きよめ餅」の調達（時間があれば）。",
-            "tips": "草薙館の最終入館は16:00。境内は平坦で歩きやすい玉砂利。",
-            "transit": "地下鉄熱田神宮西駅徒歩1分、JR熱田駅徒歩3分。",
-            "skipLimit": "16:45までに神宮を出発すれば、夢を語れの17:40ポールポジションに完全間に合う。"
+            "plusOne": "熱田神宮門前の「きよめ餅総本家」または「あつた nagAya」でのスイーツ散策。",
+            "tips": "境内は夜間も歩行・参拝可能。静かな夕暮れの社叢林の雰囲気も格別。",
+            "transit": "地下鉄熱田神宮西駅徒歩1分、名鉄神宮前駅徒歩3分。",
+            "skipLimit": "草薙館へ16:00までに入館できれば参拝は日没後でも完全に可能。"
           },
           "mapUrl": "https://www.google.com/maps/search/?api=1&query=熱田神宮",
           "checkpoints": [
             {
-              "title": "【最優先】剣の宝庫「草薙館」直行 ＆ 次郎太刀（5kg）体験",
-              "desc": "西門から草薙館へ直行（15:45入館・入館料500円）。名刀鑑賞と次郎太刀の圧倒的重量を体感（約35分）。",
+              "title": "【16:00最終入館】剣の宝庫「草薙館」直行 ＆ 次郎太刀（5kg）体験",
+              "desc": "西門から草薙館へ直行（入館料500円）。名刀鑑賞と次郎太刀の圧倒的重量を体感（約35分）。",
               "must": true,
               "mapUrl": "https://www.google.com/maps/search/?api=1&query=剣の宝庫+草薙館"
             },
             {
               "title": "本宮（拝殿）参拝 ＆ 樹齢千年超「大楠」",
-              "desc": "草薙館を出て本宮拝殿で参拝。手水舎北側の御神木「大楠」を仰ぐ（約15分）。",
+              "desc": "草薙館を出て本宮拝殿で参拝。手水舎北側の御神木「大楠」を仰ぐ（約20分・24時間参拝可）。",
               "must": true,
               "mapUrl": "https://www.google.com/maps/search/?api=1&query=熱田神宮+大楠"
             },
@@ -1536,94 +1548,84 @@ body.compact-mode .slot-details-body {
               "mapUrl": "https://www.google.com/maps/search/?api=1&query=信長塀"
             },
             {
-              "title": "きよめ餅総本家・神宮茶屋散策",
-              "desc": "名物羽二重餅「きよめ餅」。16:45撤収リミットに余裕があれば購入（スキップ可）。",
+              "title": "きよめ餅総本家 または あつた nagAya 散策",
+              "desc": "門前町で名物きよめ餅調達や最新カフェの雰囲気を楽しむ（自由）。",
               "must": false,
-              "mapUrl": "https://www.google.com/maps/search/?api=1&query=きよめ餅総本家"
+              "mapUrl": "https://www.google.com/maps/search/?api=1&query=あつた+nagAya"
             }
           ]
         },
         {
-          "id": "d1-taxi-yume",
-          "time": "16:45 - 17:30",
-          "duration": "45分",
-          "badge": "タクシー移動",
+          "id": "d1-move-yume",
+          "time": "夕方（自由）",
+          "duration": "15〜25分",
+          "badge": "移動（何時でも可）",
           "badgeType": "transit",
           "category": "transit",
-          "title": "熱田神宮から瑞穂区滝子（夢を語れ愛知）へ移動",
-          "overview": "熱田神宮から「夢を語れ 愛知」への短距離移動。地下鉄よりタクシー直行が圧倒的に快適かつ最速（所要約8分・約1,200円）。",
+          "title": "熱田神宮 ➔ 瑞穂区滝子（夢を語れ愛知）移動",
+          "overview": "熱田神宮から「夢を語れ 愛知」へ移動。タクシー直行（約8分・約1,200円）が最速。地下鉄利用の場合は金山経由桜通線「桜山駅」下車徒歩8分、または名城線「新瑞橋」経由。",
           "tacticsTitle": "移動シークエンス",
           "tactics": [
             {
               "step": 1,
-              "text": "熱田神宮東門または南門からタクシーに乗車（「滝子の名古屋市大前交差点まで」と指定）。",
+              "text": "参拝終了後、名鉄神宮前駅前または熱田神宮前からタクシーに乗車（約8分・約1,200円）。「滝子の名古屋市大前交差点まで」と指定。",
               "must": true
             },
             {
               "step": 2,
-              "text": "八熊通を経由し約8分で瑞穂区滝子の「夢を語れ 愛知」至近に到着。",
-              "must": true
-            },
-            {
-              "step": 3,
-              "text": "開店40分前の17:35〜17:40頃に店頭へ到着し、夜営業の先頭列に接続。",
-              "must": true
+              "text": "または地下鉄利用: 神宮前駅➔金山駅（名鉄2分）➔桜通線桜山駅（地下鉄10分）➔徒歩8分。",
+              "must": false
             }
           ],
           "bonusSpots": [],
           "factors": {
-            "overview": "熱田区から瑞穂区滝子への横移動。公共交通機関は乗り換えが必要なためタクシーが最強コスパ。",
-            "tactics": "名鉄神宮前駅前のタクシー乗り場から乗車するのが最も確実。迎車不要。",
-            "mustTry": "タクシー車窓から見る名古屋の下町情緒ある滝子商店街の佇まい。",
-            "plusOne": "滝子交差点付近のコンビニ（黒烏龍茶・脂肪燃焼系ドリンクの事前調達）。",
-            "tips": "二郎系直撃前に黒烏龍茶を1本買っておくと食中・食後が格段に快適。",
-            "transit": "タクシー走行距離約2.8km、所要約8〜10分、運賃約1,100〜1,300円。",
-            "skipLimit": "17:40までに店舗前に到着できればファーストロット（最初の着席組）が確定する。"
+            "overview": "熱田区から瑞穂区滝子への移動。タクシーが短距離で最強コスパ。",
+            "tactics": "時間は自由。夜営業（18:00〜21:00）に合わせて好きなタイミングで移動。",
+            "mustTry": "滝子交差点付近の学生街の落ち着いた雰囲気。",
+            "plusOne": "近隣コンビニでの黒烏龍茶調達。",
+            "tips": "二郎系の前にお茶を調達しておくと快適。",
+            "transit": "タクシー約8分（約1,200円）。",
+            "skipLimit": "20:30頃までに店舗に到着すれば夜営業のラストオーダーに間に合う。"
           },
           "mapUrl": "https://www.google.com/maps/dir/?api=1&origin=熱田神宮&destination=夢を語れ+愛知",
           "checkpoints": [
             {
-              "title": "熱田神宮（または名鉄神宮前駅前）からタクシー乗車",
-              "desc": "公共交通機関は乗り換えが必要なためタクシー直行が最速・高コスパ（約2.8km・約8〜10分・約1,200円）。運転手に「滝子の名古屋市大前交差点まで」と指定。",
+              "title": "熱田神宮からタクシーまたは地下鉄で瑞穂区滝子へ",
+              "desc": "タクシー直行約8分（約1,200円）または金山乗換地下鉄。時間は完全自由。",
               "must": true,
               "mapUrl": "https://www.google.com/maps/dir/?api=1&origin=熱田神宮&destination=夢を語れ+愛知"
-            },
-            {
-              "title": "滝子交差点付近のコンビニで黒烏龍茶を事前調達",
-              "desc": "17:35〜17:40頃の店頭整列前に黒烏龍茶を1本買っておくと食中・食後が格段に快適（列が伸び始めていればコンビニはスキップして直行）。",
-              "must": false
             }
           ]
         },
         {
           "id": "d1-yume-wo-katare",
-          "time": "17:40 - 19:00",
-          "duration": "1時間20分",
-          "badge": "東京未進出二郎系",
+          "time": "夜（18:00〜21:00の間いつでも可）",
+          "duration": "1時間00分",
+          "badge": "夜営業フリー枠",
           "badgeType": "food",
           "category": "food",
-          "title": "夢を語れ 愛知（夜営業ポールポジション直撃）",
-          "overview": "東京に常設店舗が存在しない「夢を語れ」ブランド。瑞穂区滝子にて18:00開店のファーストロットを確実に奪取。",
-          "tacticsTitle": "夢を語れ ポールポジション奪取手順",
+          "title": "夢を語れ 愛知（夜営業マイペース直撃）",
+          "overview": "東京に常設店が存在しない伝説の二郎系屋号。夜営業（18:00〜21:00）の都合の良いタイミングで訪問。18:00開店直後に突入しても、観光後に19時〜20時台にゆったり訪れても完全自由。極厚神豚とワシワシ麺を堪能。",
+          "tacticsTitle": "夢を語れ 攻略手順",
           "tactics": [
             {
               "step": 1,
-              "text": "17:40着で店頭整列（ポールポジション〜先頭3番手以内を確保）。",
+              "text": "夜営業（18:00〜21:00）の都合の良い時間に店頭へ到着。列に接続。",
               "must": true
             },
             {
               "step": 2,
-              "text": "18:00定刻オープン。券売機で「ラーメン（麺量200gまたは300g）」の食券を購入。豚増しも選択可。",
+              "text": "券売機で「ラーメン（麺量200gまたは300g）」の食券を購入。豚増しも選択可。",
               "must": true
             },
             {
               "step": 3,
-              "text": "カウンター着席。コール確認時「ニンニクあり・アブラマシ」で極上の非乳化〜微乳化スープと極太ワシワシ麺を堪能。",
+              "text": "コール確認時「ニンニクあり・アブラマシ」で極厚神豚とワシワシ麺を堪能。",
               "must": true
             },
             {
               "step": 4,
-              "text": "18:40頃に完食退店。桜山駅（地下鉄桜通線）へ徒歩10分で移動。",
+              "text": "完食後、桜山駅（地下鉄桜通線）へ徒歩8分で移動。帰路へ。",
               "must": true
             }
           ],
@@ -1635,32 +1637,31 @@ body.compact-mode .slot-details-body {
             }
           ],
           "factors": {
-            "overview": "京都一条寺発祥、ボストン・日本全国で「夢を語る」文化を生んだ二郎系の伝説的屋号。東京には常設店がないため今愛知で食す価値が極大。",
-            "tactics": "17:40並び開始 ➔ 18:00入店 ➔ 18:15着丼 ➔ 18:40退店。夜の第1ロットでスマートに食い切る。",
-            "mustTry": "極厚の神豚チャーシューと、甘辛い醤油タレが染みた味付けアブラ（別皿推奨）。",
-            "plusOne": "完食後の心地よい満腹感とともに歩く桜山駅までの夜風散歩。",
-            "tips": "麺量300gは成人男性でもかなり多め。美味しく食べ切るなら麺少なめ（200g）申請も有効。店内ルールは店員が親切に案内してくれる。",
-            "transit": "食後は地下鉄桜通線「桜山駅」まで徒歩約10分（平坦な舗装路）。",
-            "skipLimit": "18:00開店に間に合えば19:00前には完全退店可能。"
+            "overview": "京都一条寺発祥、東京未進出の二郎系名店。夜営業枠内なら何時でも突入可能。",
+            "tactics": "開店直後（18:00）でも、観光をゆっくり終えた19時〜20時でもマイペースでOK。",
+            "mustTry": "極厚の神豚チャーシューと、甘辛い醤油タレが染みた味付けアブラ。",
+            "plusOne": "卓上の一味唐辛子での味変。",
+            "tips": "麺量300gはかなりボリュームがあるため、お腹の減り具合に応じて200g（少なめ）指定も安心。",
+            "transit": "地下鉄桜通線「桜山駅」4番出口から西へ徒歩約8分。",
+            "skipLimit": "21:00閉店（20:30頃までの到着推奨）。"
           },
           "mapUrl": "https://www.google.com/maps/search/?api=1&query=夢を語れ+愛知",
           "checkpoints": [
             {
-              "title": "17:40 店頭整列（夜営業ファーストロット確保）",
-              "desc": "東京に常設店舗が存在しない「夢を語れ」直営店。18:00開店20分前に到着し、先頭〜3番手以内のポールポジションを確保。",
+              "title": "店頭到着 ➔ 食券購入（夜営業18:00〜21:00内いつでも）",
+              "desc": "都合の良いタイミングで店頭へ。ラーメン食券を購入し列に接続。",
               "must": true,
               "mapUrl": "https://www.google.com/maps/search/?api=1&query=夢を語れ+愛知"
             },
             {
-              "title": "18:00 入店・食券購入 ➔ 極太麺＆神豚チャーシュー堪能",
-              "desc": "券売機で「ラーメン（麺200gまたは300g）」を購入（300gは多めのため美味しく完食するなら200gも有効）。コールは「ニンニクあり・アブラマシ（別皿推奨）」で甘辛い醤油ダレと極厚神豚を味わい、18:40頃退店。",
+              "title": "コール ➔ 極厚神豚＆極太ワシワシ麺を堪能",
+              "desc": "ニンニク・アブラなどお好みのコールで極上の一杯を味わう。",
               "must": true
             },
             {
-              "title": "名古屋市立大学 山の畑キャンパス前 ➔ 桜山駅へ夜風散歩",
-              "desc": "店舗向かいの落ち着いた学生街キャンパスを横目に、食後の腹ごなしを兼ねて地下鉄桜通線「桜山駅」まで平坦な舗装路を徒歩10分移動。",
-              "must": false,
-              "mapUrl": "https://www.google.com/maps/search/?api=1&query=名古屋市立大学+山の畑キャンパス"
+              "title": "完食退店 ➔ 桜山駅へ徒歩8分（帰りは何時でも可）",
+              "desc": "桜山駅から地下鉄桜通線に乗車し、実家（高蔵寺）へゆったり帰還。",
+              "must": true
             }
           ]
         }
@@ -2239,13 +2240,12 @@ body.compact-mode .slot-details-body {
     }
   ]
 };
-    const STORAGE_KEY = 'aichi_skipped_cp';
     let mustOnlyMode = false;
     let compactMode = false;
     let skippedMap = {};
 
     try {
-      skippedMap = JSON.parse(localStorage.getItem(STORAGE_KEY) || '{}');
+      skippedMap = JSON.parse(localStorage.getItem('aichi_skipped_cp') || '{}');
     } catch (_) {
       skippedMap = {};
     }
@@ -2254,7 +2254,7 @@ body.compact-mode .slot-details-body {
       const activeDays = TRIP_DATA.days.filter(d =>
         TRIP_DATA.activeDayFilter === 'all' || String(d.dayNum) === TRIP_DATA.activeDayFilter
       );
-      const allItems = activeDays.reduce((acc, d) => acc.concat(d.items || []), []);
+      const allItems = activeDays.reduce((acc, d) => acc.concat(d.items), []);
       const sightCount = allItems.filter(i => i.category === 'sightseeing').length;
       const foodCount = allItems.filter(i => i.category === 'food').length;
 
@@ -2269,24 +2269,23 @@ body.compact-mode .slot-details-body {
     function renderQuickJumpBar() {
       const jumpBar = document.getElementById('quick-jump-bar');
       if (!jumpBar) return;
-
-      const metaTargets = (TRIP_DATA.meta && TRIP_DATA.meta.jumpTargets) || [];
-      const targets = metaTargets.length > 0 ? metaTargets : TRIP_DATA.days.flatMap(d =>
-        (d.items || []).filter(i => i.category !== 'transit').map(i => ({
-          id: i.id,
-          day: String(d.dayNum),
-          cat: i.category,
-          label: i.title.replace(/（.*?）|\(.*?\)/g, '').trim()
-        }))
-      );
-
-      const filtered = targets.filter(t => {
+      const jumpTargets = [
+        { id: 'd1-nagoya-castle', day: '1', cat: 'sightseeing', label: '🏯 名古屋城・本丸御殿' },
+        { id: 'd1-ogura-buffer', day: '1', cat: 'food', label: '🍞 小倉トースト（自由選択）' },
+        { id: 'd1-atsuta-jingu', day: '1', cat: 'sightseeing', label: '⛩️ 熱田神宮・草薙館' },
+        { id: 'd1-yume-wo-katare', day: '1', cat: 'food', label: '🍜 夢を語れ愛知' },
+        { id: 'd2-inuyama-castle', day: '2', cat: 'sightseeing', label: '🏯 国宝犬山城・三光稲荷' },
+        { id: 'd2-urakuen-joan', day: '2', cat: 'sightseeing', label: '🍵 国宝茶室 如庵' },
+        { id: 'd2-inuyama-castle-town', day: '2', cat: 'food', label: '🍡 城下町・山田五平餅' },
+        { id: 'd2-momotaro-shrine', day: '2', cat: 'sightseeing', label: '🍑 桃太郎神社' },
+        { id: 'd2-jakkoin-temple', day: '2', cat: 'sightseeing', label: '🍁 継鹿尾山 寂光院' }
+      ].filter(t => {
         if (TRIP_DATA.activeDayFilter !== 'all' && TRIP_DATA.activeDayFilter !== t.day) return false;
         if (TRIP_DATA.activeCategoryFilter !== 'all' && TRIP_DATA.activeCategoryFilter !== t.cat) return false;
         return true;
       });
 
-      jumpBar.innerHTML = filtered.map(t =>
+      jumpBar.innerHTML = jumpTargets.map(t =>
         `<a href="#slot-${t.id}" class="jump-chip">${t.label}</a>`
       ).join('');
     }
@@ -2294,7 +2293,7 @@ body.compact-mode .slot-details-body {
     function toggleSkipCheckpoint(cpKey) {
       skippedMap[cpKey] = !skippedMap[cpKey];
       try {
-        localStorage.setItem(STORAGE_KEY, JSON.stringify(skippedMap));
+        localStorage.setItem('aichi_skipped_cp', JSON.stringify(skippedMap));
       } catch (_) {}
       renderUI();
     }
@@ -2332,7 +2331,7 @@ body.compact-mode .slot-details-body {
           return;
         }
 
-        const filteredItems = (day.items || []).filter(item => {
+        const filteredItems = day.items.filter(item => {
           if (TRIP_DATA.activeCategoryFilter === 'all') return true;
           return item.category === TRIP_DATA.activeCategoryFilter;
         });
@@ -2360,7 +2359,7 @@ body.compact-mode .slot-details-body {
         const dayEl = document.createElement('div');
         dayEl.className = 'day-block';
 
-        const macroStripHtml = (day.macroRoute || []).map((stepName, idx) => {
+        const macroStripHtml = day.macroRoute.map((stepName, idx) => {
           const arrow = idx < day.macroRoute.length - 1 ? '<span class="macro-arrow">➔</span>' : '';
           return '<span class="macro-chip">' + stepName + '</span>' + arrow;
         }).join('');
@@ -2455,6 +2454,7 @@ body.compact-mode .slot-details-body {
                   <p class="spot-overview">${item.overview}</p>
                 </div>
 
+                <!-- Unified Default-Open Route Checkpoints & Practical Footer -->
                 <div class="slot-details-body">
                   <div class="checkpoint-list">
                     ${checkpointsHtml}
@@ -2473,12 +2473,11 @@ body.compact-mode .slot-details-body {
                 <span class="day-eyebrow">DAY 0${day.dayNum}</span>
                 <span class="day-date-text">${day.dateStr}</span>
               </div>
-              ${day.fullMapUrl ? `
               <a href="${day.fullMapUrl}" target="_blank" rel="noopener" class="day-route-map-btn">
                 <span>🗺️ Day ${day.dayNum} 全経由地マップ ↗</span>
-              </a>` : ''}
+              </a>
             </div>
-            <div class="day-subtitle-text">${day.subTitle || ''}</div>
+            <div class="day-subtitle-text">${day.subTitle}</div>
             <div class="macro-flow-strip">${macroStripHtml}</div>
           </div>
           <div class="timeline-vertical">${slotsHtml}</div>
@@ -2490,8 +2489,7 @@ body.compact-mode .slot-details-body {
       const curDay = TRIP_DATA.days.find(d => String(d.dayNum) === TRIP_DATA.activeDayFilter);
       const bMap = document.getElementById('bottom-map-link');
       if (bMap) {
-        const fallbackUrl = (TRIP_DATA.days[0] && TRIP_DATA.days[0].fullMapUrl) || 'https://www.google.com/maps';
-        bMap.href = curDay ? (curDay.fullMapUrl || fallbackUrl) : fallbackUrl;
+        bMap.href = curDay ? curDay.fullMapUrl : TRIP_DATA.days[1].fullMapUrl;
       }
     }
 
