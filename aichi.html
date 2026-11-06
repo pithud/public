@@ -48,10 +48,10 @@
   --version-title: #0f172a;
   --quick-bar-bg: rgba(255, 255, 255, 0.95);
   --quick-bar-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
-  --mother-memo-bg: linear-gradient(135deg, #f5f3ff, #ede9fe);
-  --mother-memo-border: #c4b5fd;
-  --mother-memo-title: #7c3aed;
-  --mother-memo-text: #334155;
+  
+  
+  
+  
   --theme-btn-bg: #e2e8f0;
   --theme-btn-text: #0f172a;
   --theme-btn-border: #cbd5e1;
@@ -95,10 +95,10 @@
   --version-title: #ffffff;
   --quick-bar-bg: rgba(15, 23, 42, 0.92);
   --quick-bar-shadow: 0 4px 20px rgba(0, 0, 0, 0.5);
-  --mother-memo-bg: linear-gradient(135deg, rgba(88, 28, 135, 0.25), rgba(15, 23, 42, 0.9));
-  --mother-memo-border: rgba(168, 85, 247, 0.4);
-  --mother-memo-title: #c084fc;
-  --mother-memo-text: #e2e8f0;
+  
+  
+  
+  
   --theme-btn-bg: #1e293b;
   --theme-btn-text: #f8fafc;
   --theme-btn-border: #334155;
@@ -679,29 +679,10 @@ header {
 }
 
 /* Mother Memo Collapsible */
-.mother-memo-details {
-  border: none;
-}
-.mother-memo-summary {
-  list-style: none;
-  cursor: pointer;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  user-select: none;
-}
-.mother-memo-summary::-webkit-details-marker {
-  display: none;
-}
-.mother-memo-details[open] .mother-memo-arrow {
-  transform: rotate(180deg);
-}
-.mother-memo-arrow {
-  display: inline-block;
-  transition: transform 0.2s ease;
-  font-size: 0.74rem;
-  color: #c084fc;
-}
+
+
+
+
 
 /* Spot Bottom Actions */
 .spot-bottom-actions {
@@ -979,31 +960,9 @@ header {
 .quick-pill:hover { color: #fff; border-color: var(--border); }
 
 /* Mother Memo Callout in Summary */
-.mother-memo-box {
-  background: linear-gradient(135deg, rgba(88, 28, 135, 0.25), rgba(15, 23, 42, 0.9));
-  border: 1.5px solid rgba(168, 85, 247, 0.4);
-  border-radius: 12px;
-  padding: 12px 14px;
-  margin-bottom: 14px;
-}
-.mother-memo-title {
-  font-size: 0.88rem;
-  font-weight: 800;
-  color: #c084fc;
-  margin-bottom: 8px;
-  display: flex;
-  align-items: center;
-  gap: 6px;
-}
-.mother-memo-list {
-  list-style: none;
-  font-size: 0.78rem;
-  color: #e2e8f0;
-  display: flex;
-  flex-direction: column;
-  gap: 5px;
-}
-.mother-memo-list li::before {
+
+
+
   content: "🟣 ";
   font-size: 0.75rem;
 }
@@ -1037,68 +996,14 @@ header {
       旅程更新時に過去分が上書き消滅しないよう物理アーカイブされています。いつでも過去プランへ戻せます。
     </div>
 
-    <!-- v6 (Current) -->
     <div class="version-card current">
-      <span class="version-tag current">🟢 現在表示中 (v6)</span>
-      <div class="version-title">v1: 愛知・犬山・名古屋 決定版</div>
+      <span class="version-tag current">🟢 決定版旅程</span>
+      <div class="version-title">愛知・犬山・名古屋 リアルタイムナビ</div>
       <div class="version-desc">
         ・11/7: 高蔵寺カラオケ ➔ 名駅小倉トースト ➔ 熱田神宮・草薙館 ➔ 夢を語れ愛知<br>
-        ・11/8: 家族車（犬山城＋桃太郎神社） ➔ 名鉄直通単独脱出（栄生・トヨタ産業技術記念館）<br>
-        ・岐阜城休館（2027年10月まで）完全回避＆東京にない希少枠集中
+        ・11/8: 家族車で犬山フル攻略（国宝犬山城・如庵・城下町・桃太郎神社・寂光院） ➔ 実家直帰（17:00帰着）<br>
+        ・不要な名古屋名物外食・人混み・移動ロスを完全排除した純化フォーマット
       </div>
-    </div>
-
-    <!-- v5 (Archive) -->
-    <div class="version-card">
-      <span class="version-tag archive">📄 アーカイブ (v5)</span>
-      <div class="version-title">v5: 統一見出し＆ベストプラクティス完全準拠版</div>
-      <div class="version-desc">
-        ・不自然な「右回り」等の文脈不一致サブタイトル完全撤廃<br>
-        ・全スロット見出し統一規律＆目的別アイコン連動
-      </div>
-      <a href="archive/v5.html" target="_blank" class="version-link">このバージョンを開く ↗</a>
-    </div>
-
-    <!-- v4 (Archive) -->
-    <div class="version-card">
-      <span class="version-tag archive">📄 アーカイブ (v4)</span>
-      <div class="version-title">v4: 目的バッジ＆昼食3ジャンル3択完備版</div>
-      <div class="version-desc">
-        ・見出しを【目的】バッジ化（昼食/参拝/移動/宿泊等）<br>
-        ・昼食：伊勢うどん/軽食/てこね寿司の3大ジャンル各店（おすすめ度・所要時間・予算・マップ付き）
-      </div>
-      <a href="archive/v4.html" target="_blank" class="version-link">このバージョンを開く ↗</a>
-    </div>
-
-    <!-- v3 (Archive) -->
-    <div class="version-card">
-      <span class="version-tag archive">📄 アーカイブ (v3)</span>
-      <div class="version-title">v3: ベストプラクティス3層再編版</div>
-      <div class="version-desc">
-        ・07:00発固定、全枠折りたたみ<br>
-        ・概要の複数行可読化、3大アクションブロック
-      </div>
-      <a href="archive/v3.html" target="_blank" class="version-link">このバージョンを開く ↗</a>
-    </div>
-
-    <!-- v2 (Archive) -->
-    <div class="version-card">
-      <span class="version-tag archive">📄 アーカイブ (v2)</span>
-      <div class="version-title">v2: 高機能SPA復元版</div>
-      <div class="version-desc">
-        ・母メモ骨格＋7-Factor詳細分析アコーディオン
-      </div>
-      <a href="archive/v2.html" target="_blank" class="version-link">このバージョンを開く ↗</a>
-    </div>
-
-    <!-- v1 (Archive) -->
-    <div class="version-card">
-      <span class="version-tag archive">📄 アーカイブ (v1)</span>
-      <div class="version-title">v1: スイーツ・昼食別枠詳細版</div>
-      <div class="version-desc">
-        ・おかげ横丁スイーツ8選・昼食5選の全網羅カード独立掲載版
-      </div>
-      <a href="archive/v1.html" target="_blank" class="version-link">このバージョンを開く ↗</a>
     </div>
 
     <div style="margin-top:auto; padding-top:14px; border-top:1px solid var(--border);">
@@ -1114,7 +1019,7 @@ header {
       <div class="weather-icon">🌤️</div>
       <div class="weather-body">
         <strong>11/7（金）秋晴れ ＆ 11/8（土）行楽日和</div>
-        <div class="weather-sub">11/7は平日午後の静寂を活かして熱田神宮・名刀鑑賞＆夢を語れ夜直撃。11/8は午前中に家族車で犬山城＆桃太郎神社を制覇し、午後は名鉄直通でトヨタ産業技術記念館へ単独突撃します。</div>
+        <div class="weather-sub">11/7は平日午後の静寂を活かして熱田神宮・名刀鑑賞＆夢を語れ夜直撃。11/8は朝08:30発で犬山エリア（犬山城・国宝如庵・城下町・桃太郎神社・寂光院）をフル満喫し、17:00には実家へ直帰します。</div>
       </div>
     </div>
 
@@ -1128,33 +1033,22 @@ header {
       <!-- Section 1: Settings Switcher -->
       <div class="menu-section-label">⚙️ 旅程切り替え（プラン・出発時刻・表示日）</div>
       
-      <!-- Plans -->
-      <div class="plan-group">
-        <button class="plan-btn active" id="plan-btn-1" onclick="switchPlan('1')">
-          1. 母メモ完全準拠・本命プラン
-          <small>二見浦➜外宮写真5分➜内宮➜志摩➜VISON</small>
-        </button>
-        <button class="plan-btn" id="plan-btn-2" onclick="switchPlan('2')">
-          2. 予備・雨天欠航時プラン
-          <small>鳥羽水族館組込（全天候バックアップ）</small>
-        </button>
-      </div>
-
-      <!-- Controls Grid (Departure Time & Day Filter) -->
-      <div class="controls-grid">
-        <div>
-          <div class="menu-section-label">⏰ 高蔵寺駅 出発時刻</div>
-          <div class="segmented-control" style="background:rgba(56, 189, 248, 0.1); border-color:#0284c7;">
-            <div style="flex:1; text-align:center; padding:6px 0; font-size:0.78rem; font-weight:800; color:#38bdf8;">
-              🔒 07:00発 確定（母メモ完全厳守）
-            </div></div>
-        </div>
+      <!-- Controls Grid (Day Filter & Key Info) -->
+      <div class="controls-grid" style="grid-template-columns: 1fr 1fr;">
         <div>
           <div class="menu-section-label">📅 日程絞り込み表示</div>
           <div class="segmented-control">
             <button class="segment-btn active" id="day-all-btn" onclick="filterDay('all')">全日程</button>
-            <button class="segment-btn" id="day-1-btn" onclick="filterDay('1')">1日目</button>
-            <button class="segment-btn" id="day-2-btn" onclick="filterDay('2')">2日目</button>
+            <button class="segment-btn" id="day-1-btn" onclick="filterDay('1')">11/7（金）</button>
+            <button class="segment-btn" id="day-2-btn" onclick="filterDay('2')">11/8（土）</button>
+          </div>
+        </div>
+        <div>
+          <div class="menu-section-label">⏰ 出発スケジュール</div>
+          <div class="segmented-control" style="background:rgba(56, 189, 248, 0.08); border-color:#0284c7;">
+            <div style="flex:1; text-align:center; padding:6px 0; font-size:0.75rem; font-weight:700; color:var(--primary);">
+              11/7: 09:00カラオケ / 11/8: 08:30家発
+            </div>
           </div>
         </div>
       </div>
@@ -1205,18 +1099,6 @@ const TRIP_DATA = {
           desc: "名古屋名物（ひつまぶし・味噌カツ・手羽先等）は完全不要とし唯一の関心である『小倉トースト』のみに集中。11/7昼に名駅の名店で極上小倉トーストを堪能後、熱田神宮・草薙館と夜の『夢を語れ 愛知』を完全攻略。11/8は朝08:30発で犬山エリア（国宝犬山城・国宝如庵・城下町・桃太郎神社・寂光院）を余すことなく巡り、名駅への寄り道を完全排除して夕方17:00に家族車で実家へ直帰する最高効率旅程。",
           day1Map: "https://www.google.com/maps/dir/?api=1&origin=高蔵寺駅&destination=夢を語れ+愛知&waypoints=名古屋駅%7C熱田神宮",
           day2Map: "https://www.google.com/maps/dir/?api=1&origin=高蔵寺駅&destination=高蔵寺駅&waypoints=国宝犬山城%7C有楽苑%7C犬山城下町%7C桃太郎神社%7C寂光院",
-          motherPoints: [
-            "11/7 09:00〜12:00は高蔵寺でカラオケ（固定）。12:00退店後にJR中央本線快速で12:56名駅着",
-            "11/7昼：名古屋めしは不要、唯一気になる『小倉トースト』のみに特化（BUCYO COFFEEまたはエスカ・アロマ珈琲）",
-            "11/7午後：JR東海道線で熱田駅へ直通（8分）。熱田神宮・信長塀参拝と剣の宝庫「草薙館」で名刀実重量体験",
-            "11/7夜：熱田からタクシー8分で瑞穂区滝子へ。東京に常設店のない『夢を語れ 愛知』夜の部18:00開店直撃",
-            "11/8朝：08:30実家発（家族車）。09:15犬山着で国宝犬山城天守登閣・三光稲荷参拝",
-            "11/8午前：犬山城隣の有楽苑へ。織田信長の実弟・有楽斎が建てた国宝茶室「如庵」を鑑賞",
-            "11/8昼：犬山城下町で家族昼食＆町並み散策（山田五平餅店、飛騨牛にぎり）",
-            "11/8午後前半：車で木曽川沿いを東へ10分。浅野祥雲の奇観コンクリート彫刻群『桃太郎神社』で撮影",
-            "11/8午後後半：桃太郎神社すぐ隣の『寂光院（尾張のもみじ寺）』へ。織田信長ゆかりの巨石と絶景古刹参詣",
-            "11/8夕方：名古屋駅への寄り道・名物外食は完全排除。寂光院から家族車でそのまま実家へ直帰（17:00帰着）"
-          ],
           days: [
             {
               dayNum: 1,
@@ -1652,12 +1534,7 @@ function shiftTime(baseStr, offsetMinutes) {
           </div>
           <p style="font-size:0.84rem; color:var(--text-muted); line-height:1.5; margin-bottom:12px;">${plan.desc}</p>
 
-          <!-- 母メモ重要ポイントコールアウト -->
-          <details class="mother-memo-box mother-memo-details">
-            <summary class="mother-memo-summary"><span class="mother-memo-title" style="margin-bottom:0;">🟣 母のメモ・重要ポイント＆おトク技（全量記録・タップで開閉）</span><span class="mother-memo-arrow">▼ 開く</span></summary>
-            <ul class="mother-memo-list" style="margin-top:10px; border-top:1px dashed rgba(168, 85, 247, 0.3); padding-top:10px;">
-              ${plan.motherPoints.map(p => `<li>${p}</li>`).join('')}
-          </details>
+          
           </div>
         </div>
       `;
@@ -1739,7 +1616,7 @@ function shiftTime(baseStr, offsetMinutes) {
             } else if (item.badgeText && (item.badgeText.includes('参拝') || item.badgeText.includes('禊'))) {
               blockIcon = '⛩️';
               defaultActionLabel = '推奨参拝手順（一筆書き）';
-              defaultSubtitle = '母メモ指定順路・手水・スキップ判断';
+              defaultSubtitle = '立ち回り順路・推奨ステップ';
             } else if (item.badgeText && item.badgeText.includes('写真')) {
               blockIcon = '📸';
               defaultActionLabel = '推奨撮影動線＆即出発手順';
@@ -1971,7 +1848,7 @@ function shiftTime(baseStr, offsetMinutes) {
                       </div>
                       <div class="factor-bullet-line">
                         <span class="factor-bullet-dot">•</span>
-                        <span class="factor-bullet-text"><strong>同行者（母）配慮・Tips:</strong> ${f.tips}</span>
+                        <span class="factor-bullet-text"><strong>現地Tips・注意事項:</strong> ${f.tips}</span>
                       </div>
                       <div class="factor-bullet-line">
                         <span class="factor-bullet-dot" style="color:#ef4444;">•</span>
@@ -2064,10 +1941,8 @@ function shiftTime(baseStr, offsetMinutes) {
         '🚗 1日目全ルート: ' + plan.day1Map,
         '🚗 2日目全ルート: ' + plan.day2Map,
         "",
-        "【母メモ重要ポイント】"
       ];
 
-      plan.motherPoints.forEach(mp => {
         lines.push('・ ' + mp);
       });
 
@@ -2114,7 +1989,7 @@ function shiftTime(baseStr, offsetMinutes) {
       });
 
       navigator.clipboard.writeText(lines.join('\n')).then(() => {
-        alert('全日程（母メモ準拠・立ち回り＆詳細スペック付き）をコピーしました！そのままLINEに貼り付けられます。');
+        alert('全日程の旅程テキストをコピーしました！そのままLINE等に貼り付けられます。');
       }).catch(() => {
         alert('コピーに失敗しました。');
       });
