@@ -1210,7 +1210,7 @@ const TRIP_DATA = {
             "11/7昼：夜の二郎系完食に向けて重い名古屋めしを完全排除。名駅周辺で極上小倉トースト＋珈琲を喫食",
             "11/7午後：JR東海道線で熱田駅へ直通（8分）。熱田神宮・信長塀参拝と剣の宝庫「草薙館」で名刀実重量体験",
             "11/7夜：熱田からタクシー8分で瑞穂区滝子へ。東京に常設店のない『夢を語れ 愛知』夜の部18:00開店直撃",
-            "11/8午前：実家から家族車で犬山へ（車35分）。国宝犬山城の現存天守登閣と木曽川の絶景",
+            "11/8朝：08:30実家発（家族車）。混雑ゼロの09:15に犬山城着で天守一番乗り登閣と木曽川絶景",
             "11/8昼前：車必須の奇観『桃太郎神社』へ直行（車10分）。浅野祥雲の極彩色コンクリート彫刻群を撮影",
             "11/8昼：犬山城下町または木曽川沿いで家族昼食（郷土料理・五平餅）",
             "11/8午後：犬山駅で家族と解散し単独電車移動。名鉄急行で栄生駅へ直通（約30分）",
@@ -1429,30 +1429,30 @@ const TRIP_DATA = {
               macroRoute: ["実家発（家族車）", "国宝犬山城（天守登閣）", "三光稲荷神社", "桃太郎神社（浅野祥雲彫刻）", "犬山城下町（家族昼食）", "犬山駅（単独電車脱出）", "名鉄急行直通", "トヨタ産業技術記念館", "実家帰還"],
               items: [
                 {
-                  baseStart: "09:30", baseEnd: "10:15",
+                  baseStart: "08:30", baseEnd: "09:15",
                   avgDuration: "45分", estDuration: "45分（自家用車移動約35分＋駐車）",
                   type: "transit", badgeClass: "badge-transit", badgeText: "🚗 【移動】実家 ➔ 犬山城",
                   title: "実家から家族車で国宝犬山城へ直行（車約35分）",
                   tacticsFlowTitle: "土曜混雑回避の駐車場イン立ち回り",
                   tacticsSteps: [
-                    { step: 1, text: "実家を09:30に出発。国道19号から尾張パークウェイまたは県道経由で犬山方面へ。", tag: "出発", isSkip: false },
-                    { step: 2, text: "犬山城第1駐車場（普通車500円）またはキャッスルパーキングへ10:15までに入庫。", tag: "P確保", isSkip: false },
+                    { step: 1, text: "実家を08:30に出発。国道19号から尾張パークウェイまたは県道経由で犬山方面へ。", tag: "出発", isSkip: false },
+                    { step: 2, text: "犬山城第1駐車場（普通車500円）またはキャッスルパーキングへ09:15に入庫。", tag: "P確保", isSkip: false },
                     { step: 3, text: "家族とともに城下町北端から犬山城の登城坂へ向かう。", tag: "登城へ", isSkip: false }
                   ],
                   bonusSpots: [],
                   factors: {
                     overview: "滞在目的: 家族車による犬山への快適アクセス。<br>・ 土曜の犬山城は昼以降に大混雑するため、午前中の駐車場確保が最重要。",
-                    tactics: "09:30発で10:15着。第1駐車場が満車の場合は第2駐車場または市役所Pへ回る。",
+                    tactics: "08:30発で09:15着。開門（09:00）直後で駐車場は完全余裕。第1駐車場が満車の場合は第2駐車場または市役所Pへ回る。",
                     mustTry: "木曽川沿いの山並みドライブ",
                     plusOne: "尾張パークウェイの快適な走行感",
                     tips: "車があるので荷物はすべて車内に置いて身軽に動く。",
                     transit: "自家用車移動（高蔵寺・春日井方面 ➔ 犬山、約20km）。",
-                    skipLimit: "10:30までに犬山城天守へ入る",
+                    skipLimit: "09:30までに犬山城天守へ入る",
                     mapUrl: "https://www.google.com/maps/search/?api=1&query=犬山城第1駐車場"
                   }
                 },
                 {
-                  baseStart: "10:15", baseEnd: "12:00",
+                  baseStart: "09:15", baseEnd: "11:00",
                   avgDuration: "105分", estDuration: "105分（天守登閣・三光稲荷神社）",
                   type: "must", badgeClass: "badge-must", badgeText: "🏯 【城郭・絶景】国宝 犬山城登閣",
                   title: "国宝 犬山城 登閣 ＋ 三光稲荷神社（銭洗・ハート絵馬）",
@@ -1475,12 +1475,12 @@ const TRIP_DATA = {
                     plusOne: "城門前の五平餅",
                     tips: "靴を脱いでビニール袋で持ち歩くスタイル。厚手の靴下があると快適。",
                     transit: "城内徒歩移動。急勾配階段あり。",
-                    skipLimit: "12:00には駐車場を出て桃太郎神社へ向かう",
+                    skipLimit: "11:00には駐車場を出て桃太郎神社へ向かう",
                     mapUrl: "https://www.google.com/maps/search/?api=1&query=国宝犬山城"
                   }
                 },
                 {
-                  baseStart: "12:15", baseEnd: "13:15",
+                  baseStart: "11:15", baseEnd: "12:15",
                   avgDuration: "60分", estDuration: "60分（車移動10分＋境内見学・撮影）",
                   type: "must", badgeClass: "badge-must", badgeText: "👹 【奇観・撮影】桃太郎神社",
                   title: "桃太郎神社 浅野祥雲コンクリート彫刻群の鑑賞＆写真撮影",
@@ -1490,7 +1490,7 @@ const TRIP_DATA = {
                     { step: 2, text: "桃太郎神社無料駐車場に車を入庫。", tag: "無料P", isSkip: false },
                     { step: 3, text: "境内へ。コンクリート造形作家・浅野祥雲による極彩色の実物大彫刻群（泣き叫ぶ赤鬼・青鬼、桃から生まれた桃太郎、猿・雉・犬）を撮影。", tag: "写真撮影", isSkip: false },
                     { step: 4, text: "桃形の鳥居や宝物館（大人200円、鬼のミイラの写真等）を面白く鑑賞。", tag: "珍スポット", isSkip: false },
-                    { step: 5, text: "13:15に駐車場を出て犬山城下町へ戻る。", tag: "出発", isSkip: false }
+                    { step: 5, text: "12:15に駐車場を出て犬山城下町へ戻る。", tag: "出発", isSkip: false }
                   ],
                   bonusSpots: [
                     { name: "寂光院（尾張のもみじ寺）", desc: "桃太郎神社のすぐ東にある古刹。もみじと巨石が織りなす静寂の寺社。", mapUrl: "https://www.google.com/maps/search/?api=1&query=寂光院+犬山" }
@@ -1502,13 +1502,13 @@ const TRIP_DATA = {
                     plusOne: "おみくじ・桃太郎みやげ",
                     tips: "入場無料（宝物館のみ200円）。家族全員で笑顔で写真が撮れる名所。",
                     transit: "車移動（犬山城 ➔ 桃太郎神社、約4km・約10分）。無料駐車場完備。",
-                    skipLimit: "13:15までに車を出して城下町へ戻る",
+                    skipLimit: "12:15までに車を出して城下町へ戻る",
                     mapUrl: "https://www.google.com/maps/search/?api=1&query=桃太郎神社+犬山"
                   }
                 },
                 {
-                  baseStart: "13:30", baseEnd: "14:15",
-                  avgDuration: "45分", estDuration: "45分（昼食・散策）",
+                  baseStart: "12:30", baseEnd: "13:30",
+                  avgDuration: "60分", estDuration: "60分（家族昼食・散策）",
                   type: "must", badgeClass: "badge-must", badgeText: "🍴 【昼食】犬山城下町 家族昼食",
                   title: "犬山城下町 家族昼食 ＆ 五平餅・飛騨牛串食べ歩き",
                   tacticsFlowTitle: "城下町ランチと駅送りの立ち回り",
@@ -1516,7 +1516,7 @@ const TRIP_DATA = {
                     { step: 1, text: "犬山城下町周辺の駐車場に車を停め、本町通りの城下町へ。", tag: "城下町イン", isSkip: false },
                     { step: 2, text: "家族と町家カフェや食事処で昼食（山田五平餅店のだんご型五平餅、飛騨牛にぎり寿し等）。", tag: "家族昼食", isSkip: false },
                     { step: 3, text: "食後に家族と合意の上、車で名鉄「犬山駅」西口へ送ってもらう。", tag: "駅送り", isSkip: false },
-                    { step: 4, text: "14:20 犬山駅ロータリーにて家族と笑顔で解散。単独電車移動へスイッチ。", tag: "単独へ解散", isSkip: false }
+                    { step: 4, text: "13:35 犬山駅ロータリーにて家族と笑顔で解散。単独電車移動へスイッチ。", tag: "単独へ解散", isSkip: false }
                   ],
                   bonusSpots: [
                     { name: "山田五平餅店", desc: "城下町名物。登録有形文化財の町家で焼きたてのごまだれ団子型五平餅。", mapUrl: "https://www.google.com/maps/search/?api=1&query=山田五平餅店" },
@@ -1524,17 +1524,17 @@ const TRIP_DATA = {
                   ],
                   factors: {
                     overview: "滞在目的: 家族との最後の昼食・歓談と、犬山駅でのスムーズな単独電車離脱。<br>・ ガッツリ系テーマパーク（明治村・リトルワールド）は予定通り完全パス。",
-                    tactics: "犬山城下町はサクッと食事と五平餅を味わう程度で切り上げ、14:20には犬山駅へ向かう。",
+                    tactics: "犬山城下町はサクッと食事と五平餅を味わう程度で切り上げ、13:35には犬山駅へ向かう。",
                     mustTry: "山田五平餅店の手作り五平餅（香ばしい胡麻・くるみ・落花生だれ）",
                     plusOne: "芳川屋のフルーツパフェ",
                     tips: "家族にはそのまま車で帰宅または周辺ドライブしてもらい、自分だけ電車で名古屋へ抜ける。",
                     transit: "車移動 ➔ 名鉄犬山駅ロータリーで降車。",
-                    skipLimit: "14:25までに犬山駅改札を入る",
+                    skipLimit: "13:40までに犬山駅改札を入る",
                     mapUrl: "https://www.google.com/maps/search/?api=1&query=犬山城下町"
                   }
                 },
                 {
-                  baseStart: "14:30", baseEnd: "15:00",
+                  baseStart: "13:45", baseEnd: "14:15",
                   avgDuration: "30分", estDuration: "30分（名鉄犬山線急行30分）",
                   type: "transit", badgeClass: "badge-transit", badgeText: "🚆 【移動】犬山駅 ➔ 栄生駅",
                   title: "名鉄犬山線急行で「栄生駅」へ直通（所要30分・570円）",
@@ -1553,13 +1553,13 @@ const TRIP_DATA = {
                     plusOne: "西春駅・清須エリアの車窓",
                     tips: "特急に乗ってしまった場合は名古屋駅で下車し、名鉄普通で1駅戻るか名駅から徒歩15分。",
                     transit: "名鉄犬山線急行（犬山 ➔ 栄生、運賃570円）。",
-                    skipLimit: "15:05までにトヨタ産業技術記念館へ入館する",
+                    skipLimit: "14:20までにトヨタ産業技術記念館へ入館する",
                     mapUrl: "https://www.google.com/maps/search/?api=1&query=栄生駅"
                   }
                 },
                 {
-                  baseStart: "15:05", baseEnd: "17:00",
-                  avgDuration: "115分", estDuration: "115分（動態展示見学・最終入場16:30）",
+                  baseStart: "14:20", baseEnd: "16:45",
+                  avgDuration: "145分", estDuration: "145分（動態展示見学・最終入場16:30）",
                   type: "must", badgeClass: "badge-must", badgeText: "🏭 【技術遺産】トヨタ産業技術記念館",
                   title: "トヨタ産業技術記念館（本物の巨大機械が爆音で動く動態展示）",
                   tacticsFlowTitle: "世界のトヨタの原点を巡る動態展示順路",
@@ -1578,14 +1578,14 @@ const TRIP_DATA = {
                     tactics: "オペレーターによる実機稼働実演が随時行われているため、スタッフの周りに立ち寄って実演を見るのが最大の醍醐味。",
                     mustTry: "無停止自働杼換織機の驚異的メカニズム、600トンプレス機の迫力、初代クラウンの造形美",
                     plusOne: "館内レストラン「カフェ・ド・ヴェール」",
-                    tips: "最終入場は16:30、閉館は17:00厳守。約2時間で主要エリアを完全走破可能。",
+                    tips: "最終入場は16:30、閉館は17:00厳守。出発前倒し（08:30家発）により約2時間半の贅沢な滞在時間を確保。主要実演をすべて鑑賞可能。",
                     transit: "栄生駅から徒歩3分。完全屋内空調完備。",
                     skipLimit: "17:00閉館に合わせて退館する",
                     mapUrl: "https://www.google.com/maps/search/?api=1&query=トヨタ産業技術記念館"
                   }
                 },
                 {
-                  baseStart: "17:15", baseEnd: "18:15",
+                  baseStart: "16:50", baseEnd: "17:50",
                   avgDuration: "60分", estDuration: "60分（名鉄1駅＋JR中央線快速）",
                   type: "transit", badgeClass: "badge-transit", badgeText: "🏠 【帰還】栄生 ➔ 名駅 ➔ 実家",
                   title: "名鉄で名古屋駅へ移動（1駅2分） ➔ JR中央線快速で高蔵寺・実家へ帰還",
