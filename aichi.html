@@ -421,22 +421,31 @@ header {
 
 .day-route-map-btn {
   font-size: 0.73rem;
-  font-weight: 600;
-  color: var(--accent-primary);
-  background: var(--accent-primary-soft);
-  border: 1px solid var(--accent-primary-border);
-  padding: 5px 11px;
+  font-weight: 700;
+  color: #ffffff;
+  background: #1a73e8;
+  border: 1px solid #1a73e8;
+  padding: 5px 12px;
   border-radius: 9999px;
   text-decoration: none;
   display: inline-flex;
   align-items: center;
   gap: 4px;
+  box-shadow: 0 2px 6px rgba(26, 115, 232, 0.28);
   transition: all 0.15s ease;
 }
 
+[data-theme="dark"] .day-route-map-btn {
+  background: #0284c7;
+  border-color: #0284c7;
+  box-shadow: 0 2px 8px rgba(2, 132, 199, 0.35);
+}
+
 .day-route-map-btn:hover {
-  background: var(--accent-primary);
+  background: #1557b0;
+  border-color: #1557b0;
   color: #ffffff;
+  transform: translateY(-1px);
 }
 
 .day-subtitle-text {
@@ -641,6 +650,90 @@ header {
   border: 1px solid var(--border-hairline);
 }
 
+.pill-badge.flexible {
+  background: rgba(124, 58, 237, 0.08);
+  color: #7c3aed;
+  border: 1px solid rgba(124, 58, 237, 0.28);
+}
+
+[data-theme="dark"] .pill-badge.flexible {
+  background: rgba(167, 139, 250, 0.14);
+  color: #a78bfa;
+  border-color: rgba(167, 139, 250, 0.35);
+}
+
+.spot-card.is-flexible {
+  border-left: 3px solid #7c3aed;
+}
+
+[data-theme="dark"] .spot-card.is-flexible {
+  border-left: 3px solid #a78bfa;
+}
+
+.swap-guide-box {
+  margin: 10px 18px 12px;
+  padding: 11px 14px;
+  background: rgba(124, 58, 237, 0.04);
+  border: 1px dashed rgba(124, 58, 237, 0.3);
+  border-radius: 8px;
+  font-size: 0.78rem;
+  line-height: 1.5;
+}
+
+[data-theme="dark"] .swap-guide-box {
+  background: rgba(167, 139, 250, 0.06);
+  border-color: rgba(167, 139, 250, 0.35);
+}
+
+.swap-guide-title {
+  font-weight: 750;
+  color: #7c3aed;
+  margin-bottom: 6px;
+  display: flex;
+  align-items: center;
+  gap: 5px;
+}
+
+[data-theme="dark"] .swap-guide-title {
+  color: #c4b5fd;
+}
+
+.swap-guide-row {
+  display: flex;
+  align-items: baseline;
+  gap: 6px;
+  margin-bottom: 4px;
+}
+
+.swap-guide-tag {
+  font-weight: 700;
+  font-size: 0.68rem;
+  padding: 1px 6px;
+  border-radius: 4px;
+  white-space: nowrap;
+  flex-shrink: 0;
+}
+
+.swap-guide-tag.opt-a {
+  background: rgba(37, 99, 235, 0.12);
+  color: #1d4ed8;
+}
+
+.swap-guide-tag.opt-b {
+  background: rgba(16, 185, 129, 0.12);
+  color: #047857;
+}
+
+[data-theme="dark"] .swap-guide-tag.opt-a {
+  background: rgba(56, 189, 248, 0.18);
+  color: #7dd3fc;
+}
+
+[data-theme="dark"] .swap-guide-tag.opt-b {
+  background: rgba(52, 211, 153, 0.18);
+  color: #6ee7b7;
+}
+
 .spot-title-row {
   display: flex;
   align-items: flex-start;
@@ -662,22 +755,38 @@ header {
 }
 
 .spot-map-pill {
-  font-size: 0.71rem;
-  font-weight: 600;
-  color: var(--text-secondary);
-  background: var(--bg-subtle);
-  border: 1px solid var(--border-hairline);
-  padding: 4px 10px;
+  font-size: 0.72rem;
+  font-weight: 700;
+  color: #1a73e8;
+  background: rgba(26, 115, 232, 0.08);
+  border: 1px solid rgba(26, 115, 232, 0.28);
+  padding: 4px 11px;
   border-radius: 9999px;
   text-decoration: none;
   white-space: nowrap;
   flex-shrink: 0;
   transition: all 0.15s ease;
+  display: inline-flex;
+  align-items: center;
+  gap: 3px;
+}
+
+[data-theme="dark"] .spot-map-pill {
+  color: #38bdf8;
+  background: rgba(56, 189, 248, 0.12);
+  border-color: rgba(56, 189, 248, 0.3);
 }
 
 .spot-map-pill:hover {
-  color: var(--text-primary);
-  border-color: var(--border-strong);
+  background: #1a73e8;
+  color: #ffffff;
+  border-color: #1a73e8;
+}
+
+[data-theme="dark"] .spot-map-pill:hover {
+  background: #38bdf8;
+  color: #09090b;
+  border-color: #38bdf8;
 }
 
 .spot-overview {
@@ -729,16 +838,21 @@ body.compact-mode .slot-details-body {
   width: 20px;
   height: 20px;
   border-radius: 50%;
-  background: var(--bg-subtle);
-  color: var(--text-secondary);
+  background: rgba(37, 99, 235, 0.1);
+  color: var(--accent-primary);
   font-size: 0.68rem;
-  font-weight: 700;
+  font-weight: 800;
   font-variant-numeric: tabular-nums;
   display: inline-flex;
   align-items: center;
   justify-content: center;
   flex-shrink: 0;
   margin-top: 2px;
+}
+
+[data-theme="dark"] .cp-num {
+  background: rgba(56, 189, 248, 0.16);
+  color: #38bdf8;
 }
 
 .cp-content {
@@ -797,21 +911,38 @@ body.compact-mode .slot-details-body {
 }
 
 .cp-pin-link {
-  font-size: 0.68rem;
-  font-weight: 600;
-  color: var(--accent-primary);
-  background: var(--accent-primary-soft);
-  border: 1px solid var(--accent-primary-border);
-  padding: 2px 8px;
+  font-size: 0.72rem;
+  font-weight: 700;
+  color: #d93025;
+  background: rgba(217, 48, 37, 0.08);
+  border: 1px solid rgba(217, 48, 37, 0.28);
+  padding: 3px 9px;
   border-radius: 6px;
   text-decoration: none;
   white-space: nowrap;
   flex-shrink: 0;
+  transition: all 0.15s ease;
+  display: inline-flex;
+  align-items: center;
+  gap: 2px;
+}
+
+[data-theme="dark"] .cp-pin-link {
+  color: #f87171;
+  background: rgba(248, 113, 113, 0.12);
+  border-color: rgba(248, 113, 113, 0.32);
 }
 
 .cp-pin-link:hover {
-  background: var(--accent-primary);
+  background: #d93025;
   color: #ffffff;
+  border-color: #d93025;
+}
+
+[data-theme="dark"] .cp-pin-link:hover {
+  background: #ef4444;
+  color: #ffffff;
+  border-color: #ef4444;
 }
 
 .cp-desc {
@@ -1069,7 +1200,7 @@ body.compact-mode .slot-details-body {
       "dayNum": 1,
       "shortLabel": "11/7(金) 名駅・熱田",
       "dateStr": "2026年11月7日 (金)",
-      "subTitle": "高蔵寺カラオケ ➔ 大曽根乗換 ➔ 名古屋城本丸御殿 ➔ 熱田神宮・草薙館 ➔ 夢を語れ愛知（小倉トーストは現地自由選択）",
+      "subTitle": "高蔵寺カラオケ ➔ 【先小倉 vs 後小倉：自在入替】 ➔ 名古屋城本丸御殿 ➔ 熱田神宮・草薙館 ➔ 夢を語れ愛知",
       "macroRoute": [
         "高蔵寺カラオケ",
         "大曽根乗換（名城線）",
@@ -1141,11 +1272,11 @@ body.compact-mode .slot-details-body {
           "id": "d1-jr-ozone",
           "time": "12:15 - 12:35",
           "duration": "20分",
-          "badge": "JR快速移動",
-          "badgeType": "transit",
+          "badge": "分岐移動枠",
+          "badgeType": "flexible",
           "category": "transit",
-          "title": "JR中央本線 快速（高蔵寺 ➔ 大曽根）",
-          "overview": "名駅の巨大ターミナル混雑を完全回避。手前の大曽根駅で下車し、地下鉄名城線へショートカット乗り換え。",
+          "title": "高蔵寺駅 ➔ 大曽根 または 名古屋駅（先小倉/後小倉で選択）",
+          "overview": "【Pattern A：先小倉】なら終点「名古屋駅」まで快速直通（約28分・510円）。【Pattern B：後小倉】なら手前の「大曽根駅」で下車（約16分・330円）し地下鉄名城線へショートカット。",
           "tacticsTitle": "大曽根ショートカット手順",
           "tactics": [
             {
@@ -1187,7 +1318,22 @@ body.compact-mode .slot-details-body {
               "must": true,
               "mapUrl": "https://www.google.com/maps/dir/?api=1&origin=高蔵寺駅&destination=大曽根駅"
             }
-          ]
+          ],
+          "swapGuide": {
+            "title": "高蔵寺からの降車駅分岐",
+            "options": [
+              {
+                "tag": "先小倉トースト",
+                "tagClass": "opt-a",
+                "text": "終点「名古屋駅」まで快速28分 ➔ 新幹線口エスカ直結のアロマ珈琲へ直行（12:50着）"
+              },
+              {
+                "tag": "先名古屋城",
+                "tagClass": "opt-b",
+                "text": "手前の「大曽根駅」で下車（快速16分） ➔ 名城線で名古屋城駅へダイレクト（12:50着）"
+              }
+            ]
+          }
         },
         {
           "id": "d1-meijo-nagoyajo",
@@ -1331,11 +1477,11 @@ body.compact-mode .slot-details-body {
           "id": "d1-ogura-buffer",
           "time": "随時（前後自由）",
           "duration": "40〜50分",
-          "badge": "【自由選択】各エリア候補",
-          "badgeType": "food",
+          "badge": "🔄 順序入替自由",
+          "badgeType": "flexible",
           "category": "food",
-          "title": "小倉トースト ＆ 喫茶ブレイク（観光の前後・現地判断で選択）",
-          "overview": "夜の二郎系や帰宅時間に縛られないため、小倉トーストはお腹の空き具合と観光進行に合わせて3大エリアから前後どこでも立ち寄り可能。各エリアの厳選候補を常備。",
+          "title": "【順序入替枠】小倉トースト ＆ 珈琲ブレイク（先小倉 vs 後小倉）",
+          "overview": "当日の空腹度や気分に合わせて「先に食べる（名駅）」か「名古屋城の後に食べる（久屋大通 加藤珈琲店）」を自由に入れ替え可能。どちらの順序でも名古屋城（16:00最終入場）・熱田神宮草薙館（16:00最終入館）に完全間に合います。",
           "tacticsTitle": "3大エリア別・厳選候補一覧",
           "tactics": [
             {
@@ -1388,24 +1534,39 @@ body.compact-mode .slot-details-body {
           "mapUrl": "https://www.google.com/maps/search/?api=1&query=加藤珈琲店+久屋大通",
           "checkpoints": [
             {
-              "title": "【候補1・最推奨】加藤珈琲店（久屋大通・百名店）",
-              "desc": "名城線1駅・久屋大通駅3B出口徒歩2分。全国屈指の自家焙煎珈琲と極上小倉トースト（約40分）。",
+              "title": "【Pattern A：先小倉】名駅エスカ「喫茶 アロマ珈琲」または「BUCYO COFFEE」",
+              "desc": "高蔵寺から快速で名駅へ直行（28分）。新幹線地下街直結のアロマ珈琲で極厚小倉トーストを先に満喫（12:50〜13:40）。食後に地下鉄東山線栄乗換名城線で名古屋城へ（約15分・14:00入城）。",
+              "must": false,
+              "mapUrl": "https://www.google.com/maps/search/?api=1&query=アロマ珈琲+エスカ"
+            },
+            {
+              "title": "【Pattern B：後小倉】久屋大通「加藤珈琲店」（名城線1駅・食べログ百名店）",
+              "desc": "高蔵寺から大曽根経由で先に名古屋城へ（13:00入城）。見学後に名城線で1駅の久屋大通へ移動し、全国屈指の極上自家焙煎珈琲と厚切り小倉トーストを堪能（14:25〜15:15）。食後に名城線直通で熱田神宮へ（15分）。",
               "must": false,
               "mapUrl": "https://www.google.com/maps/search/?api=1&query=加藤珈琲店+久屋大通"
             },
             {
-              "title": "【候補2・熱田神宮】きよめ餅総本家 喫茶部 または あつた nagAya",
-              "desc": "熱田神宮参拝の直前・直後に門前で和スイーツブレイク（喫茶は17:00L.O.）。",
+              "title": "【Pattern C：熱田門前】きよめ餅総本家 喫茶部 または あつた nagAya",
+              "desc": "観光を優先し、熱田神宮参拝の直前・直後に門前で名物きよめ餅とお茶・和スイーツブレイク（喫茶部は17:00L.O.）。",
               "must": false,
               "mapUrl": "https://www.google.com/maps/search/?api=1&query=きよめ餅総本家"
-            },
-            {
-              "title": "【候補3・名駅】喫茶 アロマ珈琲（エスカ直結）",
-              "desc": "新幹線口エスカ地下街のクラシック名喫茶。極厚切りトースト。",
-              "must": false,
-              "mapUrl": "https://www.google.com/maps/search/?api=1&query=アロマ珈琲+エスカ"
             }
-          ]
+          ],
+          "swapGuide": {
+            "title": "先小倉 vs 後小倉：2大ルート比較",
+            "options": [
+              {
+                "tag": "Pattern A：先小倉",
+                "tagClass": "opt-a",
+                "text": "高蔵寺 ➔ 名古屋駅（快速28分） ➔ 喫茶アロマ珈琲（エスカ直結 12:50〜13:40） ➔ 地下鉄東山・名城線で名古屋城（14:00〜15:15） ➔ 名城線直通で熱田神宮（15:40〜16:45）"
+              },
+              {
+                "tag": "Pattern B：後小倉",
+                "tagClass": "opt-b",
+                "text": "高蔵寺 ➔ 大曽根乗換（名城線） ➔ 名古屋城（13:00〜14:15） ➔ 久屋大通・加藤珈琲店（百名店 14:25〜15:15） ➔ 名城線直通で熱田神宮（15:40〜16:45）"
+              }
+            ]
+          }
         },
         {
           "id": "d1-meijo-move",
@@ -1671,17 +1832,20 @@ body.compact-mode .slot-details-body {
       "dayNum": 2,
       "shortLabel": "11/8(土) 犬山フル攻略",
       "dateStr": "2026年11月8日 (土)",
-      "subTitle": "朝08:30発 家族車で犬山フル攻略（国宝犬山城 ➔ 国宝茶室如庵 ➔ 城下町昼食 ➔ 桃太郎神社 ➔ 寂光院） ➔ 17:00実家直帰",
+      "subTitle": "家族車で犬山フル攻略（国宝犬山城・如庵・城下町・桃太郎神社・寂光院）➔ 犬山駅ドロップオフ ➔ 名鉄特急直行 ➔ 名駅スガキヤ ➔ 新幹線のぞみ東京帰還",
       "macroRoute": [
         "実家発（家族車08:30）",
         "犬山城第1駐車場",
         "国宝犬山城（天守登閣）",
-        "三光稲荷・針綱神社",
+        "三光稲荷・猿田彦・針綱神社",
         "有楽苑（国宝茶室如庵）",
         "犬山城下町（家族昼食・五平餅）",
         "桃太郎神社（浅野祥雲）",
         "寂光院（尾張のもみじ寺）",
-        "実家直帰（17:00着）"
+        "犬山駅ドロップオフ（車10分）",
+        "名鉄快速特急（犬山➔名駅25分）",
+        "スガキヤ 名古屋エスカ店",
+        "東海道新幹線のぞみ（名古屋➔東京）"
       ],
       "fullMapUrl": "https://www.google.com/maps/dir/?api=1&origin=春日井市高蔵寺町&destination=春日井市高蔵寺町&waypoints=犬山城第1駐車場|国宝犬山城|三光稲荷神社|有楽苑|山田五平餅店|桃太郎神社|寂光院",
       "items": [
@@ -1787,6 +1951,11 @@ body.compact-mode .slot-details-body {
           ],
           "bonusSpots": [
             {
+              "name": "犬山 猿田彦神社（みちひらきの神）",
+              "desc": "三光稲荷神社境内に鎮座する独立社。万人万事を善導する道開きの神。交通・道中安全を祈願。",
+              "mapUrl": "https://www.google.com/maps/search/?api=1&query=犬山+猿田彦神社"
+            },
+            {
               "name": "三光稲荷神社（銭洗稲荷・ハート絵馬）",
               "desc": "犬山城の登城口にある古社。銭洗池の御神水でお金を洗うと何倍にもなって返るとされる。ピンクのハート絵馬が鮮やか。",
               "mapUrl": "https://www.google.com/maps/search/?api=1&query=三光稲荷神社"
@@ -1824,6 +1993,12 @@ body.compact-mode .slot-details-body {
               "desc": "下城後、登城口にある古社へ立ち寄り。御神水でお金を洗うと何倍にもなって返るとされる「銭洗池」体験と鮮やかなピンクのハート絵馬トンネル散策（混雑時や足元疲労時は短縮・スキップ可）。",
               "must": false,
               "mapUrl": "https://www.google.com/maps/search/?api=1&query=三光稲荷神社"
+            },
+            {
+              "title": "猿田彦神社（三光稲荷境内すぐ・みちひらきの大神・所要3分）",
+              "desc": "三光稲荷神社のすぐ隣に鎮座する「みちひらき（道開き）の神様」。古来より万人万事を良い方向へ導き、道中安全・開運・事業発展のご利益。通り道沿いのため3分でサッと参拝可能（スキップ可）。",
+              "must": false,
+              "mapUrl": "https://www.google.com/maps/search/?api=1&query=犬山+猿田彦神社"
             },
             {
               "title": "針綱神社（犬山城守護神・犬山祭主幹社）",
@@ -2185,54 +2360,231 @@ body.compact-mode .slot-details-body {
           ]
         },
         {
-          "id": "d2-direct-home",
-          "time": "16:25 - 17:05",
-          "duration": "40分",
-          "badge": "家族車直帰",
+          "id": "d2-inuyama-station-drop",
+          "time": "16:25 - 16:40",
+          "duration": "15分",
+          "badge": "【推奨】犬山駅解散",
           "badgeType": "transit",
           "category": "transit",
-          "title": "寂光院から家族車で実家（高蔵寺）へ直行帰宅（17:00帰着）",
-          "overview": "名古屋方面の渋滞や不要な寄り道を完全排除。県道27号・愛岐道路を使い、夕暮れ前の17:00に実家へスマートに直帰完了。",
-          "tacticsTitle": "直行帰還ステップ",
+          "title": "寂光院 ➔ 犬山駅（家族車で送迎・自分だけドロップオフ）",
+          "overview": "寂光院の散策終了後、家族車で犬山駅東口へ（車で約8〜10分）。家族はそのまま高蔵寺実家へ直帰し、自分だけ犬山駅から名鉄特急に乗車。実家への往復時間を1時間以上ショートカットする最強の分散解散。",
+          "tacticsTitle": "犬山駅解散ステップ",
           "tactics": [
             {
               "step": 1,
-              "text": "寂光院駐車場を出発。県道27号（春日井犬山線）へ南下。",
+              "text": "寂光院駐車場を出発。県道185号・県道27号を経由し、犬山駅東口ロータリーへ（約3.5km・約8〜10分）。",
               "must": true
             },
             {
               "step": 2,
-              "text": "名古屋駅方面の夕方渋滞には一切巻き込まれず、郊外ルートを快速ドライブ。",
+              "text": "犬山駅東口ロータリーで手荷物（リュック等）を持って下車。家族を見送り改札へ向かう。",
               "must": true
             },
             {
               "step": 3,
-              "text": "わずか35〜40分の快適なドライブで、17:05には実家へ無事帰還。",
-              "must": true
-            },
-            {
-              "step": 4,
-              "text": "夜は実家で家族とゆったり過ごすか、近場で気兼ねなく食事を済ませる。",
+              "text": "名鉄犬山線改札（2階コンコース）へ。交通系ICカードでタッチ入場。",
               "must": true
             }
           ],
           "bonusSpots": [],
           "factors": {
-            "overview": "無駄な名古屋立ち寄りや外食を完全排除し、余力十分でフィニッシュする最高効率の帰宅動線。",
-            "tactics": "寂光院 ➔ 県道27号 ➔ 春日井/高蔵寺。最短ルートをナビ任せで直行。",
-            "mustTry": "全行程を一切のタイムロスなく完遂した圧倒的スマート感。",
-            "plusOne": "帰着後の家族との団らん、旅の写真シェアタイム。",
-            "tips": "夕方の名古屋市内は激しい混雑となるが、犬山〜高蔵寺ルートは郊外バイパスのため渋滞リスクが極めて低い。",
-            "transit": "自家用車移動（約18km・所要約35〜40分）。有料道路なし・通行料0円。",
-            "skipLimit": "17:15までに実家へ帰着。"
+            "overview": "実家へ戻る無駄な往復を完全にカットし、名鉄特急のスピードを活かして17時過ぎに名駅へ直行。",
+            "tactics": "家族の帰り道（高蔵寺方面）の経路上にあるため、家族側への余計な迂回負担もゼロ。",
+            "mustTry": "犬山駅改札階から望む名鉄電車のパノラマ。",
+            "plusOne": "犬山駅東口・西口のコンビニ（水分調達）。",
+            "tips": "手荷物はあらかじめ家族車内でリュックにまとめておくと下車がスムーズ。",
+            "transit": "寂光院から犬山駅まで車で約8〜10分。",
+            "skipLimit": "※実家に立ち寄る必要がある場合は、そのまま家族車で実家へ帰還（17:05着）も選択可。"
           },
-          "mapUrl": "https://www.google.com/maps/search/?api=1&query=高蔵寺駅",
+          "mapUrl": "https://www.google.com/maps/dir/?api=1&origin=寂光院&destination=犬山駅",
           "checkpoints": [
             {
-              "title": "16:25 寂光院駐車場を出発 ➔ 県道27号で実家（高蔵寺）へ直帰",
-              "desc": "夕方の名古屋市内の激しい渋滞や不要な外食立ち寄りを完全排除。郊外バイパス（県道27号・愛岐道路、約18km・通行料0円）を快走し、17:00〜17:05に余力十分で実家へ帰着完了。",
+              "title": "寂光院 ➔ 家族車で犬山駅東口ロータリーへ（約8〜10分）",
+              "desc": "家族車で犬山駅東口へ直行。手荷物をピックアップして下車。家族はそのまま高蔵寺へ直帰。",
               "must": true,
-              "mapUrl": "https://www.google.com/maps/search/?api=1&query=高蔵寺駅"
+              "mapUrl": "https://www.google.com/maps/dir/?api=1&origin=寂光院&destination=犬山駅"
+            },
+            {
+              "title": "犬山駅改札 ➔ 名鉄線ホームへ（ICカード入場）",
+              "desc": "ICカードで入場し、1・2番線（名鉄名古屋・中部国際空港方面）ホームへ。",
+              "must": true
+            }
+          ]
+        },
+        {
+          "id": "d2-meitetsu-limited",
+          "time": "16:45 - 17:15",
+          "duration": "30分",
+          "badge": "名鉄特急直通25分",
+          "badgeType": "transit",
+          "category": "transit",
+          "title": "名鉄犬山線 快速特急/特急（犬山 ➔ 名鉄名古屋）",
+          "overview": "犬山駅から名鉄快速特急または特急に乗車。乗り換えなし・わずか25〜29分（運賃570円）で名鉄名古屋駅（名駅直結）へワープ。一般車（特別料金不要）で快適移動。",
+          "tacticsTitle": "名鉄特急アクセス手順",
+          "tactics": [
+            {
+              "step": 1,
+              "text": "犬山駅1・2番線から名鉄名古屋方面の「快速特急」または「特急」（または急行）に乗車。",
+              "must": true
+            },
+            {
+              "step": 2,
+              "text": "江南・岩倉のみ停車の高速運転で、わずか25分で名鉄名古屋駅に到着（運賃570円）。",
+              "must": true
+            },
+            {
+              "step": 3,
+              "text": "名鉄名古屋駅中央改札口を出て、地下街直結で太閤通口（新幹線口・エスカ）へ徒歩3分。",
+              "must": true
+            }
+          ],
+          "bonusSpots": [],
+          "factors": {
+            "overview": "犬山から名古屋都心への最強直通ルート。JR中央線経由より圧倒的に速い。",
+            "tactics": "特急は一般車（3〜6号車等）に乗れば特別車両券（ミューチケット360円）不要で運賃のみで乗車可能。座りたければミューチケット購入も可。",
+            "mustTry": "濃尾平野を疾走する名鉄特急の快適な走り。",
+            "plusOne": "名鉄名古屋駅の独特な方面別乗降システム見学。",
+            "tips": "特急・快速特急は昼〜夕方15分ヘッドで運行。",
+            "transit": "名鉄犬山線快速特急/特急で約25分〜29分、570円。",
+            "skipLimit": "17時台前半には名駅に到着するため、スガキヤとお土産選びに圧倒的ゆとりが生まれる。"
+          },
+          "mapUrl": "https://www.google.com/maps/dir/?api=1&origin=犬山駅&destination=名鉄名古屋駅",
+          "checkpoints": [
+            {
+              "title": "犬山駅 ➔ 名鉄快速特急/特急（名鉄名古屋行）に乗車",
+              "desc": "江南・岩倉停車の俊足特急。一般車なら運賃570円のみで乗車可能（約25分）。",
+              "must": true
+            },
+            {
+              "title": "名鉄名古屋駅到着 ➔ 中央改札からエスカ地下街へ直行（徒歩3分）",
+              "desc": "中央改札を出て地下通路を通り、太閤通口（新幹線口）エスカ地下街へ直行。",
+              "must": true,
+              "mapUrl": "https://www.google.com/maps/dir/?api=1&origin=犬山駅&destination=名鉄名古屋駅"
+            }
+          ]
+        },
+        {
+          "id": "d2-sugakiya-esca",
+          "time": "17:20 - 18:05",
+          "duration": "45分",
+          "badge": "【必食】ソウルフード回収",
+          "badgeType": "food",
+          "category": "food",
+          "title": "スガキヤ 名古屋エスカ店（愛知ソウルフード回収 ＆ 新幹線直結）",
+          "overview": "17時過ぎの名駅着により超ゆったり回収可能。新幹線改札から徒歩1分のエスカ地下街にて、唯一無二の和風とんこつラーメン（あのラーメンフォーク付き）と、特製ソフトクリームまたはクリームぜんざいで完璧に締める。混雑前の早い夕食としてベストタイミング。",
+          "tacticsTitle": "スガキヤ回収手順",
+          "tactics": [
+            {
+              "step": 1,
+              "text": "エスカ地下街奥の「スガキヤ 名古屋エスカ店」へ入店（レジで先に注文・会計）。",
+              "must": true
+            },
+            {
+              "step": 2,
+              "text": "「ラーメン（または特製ラーメン）」と「クリームぜんざい（またはソフトクリーム）」を注文。ブザーを受け取り着席。",
+              "must": true
+            },
+            {
+              "step": 3,
+              "text": "名物ラーメンフォークで白濁和風とんこつスープと細縮れ麺を味わい、食後に冷たいクリームぜんざいで完璧に締める。",
+              "must": true
+            },
+            {
+              "step": 4,
+              "text": "エスカ地下街および新幹線改札前でお土産（ゆかり・赤福・ういろう等）をゆったり物色。",
+              "must": true
+            }
+          ],
+          "bonusSpots": [
+            {
+              "name": "スガキヤ 名古屋エスカ店",
+              "desc": "新幹線改札から一番近いスガキヤ。伝統の和風とんこつスープとラーメンフォーク。",
+              "mapUrl": "https://www.google.com/maps/search/?api=1&query=スガキヤ+名古屋エスカ店"
+            },
+            {
+              "name": "グランドキヨスク名古屋（新幹線改札前）",
+              "desc": "新幹線改札前の巨大土産店。ゆかり・ういろう・赤福の調達に最適。",
+              "mapUrl": "https://www.google.com/maps/search/?api=1&query=グランドキヨスク名古屋"
+            }
+          ],
+          "factors": {
+            "overview": "愛知遠征の最後を締めくくる伝統のソウルフード。新幹線直結のため時間ロスが極小。",
+            "tactics": "17時台前半は夕食ピーク前で空いているため、並ばず即着席可能。",
+            "mustTry": "魚介だしの効いた和風とんこつスープ＋ラーメンフォークでの麺リフト＋食後のクリームぜんざい。",
+            "plusOne": "店頭販売のスガキヤ生ラーメン・袋麺（自宅用土産）。",
+            "tips": "エスカ店は完全禁煙、回転が早く列があってもすぐ着席可能。各種電子マネー対応。",
+            "transit": "JR名古屋駅新幹線改札から徒歩約1分（地下街エスカ内）。",
+            "skipLimit": "新幹線発車時刻の20分前に退店すれば余裕でホームへ到達可能。"
+          },
+          "mapUrl": "https://www.google.com/maps/search/?api=1&query=スガキヤ+名古屋エスカ店",
+          "checkpoints": [
+            {
+              "title": "スガキヤ 名古屋エスカ店 入店 ＆ 注文",
+              "desc": "エスカ地下街奥。レジでラーメン＋クリームぜんざいを注文。",
+              "must": true,
+              "mapUrl": "https://www.google.com/maps/search/?api=1&query=スガキヤ+名古屋エスカ店"
+            },
+            {
+              "title": "ラーメンフォークで和風とんこつ ＆ クリームぜんざい堪能",
+              "desc": "唯一無二の魚介とんこつ味を堪能し、北海道産小豆とソフトクリームのぜんざいで締める（約30分）。",
+              "must": true
+            },
+            {
+              "title": "エスカ土産通り ＆ グランドキヨスクでお土産選び",
+              "desc": "新幹線乗車前にゆかり・赤福・名物土産をゆったり購入。",
+              "must": true
+            }
+          ]
+        },
+        {
+          "id": "d2-shinkansen-tokyo",
+          "time": "18:20 - 20:00",
+          "duration": "1時間40分",
+          "badge": "新幹線のぞみ",
+          "badgeType": "transit",
+          "category": "transit",
+          "title": "東海道新幹線 のぞみ（名古屋 ➔ 東京 帰還）",
+          "overview": "名古屋駅から東海道新幹線のぞみ号に乗車。18時台発の新幹線に乗れるため、20:00頃には東京駅へ快適帰還。翌日（日曜日）をまるまる休養に充てられる完璧な週末スケジュール。",
+          "tacticsTitle": "新幹線帰還ステップ",
+          "tactics": [
+            {
+              "step": 1,
+              "text": "新幹線南口/北口改札をEX-ICまたはスマートEX（モバイルSuica）でタッチ入場。",
+              "must": true
+            },
+            {
+              "step": 2,
+              "text": "14・15番線ホーム（上り 東京方面）へ。のぞみ号に乗車。",
+              "must": true
+            },
+            {
+              "step": 3,
+              "text": "新横浜・品川を経て20:00頃東京駅に到着。帰宅。",
+              "must": true
+            }
+          ],
+          "bonusSpots": [],
+          "factors": {
+            "overview": "名古屋から東京への最速アクセス。夜の早い時間帯に都内自宅へ帰着可能。",
+            "tactics": "進行方向左側席（E席・2人掛け窓側）を確保すると快適。",
+            "mustTry": "スガキヤの余韻を噛み締めながらの車窓夜景。",
+            "plusOne": "車内改札不要のスムーズなEX-IC乗車。",
+            "tips": "のぞみ号は3〜5分間隔で運行されているため時間変更も自在。",
+            "transit": "東海道新幹線のぞみ号で約1時間37分〜1時間40分。",
+            "skipLimit": "※遅い時間（19時台・20時台）への新幹線変更もEX予約で1タップで可能。"
+          },
+          "mapUrl": "https://www.google.com/maps/dir/?api=1&origin=名古屋駅&destination=東京駅",
+          "checkpoints": [
+            {
+              "title": "新幹線改札入場 ➔ 14・15番線ホーム（東京行）へ",
+              "desc": "EX-ICでタッチ入場しホームへ上がる。",
+              "must": true
+            },
+            {
+              "title": "のぞみ号乗車 ➔ 東京駅到着（20:00頃・愛知遠征完結）",
+              "desc": "所要約1時間40分で東京駅着。早い時間に無事帰還。",
+              "must": true,
+              "mapUrl": "https://www.google.com/maps/dir/?api=1&origin=名古屋駅&destination=東京駅"
             }
           ]
         }
@@ -2278,7 +2630,8 @@ body.compact-mode .slot-details-body {
         { id: 'd2-urakuen-joan', day: '2', cat: 'sightseeing', label: '🍵 国宝茶室 如庵' },
         { id: 'd2-inuyama-castle-town', day: '2', cat: 'food', label: '🍡 城下町・山田五平餅' },
         { id: 'd2-momotaro-shrine', day: '2', cat: 'sightseeing', label: '🍑 桃太郎神社' },
-        { id: 'd2-jakkoin-temple', day: '2', cat: 'sightseeing', label: '🍁 継鹿尾山 寂光院' }
+        { id: 'd2-jakkoin-temple', day: '2', cat: 'sightseeing', label: '🍁 継鹿尾山 寂光院' },
+        { id: 'd2-sugakiya-esca', day: '2', cat: 'food', label: '🍜 スガキヤ名駅エスカ店' }
       ].filter(t => {
         if (TRIP_DATA.activeDayFilter !== 'all' && TRIP_DATA.activeDayFilter !== t.day) return false;
         if (TRIP_DATA.activeCategoryFilter !== 'all' && TRIP_DATA.activeCategoryFilter !== t.cat) return false;
@@ -2431,11 +2784,30 @@ body.compact-mode .slot-details-body {
             ? '🍴 飯・喫茶'
             : (item.category === 'sightseeing' ? '🏛️ 観光' : '🚆 移動');
 
-          const subBadgeClass = item.badgeType === 'national' ? 'national' : 'transit';
+          const subBadgeClass = item.badgeType === 'national' 
+            ? 'national' 
+            : (item.badgeType === 'flexible' ? 'flexible' : 'transit');
+
+          const isFlexible = item.badgeType === 'flexible';
+
+          let swapGuideHtml = '';
+          if (item.swapGuide) {
+            swapGuideHtml = `
+              <div class="swap-guide-box">
+                <div class="swap-guide-title"><span>🔄</span> <span>${item.swapGuide.title}</span></div>
+                ${item.swapGuide.options.map(opt => `
+                  <div class="swap-guide-row">
+                    <span class="swap-guide-tag ${opt.tagClass}">${opt.tag}</span>
+                    <span class="swap-guide-text">${opt.text}</span>
+                  </div>
+                `).join('')}
+              </div>
+            `;
+          }
 
           return `
             <article class="slot-node ${nodeClass}" id="slot-${item.id}">
-              <div class="spot-card ${isTransit ? 'is-transit' : ''}">
+              <div class="spot-card ${isTransit ? 'is-transit' : ''} ${isFlexible ? 'is-flexible' : ''}">
                 <div class="spot-card-head">
                   <div class="spot-meta-bar">
                     <div class="spot-time-cluster">
@@ -2453,6 +2825,7 @@ body.compact-mode .slot-details-body {
                   </div>
                   <p class="spot-overview">${item.overview}</p>
                 </div>
+                ${swapGuideHtml}
 
                 <!-- Unified Default-Open Route Checkpoints & Practical Footer -->
                 <div class="slot-details-body">
