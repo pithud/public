@@ -1,0 +1,1684 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>【Beta】愛知・犬山・名古屋 リアルタイム旅程ナビ（11/7〜11/8）</title>
+  <script>
+    (function() {
+      var t = localStorage.getItem('trip_nav_theme') || 'light';
+      document.documentElement.setAttribute('data-theme', t);
+    })();
+  </script>
+  <style>
+:root, [data-theme="light"] {
+  --bg: #f8fafc;
+  --card-bg: #ffffff;
+  --card-inner: #f1f5f9;
+  --header-bg: rgba(255, 255, 255, 0.96);
+  --border: #cbd5e1;
+  --border-subtle: #e2e8f0;
+  --text: #0f172a;
+  --text-muted: #64748b;
+  --primary: #0284c7;
+  --primary-hover: #0369a1;
+  --accent: #d97706;
+  --danger: #dc2626;
+  --success: #059669;
+  --purple: #9333ea;
+  --map-green: #059669;
+  --map-green-hover: #047857;
+  --bonus-border: #f59e0b;
+  --bonus-bg: #fffbeb;
+  --bonus-title: #b45309;
+  --weather-bg: linear-gradient(135deg, #eff6ff, #dbeafe);
+  --weather-border: #bfdbfe;
+  --weather-text: #1e3a8a;
+  --summary-bg: #f1f5f9;
+  --summary-border: #cbd5e1;
+  --summary-title: #0f172a;
+  --summary-text: #334155;
+  --summary-time-bg: #e2e8f0;
+  --summary-time-text: #334155;
+  --shadow-sm: 0 1px 2px rgba(0,0,0,0.05);
+  --shadow-md: 0 4px 6px -1px rgba(0,0,0,0.08), 0 2px 4px -2px rgba(0,0,0,0.05);
+}
+
+[data-theme="dark"] {
+  --bg: #090d16;
+  --card-bg: #0f172a;
+  --card-inner: #1e293b;
+  --header-bg: rgba(15, 23, 42, 0.96);
+  --border: #334155;
+  --border-subtle: #1e293b;
+  --text: #f8fafc;
+  --text-muted: #94a3b8;
+  --primary: #38bdf8;
+  --primary-hover: #0284c7;
+  --accent: #f59e0b;
+  --danger: #ef4444;
+  --success: #10b981;
+  --purple: #a855f7;
+  --map-green: #10b981;
+  --map-green-hover: #059669;
+  --bonus-border: #f59e0b;
+  --bonus-bg: rgba(245, 158, 11, 0.12);
+  --bonus-title: #fbbf24;
+  --weather-bg: linear-gradient(135deg, rgba(30, 58, 138, 0.25), rgba(15, 23, 42, 0.9));
+  --weather-border: rgba(56, 189, 248, 0.4);
+  --weather-text: #e0f2fe;
+  --summary-bg: rgba(30, 41, 59, 0.7);
+  --summary-border: rgba(71, 85, 105, 0.5);
+  --summary-title: #f8fafc;
+  --summary-text: #cbd5e1;
+  --summary-time-bg: #1e293b;
+  --summary-time-text: #94a3b8;
+  --shadow-sm: 0 1px 2px rgba(0,0,0,0.3);
+  --shadow-md: 0 4px 6px -1px rgba(0,0,0,0.4);
+}
+
+* { box-sizing: border-box; margin: 0; padding: 0; -webkit-tap-highlight-color: transparent; }
+body {
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+  background-color: var(--bg);
+  color: var(--text);
+  line-height: 1.5;
+  padding-bottom: 70px;
+}
+
+header {
+  background: var(--header-bg);
+  backdrop-filter: blur(8px);
+  border-bottom: 1px solid var(--border);
+  position: sticky;
+  top: 0;
+  z-index: 50;
+  padding: 10px 14px;
+}
+.header-row {
+  max-width: 820px;
+  margin: 0 auto;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+}
+.title-group {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.title-main {
+  font-size: 1.05rem;
+  font-weight: 800;
+  color: var(--primary);
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+.badge-beta {
+  font-size: 0.68rem;
+  background: #f59e0b;
+  color: #000;
+  font-weight: 800;
+  padding: 2px 6px;
+  border-radius: 4px;
+  text-transform: uppercase;
+}
+.badge-version {
+  font-size: 0.7rem;
+  background: var(--card-inner);
+  border: 1px solid var(--border);
+  color: var(--text-muted);
+  padding: 2px 6px;
+  border-radius: 9999px;
+  font-weight: 600;
+}
+.header-actions {
+  display: flex;
+  gap: 6px;
+}
+.btn-header {
+  font-size: 0.76rem;
+  font-weight: 600;
+  padding: 6px 10px;
+  border-radius: 6px;
+  border: 1px solid var(--border);
+  background: var(--card-bg);
+  color: var(--text);
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  transition: all 0.2s;
+}
+.btn-header:hover {
+  background: var(--card-inner);
+  border-color: var(--primary);
+}
+.btn-header.primary {
+  background: var(--primary);
+  color: #fff;
+  border-color: var(--primary);
+}
+.btn-header.primary:hover {
+  background: var(--primary-hover);
+}
+
+.main-content {
+  max-width: 820px;
+  margin: 0 auto;
+  padding: 14px;
+}
+
+/* Control Bar (Filters) */
+.filter-panel {
+  background: var(--card-bg);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  padding: 10px 12px;
+  margin-bottom: 14px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  box-shadow: var(--shadow-sm);
+}
+.filter-row {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+.filter-label {
+  font-size: 0.74rem;
+  font-weight: 700;
+  color: var(--text-muted);
+  min-width: 65px;
+}
+.filter-group {
+  display: flex;
+  background: var(--card-inner);
+  padding: 2px;
+  border-radius: 8px;
+  gap: 2px;
+  border: 1px solid var(--border-subtle);
+  flex-wrap: wrap;
+}
+.filter-btn {
+  font-size: 0.74rem;
+  font-weight: 600;
+  padding: 5px 10px;
+  border-radius: 6px;
+  border: none;
+  background: transparent;
+  color: var(--text-muted);
+  cursor: pointer;
+  transition: all 0.15s ease;
+  white-space: nowrap;
+}
+.filter-btn.active {
+  background: var(--card-bg);
+  color: var(--primary);
+  font-weight: 700;
+  box-shadow: var(--shadow-sm);
+}
+.filter-btn.cat-active {
+  background: var(--card-bg);
+  color: var(--accent);
+  font-weight: 700;
+  box-shadow: var(--shadow-sm);
+}
+
+/* Strategy Banner */
+.strategy-box {
+  background: var(--weather-bg);
+  border: 1px solid var(--weather-border);
+  border-radius: 10px;
+  padding: 12px 14px;
+  margin-bottom: 14px;
+  box-shadow: var(--shadow-sm);
+}
+.strategy-title {
+  font-size: 0.82rem;
+  font-weight: 800;
+  color: var(--weather-text);
+  margin-bottom: 4px;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+.strategy-desc {
+  font-size: 0.76rem;
+  color: var(--text);
+  line-height: 1.5;
+}
+
+/* Day Section */
+.day-section {
+  margin-bottom: 24px;
+}
+.day-header-card {
+  background: var(--card-bg);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 14px;
+  margin-bottom: 12px;
+  box-shadow: var(--shadow-sm);
+}
+.day-header-top {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 6px;
+}
+.day-title {
+  font-size: 1.15rem;
+  font-weight: 800;
+  color: var(--primary);
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.day-date {
+  font-size: 0.78rem;
+  color: var(--text-muted);
+  font-weight: 600;
+}
+.day-sub {
+  font-size: 0.8rem;
+  font-weight: 600;
+  color: var(--text);
+  margin-bottom: 10px;
+}
+.macro-flow-box {
+  background: var(--card-inner);
+  border: 1px solid var(--border-subtle);
+  border-radius: 8px;
+  padding: 10px 12px;
+  font-size: 0.75rem;
+  line-height: 1.6;
+}
+.macro-flow-label {
+  font-weight: 800;
+  color: var(--accent);
+  margin-bottom: 2px;
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+.day-fullmap-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  margin-top: 8px;
+  font-size: 0.76rem;
+  font-weight: 700;
+  color: #fff;
+  background: var(--map-green);
+  padding: 6px 12px;
+  border-radius: 6px;
+  text-decoration: none;
+  transition: background 0.2s;
+}
+.day-fullmap-link:hover {
+  background: var(--map-green-hover);
+}
+
+/* Slot Card */
+.timeline-slot {
+  margin-bottom: 12px;
+}
+.slot-card {
+  background: var(--card-bg);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  overflow: hidden;
+  box-shadow: var(--shadow-sm);
+  transition: border-color 0.2s;
+}
+.slot-card[open] {
+  border-color: var(--primary);
+}
+.slot-summary {
+  list-style: none;
+  padding: 12px 14px;
+  cursor: pointer;
+  user-select: none;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+.slot-summary::-webkit-details-marker {
+  display: none;
+}
+.slot-top-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+}
+.slot-time-badge {
+  font-size: 0.76rem;
+  font-weight: 800;
+  background: var(--card-inner);
+  border: 1px solid var(--border-subtle);
+  color: var(--text);
+  padding: 3px 8px;
+  border-radius: 6px;
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+}
+.badge-group {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+.cat-badge {
+  font-size: 0.68rem;
+  font-weight: 800;
+  padding: 2px 7px;
+  border-radius: 4px;
+  display: inline-flex;
+  align-items: center;
+  gap: 3px;
+}
+.cat-badge.food {
+  background: #ffedd5;
+  color: #c2410c;
+  border: 1px solid #fed7aa;
+}
+[data-theme="dark"] .cat-badge.food {
+  background: rgba(234, 88, 12, 0.2);
+  color: #fb923c;
+  border-color: rgba(234, 88, 12, 0.4);
+}
+.cat-badge.sightseeing {
+  background: #e0f2fe;
+  color: #0369a1;
+  border: 1px solid #bae6fd;
+}
+[data-theme="dark"] .cat-badge.sightseeing {
+  background: rgba(2, 132, 199, 0.2);
+  color: #38bdf8;
+  border-color: rgba(2, 132, 199, 0.4);
+}
+.cat-badge.transit {
+  background: #f1f5f9;
+  color: #475569;
+  border: 1px solid #cbd5e1;
+}
+[data-theme="dark"] .cat-badge.transit {
+  background: rgba(71, 85, 105, 0.2);
+  color: #94a3b8;
+  border-color: rgba(71, 85, 105, 0.4);
+}
+
+.badge-tag {
+  font-size: 0.68rem;
+  font-weight: 700;
+  padding: 2px 6px;
+  border-radius: 4px;
+}
+.badge-national { background: #fee2e2; color: #991b1b; }
+.badge-food { background: #fef3c7; color: #92400e; }
+.badge-temple { background: #f3e8ff; color: #6b21a8; }
+.badge-transit { background: #f1f5f9; color: #475569; }
+[data-theme="dark"] .badge-national { background: rgba(185, 28, 28, 0.25); color: #fca5a5; }
+[data-theme="dark"] .badge-food { background: rgba(217, 119, 6, 0.25); color: #fcd34d; }
+[data-theme="dark"] .badge-temple { background: rgba(147, 51, 234, 0.25); color: #d8b4fe; }
+[data-theme="dark"] .badge-transit { background: rgba(71, 85, 105, 0.25); color: #cbd5e1; }
+
+.slot-title {
+  font-size: 0.95rem;
+  font-weight: 800;
+  color: var(--text);
+  line-height: 1.35;
+}
+.slot-overview-text {
+  font-size: 0.77rem;
+  color: var(--text-muted);
+  line-height: 1.45;
+}
+.slot-expand-hint {
+  font-size: 0.7rem;
+  font-weight: 600;
+  color: var(--primary);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding-top: 4px;
+  border-top: 1px dashed var(--border-subtle);
+}
+
+.slot-body {
+  padding: 10px 14px 14px 14px;
+  border-top: 1px solid var(--border-subtle);
+  background: var(--card-bg);
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+/* 7-Factor Detailed Analysis Block */
+.factors-card {
+  background: var(--card-inner);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: 10px 12px;
+}
+.factors-card-title {
+  font-size: 0.78rem;
+  font-weight: 800;
+  color: var(--primary);
+  margin-bottom: 8px;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+.factors-grid {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+.factor-row {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+.factor-header {
+  font-size: 0.74rem;
+  font-weight: 800;
+  color: var(--text);
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+.factor-header.primary { color: var(--primary); }
+.factor-header.success { color: var(--success); }
+.factor-header.accent { color: var(--accent); }
+.factor-header.purple { color: var(--purple); }
+.factor-header.danger { color: var(--danger); }
+
+.factor-content {
+  font-size: 0.75rem;
+  color: var(--text);
+  line-height: 1.45;
+  padding-left: 12px;
+}
+.factor-bullet-line {
+  display: flex;
+  align-items: flex-start;
+  gap: 6px;
+  margin-bottom: 2px;
+}
+.factor-bullet-dot {
+  color: var(--primary);
+  font-size: 0.8rem;
+  line-height: 1.3;
+}
+.factor-bullet-text {
+  flex: 1;
+}
+
+/* Standalone High-Visibility Tsuide (Bonus) Banner */
+.bonus-highlight-box {
+  background: var(--bonus-bg);
+  border: 2px solid var(--bonus-border);
+  border-radius: 8px;
+  padding: 10px 12px;
+  box-shadow: var(--shadow-sm);
+}
+.bonus-highlight-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 6px;
+}
+.bonus-highlight-title {
+  font-size: 0.8rem;
+  font-weight: 800;
+  color: var(--bonus-title);
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+.bonus-highlight-badge {
+  font-size: 0.66rem;
+  font-weight: 800;
+  background: #f59e0b;
+  color: #000;
+  padding: 1px 6px;
+  border-radius: 4px;
+}
+.bonus-spot-list {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+.bonus-spot-row {
+  background: var(--card-bg);
+  border: 1px solid var(--border-subtle);
+  border-radius: 6px;
+  padding: 8px 10px;
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+}
+.bonus-spot-top {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+}
+.bonus-spot-name {
+  font-size: 0.77rem;
+  font-weight: 700;
+  color: var(--text);
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+.bonus-map-btn {
+  font-size: 0.7rem;
+  font-weight: 700;
+  color: #fff;
+  background: #059669;
+  padding: 3px 8px;
+  border-radius: 4px;
+  text-decoration: none;
+  white-space: nowrap;
+}
+.bonus-map-btn:hover {
+  background: #047857;
+}
+.bonus-spot-desc {
+  font-size: 0.73rem;
+  color: var(--text-muted);
+  line-height: 1.4;
+}
+
+/* Micro-steps Tactics */
+.tactics-box {
+  background: var(--card-inner);
+  border: 1px solid var(--border-subtle);
+  border-radius: 8px;
+  padding: 10px 12px;
+}
+.tactics-title {
+  font-size: 0.76rem;
+  font-weight: 800;
+  color: var(--success);
+  margin-bottom: 6px;
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+.step-row {
+  display: flex;
+  align-items: flex-start;
+  gap: 8px;
+  font-size: 0.75rem;
+  margin-bottom: 5px;
+}
+.step-num {
+  font-size: 0.68rem;
+  font-weight: 800;
+  background: var(--primary);
+  color: #fff;
+  padding: 1px 6px;
+  border-radius: 4px;
+  white-space: nowrap;
+  margin-top: 1px;
+}
+.step-text {
+  flex: 1;
+  color: var(--text);
+  line-height: 1.4;
+}
+.step-must {
+  font-size: 0.65rem;
+  background: #fee2e2;
+  color: #b91c1c;
+  padding: 1px 4px;
+  border-radius: 3px;
+  font-weight: 700;
+  margin-left: 4px;
+}
+[data-theme="dark"] .step-must {
+  background: rgba(220, 38, 38, 0.25);
+  color: #fca5a5;
+}
+
+/* Map Action Button */
+.slot-map-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  font-size: 0.76rem;
+  font-weight: 700;
+  color: #fff;
+  background: var(--map-green);
+  padding: 8px 12px;
+  border-radius: 6px;
+  text-decoration: none;
+  transition: background 0.2s;
+  box-shadow: var(--shadow-sm);
+}
+.slot-map-btn:hover {
+  background: var(--map-green-hover);
+}
+
+/* Bottom Floating Bar */
+.bottom-bar {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background: var(--header-bg);
+  backdrop-filter: blur(8px);
+  border-top: 1px solid var(--border);
+  padding: 8px 14px;
+  z-index: 50;
+  box-shadow: 0 -2px 10px rgba(0,0,0,0.06);
+}
+.bottom-bar-inner {
+  max-width: 820px;
+  margin: 0 auto;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+}
+.btn-bottom {
+  flex: 1;
+  font-size: 0.75rem;
+  font-weight: 700;
+  padding: 8px 12px;
+  border-radius: 6px;
+  border: 1px solid var(--border);
+  background: var(--card-bg);
+  color: var(--text);
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 4px;
+  text-decoration: none;
+  transition: all 0.15s;
+}
+.btn-bottom.primary {
+  background: var(--primary);
+  color: #fff;
+  border-color: var(--primary);
+}
+.btn-bottom.green {
+  background: var(--map-green);
+  color: #fff;
+  border-color: var(--map-green);
+}
+  </style>
+</head>
+<body>
+  <header>
+    <div class="header-row">
+      <div class="title-group">
+        <span class="badge-beta">BETA</span>
+        <div class="title-main">
+          <span>愛知・犬山・名古屋 旅程ナビ</span>
+        </div>
+        <span class="badge-version">v2.1</span>
+      </div>
+      <div class="header-actions">
+        <button class="btn-header" onclick="copyCurrentPlan()">
+          <span>📋 LINE一括コピー</span>
+        </button>
+        <button class="btn-header" onclick="toggleTheme()" id="theme-btn">
+          <span id="theme-icon">☀️</span>
+          <span id="theme-text">ライト</span>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <main class="main-content">
+    <!-- Filter Controls -->
+    <div class="filter-panel">
+      <div class="filter-row">
+        <span class="filter-label">📅 日程絞込:</span>
+        <div class="filter-group">
+          <button class="filter-btn active" id="day-all-btn" onclick="filterDay('all')">全日程 (11/7〜8)</button>
+          <button class="filter-btn" id="day-1-btn" onclick="filterDay('1')">11/7 (金) 名駅・熱田・夢語</button>
+          <button class="filter-btn" id="day-2-btn" onclick="filterDay('2')">11/8 (土) 犬山城・如庵・寂光院</button>
+        </div>
+      </div>
+      <div class="filter-row">
+        <span class="filter-label">🎯 種別表示:</span>
+        <div class="filter-group">
+          <button class="filter-btn cat-active" id="cat-all-btn" onclick="filterCategory('all')">すべて表示</button>
+          <button class="filter-btn" id="cat-sightseeing-btn" onclick="filterCategory('sightseeing')">🏛️ 観光スポットのみ</button>
+          <button class="filter-btn" id="cat-food-btn" onclick="filterCategory('food')">🍴 飯・喫茶のみ</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Strategy Summary -->
+    <div class="strategy-box">
+      <div class="strategy-title">
+        <span>💡 2026/11/7〜11/8 今回の確定戦略方針</span>
+      </div>
+      <div class="strategy-desc">
+        ・<strong>名古屋名物は小倉トーストのみに完全特化</strong>（ひつまぶし・手羽先等は除外、BUCYO COFFEEまたはエスカ・アロマ珈琲）。<br>
+        ・<strong>熱田神宮＆草薙館の名刀鑑賞</strong>（平日午後の静けさ＋信長塀・次郎太刀実物大体験）。<br>
+        ・<strong>夢を語れ愛知（夜直撃）</strong>：東京にない直営二郎系。17:40着で夜営業ポールポジション確保。<br>
+        ・<strong>11/8 朝08:30発・家族車で犬山フル満喫</strong>：国宝犬山城登閣 ➔ 国宝茶室如庵 ➔ 城下町五平餅 ➔ 桃太郎神社 ➔ 寂光院 ➔ 名古屋・外食完全スルーで17:00実家直帰。
+      </div>
+    </div>
+
+    <!-- Timeline Container -->
+    <div id="timeline-container"></div>
+  </main>
+
+  <!-- Bottom Floating Action Bar -->
+  <div class="bottom-bar">
+    <div class="bottom-bar-inner">
+      <button class="btn-bottom" onclick="toggleAllAccordions()">
+        <span>↕️ 全詳細を開閉</span>
+      </button>
+      <button class="btn-bottom primary" onclick="copyCurrentPlan()">
+        <span>📋 LINE用テキストコピー</span>
+      </button>
+      <a href="https://www.google.com/maps" target="_blank" class="btn-bottom green" id="bottom-map-link">
+        <span>🗺️ 全ピン連動マップ</span>
+      </a>
+    </div>
+  </div>
+
+  <script>
+    const TRIP_DATA = {
+      activeDayFilter: 'all',
+      activeCategoryFilter: 'all',
+      days: [
+        {
+          dayNum: 1,
+          dateStr: "2026年11月7日 (金)",
+          subTitle: "高蔵寺カラオケ ➔ 名駅小倉トースト ➔ 熱田神宮・草薙館 ➔ 夢を語れ愛知（夜直撃）",
+          macroRoute: ["高蔵寺カラオケ", "JR快速移動", "名駅小倉トースト（BUCYO/アロマ）", "熱田神宮・信長塀", "草薙館（名刀）", "夢を語れ愛知"],
+          fullMapUrl: "https://www.google.com/maps/dir/?api=1&origin=高蔵寺駅&destination=夢を語れ+愛知&waypoints=名古屋駅|BUCYO+COFFEE|熱田神宮|草薙館|きよめ餅総本家",
+          items: [
+            {
+              id: "d1-karaoke",
+              time: "09:00 - 12:00",
+              duration: "3時間00分",
+              badge: "固定予定",
+              badgeType: "transit",
+              category: "sightseeing",
+              categoryLabel: "予定",
+              title: "高蔵寺 近隣カラオケ（まねきねこ または 快活CLUB）",
+              overview: "午前の固定カラオケタイム。歌唱とウォーミングアップ完了後、12:00きっかりに撤収し高蔵寺駅へ向かう。",
+              tacticsTitle: "午前立ち回りステップ",
+              tactics: [
+                { step: 1, text: "09:00前に入店し、3時間パックを確保。ドリンクバー確保。", must: true },
+                { step: 2, text: "11:50に終了精算。手荷物・持ち物をまとめ退店準備。", must: true },
+                { step: 3, text: "12:00に高蔵寺駅北口へ移動（徒歩または送迎）。JR中央本線快速（12:15発または12:29発）に乗車。", must: true }
+              ],
+              bonusSpots: [],
+              factors: {
+                overview: "午前の固定スケジュール。歌唱・リフレッシュと旅のスタート準備。",
+                tactics: "11:50に歌唱終了しレジ精算を済ませる。12:00退店でJR快速に余裕で乗車可能。",
+                mustTry: "午後の名駅歩きに向けた喉・体調のウォーミングアップ。",
+                plusOne: "高蔵寺駅構内のベルマート（JR東海限定の緑茶・水分確保）。",
+                tips: "荷物はリュック1つにコンパクト化し、名駅コインロッカー不要の機動力を維持。",
+                transit: "JR中央本線 快速名古屋行（所要約26〜30分、運賃510円）。日中10〜15分ヘッドで運行。",
+                skipLimit: "12:30高蔵寺駅発の電車に乗れば13:00の名駅到着に完全間に合う。"
+              },
+              mapUrl: "https://www.google.com/maps/search/?api=1&query=高蔵寺駅"
+            },
+            {
+              id: "d1-jr-move",
+              time: "12:15 - 12:45",
+              duration: "30分",
+              badge: "JR快速移動",
+              badgeType: "transit",
+              category: "transit",
+              categoryLabel: "移動",
+              title: "JR中央本線 快速 名古屋行（高蔵寺 ➔ 名古屋）",
+              overview: "高蔵寺駅から名古屋駅へ直通快速移動。乗り換えなしで都心部へスムーズにアプローチ。",
+              tacticsTitle: "移動シークエンス",
+              tactics: [
+                { step: 1, text: "高蔵寺駅の自動改札をICカード（Suica/manaca）でタッチ入場。", must: true },
+                { step: 2, text: "快速（大曽根・千種・金山経由）に乗車。進行方向前寄りに乗ると名古屋駅の桜通口・中央口改札に直結。", must: true },
+                { step: 3, text: "12:45頃名古屋駅到着。小倉トーストの目的地（桜通口側のBUCYO、または新幹線口エスカのアロマ）へ直行。", must: true }
+              ],
+              bonusSpots: [],
+              factors: {
+                overview: "高蔵寺から名古屋駅への基幹鉄道路線移動。",
+                tactics: "進行方向の前寄り車両（1〜3号車）に乗車すると名古屋駅改札への階段・エスカレーターが至近。",
+                mustTry: "車窓から眺める庄内川・千種・鶴舞の街並み。",
+                plusOne: "名古屋駅中央コンコースの金時計・銀時計での記念撮影。",
+                tips: "快速は千種・金山に停車するため寝過ごし注意。名古屋が終点なので安心。",
+                transit: "JR快速で約28分。ICカード運賃510円。",
+                skipLimit: "12:45までに乗車できれば名駅タイムは確保可能。"
+              },
+              mapUrl: "https://www.google.com/maps/search/?api=1&query=名古屋駅"
+            },
+            {
+              id: "d1-ogura-toast",
+              time: "13:00 - 14:00",
+              duration: "1時間00分",
+              badge: "小倉トースト限定",
+              badgeType: "food",
+              category: "food",
+              categoryLabel: "飯・喫茶",
+              title: "名駅 小倉トースト ＆ 珈琲タイム（BUCYO COFFEE または エスカ・アロマ珈琲）",
+              overview: "名古屋名物の中で唯一所望する「小倉トースト」を極限まで楽しむ喫茶枠。自家製あんこの豆感・厚切りバタートーストを堪能。",
+              tacticsTitle: "小倉トースト攻略手順",
+              tactics: [
+                { step: 1, text: "【第1候補：味＆名店重視】桜通口から徒歩10分の「BUCYO COFFEE」へ。自家製極上粒あんと厚切りトースト、ソフトクリームトッピングを注文。", must: true },
+                { step: 2, text: "【第2候補：雨天・移動重視】新幹線地下街エスカ直結の「喫茶 アロマ珈琲」へ。クラシックな極厚切り小倉トーストと直火焙煎珈琲を味わう。", must: false },
+                { step: 3, text: "13:50までに会計を済ませ、JR名古屋駅の東海道本線ホーム（上り 岡崎・豊橋方面）へ移動。", must: true }
+              ],
+              bonusSpots: [
+                {
+                  name: "BUCYO COFFEE (ブチョーコーヒー)",
+                  desc: "名駅南。自家製あんこの豆感が際立つ全国屈指の小倉トースト名店。珈琲のコクも抜群。",
+                  mapUrl: "https://www.google.com/maps/search/?api=1&query=BUCYO+COFFEE"
+                },
+                {
+                  name: "喫茶 アロマ珈琲（エスカ地下街店）",
+                  desc: "新幹線口エスカ直結。昭和レトロな名喫茶。分厚いトーストにたっぷりの小倉餡とバター。",
+                  mapUrl: "https://www.google.com/maps/search/?api=1&query=アロマ珈琲+エスカ"
+                },
+                {
+                  name: "ぴよりんshop（名古屋駅構内）",
+                  desc: "中央コンコース。テイクアウトの行列状況を横目でチェック（崩れやすいため鑑賞のみ）。",
+                  mapUrl: "https://www.google.com/maps/search/?api=1&query=ぴよりんshop"
+                }
+              ],
+              factors: {
+                overview: "ひつまぶし等の名古屋めしを完全除外した上で、唯一心惹かれる「小倉トースト」を名店で味わい尽くす珠玉の1時間。",
+                tactics: "桜通口に出てBUCYO COFFEEを目指すのがベスト。混雑時はエスカ地下街のアロマ珈琲へ即座にスイッチ。",
+                mustTry: "BUCYOの自家製小倉モーニング/トースト（濃厚かつ甘さ控えめな粒あんと有塩バターの対比）＋深煎りアイスコーヒー。",
+                plusOne: "エスカ地下街のお土産ストリート（両口屋是清の和菓子や坂角総本舗のえびせんべい）。",
+                tips: "金曜13時は昼のピークアウト時間帯のため比較的スムーズに入店可能。支払いは現金・PayPay対応。",
+                transit: "BUCYO COFFEEは桜通口から徒歩約10分。アロマ珈琲は太閤通口エスカ地下直結（徒歩2分）。",
+                skipLimit: "14:00までに喫茶を出店できれば熱田神宮参拝に一切支障なし。"
+              },
+              mapUrl: "https://www.google.com/maps/search/?api=1&query=BUCYO+COFFEE"
+            },
+            {
+              id: "d1-atsuta-move",
+              time: "14:05 - 14:18",
+              duration: "13分",
+              badge: "JR東海道線",
+              badgeType: "transit",
+              category: "transit",
+              categoryLabel: "移動",
+              title: "JR東海道本線 名古屋 ➔ 熱田駅 移動",
+              overview: "名古屋駅から熱田神宮への最速・最安アクセス。電車8分＋徒歩3分で熱田神宮の東門へ至近アプローチ。",
+              tacticsTitle: "JRアクセスステップ",
+              tactics: [
+                { step: 1, text: "名古屋駅JR在来線ホームへ。東海道本線上り（岡崎・豊橋・武豊方面）の普通電車に乗車。", must: true },
+                { step: 2, text: "尾頭橋、金山を過ぎ、わずか3駅・8分で「熱田駅」に到着（運賃190円）。", must: true },
+                { step: 3, text: "熱田駅西口を出て徒歩約3分で熱田神宮の東門・静寂の森へ入る。", must: true }
+              ],
+              bonusSpots: [],
+              factors: {
+                overview: "名駅から熱田神宮へのスマートアクセス。地下鉄名城線よりJRが圧倒的に速い。",
+                tactics: "名鉄神宮前駅ではなくJR熱田駅を使うことで、東門からの静かな参道アプローチを楽しめる。",
+                mustTry: "東門鳥居をくぐった瞬間に都市の喧騒が消える森の空気感。",
+                plusOne: "JR熱田駅前のレトロな街並みと商店街。",
+                tips: "快速は熱田駅を通過する場合があるため、必ず「普通」電車に乗車すること。",
+                transit: "JR東海道本線普通（約8分・190円）。",
+                skipLimit: "14:30までに熱田駅に着けば草薙館鑑賞に十分な時間が確保可能。"
+              },
+              mapUrl: "https://www.google.com/maps/dir/?api=1&origin=名古屋駅&destination=熱田神宮"
+            },
+            {
+              id: "d1-atsuta-jingu",
+              time: "14:20 - 16:45",
+              duration: "2時間25分",
+              badge: "三種の神器・国宝名刀",
+              badgeType: "temple",
+              category: "sightseeing",
+              categoryLabel: "観光・名所",
+              title: "熱田神宮 本殿・信長塀参拝 ＆ 剣の宝庫「草薙館」名刀鑑賞",
+              overview: "三種の神器（草薙神剣）を祀る熱田神宮参拝と、全国屈指の名刀コレクション「草薙館」の鑑賞。平日の午後は静謐そのもの。",
+              tacticsTitle: "熱田神宮＆草薙館 必勝ルート",
+              tactics: [
+                { step: 1, text: "東門から参道へ進み、樹齢千年を超える大楠を鑑賞し本宮（拝殿）で参拝。", must: true },
+                { step: 2, text: "織田信長が桶狭間の戦い戦勝御礼に奉納した日本三大土塀「信長塀」の重厚な瓦土構造をじっくり観察。", must: true },
+                { step: 3, text: "剣の宝庫「草薙館」（入館料500円）へ入場。常設・特別展示の国宝・重文名刀を鑑賞。", must: true },
+                { step: 4, text: "「草薙館」体験コーナーで、伝説の「次郎太刀」（刃長約166cm）実物大レプリカを持ち上げ、その圧倒的重量と刀剣の迫力を体感。", must: true },
+                { step: 5, text: "神宮茶屋周辺を散策し、熱田名物「きよめ餅」をチェック。16:45に南門または東門へ。", must: true }
+              ],
+              bonusSpots: [
+                {
+                  name: "剣の宝庫 草薙館（熱田神宮宝物館隣）",
+                  desc: "熱田神宮が所蔵する名刀を常時展示。次郎太刀・太郎太刀のスケール感は必見。",
+                  mapUrl: "https://www.google.com/maps/search/?api=1&query=剣の宝庫+草薙館"
+                },
+                {
+                  name: "信長塀（日本三大土塀）",
+                  desc: "桶狭間の奇襲直前に信長が熱田神宮で必勝祈願し、大勝後に奉納した歴史的土塀。",
+                  mapUrl: "https://www.google.com/maps/search/?api=1&query=信長塀"
+                },
+                {
+                  name: "きよめ餅総本家",
+                  desc: "熱田神宮名物の羽二重餅。お土産に最適（ついで買い推奨）。",
+                  mapUrl: "https://www.google.com/maps/search/?api=1&query=きよめ餅総本家"
+                },
+                {
+                  name: "熱田神宮 大楠（弘法大師お手植え）",
+                  desc: "手水舎北側にある樹齢1000年以上の御神木。蛇が住むとされる神聖なパワースポット。",
+                  mapUrl: "https://www.google.com/maps/search/?api=1&query=熱田神宮+大楠"
+                }
+              ],
+              factors: {
+                overview: "草薙神剣を祀る伊勢神宮に次ぐ格式の古社。桶狭間の信長塀と草薙館の名刀鑑賞が二大主目的。",
+                tactics: "参拝（本宮・大楠・信長塀）で約35分 ➔ 草薙館で名刀鑑賞＆重量体験で約50分 ➔ 境内散策・きよめ餅調達で約30分。",
+                mustTry: "草薙館の「体験コーナー」で次郎太刀（重さ約5kg）を持ち上げる体験。戦国武士の膂力を実感。",
+                plusOne: "熱田神宮門前の「きよめ餅総本家」で銘菓きよめ餅（こし餡の羽二重餅）を購入。",
+                tips: "草薙館の最終入館は16:00なので先に草薙館へ行くのも手。境内は平坦で歩きやすい玉砂利。",
+                transit: "JR熱田駅徒歩3分、または名鉄神宮前駅徒歩3分。境内駐車場は参拝者無料。",
+                skipLimit: "16:45までに神宮を出発すれば、夢を語れ愛知の夜ポールポジション確保に完全間に合う。"
+              },
+              mapUrl: "https://www.google.com/maps/search/?api=1&query=熱田神宮"
+            },
+            {
+              id: "d1-taxi-yume",
+              time: "16:45 - 17:30",
+              duration: "45分",
+              badge: "タクシー移動",
+              badgeType: "transit",
+              category: "transit",
+              categoryLabel: "移動",
+              title: "熱田神宮から瑞穂区滝子（夢を語れ愛知）へ移動",
+              overview: "熱田神宮から「夢を語れ 愛知」への短距離移動。地下鉄よりタクシー直行が圧倒的に快適かつ最速（所要約8分・約1,200円）。",
+              tacticsTitle: "移動シークエンス",
+              tactics: [
+                { step: 1, text: "熱田神宮東門または南門からタクシーに乗車（「滝子の名古屋市大前交差点まで」と指定）。", must: true },
+                { step: 2, text: "八熊通を経由し約8分で瑞穂区滝子の「夢を語れ 愛知」至近に到着。", must: true },
+                { step: 3, text: "開店40分前の17:35〜17:40頃に店頭へ到着し、夜営業の先頭列に接続。", must: true }
+              ],
+              bonusSpots: [],
+              factors: {
+                overview: "熱田区から瑞穂区滝子への横移動。公共交通機関は乗り換えが必要なためタクシーが最強コスパ。",
+                tactics: "名鉄神宮前駅前のタクシー乗り場から乗車するのが最も確実。迎車不要。",
+                mustTry: "タクシー車窓から見る名古屋の下町情緒ある滝子商店街の佇まい。",
+                plusOne: "滝子交差点付近のコンビニ（黒烏龍茶・脂肪燃焼系ドリンクの事前調達）。",
+                tips: "二郎系直撃前に黒烏龍茶を1本買っておくと食中・食後が格段に快適。",
+                transit: "タクシー走行距離約2.8km、所要約8〜10分、運賃約1,100〜1,300円。",
+                skipLimit: "17:40までに店舗前に到着できればファーストロット（最初の着席組）が確定する。"
+              },
+              mapUrl: "https://www.google.com/maps/dir/?api=1&origin=熱田神宮&destination=夢を語れ+愛知"
+            },
+            {
+              id: "d1-yume-wo-katare",
+              time: "17:40 - 19:00",
+              duration: "1時間20分",
+              badge: "東京未進出直営二郎系",
+              badgeType: "food",
+              category: "food",
+              categoryLabel: "飯・喫茶",
+              title: "夢を語れ 愛知（夜営業ポールポジション直撃）",
+              overview: "東京に常設店舗が存在しない「夢を語れ」ブランド。瑞穂区滝子にて18:00開店のファーストロットを確実に奪取。",
+              tacticsTitle: "夢を語れ ポールポジション奪取手順",
+              tactics: [
+                { step: 1, text: "17:40着で店頭整列（ポールポジション〜先頭3番手以内を確保）。", must: true },
+                { step: 2, text: "18:00定刻オープン。券売機で「ラーメン（麺量200gまたは300g）」の食券を購入。豚増しも選択可。", must: true },
+                { step: 3, text: "カウンター着席。コール確認時「ニンニクあり・アブラマシ」で極上の非乳化〜微乳化スープと極太ワシワシ麺を堪能。", must: true },
+                { step: 4, text: "18:40頃に完食退店。桜山駅（地下鉄桜通線）へ徒歩10分で移動。", must: true }
+              ],
+              bonusSpots: [
+                {
+                  name: "名古屋市立大学 山の畑キャンパス",
+                  desc: "店舗の向かいにある落ち着いたキャンパス。周辺は学生街の活気。",
+                  mapUrl: "https://www.google.com/maps/search/?api=1&query=名古屋市立大学+山の畑キャンパス"
+                }
+              ],
+              factors: {
+                overview: "京都一条寺発祥、ボストン・日本全国で「夢を語る」文化を生んだ二郎系の伝説的屋号。東京には常設店がないため今愛知で食す価値が極大。",
+                tactics: "17:40並び開始 ➔ 18:00入店 ➔ 18:15着丼 ➔ 18:40退店。夜の第1ロットでスマートに食い切る。",
+                mustTry: "極厚の神豚チャーシューと、甘辛い醤油タレが染みた味付けアブラ（別皿推奨）。",
+                plusOne: "完食後の心地よい満腹感とともに歩く桜山駅までの夜風散歩。",
+                tips: "麺量300gは成人男性でもかなり多め。美味しく食べ切るなら麺少なめ（200g）申請も有効。店内ルールは店員が親切に案内してくれる。",
+                transit: "食後は地下鉄桜通線「桜山駅」まで徒歩約10分（平坦な舗装路）。",
+                skipLimit: "18:00開店に間に合えば19:00前には完全退店可能。"
+              },
+              mapUrl: "https://www.google.com/maps/search/?api=1&query=夢を語れ+愛知"
+            },
+            {
+              id: "d1-return-home",
+              time: "19:00 - 20:00",
+              duration: "1時間00分",
+              badge: "地下鉄＋JR帰還",
+              badgeType: "transit",
+              category: "transit",
+              categoryLabel: "移動",
+              title: "桜山 ➔ 名古屋（または千種） ➔ 高蔵寺 帰還",
+              overview: "地下鉄桜通線で桜山駅から都心へ戻り、JR中央線快速に乗り継いで高蔵寺へスムーズに帰宅。翌日の犬山城朝立ちに備えて十分な休養を確保。",
+              tacticsTitle: "夜帰還ステップ",
+              tactics: [
+                { step: 1, text: "滝子から東へ歩き、地下鉄桜通線「桜山駅」から乗車（名古屋方面行）。", must: true },
+                { step: 2, text: "千種乗換（今池経由東山線経由）または名古屋駅直通乗換でJR中央本線快速に乗車。", must: true },
+                { step: 3, text: "20:00頃には高蔵寺駅に無事帰還。明日の朝08:30出発に向け、早めに就寝。", must: true }
+              ],
+              bonusSpots: [],
+              factors: {
+                overview: "Day 1のフィニッシュと実家への帰還ルート。",
+                tactics: "桜山駅から桜通線で「名古屋駅」まで直通17分。名古屋駅でJR快速に乗れば高蔵寺まで一直線。",
+                mustTry: "夜の帰還電車でのゆったりした達成感と明日の犬山城へのワクワク感。",
+                plusOne: "高蔵寺駅前のコンビニでのミネラルウォーター補充。",
+                tips: "食後すぐなので無理に走らず、ゆったりしたペースで桜山駅へ歩く。",
+                transit: "地下鉄桜通線（桜山 ➔ 名古屋 270円）＋ JR中央線快速（名古屋 ➔ 高蔵寺 510円）。",
+                skipLimit: "20:30までに帰宅できれば睡眠時間は8時間以上確保可能。"
+              },
+              mapUrl: "https://www.google.com/maps/dir/?api=1&origin=桜山駅&destination=高蔵寺駅"
+            }
+          ]
+        },
+        {
+          dayNum: 2,
+          dateStr: "2026年11月8日 (土)",
+          subTitle: "朝08:30発 家族車で犬山フル満喫（国宝犬山城 ➔ 国宝茶室如庵 ➔ 城下町昼食 ➔ 桃太郎神社 ➔ 寂光院） ➔ 17:00実家直帰",
+          macroRoute: ["実家発（家族車08:30）", "犬山城第1駐車場", "国宝犬山城（天守登閣）", "三光稲荷・針綱神社", "有楽苑（国宝茶室如庵）", "犬山城下町（家族昼食・五平餅）", "桃太郎神社（浅野祥雲）", "寂光院（尾張のもみじ寺）", "実家直帰（17:00着）"],
+          fullMapUrl: "https://www.google.com/maps/dir/?api=1&origin=春日井市高蔵寺町&destination=春日井市高蔵寺町&waypoints=犬山城第1駐車場|国宝犬山城|三光稲荷神社|有楽苑|山田五平餅店|桃太郎神社|寂光院",
+          items: [
+            {
+              id: "d2-depart-inuyama",
+              time: "08:30 - 09:15",
+              duration: "45分",
+              badge: "家族車直行",
+              badgeType: "transit",
+              category: "transit",
+              categoryLabel: "移動",
+              title: "実家から家族車で国宝犬山城へ直行（車約35〜40分）",
+              overview: "土曜日の混雑を完全回避するため朝08:30に家族車で出発。愛岐道路または県道27号を快走し、開門直後の犬山城第1駐車場へ09:15にスムーズ入庫。",
+              tacticsTitle: "土曜朝の駐車場必勝ステップ",
+              tactics: [
+                { step: 1, text: "08:30に実家を出発。ナビ目的地を「犬山城第1駐車場（キャッスルパーキング）」にセット。", must: true },
+                { step: 2, text: "県道27号・春日井犬山線を経由して木曽川方面へ北上（約18km）。", must: true },
+                { step: 3, text: "09:15に「犬山城第1駐車場」（1回500円・140台）に余裕で駐車完了。満車・行列ストレス皆無。", must: true }
+              ],
+              bonusSpots: [
+                {
+                  name: "犬山城第1駐車場（キャッスルパーキング）",
+                  desc: "犬山城前広場に最も近い大型駐車場。09:30を過ぎると満車になるため09:15入庫が絶対の鍵。",
+                  mapUrl: "https://www.google.com/maps/search/?api=1&query=犬山城第1駐車場"
+                }
+              ],
+              factors: {
+                overview: "土曜日の犬山城観光の勝敗を決める早朝アプローチ。08:30発により観光バスや一般客のラッシュを出し抜く。",
+                tactics: "実家 ➔ 県道27号直行。09:15現地着で第1駐車場を即確保。",
+                mustTry: "朝の澄んだ空気の中で木曽川越しに見上げる犬山城の美景。",
+                plusOne: "駐車場脇の犬山口観光案内所で散策マップを入手。",
+                tips: "09:45以降は駐車場待ちの車列が伸びるため、08:30出発の遵守が必須。",
+                transit: "自家用車移動（春日井/高蔵寺 ➔ 犬山城、約18km・所要約35〜40分）。普通車駐車料金500円。",
+                skipLimit: "09:00までに出発できれば09:45前に入庫可能。"
+              },
+              mapUrl: "https://www.google.com/maps/search/?api=1&query=犬山城第1駐車場"
+            },
+            {
+              id: "d2-inuyama-castle",
+              time: "09:15 - 11:00",
+              duration: "1時間45分",
+              badge: "現存12天守・国宝5城",
+              badgeType: "national",
+              category: "sightseeing",
+              categoryLabel: "観光・名所",
+              title: "国宝 犬山城 天守登閣 ＋ 三光稲荷神社（銭洗・ハート絵馬）",
+              overview: "室町時代に織田信長の叔父・織田信康が築いた日本最古級の現存天守。急勾配の階段を登り、廻縁（回廊）から木曽川と濃尾平野の絶景を360度大パノラマで展望。",
+              tacticsTitle: "犬山城 最速登閣シークエンス",
+              tactics: [
+                { step: 1, text: "駐車場から登城坂を上がり、本丸入場券売場へ（大人550円、有楽苑とのセット券は有楽苑側で購入も可）。", must: true },
+                { step: 2, text: "09:25までに天守閣入口へ。混雑前のため靴を脱いですぐに入城可能（昼間は天守登閣60分待ちになる名所）。", must: true },
+                { step: 3, text: "急勾配の武者走りを登り、最上階「望楼」の廻縁へ。木曽川と伊吹山、御嶽山を望む雄大な絶景を鑑賞。", must: true },
+                { step: 4, text: "下城後、麓に鎮座する「三光稲荷神社」で銭洗池の清めとお札清め体験。インスタで有名なピンクのハート絵馬トンネルを家族で散策。", must: true },
+                { step: 5, text: "隣接する「針綱神社」で延命長寿と旅の安全を祈願。11:00に有楽苑へ移動。", must: true }
+              ],
+              bonusSpots: [
+                {
+                  name: "三光稲荷神社（銭洗稲荷・ハート絵馬）",
+                  desc: "犬山城の登城口にある古社。銭洗池の御神水でお金を洗うと何倍にもなって返るとされる。ピンクのハート絵馬が鮮やか。",
+                  mapUrl: "https://www.google.com/maps/search/?api=1&query=三光稲荷神社"
+                },
+                {
+                  name: "針綱神社（犬山城守護神）",
+                  desc: "織田信康ゆかりの延命・安産・厄除け神社。国指定重要無形民俗文化財「犬山祭」の主幹社。",
+                  mapUrl: "https://www.google.com/maps/search/?api=1&query=針綱神社"
+                },
+                {
+                  name: "犬山城 望楼（最上階廻縁）",
+                  desc: "天守最上階をぐるりと一周できる回廊。木曽川のダイナミックな蛇行と濃尾平野を一望。",
+                  mapUrl: "https://www.google.com/maps/search/?api=1&query=国宝犬山城"
+                }
+              ],
+              factors: {
+                overview: "現存12天守にして国宝5城（姫路、松本、彦根、松江、犬山）の一角。木曽川の断崖にそびえる白帝城。",
+                tactics: "土曜日の天守階段は狭く一方通行のため、09:30前の先頭集団で登り切るのが最大の鉄則。下城後に三光稲荷と針綱神社をゆったり巡る。",
+                mustTry: "天守最上階の外回廊（廻縁）に出た瞬間の木曽川の絶景と爽快な風。",
+                plusOne: "三光稲荷神社の「銭洗池」で小銭・紙幣をザルに入れて清める開運体験。",
+                tips: "天守階段は傾斜角度が非常に急（約50度）。足元に注意し、手荷物はコンパクトに。",
+                transit: "犬山城第1駐車場から登城坂を徒歩約5分。段差あり。",
+                skipLimit: "11:00までに下城・神社参拝を終えれば次行程の有楽苑にゆとりで繋がる。"
+              },
+              mapUrl: "https://www.google.com/maps/search/?api=1&query=国宝犬山城"
+            },
+            {
+              id: "d2-urakuen-joan",
+              time: "11:05 - 12:15",
+              duration: "1時間10分",
+              badge: "国宝三茶室・如庵",
+              badgeType: "national",
+              category: "sightseeing",
+              categoryLabel: "観光・名所",
+              title: "名鉄有楽苑 国宝茶室「如庵」 ＆ 重要文化財旧正伝院書院（呈茶席）",
+              overview: "織田信長の実弟であり大茶人・織田有楽斎（長益）が建てた茶道史上の至宝、国宝三茶室の一つ「如庵」を間近に鑑賞。美しい日本庭園の中で抹茶と季節の和菓子を味わう静寂のひととき。",
+              tacticsTitle: "有楽苑 優雅な鑑賞ステップ",
+              tactics: [
+                { step: 1, text: "犬山城から東へ徒歩約5分、名鉄有楽苑の正門へ（入園料1,200円、呈茶付きセット推奨）。", must: true },
+                { step: 2, text: "苔むした静謐な庭園を進み、国宝茶室「如庵」の杮葺き屋根・有楽窓（暦張り）・躙口を外観鑑賞。", must: true },
+                { step: 3, text: "重要文化財「旧正伝院書院」へ。長谷川等伯や狩野山楽の襖絵（複製）が彩る洗練された空間を鑑賞。", must: true },
+                { step: 4, text: "庭園内の茶房にて、如庵を眺めながら本格的な呈茶（お抹茶と有楽苑銘菓「有楽風」）で一服。", must: true },
+                { step: 5, text: "12:15に有楽苑を出て、徒歩3分で賑わう犬山城下町の本町通りへ。", must: true }
+              ],
+              bonusSpots: [
+                {
+                  name: "国宝茶室 如庵（織田有楽斎作）",
+                  desc: "京都の妙喜庵「待庵」（利休）、大徳寺龍光院「密庵」と並ぶ国宝三茶室の筆頭。有楽窓と呼ばれる竹の隙間からの採光が芸術的。",
+                  mapUrl: "https://www.google.com/maps/search/?api=1&query=国宝茶室+如庵"
+                },
+                {
+                  name: "重要文化財 旧正伝院書院",
+                  desc: "有楽斎の隠居所として建てられた書院。瀟洒な縁側と落ち着いた畳敷きの造り。",
+                  mapUrl: "https://www.google.com/maps/search/?api=1&query=旧正伝院書院"
+                },
+                {
+                  name: "ホテルインディゴ犬山有楽苑",
+                  desc: "有楽苑に隣接するIHG系列のラグジュアリーホテル。木曽川と犬山城を借景にした建築美。",
+                  mapUrl: "https://www.google.com/maps/search/?api=1&query=ホテルインディゴ犬山有楽苑"
+                }
+              ],
+              factors: {
+                overview: "犬山が誇るもう一つの国宝。信長の実弟・織田有楽斎の美意識が結晶化した茶室文化の最高峰庭園。",
+                tactics: "犬山城の賑わいから一転して静寂が広がる隠れた名所。混雑ゼロでゆったり呈茶を楽しめる。",
+                mustTry: "如庵独特の「有楽窓」（古暦を腰張りに貼った意匠）と呈茶席の上品な抹茶。",
+                plusOne: "有楽苑限定の銘菓「有楽風」のしっとりとした上品な甘み。",
+                tips: "犬山城から徒歩すぐなので車を動かす必要なし。靴を脱いで上がる場所があるため脱ぎ履きしやすい靴が吉。",
+                transit: "犬山城本丸・三光稲荷から徒歩約5〜7分。",
+                skipLimit: "12:15に苑を出れば、城下町のランチ混雑ピークを回避して昼食に滑り込める。"
+              },
+              mapUrl: "https://www.google.com/maps/search/?api=1&query=有楽苑"
+            },
+            {
+              id: "d2-inuyama-castle-town",
+              time: "12:20 - 13:45",
+              duration: "1時間25分",
+              badge: "城下町名物グルメ",
+              badgeType: "food",
+              category: "food",
+              categoryLabel: "飯・喫茶",
+              title: "犬山城下町（本町通り） 家族昼食 ＆ 山田五平餅・飛騨牛串食べ歩き",
+              overview: "江戸時代の町割りが残る城下町・本町通り。登録有形文化財の古民家レストランで落ち着いた家族昼食をとり、名物の山田五平餅や飛騨牛にぎり寿しをつまみ食い散策。",
+              tacticsTitle: "城下町 昼食＆食べ歩きステップ",
+              tactics: [
+                { step: 1, text: "有楽苑から本町通り北端へ進入。まずは落ち着いて昼食をとれる食事処を確保。", must: true },
+                { step: 2, text: "【昼食候補】「蕎麦正 まつい 犬山店」（手打ち蕎麦）または「香味茶寮 壽俵屋 犬山井上邸」（守口漬焼きおにぎり・和食膳）に入店。", must: true },
+                { step: 3, text: "食後、登録有形文化財の「山田五平餅店」へ立ち寄り、香ばしい団子型五平餅（ゴマ・クルミ・ピーナッツの特製タレ）を1本味わう。", must: true },
+                { step: 4, text: "「犬山牛太郎」の飛騨牛にぎり寿し（A5等級）や、犬山どんでん館（祭り車山展示）の勇姿を横目に散策。", must: true },
+                { step: 5, text: "13:45に犬山城第1駐車場へ戻り、家族車に乗車して桃太郎神社へ移動。", must: true }
+              ],
+              bonusSpots: [
+                {
+                  name: "山田五平餅店（登録有形文化財）",
+                  desc: "犬山城下町を代表する五平餅の超名店。すりつぶしたゴマ・クルミ・ピーナッツの香ばしいタレがたまらない逸品。",
+                  mapUrl: "https://www.google.com/maps/search/?api=1&query=山田五平餅店"
+                },
+                {
+                  name: "犬山牛太郎（飛騨牛にぎり寿し）",
+                  desc: "A5ランクの飛騨牛を目の前で炙ってえびせんべいの上に乗せて提供。わさび醤油と塩しょうがが絶品。",
+                  mapUrl: "https://www.google.com/maps/search/?api=1&query=犬山牛太郎"
+                },
+                {
+                  name: "どんでん館（犬山祭車山展示）",
+                  desc: "高さ8m・重さ3トンを超える豪華絢爛な祭りの車山（やま）が常設展示されている迫力スポット。",
+                  mapUrl: "https://www.google.com/maps/search/?api=1&query=どんでん館"
+                },
+                {
+                  name: "香味茶寮 壽俵屋 犬山井上邸",
+                  desc: "犬山名産「守口漬」の老舗が手がける茶寮。醤油おこげと守口漬の相性が抜群。",
+                  mapUrl: "https://www.google.com/maps/search/?api=1&query=壽俵屋+犬山井上邸"
+                }
+              ],
+              factors: {
+                overview: "江戸時代の町家建築が並ぶメインストリート。座って食べる家族昼食と、片手で楽しむ名物食べ歩きの両立。",
+                tactics: "混雑する本町通りではまず家族全員で入れる昼食処に直行して席を確保 ➔ 食後に名物五平餅・牛にぎりを買い食い。",
+                mustTry: "山田五平餅店の「団子型五平餅」（注文後に炭火で焼き上げる香ばしさは別格）。",
+                plusOne: "壽俵屋の守口漬（細長い大根の酒粕漬け）のお土産購入。",
+                tips: "土曜昼は通り全体が賑わう。食べ歩きは指定のベンチやゴミ箱のある店先でマナー良く行う。",
+                transit: "有楽苑から徒歩約3分で本町通りへ進入。駐車場までは徒歩約8分。",
+                skipLimit: "13:50までに駐車場を出発できれば桃太郎神社と寂光院を完全コンプリート可能。"
+              },
+              mapUrl: "https://www.google.com/maps/search/?api=1&query=犬山城下町"
+            },
+            {
+              id: "d2-momotaro-shrine",
+              time: "14:00 - 15:00",
+              duration: "1時間00分",
+              badge: "浅野祥雲コンクリート像群",
+              badgeType: "temple",
+              category: "sightseeing",
+              categoryLabel: "観光・名所",
+              title: "桃太郎神社（日本屈指のB級シュール巨匠・浅野祥雲コンクリート像群）",
+              overview: "木曽川沿いの桃太郎伝説の聖地。巨匠・浅野祥雲が昭和初期に手掛けた約20体の実物大カラーコンクリート彫刻（桃から生まれた桃太郎、鬼の涙痕、サル・キジ・イヌ）が境内に林立する唯一無二の異空間。",
+              tacticsTitle: "桃太郎神社 撮影＆散策ステップ",
+              tactics: [
+                { step: 1, text: "犬山城駐車場を出発し、木曽川沿いの県道を東へ約10分車で直行。", must: true },
+                { step: 2, text: "桃太郎神社の無料大駐車場に入庫（車でないとアクセス困難な隠れ名所）。", must: true },
+                { step: 3, text: "桃型の珍しい鳥居をくぐり、境内に点在する極彩色の浅野祥雲コンクリート像と記念撮影。", must: true },
+                { step: 4, text: "奥の有料宝物館エリア（大人200円）へ。鬼の金棒や鬼のミイラの写真、シュール極まる鬼の涙痕像を鑑賞。", must: true },
+                { step: 5, text: "15:00に駐車場へ戻り、車で3分の隣山「寂光院」へ移動。", must: true }
+              ],
+              bonusSpots: [
+                {
+                  name: "桃太郎神社 宝物館",
+                  desc: "鬼が残したとされる珍宝や、浅野祥雲が作った鬼の降伏像・金棒展示（大人200円の価値十分）。",
+                  mapUrl: "https://www.google.com/maps/search/?api=1&query=桃太郎神社+宝物館"
+                },
+                {
+                  name: "桃型鳥居",
+                  desc: "くぐると「悪霊退散・災難除け・不老長寿」のご利益があるとされる桃の形をしたユニークな鳥居。",
+                  mapUrl: "https://www.google.com/maps/search/?api=1&query=桃太郎神社+桃型鳥居"
+                },
+                {
+                  name: "木曽川桃太郎公園",
+                  desc: "神社に隣接する芝生広場と木曽川の清流。芝生越しに眺める木曽川の景観が開放的。",
+                  mapUrl: "https://www.google.com/maps/search/?api=1&query=桃太郎公園"
+                }
+              ],
+              factors: {
+                overview: "明治村等の大掛かりなテーマパークをスルーしたユーザーに最適な、短時間で濃密な写真・体験が得られる珍スポット。",
+                tactics: "無料駐車場から境内までは徒歩1分。鳥居前 ➔ 境内 ➔ 宝物館の順に巡り、家族でユニークな記念写真を撮りまくる。",
+                mustTry: "桃からパッカーンと飛び出した桃太郎像と、涙を流して反省する赤鬼像の前での記念撮影。",
+                plusOne: "門前茶屋の「桃太郎みたらし団子」や「木の芽田楽」。",
+                tips: "浅野祥雲の彫刻は色鮮やかに修復されており、写真映えが極めて良い。入場無料（宝物館のみ200円）。",
+                transit: "犬山城駐車場から車で約10分（約4.5km）。無料駐車場完備。",
+                skipLimit: "15:00に出発できれば、最終目的地・寂光院の拝観受付に余裕で間に合う。"
+              },
+              mapUrl: "https://www.google.com/maps/search/?api=1&query=桃太郎神社"
+            },
+            {
+              id: "d2-jakkoin-temple",
+              time: "15:05 - 16:20",
+              duration: "1時間15分",
+              badge: "尾張のもみじ寺・信長史跡",
+              badgeType: "temple",
+              category: "sightseeing",
+              categoryLabel: "観光・名所",
+              title: "継鹿尾山 寂光院（尾張のもみじ寺 ＆ 展望台から木曽川・犬山城大パノラマ）",
+              overview: "白鳳時代（654年）創建、織田信長も参詣した尾張最古の霊場。境内全域に約1000本のもみじが生い茂り、本堂前の展望台からは木曽川と犬山城、遠く名駅ビル群まで見渡せる絶景スポット。",
+              tacticsTitle: "寂光院 絶景アプローチステップ",
+              tactics: [
+                { step: 1, text: "桃太郎神社から車でわずか3分、寂光院山麓の無料大駐車場に入庫。", must: true },
+                { step: 2, text: "本堂への参道へ。「七福神坂」の石段（約320段）を登るか、足腰に配慮してスロープカー（電動モノレール・片道200円）を利用。", must: true },
+                { step: 3, text: "山上の本堂（重要文化財・千手観音）へ参拝。信長が清須城から岐阜城へ向かう途中に立ち寄った歴史を偲ぶ。", must: true },
+                { step: 4, text: "本堂広場の展望台へ。木曽川の壮大な流れと、午前中に登った国宝犬山城の遠景をパノラマ一望。", must: true },
+                { step: 5, text: "16:20に下山し駐車場へ。全行程コンプリートの充実感とともに家族車で実家直帰へ。", must: true }
+              ],
+              bonusSpots: [
+                {
+                  name: "寂光院 本堂展望台",
+                  desc: "標高273mの継鹿尾山から濃尾平野、木曽川、犬山城、名古屋駅の高層ビル群を一望する大展望台。",
+                  mapUrl: "https://www.google.com/maps/search/?api=1&query=寂光院+展望台"
+                },
+                {
+                  name: "寂光院 スロープカー（もみじロード）",
+                  desc: "石段を登らずに一気に山上本堂へ行ける斜行エレベーター。車窓からもみじのトンネルを鑑賞。",
+                  mapUrl: "https://www.google.com/maps/search/?api=1&query=寂光院+スロープカー"
+                },
+                {
+                  name: "筆弘法大師像",
+                  desc: "弘法大師空海が自ら筆を執って千手観音像を描いたとされる伝説の遺蹟。",
+                  mapUrl: "https://www.google.com/maps/search/?api=1&query=寂光院+筆弘法"
+                }
+              ],
+              factors: {
+                overview: "犬山屈指の名刹。「もみじ寺」の別名通り、紅葉のグラデーションと木曽川の絶壁に佇む山岳寺院の風情が圧巻。",
+                tactics: "無理せず行きはスロープカー（200円）で登り、帰りはもみじの石段をゆっくり下るのが最も快適なスマート戦術。",
+                mustTry: "山上展望台から望む「木曽川と犬山城」の借景パノラマ。",
+                plusOne: "本堂横の茶屋で味わうお抹茶や、厄除けの千手観音御守り。",
+                tips: "石段は約320段あるため家族の体力に応じてスロープカーを活用。境内拝観無料。",
+                transit: "桃太郎神社から車で約3分（約1.5km）。駐車場無料完備。",
+                skipLimit: "16:25までに車に乗車すれば17:05には実家へ完全帰着。"
+              },
+              mapUrl: "https://www.google.com/maps/search/?api=1&query=継鹿尾山+寂光院"
+            },
+            {
+              id: "d2-direct-home",
+              time: "16:25 - 17:05",
+              duration: "40分",
+              badge: "家族車直帰",
+              badgeType: "transit",
+              category: "transit",
+              categoryLabel: "帰着",
+              title: "寂光院から家族車で実家（高蔵寺）へ直行帰宅（17:00帰着）",
+              overview: "名古屋方面の渋滞や不要な寄り道を完全排除。県道27号・愛岐道路を使い、夕暮れ前の17:00に実家へスマートに直帰完了。",
+              tacticsTitle: "直行帰還ステップ",
+              tactics: [
+                { step: 1, text: "寂光院駐車場を出発。県道27号（春日井犬山線）へ南下。", must: true },
+                { step: 2, text: "名古屋駅方面の夕方渋滞には一切巻き込まれず、郊外ルートを快速ドライブ。", must: true },
+                { step: 3, text: "わずか35〜40分の快適なドライブで、17:05には実家へ無事帰還。", must: true },
+                { step: 4, text: "夜は実家で家族とゆったり過ごすか、近場で気兼ねなく食事を済ませる。", must: true }
+              ],
+              bonusSpots: [],
+              factors: {
+                overview: "無駄な名古屋立ち寄りや外食を完全排除し、余力十分でフィニッシュする最高効率の帰宅動線。",
+                tactics: "寂光院 ➔ 県道27号 ➔ 春日井/高蔵寺。最短ルートをナビ任せで直行。",
+                mustTry: "全行程を一切のタイムロスなく完遂した圧倒的スマート感。",
+                plusOne: "帰着後の家族との団らん、旅の写真シェアタイム。",
+                tips: "夕方の名古屋市内は激しい混雑となるが、犬山〜高蔵寺ルートは郊外バイパスのため渋滞リスクが極めて低い。",
+                transit: "自家用車移動（約18km・所要約35〜40分）。有料道路なし・通行料0円。",
+                skipLimit: "17:15までに実家へ帰着。"
+              },
+              mapUrl: "https://www.google.com/maps/search/?api=1&query=高蔵寺駅"
+            }
+          ]
+        }
+      ]
+    };
+
+    function toBullets(text) {
+      if (!text) return '';
+      const rawLines = text
+        .split(/<br\s*\/?>|\n/)
+        .map(s => s.trim())
+        .filter(Boolean);
+      if (rawLines.length === 0) return '';
+      return rawLines.map(line => {
+        const cleaned = line.replace(/^[・\-\*]\s*/, '').trim();
+        return '<div class="factor-bullet-line"><span class="factor-bullet-dot">•</span><span class="factor-bullet-text">' + cleaned + '</span></div>';
+      }).join('');
+    }
+
+    function renderUI() {
+      const container = document.getElementById('timeline-container');
+      container.innerHTML = '';
+
+      TRIP_DATA.days.forEach(day => {
+        if (TRIP_DATA.activeDayFilter !== 'all' && TRIP_DATA.activeDayFilter !== String(day.dayNum)) {
+          return;
+        }
+
+        // Filter items by category
+        const filteredItems = day.items.filter(item => {
+          if (TRIP_DATA.activeCategoryFilter === 'all') return true;
+          return item.category === TRIP_DATA.activeCategoryFilter;
+        });
+
+        if (filteredItems.length === 0) {
+          const emptyEl = document.createElement('div');
+          emptyEl.className = 'day-section';
+          emptyEl.innerHTML = `
+            <div class="day-header-card">
+              <div class="day-title">Day ${day.dayNum} (${day.dateStr})</div>
+              <div style="font-size:0.8rem; color:var(--text-muted); margin-top:8px;">選択されたカテゴリ「${TRIP_DATA.activeCategoryFilter === 'sightseeing' ? '観光スポット' : '飯・喫茶'}」に該当するスロットはありません。</div>
+            </div>
+          `;
+          container.appendChild(emptyEl);
+          return;
+        }
+
+        const dayEl = document.createElement('div');
+        dayEl.className = 'day-section';
+
+        let slotsHtml = filteredItems.map(item => {
+          // 1. Tactics micro-steps
+          const tacticsHtml = item.tactics && item.tactics.length > 0 ? `
+            <div class="tactics-box">
+              <div class="tactics-title">
+                <span>🚶‍♂️ ${item.tacticsTitle || '立ち回り推奨ステップ'}</span>
+              </div>
+              <div class="step-list">
+                ${item.tactics.map(s => `
+                  <div class="step-row">
+                    <span class="step-num">Step ${s.step}</span>
+                    <span class="step-text">${s.text}${s.must ? '<span class="step-must">必須</span>' : ''}</span>
+                  </div>
+                `).join('')}
+              </div>
+            </div>
+          ` : '';
+
+          // 2. High-Visibility Bonus Spots (ついで寄り道バナー)
+          const bonusHtml = item.bonusSpots && item.bonusSpots.length > 0 ? `
+            <div class="bonus-highlight-box">
+              <div class="bonus-highlight-header">
+                <div class="bonus-highlight-title">
+                  <span>💡 忘れない寄り道チェック（ついで名所・スイーツ）</span>
+                </div>
+                <span class="bonus-highlight-badge">立ち寄り推奨</span>
+              </div>
+              <div class="bonus-spot-list">
+                ${item.bonusSpots.map(b => `
+                  <div class="bonus-spot-row">
+                    <div class="bonus-spot-top">
+                      <span class="bonus-spot-name">📍 ${b.name}</span>
+                      <a href="${b.mapUrl}" target="_blank" class="bonus-map-btn">ピン地図 ↗</a>
+                    </div>
+                    <div class="bonus-spot-desc">${b.desc}</div>
+                  </div>
+                `).join('')}
+              </div>
+            </div>
+          ` : '';
+
+          // 3. 7-Factor Detailed Analysis Specs
+          const f = item.factors || {};
+          const factorsHtml = `
+            <div class="factors-card">
+              <div class="factors-card-title">
+                <span>📋 7つの詳細分析スペック（完全項目化）</span>
+              </div>
+              <div class="factors-grid">
+                <div class="factor-row">
+                  <div class="factor-header primary">① 概要・目的（何をする場所か）</div>
+                  <div class="factor-content">${toBullets(f.overview)}</div>
+                </div>
+                <div class="factor-row">
+                  <div class="factor-header success">② 立ち回り＆基本戦略（最速・最適手順）</div>
+                  <div class="factor-content">${toBullets(f.tactics)}</div>
+                </div>
+                <div class="factor-row">
+                  <div class="factor-header accent">③ 代替不可名物・限定体験（ここでしか味わえないもの）</div>
+                  <div class="factor-content">${toBullets(f.mustTry)}</div>
+                </div>
+                <div class="factor-row">
+                  <div class="factor-header purple">④ ついでに巡れる名所・スイーツ（立ち寄り推奨）</div>
+                  <div class="factor-content">${toBullets(f.plusOne)}</div>
+                </div>
+                <div class="factor-row">
+                  <div class="factor-header">⑤ 事前Tips・同行者配慮（歩行・トイレ・準備）</div>
+                  <div class="factor-content">${toBullets(f.tips)}</div>
+                </div>
+                <div class="factor-row">
+                  <div class="factor-header accent">⑥ 交通・移動・駐車場評価（料金・ルート・入庫性）</div>
+                  <div class="factor-content">${toBullets(f.transit)}</div>
+                </div>
+                <div class="factor-row">
+                  <div class="factor-header danger">⑦ スキップ基準・損切りタイムゲート（遅延時の判断）</div>
+                  <div class="factor-content">${toBullets(f.skipLimit)}</div>
+                </div>
+              </div>
+            </div>
+          `;
+
+          return `
+            <div class="timeline-slot">
+              <details class="slot-card" open>
+                <summary class="slot-summary">
+                  <div class="slot-top-row">
+                    <span class="slot-time-badge">⏰ ${item.time} (${item.duration})</span>
+                    <div class="badge-group">
+                      <span class="cat-badge ${item.category}">${item.category === 'food' ? '🍴 飯・喫茶' : (item.category === 'sightseeing' ? '🏛️ 観光・名所' : '🚆 移動・帰着')}</span>
+                      <span class="badge-tag badge-${item.badgeType}">${item.badge}</span>
+                    </div>
+                  </div>
+                  <div class="slot-title">${item.title}</div>
+                  <div class="slot-overview-text">${item.overview}</div>
+                  <div class="slot-expand-hint">
+                    <span>詳細（立ち回り・ついで名所・7要素スペック）を展開中</span>
+                    <span>▲</span>
+                  </div>
+                </summary>
+                <div class="slot-body">
+                  ${tacticsHtml}
+                  ${bonusHtml}
+                  ${factorsHtml}
+                  ${item.mapUrl ? `<a href="${item.mapUrl}" target="_blank" class="slot-map-btn">🗺️ このスポットのGoogleマップピンを開く ↗</a>` : ''}
+                </div>
+              </details>
+            </div>
+          `;
+        }).join('');
+
+        dayEl.innerHTML = `
+          <div class="day-header-card">
+            <div class="day-header-top">
+              <div class="day-title">Day ${day.dayNum}</div>
+              <div class="day-date">${day.dateStr}</div>
+            </div>
+            <div class="day-sub">${day.subTitle}</div>
+            <div class="macro-flow-box">
+              <div class="macro-flow-label">【マクロ行程フロー】</div>
+              <div>${day.macroRoute.join(' ➔ ')}</div>
+            </div>
+            <a href="${day.fullMapUrl}" target="_blank" class="day-fullmap-link">
+              🗺️ Day ${day.dayNum} ついでスポット含む全経由地Googleマップを開く ↗
+            </a>
+          </div>
+          <div class="slots-container">${slotsHtml}</div>
+        `;
+
+        container.appendChild(dayEl);
+      });
+
+      // Update bottom map link
+      const curDay = TRIP_DATA.days.find(d => String(d.dayNum) === TRIP_DATA.activeDayFilter);
+      const bMap = document.getElementById('bottom-map-link');
+      if (bMap) {
+        if (curDay) {
+          bMap.href = curDay.fullMapUrl;
+        } else {
+          bMap.href = TRIP_DATA.days[1].fullMapUrl; // Default to Day 2 full map
+        }
+      }
+    }
+
+    function filterDay(dayKey) {
+      TRIP_DATA.activeDayFilter = dayKey;
+      document.querySelectorAll('.filter-row:first-child .filter-btn').forEach(btn => btn.classList.remove('active'));
+      const activeBtn = document.getElementById('day-' + dayKey + '-btn');
+      if (activeBtn) activeBtn.classList.add('active');
+      renderUI();
+    }
+
+    function filterCategory(catKey) {
+      TRIP_DATA.activeCategoryFilter = catKey;
+      document.querySelectorAll('.filter-row:last-child .filter-btn').forEach(btn => btn.classList.remove('cat-active'));
+      const activeBtn = document.getElementById('cat-' + catKey + '-btn');
+      if (activeBtn) activeBtn.classList.add('cat-active');
+      renderUI();
+    }
+
+    function toggleAllAccordions() {
+      const cards = document.querySelectorAll('.slot-card');
+      const allOpen = Array.from(cards).every(c => c.open);
+      cards.forEach(c => { c.open = !allOpen; });
+    }
+
+    function copyCurrentPlan() {
+      let text = "🏯 【愛知・犬山・名古屋 リアルタイム旅程ナビ（Beta版）】\n\n";
+      
+      TRIP_DATA.days.forEach(day => {
+        text += "========================================\n";
+        text += "■ " + day.dateStr + " (Day " + day.dayNum + ")\n";
+        text += "マクロ: " + day.macroRoute.join(' ➔ ') + "\n";
+        text += "全体地図: " + day.fullMapUrl + "\n";
+        text += "========================================\n\n";
+
+        day.items.forEach(item => {
+          text += "【" + item.time + "】 " + item.title + "\n";
+          text += "・種別: " + (item.category === 'food' ? '🍴 飯・喫茶' : (item.category === 'sightseeing' ? '🏛️ 観光' : '🚆 移動')) + "\n";
+          text += "・概要: " + item.overview + "\n";
+          if (item.tactics && item.tactics.length > 0) {
+            text += "・立ち回り:\n";
+            item.tactics.forEach(t => {
+              text += "   Step " + t.step + ". " + t.text + (t.must ? " [必須]" : "") + "\n";
+            });
+          }
+          if (item.bonusSpots && item.bonusSpots.length > 0) {
+            text += "・💡 忘れない寄り道チェック:\n";
+            item.bonusSpots.forEach(b => {
+              text += "   📍 " + b.name + ": " + b.desc + "\n";
+            });
+          }
+          if (item.factors) {
+            const f = item.factors;
+            text += "・7要素スペック:\n";
+            text += "   ① 概要: " + f.overview + "\n";
+            text += "   ② 戦略: " + f.tactics + "\n";
+            text += "   ③ 名物: " + f.mustTry + "\n";
+            text += "   ④ ついで: " + f.plusOne + "\n";
+            text += "   ⑤ Tips: " + f.tips + "\n";
+            text += "   ⑥ 交通: " + f.transit + "\n";
+            text += "   ⑦ 損切り: " + f.skipLimit + "\n";
+          }
+          text += "\n";
+        });
+      });
+
+      if (navigator.clipboard) {
+        navigator.clipboard.writeText(text).then(() => {
+          alert('7要素スペック＆ついで名所を含む全旅程テキストをコピーしました！LINE等にそのまま貼り付け可能です。');
+        }).catch(() => {
+          prompt('以下のテキストをコピーしてください:', text);
+        });
+      } else {
+        prompt('以下のテキストをコピーしてください:', text);
+      }
+    }
+
+    function toggleTheme() {
+      const current = document.documentElement.getAttribute('data-theme') || 'light';
+      const next = current === 'dark' ? 'light' : 'dark';
+      document.documentElement.setAttribute('data-theme', next);
+      localStorage.setItem('trip_nav_theme', next);
+      const icon = document.getElementById('theme-icon');
+      const text = document.getElementById('theme-text');
+      if (icon && text) {
+        if (next === 'dark') {
+          icon.textContent = '🌙';
+          text.textContent = 'ダーク';
+        } else {
+          icon.textContent = '☀️';
+          text.textContent = 'ライト';
+        }
+      }
+    }
+
+    document.addEventListener('DOMContentLoaded', () => {
+      const stored = localStorage.getItem('trip_nav_theme') || 'light';
+      document.documentElement.setAttribute('data-theme', stored);
+      const icon = document.getElementById('theme-icon');
+      const text = document.getElementById('theme-text');
+      if (icon && text) {
+        icon.textContent = stored === 'dark' ? '🌙' : '☀️';
+        text.textContent = stored === 'dark' ? 'ダーク' : 'ライト';
+      }
+      renderUI();
+    });
+  </script>
+</body>
+</html>
