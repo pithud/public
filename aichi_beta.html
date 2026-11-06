@@ -650,6 +650,90 @@ header {
   border: 1px solid var(--border-hairline);
 }
 
+.pill-badge.flexible {
+  background: rgba(124, 58, 237, 0.08);
+  color: #7c3aed;
+  border: 1px solid rgba(124, 58, 237, 0.28);
+}
+
+[data-theme="dark"] .pill-badge.flexible {
+  background: rgba(167, 139, 250, 0.14);
+  color: #a78bfa;
+  border-color: rgba(167, 139, 250, 0.35);
+}
+
+.spot-card.is-flexible {
+  border-left: 3px solid #7c3aed;
+}
+
+[data-theme="dark"] .spot-card.is-flexible {
+  border-left: 3px solid #a78bfa;
+}
+
+.swap-guide-box {
+  margin: 10px 18px 12px;
+  padding: 11px 14px;
+  background: rgba(124, 58, 237, 0.04);
+  border: 1px dashed rgba(124, 58, 237, 0.3);
+  border-radius: 8px;
+  font-size: 0.78rem;
+  line-height: 1.5;
+}
+
+[data-theme="dark"] .swap-guide-box {
+  background: rgba(167, 139, 250, 0.06);
+  border-color: rgba(167, 139, 250, 0.35);
+}
+
+.swap-guide-title {
+  font-weight: 750;
+  color: #7c3aed;
+  margin-bottom: 6px;
+  display: flex;
+  align-items: center;
+  gap: 5px;
+}
+
+[data-theme="dark"] .swap-guide-title {
+  color: #c4b5fd;
+}
+
+.swap-guide-row {
+  display: flex;
+  align-items: baseline;
+  gap: 6px;
+  margin-bottom: 4px;
+}
+
+.swap-guide-tag {
+  font-weight: 700;
+  font-size: 0.68rem;
+  padding: 1px 6px;
+  border-radius: 4px;
+  white-space: nowrap;
+  flex-shrink: 0;
+}
+
+.swap-guide-tag.opt-a {
+  background: rgba(37, 99, 235, 0.12);
+  color: #1d4ed8;
+}
+
+.swap-guide-tag.opt-b {
+  background: rgba(16, 185, 129, 0.12);
+  color: #047857;
+}
+
+[data-theme="dark"] .swap-guide-tag.opt-a {
+  background: rgba(56, 189, 248, 0.18);
+  color: #7dd3fc;
+}
+
+[data-theme="dark"] .swap-guide-tag.opt-b {
+  background: rgba(52, 211, 153, 0.18);
+  color: #6ee7b7;
+}
+
 .spot-title-row {
   display: flex;
   align-items: flex-start;
@@ -1116,7 +1200,7 @@ body.compact-mode .slot-details-body {
       "dayNum": 1,
       "shortLabel": "11/7(金) 名駅・熱田",
       "dateStr": "2026年11月7日 (金)",
-      "subTitle": "高蔵寺カラオケ ➔ 大曽根乗換 ➔ 名古屋城本丸御殿 ➔ 熱田神宮・草薙館 ➔ 夢を語れ愛知（小倉トーストは現地自由選択）",
+      "subTitle": "高蔵寺カラオケ ➔ 【先小倉 vs 後小倉：自在入替】 ➔ 名古屋城本丸御殿 ➔ 熱田神宮・草薙館 ➔ 夢を語れ愛知",
       "macroRoute": [
         "高蔵寺カラオケ",
         "大曽根乗換（名城線）",
@@ -1188,11 +1272,11 @@ body.compact-mode .slot-details-body {
           "id": "d1-jr-ozone",
           "time": "12:15 - 12:35",
           "duration": "20分",
-          "badge": "JR快速移動",
-          "badgeType": "transit",
+          "badge": "分岐移動枠",
+          "badgeType": "flexible",
           "category": "transit",
-          "title": "JR中央本線 快速（高蔵寺 ➔ 大曽根）",
-          "overview": "名駅の巨大ターミナル混雑を完全回避。手前の大曽根駅で下車し、地下鉄名城線へショートカット乗り換え。",
+          "title": "高蔵寺駅 ➔ 大曽根 または 名古屋駅（先小倉/後小倉で選択）",
+          "overview": "【Pattern A：先小倉】なら終点「名古屋駅」まで快速直通（約28分・510円）。【Pattern B：後小倉】なら手前の「大曽根駅」で下車（約16分・330円）し地下鉄名城線へショートカット。",
           "tacticsTitle": "大曽根ショートカット手順",
           "tactics": [
             {
@@ -1234,7 +1318,22 @@ body.compact-mode .slot-details-body {
               "must": true,
               "mapUrl": "https://www.google.com/maps/dir/?api=1&origin=高蔵寺駅&destination=大曽根駅"
             }
-          ]
+          ],
+          "swapGuide": {
+            "title": "高蔵寺からの降車駅分岐",
+            "options": [
+              {
+                "tag": "先小倉トースト",
+                "tagClass": "opt-a",
+                "text": "終点「名古屋駅」まで快速28分 ➔ 新幹線口エスカ直結のアロマ珈琲へ直行（12:50着）"
+              },
+              {
+                "tag": "先名古屋城",
+                "tagClass": "opt-b",
+                "text": "手前の「大曽根駅」で下車（快速16分） ➔ 名城線で名古屋城駅へダイレクト（12:50着）"
+              }
+            ]
+          }
         },
         {
           "id": "d1-meijo-nagoyajo",
@@ -1378,11 +1477,11 @@ body.compact-mode .slot-details-body {
           "id": "d1-ogura-buffer",
           "time": "随時（前後自由）",
           "duration": "40〜50分",
-          "badge": "【自由選択】各エリア候補",
-          "badgeType": "food",
+          "badge": "🔄 順序入替自由",
+          "badgeType": "flexible",
           "category": "food",
-          "title": "小倉トースト ＆ 喫茶ブレイク（観光の前後・現地判断で選択）",
-          "overview": "夜の二郎系や帰宅時間に縛られないため、小倉トーストはお腹の空き具合と観光進行に合わせて3大エリアから前後どこでも立ち寄り可能。各エリアの厳選候補を常備。",
+          "title": "【順序入替枠】小倉トースト ＆ 珈琲ブレイク（先小倉 vs 後小倉）",
+          "overview": "当日の空腹度や気分に合わせて「先に食べる（名駅）」か「名古屋城の後に食べる（久屋大通 加藤珈琲店）」を自由に入れ替え可能。どちらの順序でも名古屋城（16:00最終入場）・熱田神宮草薙館（16:00最終入館）に完全間に合います。",
           "tacticsTitle": "3大エリア別・厳選候補一覧",
           "tactics": [
             {
@@ -1435,24 +1534,39 @@ body.compact-mode .slot-details-body {
           "mapUrl": "https://www.google.com/maps/search/?api=1&query=加藤珈琲店+久屋大通",
           "checkpoints": [
             {
-              "title": "【候補1・最推奨】加藤珈琲店（久屋大通・百名店）",
-              "desc": "名城線1駅・久屋大通駅3B出口徒歩2分。全国屈指の自家焙煎珈琲と極上小倉トースト（約40分）。",
+              "title": "【Pattern A：先小倉】名駅エスカ「喫茶 アロマ珈琲」または「BUCYO COFFEE」",
+              "desc": "高蔵寺から快速で名駅へ直行（28分）。新幹線地下街直結のアロマ珈琲で極厚小倉トーストを先に満喫（12:50〜13:40）。食後に地下鉄東山線栄乗換名城線で名古屋城へ（約15分・14:00入城）。",
+              "must": false,
+              "mapUrl": "https://www.google.com/maps/search/?api=1&query=アロマ珈琲+エスカ"
+            },
+            {
+              "title": "【Pattern B：後小倉】久屋大通「加藤珈琲店」（名城線1駅・食べログ百名店）",
+              "desc": "高蔵寺から大曽根経由で先に名古屋城へ（13:00入城）。見学後に名城線で1駅の久屋大通へ移動し、全国屈指の極上自家焙煎珈琲と厚切り小倉トーストを堪能（14:25〜15:15）。食後に名城線直通で熱田神宮へ（15分）。",
               "must": false,
               "mapUrl": "https://www.google.com/maps/search/?api=1&query=加藤珈琲店+久屋大通"
             },
             {
-              "title": "【候補2・熱田神宮】きよめ餅総本家 喫茶部 または あつた nagAya",
-              "desc": "熱田神宮参拝の直前・直後に門前で和スイーツブレイク（喫茶は17:00L.O.）。",
+              "title": "【Pattern C：熱田門前】きよめ餅総本家 喫茶部 または あつた nagAya",
+              "desc": "観光を優先し、熱田神宮参拝の直前・直後に門前で名物きよめ餅とお茶・和スイーツブレイク（喫茶部は17:00L.O.）。",
               "must": false,
               "mapUrl": "https://www.google.com/maps/search/?api=1&query=きよめ餅総本家"
-            },
-            {
-              "title": "【候補3・名駅】喫茶 アロマ珈琲（エスカ直結）",
-              "desc": "新幹線口エスカ地下街のクラシック名喫茶。極厚切りトースト。",
-              "must": false,
-              "mapUrl": "https://www.google.com/maps/search/?api=1&query=アロマ珈琲+エスカ"
             }
-          ]
+          ],
+          "swapGuide": {
+            "title": "先小倉 vs 後小倉：2大ルート比較",
+            "options": [
+              {
+                "tag": "Pattern A：先小倉",
+                "tagClass": "opt-a",
+                "text": "高蔵寺 ➔ 名古屋駅（快速28分） ➔ 喫茶アロマ珈琲（エスカ直結 12:50〜13:40） ➔ 地下鉄東山・名城線で名古屋城（14:00〜15:15） ➔ 名城線直通で熱田神宮（15:40〜16:45）"
+              },
+              {
+                "tag": "Pattern B：後小倉",
+                "tagClass": "opt-b",
+                "text": "高蔵寺 ➔ 大曽根乗換（名城線） ➔ 名古屋城（13:00〜14:15） ➔ 久屋大通・加藤珈琲店（百名店 14:25〜15:15） ➔ 名城線直通で熱田神宮（15:40〜16:45）"
+              }
+            ]
+          }
         },
         {
           "id": "d1-meijo-move",
@@ -2670,11 +2784,30 @@ body.compact-mode .slot-details-body {
             ? '🍴 飯・喫茶'
             : (item.category === 'sightseeing' ? '🏛️ 観光' : '🚆 移動');
 
-          const subBadgeClass = item.badgeType === 'national' ? 'national' : 'transit';
+          const subBadgeClass = item.badgeType === 'national' 
+            ? 'national' 
+            : (item.badgeType === 'flexible' ? 'flexible' : 'transit');
+
+          const isFlexible = item.badgeType === 'flexible';
+
+          let swapGuideHtml = '';
+          if (item.swapGuide) {
+            swapGuideHtml = `
+              <div class="swap-guide-box">
+                <div class="swap-guide-title"><span>🔄</span> <span>${item.swapGuide.title}</span></div>
+                ${item.swapGuide.options.map(opt => `
+                  <div class="swap-guide-row">
+                    <span class="swap-guide-tag ${opt.tagClass}">${opt.tag}</span>
+                    <span class="swap-guide-text">${opt.text}</span>
+                  </div>
+                `).join('')}
+              </div>
+            `;
+          }
 
           return `
             <article class="slot-node ${nodeClass}" id="slot-${item.id}">
-              <div class="spot-card ${isTransit ? 'is-transit' : ''}">
+              <div class="spot-card ${isTransit ? 'is-transit' : ''} ${isFlexible ? 'is-flexible' : ''}">
                 <div class="spot-card-head">
                   <div class="spot-meta-bar">
                     <div class="spot-time-cluster">
@@ -2692,6 +2825,7 @@ body.compact-mode .slot-details-body {
                   </div>
                   <p class="spot-overview">${item.overview}</p>
                 </div>
+                ${swapGuideHtml}
 
                 <!-- Unified Default-Open Route Checkpoints & Practical Footer -->
                 <div class="slot-details-body">
