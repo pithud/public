@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
-  <title>愛知・犬山・名古屋 旅程ナビ（11/7〜11/8）</title>
+  <title>愛知・犬山・名古屋 旅程ナビ（11/7〜11/8） </title>
   <script>
     (function() {
       var t = localStorage.getItem('trip_nav_theme') || 'light';
@@ -1071,21 +1071,21 @@ body.compact-mode .slot-details-body {
       <div class="header-controls-row" role="toolbar" aria-label="日程・カテゴリ絞り込み">
         <div class="segmented-pill-group" id="day-segments">
           <button class="seg-btn active" type="button" id="day-all-btn" onclick="filterDay('all')">全日程</button>
-          <button class="seg-btn" type="button" id="day-1-btn" onclick="filterDay('1')">11/7(金) 名駅・熱田</button>
-          <button class="seg-btn" type="button" id="day-2-btn" onclick="filterDay('2')">11/8(土) 犬山フル攻略</button>
+          <button class="seg-btn" type="button" id="day-1-btn" onclick="filterDay('1')">11/7(土) 名駅・熱田</button>
+          <button class="seg-btn" type="button" id="day-2-btn" onclick="filterDay('2')">11/8(日) 犬山フル攻略</button>
         </div>
         <div class="segmented-pill-group" id="cat-segments">
           <button class="seg-btn active-cat" type="button" id="cat-all-btn" onclick="filterCategory('all')">
             <span>すべて</span>
-            <span class="seg-count" id="count-all">15</span>
+            <span class="seg-count" id="count-all">0</span>
           </button>
           <button class="seg-btn" type="button" id="cat-sightseeing-btn" onclick="filterCategory('sightseeing')">
             <span>🏛️ 観光</span>
-            <span class="seg-count" id="count-sightseeing">5</span>
+            <span class="seg-count" id="count-sightseeing">0</span>
           </button>
           <button class="seg-btn" type="button" id="cat-food-btn" onclick="filterCategory('food')">
             <span>🍴 飯・喫茶</span>
-            <span class="seg-count" id="count-food">3</span>
+            <span class="seg-count" id="count-food">0</span>
           </button>
         </div>
       </div>
@@ -1094,10 +1094,8 @@ body.compact-mode .slot-details-body {
 
   <!-- Main Mobile Workspace -->
   <main class="main-wrapper">
-    <!-- Horizontal Swipe Quick-Jump Spot Bar -->
     <nav class="quick-jump-bar" id="quick-jump-bar" aria-label="主要スポットへジャンプ"></nav>
 
-    <!-- Intuitive Guide Legend -->
     <div class="legend-bar">
       <div class="legend-items">
         <span class="legend-item">
@@ -1106,13 +1104,12 @@ body.compact-mode .slot-details-body {
         </span>
         <span class="legend-item">
           <span class="cp-badge skippable">スキップ可</span>
-          <span>ついで寄り道・代替候補（バッジをタップで打消し可）</span>
+          <span>ついで寄り道・代替候補（タップで打消し）</span>
         </span>
       </div>
       <span style="font-size:0.71rem; color:var(--text-tertiary);">全詳細デフォルト展開</span>
     </div>
 
-    <!-- Dynamic Timeline Container -->
     <div id="timeline-container"></div>
   </main>
 
@@ -1198,8 +1195,8 @@ body.compact-mode .slot-details-body {
   "days": [
     {
       "dayNum": 1,
-      "shortLabel": "11/7(金) 名駅・熱田",
-      "dateStr": "2026年11月7日 (金)",
+      "shortLabel": "11/7(土) 名駅・熱田",
+      "dateStr": "2026年11月7日 (土)",
       "subTitle": "高蔵寺カラオケ ➔ 【先小倉 vs 後小倉：自在入替】 ➔ 名古屋城本丸御殿 ➔ 熱田神宮・草薙館 ➔ 夢を語れ愛知",
       "macroRoute": [
         "高蔵寺カラオケ",
@@ -1830,8 +1827,8 @@ body.compact-mode .slot-details-body {
     },
     {
       "dayNum": 2,
-      "shortLabel": "11/8(土) 犬山フル攻略",
-      "dateStr": "2026年11月8日 (土)",
+      "shortLabel": "11/8(日) 犬山フル攻略",
+      "dateStr": "2026年11月8日 (日)",
       "subTitle": "家族車で犬山フル攻略（国宝犬山城・如庵・城下町・桃太郎神社・寂光院）➔ 犬山駅ドロップオフ ➔ 名鉄特急直行 ➔ 名駅スガキヤ ➔ 新幹線のぞみ東京帰還",
       "macroRoute": [
         "実家発（家族車08:30）",
@@ -2544,7 +2541,7 @@ body.compact-mode .slot-details-body {
           "badgeType": "transit",
           "category": "transit",
           "title": "東海道新幹線 のぞみ（名古屋 ➔ 東京 帰還）",
-          "overview": "名古屋駅から東海道新幹線のぞみ号に乗車。18時台発の新幹線に乗れるため、20:00頃には東京駅へ快適帰還。翌日（日曜日）をまるまる休養に充てられる完璧な週末スケジュール。",
+          "overview": "名古屋駅から東海道新幹線のぞみ号に乗車。18時台発の新幹線に乗れるため、20:00頃には東京駅へ快適帰還。日曜夜に余裕を持って帰還し翌日（月曜日）に響かない完璧な週末スケジュール。",
           "tacticsTitle": "新幹線帰還ステップ",
           "tactics": [
             {
@@ -2592,12 +2589,13 @@ body.compact-mode .slot-details-body {
     }
   ]
 };
+    const STORAGE_KEY = 'aichi_skipped_cp';
     let mustOnlyMode = false;
     let compactMode = false;
     let skippedMap = {};
 
     try {
-      skippedMap = JSON.parse(localStorage.getItem('aichi_skipped_cp') || '{}');
+      skippedMap = JSON.parse(localStorage.getItem(STORAGE_KEY) || '{}');
     } catch (_) {
       skippedMap = {};
     }
@@ -2606,7 +2604,7 @@ body.compact-mode .slot-details-body {
       const activeDays = TRIP_DATA.days.filter(d =>
         TRIP_DATA.activeDayFilter === 'all' || String(d.dayNum) === TRIP_DATA.activeDayFilter
       );
-      const allItems = activeDays.reduce((acc, d) => acc.concat(d.items), []);
+      const allItems = activeDays.reduce((acc, d) => acc.concat(d.items || []), []);
       const sightCount = allItems.filter(i => i.category === 'sightseeing').length;
       const foodCount = allItems.filter(i => i.category === 'food').length;
 
@@ -2621,24 +2619,24 @@ body.compact-mode .slot-details-body {
     function renderQuickJumpBar() {
       const jumpBar = document.getElementById('quick-jump-bar');
       if (!jumpBar) return;
-      const jumpTargets = [
-        { id: 'd1-nagoya-castle', day: '1', cat: 'sightseeing', label: '🏯 名古屋城・本丸御殿' },
-        { id: 'd1-ogura-buffer', day: '1', cat: 'food', label: '🍞 小倉トースト（自由選択）' },
-        { id: 'd1-atsuta-jingu', day: '1', cat: 'sightseeing', label: '⛩️ 熱田神宮・草薙館' },
-        { id: 'd1-yume-wo-katare', day: '1', cat: 'food', label: '🍜 夢を語れ愛知' },
-        { id: 'd2-inuyama-castle', day: '2', cat: 'sightseeing', label: '🏯 国宝犬山城・三光稲荷' },
-        { id: 'd2-urakuen-joan', day: '2', cat: 'sightseeing', label: '🍵 国宝茶室 如庵' },
-        { id: 'd2-inuyama-castle-town', day: '2', cat: 'food', label: '🍡 城下町・山田五平餅' },
-        { id: 'd2-momotaro-shrine', day: '2', cat: 'sightseeing', label: '🍑 桃太郎神社' },
-        { id: 'd2-jakkoin-temple', day: '2', cat: 'sightseeing', label: '🍁 継鹿尾山 寂光院' },
-        { id: 'd2-sugakiya-esca', day: '2', cat: 'food', label: '🍜 スガキヤ名駅エスカ店' }
-      ].filter(t => {
+
+      const metaTargets = (TRIP_DATA.meta && TRIP_DATA.meta.jumpTargets) || [];
+      const targets = metaTargets.length > 0 ? metaTargets : TRIP_DATA.days.flatMap(d =>
+        (d.items || []).filter(i => i.category !== 'transit').map(i => ({
+          id: i.id,
+          day: String(d.dayNum),
+          cat: i.category,
+          label: i.title.replace(/（.*?）|\(.*?\)/g, '').trim()
+        }))
+      );
+
+      const filtered = targets.filter(t => {
         if (TRIP_DATA.activeDayFilter !== 'all' && TRIP_DATA.activeDayFilter !== t.day) return false;
         if (TRIP_DATA.activeCategoryFilter !== 'all' && TRIP_DATA.activeCategoryFilter !== t.cat) return false;
         return true;
       });
 
-      jumpBar.innerHTML = jumpTargets.map(t =>
+      jumpBar.innerHTML = filtered.map(t =>
         `<a href="#slot-${t.id}" class="jump-chip">${t.label}</a>`
       ).join('');
     }
@@ -2646,7 +2644,7 @@ body.compact-mode .slot-details-body {
     function toggleSkipCheckpoint(cpKey) {
       skippedMap[cpKey] = !skippedMap[cpKey];
       try {
-        localStorage.setItem('aichi_skipped_cp', JSON.stringify(skippedMap));
+        localStorage.setItem(STORAGE_KEY, JSON.stringify(skippedMap));
       } catch (_) {}
       renderUI();
     }
@@ -2684,7 +2682,7 @@ body.compact-mode .slot-details-body {
           return;
         }
 
-        const filteredItems = day.items.filter(item => {
+        const filteredItems = (day.items || []).filter(item => {
           if (TRIP_DATA.activeCategoryFilter === 'all') return true;
           return item.category === TRIP_DATA.activeCategoryFilter;
         });
@@ -2712,7 +2710,7 @@ body.compact-mode .slot-details-body {
         const dayEl = document.createElement('div');
         dayEl.className = 'day-block';
 
-        const macroStripHtml = day.macroRoute.map((stepName, idx) => {
+        const macroStripHtml = (day.macroRoute || []).map((stepName, idx) => {
           const arrow = idx < day.macroRoute.length - 1 ? '<span class="macro-arrow">➔</span>' : '';
           return '<span class="macro-chip">' + stepName + '</span>' + arrow;
         }).join('');
@@ -2827,7 +2825,6 @@ body.compact-mode .slot-details-body {
                 </div>
                 ${swapGuideHtml}
 
-                <!-- Unified Default-Open Route Checkpoints & Practical Footer -->
                 <div class="slot-details-body">
                   <div class="checkpoint-list">
                     ${checkpointsHtml}
@@ -2846,11 +2843,12 @@ body.compact-mode .slot-details-body {
                 <span class="day-eyebrow">DAY 0${day.dayNum}</span>
                 <span class="day-date-text">${day.dateStr}</span>
               </div>
+              ${day.fullMapUrl ? `
               <a href="${day.fullMapUrl}" target="_blank" rel="noopener" class="day-route-map-btn">
                 <span>🗺️ Day ${day.dayNum} 全経由地マップ ↗</span>
-              </a>
+              </a>` : ''}
             </div>
-            <div class="day-subtitle-text">${day.subTitle}</div>
+            <div class="day-subtitle-text">${day.subTitle || ''}</div>
             <div class="macro-flow-strip">${macroStripHtml}</div>
           </div>
           <div class="timeline-vertical">${slotsHtml}</div>
@@ -2862,7 +2860,8 @@ body.compact-mode .slot-details-body {
       const curDay = TRIP_DATA.days.find(d => String(d.dayNum) === TRIP_DATA.activeDayFilter);
       const bMap = document.getElementById('bottom-map-link');
       if (bMap) {
-        bMap.href = curDay ? curDay.fullMapUrl : TRIP_DATA.days[1].fullMapUrl;
+        const fallbackUrl = (TRIP_DATA.days[0] && TRIP_DATA.days[0].fullMapUrl) || 'https://www.google.com/maps';
+        bMap.href = curDay ? (curDay.fullMapUrl || fallbackUrl) : fallbackUrl;
       }
     }
 
