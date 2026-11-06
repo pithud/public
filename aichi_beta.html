@@ -1671,7 +1671,7 @@ body.compact-mode .slot-details-body {
       "dayNum": 2,
       "shortLabel": "11/8(土) 犬山フル攻略",
       "dateStr": "2026年11月8日 (土)",
-      "subTitle": "朝08:30発 家族車で犬山フル攻略（国宝犬山城 ➔ 国宝茶室如庵 ➔ 城下町昼食 ➔ 桃太郎神社 ➔ 寂光院） ➔ 17:00実家直帰",
+      "subTitle": "家族車で犬山フル攻略（国宝犬山城・如庵・城下町・桃太郎神社・寂光院）➔ 実家帰着 ➔ 名駅スガキヤ回収・東京帰還",
       "macroRoute": [
         "実家発（家族車08:30）",
         "犬山城第1駐車場",
@@ -1681,7 +1681,10 @@ body.compact-mode .slot-details-body {
         "犬山城下町（家族昼食・五平餅）",
         "桃太郎神社（浅野祥雲）",
         "寂光院（尾張のもみじ寺）",
-        "実家直帰（17:00着）"
+        "実家帰着（17:00）",
+        "JR中央線（高蔵寺➔名駅）",
+        "スガキヤ 名駅エスカ店",
+        "東海道新幹線（名古屋➔東京）"
       ],
       "fullMapUrl": "https://www.google.com/maps/dir/?api=1&origin=春日井市高蔵寺町&destination=春日井市高蔵寺町&waypoints=犬山城第1駐車場|国宝犬山城|三光稲荷神社|有楽苑|山田五平餅店|桃太郎神社|寂光院",
       "items": [
@@ -2235,6 +2238,183 @@ body.compact-mode .slot-details-body {
               "mapUrl": "https://www.google.com/maps/search/?api=1&query=高蔵寺駅"
             }
           ]
+        },
+        {
+          "id": "d2-jr-move-tokyo",
+          "time": "17:45 - 18:20",
+          "duration": "35分",
+          "badge": "JR快速移動",
+          "badgeType": "transit",
+          "category": "transit",
+          "title": "JR中央本線 快速（高蔵寺 ➔ 名古屋駅 移動）",
+          "overview": "実家で身支度を整え、高蔵寺駅からJR中央本線快速で名古屋駅へ直通移動（所要約28分・510円）。新幹線口（太閤通口）エスカ地下街へ直行。",
+          "tacticsTitle": "名駅アクセス手順",
+          "tactics": [
+            {
+              "step": 1,
+              "text": "高蔵寺駅北口からJR中央本線快速（名古屋行）に乗車。",
+              "must": true
+            },
+            {
+              "step": 2,
+              "text": "大曽根・千種・金山を経由し名古屋駅に到着。中央口または桜通口改札を出て、中央コンコースを通り太閤通口（新幹線口）へ向かう。",
+              "must": true
+            },
+            {
+              "step": 3,
+              "text": "新幹線改札横のエスカレーターを下り、エスカ地下街へ。",
+              "must": true
+            }
+          ],
+          "bonusSpots": [],
+          "factors": {
+            "overview": "実家から名古屋駅・新幹線コンコースへのスマートアクセス。",
+            "tactics": "新幹線指定席を事前にEX予約等で確保しておくと、スガキヤの時間を完全に逆算可能。",
+            "mustTry": "名古屋駅中央コンコースの活気。",
+            "plusOne": "エスカ地下街の各種お土産店舗。",
+            "tips": "高蔵寺駅発の快速は10〜15分間隔で運行。",
+            "transit": "JR中央本線快速で約28分、運賃510円。",
+            "skipLimit": "18:30までに名古屋駅に着けば、スガキヤを食べて19時台の新幹線に乗車可能。"
+          },
+          "mapUrl": "https://www.google.com/maps/dir/?api=1&origin=高蔵寺駅&destination=名古屋駅",
+          "checkpoints": [
+            {
+              "title": "高蔵寺駅 ➔ JR中央本線快速に乗車",
+              "desc": "快速名古屋行に乗車。終点名古屋駅まで乗り換えなし約28分（510円）。",
+              "must": true
+            },
+            {
+              "title": "名古屋駅到着 ➔ 太閤通口（新幹線口）エスカ地下街へ",
+              "desc": "中央口を出て太閤通口へ通り抜け、エスカレーターで地下街「エスカ」へ直行。",
+              "must": true,
+              "mapUrl": "https://www.google.com/maps/dir/?api=1&origin=高蔵寺駅&destination=名古屋駅"
+            }
+          ]
+        },
+        {
+          "id": "d2-sugakiya-esca",
+          "time": "18:25 - 19:05",
+          "duration": "40分",
+          "badge": "【必食】ソウルフード回収",
+          "badgeType": "food",
+          "category": "food",
+          "title": "スガキヤ 名古屋エスカ店（愛知ソウルフード回収 ＆ 新幹線直結）",
+          "overview": "愛知県民の魂の味「スガキヤ」。新幹線改札から徒歩1分のエスカ地下街にて、唯一無二の和風とんこつラーメン（あのラーメンフォーク付き）と、特製ソフトクリームまたはクリームぜんざいをサクッと回収。新幹線乗車直前の最強フィナーレ。",
+          "tacticsTitle": "スガキヤ回収手順",
+          "tactics": [
+            {
+              "step": 1,
+              "text": "エスカ地下街奥の「スガキヤ 名古屋エスカ店」へ入店（レジで先に注文・会計）。",
+              "must": true
+            },
+            {
+              "step": 2,
+              "text": "「ラーメン（または特製ラーメン）」と「クリームぜんざい（またはソフトクリーム）」を注文。ブザーを受け取り着席。",
+              "must": true
+            },
+            {
+              "step": 3,
+              "text": "名物ラーメンフォークで白濁和風とんこつスープと細縮れ麺を味わい、食後に冷たいクリームぜんざいで完璧に締める。",
+              "must": true
+            },
+            {
+              "step": 4,
+              "text": "食器を返却し、エスカレーターを上がって新幹線北口/南口改札へ直行（徒歩1分）。",
+              "must": true
+            }
+          ],
+          "bonusSpots": [
+            {
+              "name": "スガキヤ 名古屋エスカ店",
+              "desc": "新幹線改札から一番近いスガキヤ。伝統の和風とんこつスープとラーメンフォーク。",
+              "mapUrl": "https://www.google.com/maps/search/?api=1&query=スガキヤ+名古屋エスカ店"
+            },
+            {
+              "name": "グランドキヨスク名古屋（新幹線改札前）",
+              "desc": "新幹線改札前の巨大土産店。ゆかり・ういろう・赤福の調達に最適。",
+              "mapUrl": "https://www.google.com/maps/search/?api=1&query=グランドキヨスク名古屋"
+            }
+          ],
+          "factors": {
+            "overview": "愛知遠征の最後を締めくくる伝統のソウルフード。新幹線直結のため時間ロスが極小。",
+            "tactics": "提供が極めて早いため、注文から完食まで30分以内で余裕を持って完了可能。",
+            "mustTry": "魚介だしの効いた和風とんこつスープ＋ラーメンフォークでの麺リフト＋食後のクリームぜんざい。",
+            "plusOne": "店頭販売のスガキヤ生ラーメン・袋麺（自宅用土産）。",
+            "tips": "エスカ店は完全禁煙、回転が早く列があってもすぐ着席可能。各種電子マネー対応。",
+            "transit": "JR名古屋駅新幹線改札から徒歩約1分（地下街エスカ内）。",
+            "skipLimit": "新幹線発車時刻の20分前に退店すれば余裕でホームへ到達可能。"
+          },
+          "mapUrl": "https://www.google.com/maps/search/?api=1&query=スガキヤ+名古屋エスカ店",
+          "checkpoints": [
+            {
+              "title": "スガキヤ 名古屋エスカ店 入店 ＆ 注文",
+              "desc": "エスカ地下街奥。レジでラーメン（または特製ラーメン）＋クリームぜんざいを注文。",
+              "must": true,
+              "mapUrl": "https://www.google.com/maps/search/?api=1&query=スガキヤ+名古屋エスカ店"
+            },
+            {
+              "title": "ラーメンフォークで和風とんこつ ＆ クリームぜんざい堪能",
+              "desc": "唯一無二の魚介とんこつ味を堪能し、北海道産小豆とソフトクリームのぜんざいで締める（約30分）。",
+              "must": true
+            },
+            {
+              "title": "新幹線改札へ移動（徒歩1分）➔ グランドキヨスク土産調達",
+              "desc": "エスカレーターを上がって新幹線改札へ。必要に応じてお土産を購入しホームへ。",
+              "must": true
+            }
+          ]
+        },
+        {
+          "id": "d2-shinkansen-tokyo",
+          "time": "19:15 - 20:55",
+          "duration": "1時間40分",
+          "badge": "新幹線のぞみ",
+          "badgeType": "transit",
+          "category": "transit",
+          "title": "東海道新幹線 のぞみ（名古屋 ➔ 東京 帰還）",
+          "overview": "名古屋駅から東海道新幹線のぞみ号に乗車。わずか1時間40分で東京駅へスマート帰還。充実の愛知・犬山2日間が完結。",
+          "tacticsTitle": "新幹線帰還ステップ",
+          "tactics": [
+            {
+              "step": 1,
+              "text": "新幹線南口/北口改札をEX-ICまたはスマートEX（モバイルSuica）でタッチ入場。",
+              "must": true
+            },
+            {
+              "step": 2,
+              "text": "14・15番線ホーム（上り 東京方面）へ。のぞみ号に乗車。",
+              "must": true
+            },
+            {
+              "step": 3,
+              "text": "新横浜・品川を経て東京駅に到着。帰宅。",
+              "must": true
+            }
+          ],
+          "bonusSpots": [],
+          "factors": {
+            "overview": "名古屋から東京への最速アクセス。夜の車内で旅の余韻を振り返る。",
+            "tactics": "進行方向左側席（E席・2人掛け窓側）を確保すると快適。",
+            "mustTry": "スガキヤの余韻を噛み締めながらの車窓夜景。",
+            "plusOne": "車内改札不要のスムーズなEX-IC乗車。",
+            "tips": "のぞみ号は3〜5分間隔で運行されているため時間変更も自在。",
+            "transit": "東海道新幹線のぞみ号で約1時間37分〜1時間40分。",
+            "skipLimit": "21時台までの新幹線に乗れば当日中に都内自宅へ帰宅完了。"
+          },
+          "mapUrl": "https://www.google.com/maps/dir/?api=1&origin=名古屋駅&destination=東京駅",
+          "checkpoints": [
+            {
+              "title": "新幹線改札入場 ➔ 14・15番線ホーム（東京行）へ",
+              "desc": "EX-ICでタッチ入場しホームへ上がる。",
+              "must": true
+            },
+            {
+              "title": "のぞみ号乗車 ➔ 東京駅到着（愛知・犬山旅完結）",
+              "desc": "所要約1時間40分で東京駅着。無事帰還。",
+              "must": true,
+              "mapUrl": "https://www.google.com/maps/dir/?api=1&origin=名古屋駅&destination=東京駅"
+            }
+          ]
         }
       ]
     }
@@ -2278,7 +2458,8 @@ body.compact-mode .slot-details-body {
         { id: 'd2-urakuen-joan', day: '2', cat: 'sightseeing', label: '🍵 国宝茶室 如庵' },
         { id: 'd2-inuyama-castle-town', day: '2', cat: 'food', label: '🍡 城下町・山田五平餅' },
         { id: 'd2-momotaro-shrine', day: '2', cat: 'sightseeing', label: '🍑 桃太郎神社' },
-        { id: 'd2-jakkoin-temple', day: '2', cat: 'sightseeing', label: '🍁 継鹿尾山 寂光院' }
+        { id: 'd2-jakkoin-temple', day: '2', cat: 'sightseeing', label: '🍁 継鹿尾山 寂光院' },
+        { id: 'd2-sugakiya-esca', day: '2', cat: 'food', label: '🍜 スガキヤ名駅エスカ店' }
       ].filter(t => {
         if (TRIP_DATA.activeDayFilter !== 'all' && TRIP_DATA.activeDayFilter !== t.day) return false;
         if (TRIP_DATA.activeCategoryFilter !== 'all' && TRIP_DATA.activeCategoryFilter !== t.cat) return false;
