@@ -2,8 +2,8 @@
 <html lang="ja">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>【Beta】愛知・犬山・名古屋 リアルタイム旅程ナビ（11/7〜11/8）</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+  <title>愛知・犬山・名古屋 旅程ナビ（11/7〜11/8）</title>
   <script>
     (function() {
       var t = localStorage.getItem('trip_nav_theme') || 'light';
@@ -12,616 +12,495 @@
   </script>
   <style>
 :root, [data-theme="light"] {
-  --bg: #f8fafc;
-  --card-bg: #ffffff;
-  --card-inner: #f1f5f9;
-  --header-bg: rgba(255, 255, 255, 0.96);
-  --border: #cbd5e1;
-  --border-subtle: #e2e8f0;
-  --text: #0f172a;
+  --bg-page: #f8fafc;
+  --bg-card: #ffffff;
+  --bg-card-subtle: #f1f5f9;
+  --bg-card-hover: #f8fafc;
+  --header-bg: rgba(255, 255, 255, 0.88);
+  --border-color: rgba(203, 213, 225, 0.7);
+  --border-focus: #2563eb;
+  --text-main: #0f172a;
   --text-muted: #64748b;
-  --primary: #0284c7;
-  --primary-hover: #0369a1;
-  --accent: #d97706;
-  --danger: #dc2626;
-  --success: #059669;
-  --purple: #9333ea;
-  --map-green: #059669;
-  --map-green-hover: #047857;
-  --bonus-border: #f59e0b;
-  --bonus-bg: #fffbeb;
-  --bonus-title: #b45309;
-  --weather-bg: linear-gradient(135deg, #eff6ff, #dbeafe);
-  --weather-border: #bfdbfe;
-  --weather-text: #1e3a8a;
-  --summary-bg: #f1f5f9;
-  --summary-border: #cbd5e1;
-  --summary-title: #0f172a;
-  --summary-text: #334155;
-  --summary-time-bg: #e2e8f0;
-  --summary-time-text: #334155;
-  --shadow-sm: 0 1px 2px rgba(0,0,0,0.05);
-  --shadow-md: 0 4px 6px -1px rgba(0,0,0,0.08), 0 2px 4px -2px rgba(0,0,0,0.05);
+  --text-dim: #94a3b8;
+  --primary: #2563eb;
+  --primary-bg: #eff6ff;
+  --primary-hover: #1d4ed8;
+  --accent-gold: #d97706;
+  --accent-gold-bg: #fffbeb;
+  --accent-gold-border: #fcd34d;
+  --cat-food: #ea580c;
+  --cat-food-bg: #fff7ed;
+  --cat-food-border: #ffedd5;
+  --cat-sight: #0284c7;
+  --cat-sight-bg: #f0f9ff;
+  --cat-sight-border: #e0f2fe;
+  --cat-transit: #475569;
+  --cat-transit-bg: #f1f5f9;
+  --shadow-sm: 0 1px 3px rgba(0,0,0,0.04), 0 1px 2px rgba(0,0,0,0.02);
+  --shadow-md: 0 4px 14px -2px rgba(15,23,42,0.06), 0 2px 6px -1px rgba(15,23,42,0.03);
+  --shadow-lg: 0 12px 28px -4px rgba(15,23,42,0.1), 0 4px 10px -2px rgba(15,23,42,0.04);
+  --line-connector: #cbd5e1;
 }
 
 [data-theme="dark"] {
-  --bg: #090d16;
-  --card-bg: #0f172a;
-  --card-inner: #1e293b;
-  --header-bg: rgba(15, 23, 42, 0.96);
-  --border: #334155;
-  --border-subtle: #1e293b;
-  --text: #f8fafc;
-  --text-muted: #94a3b8;
+  --bg-page: #0b0f19;
+  --bg-card: #111827;
+  --bg-card-subtle: #1f2937;
+  --bg-card-hover: #172033;
+  --header-bg: rgba(11, 15, 25, 0.9);
+  --border-color: rgba(55, 65, 81, 0.7);
+  --border-focus: #38bdf8;
+  --text-main: #f9fafb;
+  --text-muted: #9ca3af;
+  --text-dim: #6b7280;
   --primary: #38bdf8;
-  --primary-hover: #0284c7;
-  --accent: #f59e0b;
-  --danger: #ef4444;
-  --success: #10b981;
-  --purple: #a855f7;
-  --map-green: #10b981;
-  --map-green-hover: #059669;
-  --bonus-border: #f59e0b;
-  --bonus-bg: rgba(245, 158, 11, 0.12);
-  --bonus-title: #fbbf24;
-  --weather-bg: linear-gradient(135deg, rgba(30, 58, 138, 0.25), rgba(15, 23, 42, 0.9));
-  --weather-border: rgba(56, 189, 248, 0.4);
-  --weather-text: #e0f2fe;
-  --summary-bg: rgba(30, 41, 59, 0.7);
-  --summary-border: rgba(71, 85, 105, 0.5);
-  --summary-title: #f8fafc;
-  --summary-text: #cbd5e1;
-  --summary-time-bg: #1e293b;
-  --summary-time-text: #94a3b8;
-  --shadow-sm: 0 1px 2px rgba(0,0,0,0.3);
-  --shadow-md: 0 4px 6px -1px rgba(0,0,0,0.4);
+  --primary-bg: rgba(56, 189, 248, 0.12);
+  --primary-hover: #7dd3fc;
+  --accent-gold: #f59e0b;
+  --accent-gold-bg: rgba(245, 158, 11, 0.12);
+  --accent-gold-border: rgba(245, 158, 11, 0.35);
+  --cat-food: #fb923c;
+  --cat-food-bg: rgba(251, 146, 60, 0.12);
+  --cat-food-border: rgba(251, 146, 60, 0.3);
+  --cat-sight: #38bdf8;
+  --cat-sight-bg: rgba(56, 189, 248, 0.12);
+  --cat-sight-border: rgba(56, 189, 248, 0.3);
+  --cat-transit: #9ca3af;
+  --cat-transit-bg: rgba(156, 163, 175, 0.12);
+  --shadow-sm: 0 1px 3px rgba(0,0,0,0.3);
+  --shadow-md: 0 4px 14px -2px rgba(0,0,0,0.4);
+  --shadow-lg: 0 12px 28px -4px rgba(0,0,0,0.6);
+  --line-connector: #374151;
 }
 
 * { box-sizing: border-box; margin: 0; padding: 0; -webkit-tap-highlight-color: transparent; }
+
 body {
-  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
-  background-color: var(--bg);
-  color: var(--text);
-  line-height: 1.5;
-  padding-bottom: 70px;
+  font-family: -apple-system, BlinkMacSystemFont, "SF Pro Text", "Hiragino Sans", "Hiragino Kaku Gothic ProN", "Yu Gothic", sans-serif;
+  background-color: var(--bg-page);
+  color: var(--text-main);
+  line-height: 1.55;
+  letter-spacing: -0.01em;
+  padding-bottom: 90px;
+  -webkit-font-smoothing: antialiased;
 }
 
+/* Header */
 header {
   background: var(--header-bg);
-  backdrop-filter: blur(8px);
-  border-bottom: 1px solid var(--border);
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+  border-bottom: 1px solid var(--border-color);
   position: sticky;
   top: 0;
-  z-index: 50;
-  padding: 10px 14px;
+  z-index: 100;
+  padding: 12px 18px;
 }
-.header-row {
-  max-width: 820px;
+.header-container {
+  max-width: 860px;
   margin: 0 auto;
   display: flex;
   align-items: center;
   justify-content: space-between;
-  gap: 8px;
+  gap: 12px;
 }
-.title-group {
+.brand-group {
   display: flex;
   align-items: center;
-  gap: 8px;
+  gap: 10px;
 }
-.title-main {
-  font-size: 1.05rem;
+.brand-title {
+  font-size: 1.08rem;
   font-weight: 800;
-  color: var(--primary);
+  color: var(--text-main);
+  letter-spacing: -0.02em;
   display: flex;
   align-items: center;
   gap: 6px;
 }
 .badge-beta {
-  font-size: 0.68rem;
-  background: #f59e0b;
-  color: #000;
+  font-size: 0.65rem;
   font-weight: 800;
-  padding: 2px 6px;
-  border-radius: 4px;
-  text-transform: uppercase;
-}
-.badge-version {
-  font-size: 0.7rem;
-  background: var(--card-inner);
-  border: 1px solid var(--border);
-  color: var(--text-muted);
-  padding: 2px 6px;
+  background: linear-gradient(135deg, #f59e0b, #d97706);
+  color: #fff;
+  padding: 2px 7px;
   border-radius: 9999px;
-  font-weight: 600;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  box-shadow: 0 2px 4px rgba(217, 119, 6, 0.25);
 }
 .header-actions {
   display: flex;
-  gap: 6px;
-}
-.btn-header {
-  font-size: 0.76rem;
-  font-weight: 600;
-  padding: 6px 10px;
-  border-radius: 6px;
-  border: 1px solid var(--border);
-  background: var(--card-bg);
-  color: var(--text);
-  cursor: pointer;
-  display: flex;
   align-items: center;
-  gap: 4px;
-  transition: all 0.2s;
-}
-.btn-header:hover {
-  background: var(--card-inner);
-  border-color: var(--primary);
-}
-.btn-header.primary {
-  background: var(--primary);
-  color: #fff;
-  border-color: var(--primary);
-}
-.btn-header.primary:hover {
-  background: var(--primary-hover);
-}
-
-.main-content {
-  max-width: 820px;
-  margin: 0 auto;
-  padding: 14px;
-}
-
-/* Control Bar (Filters) */
-.filter-panel {
-  background: var(--card-bg);
-  border: 1px solid var(--border);
-  border-radius: 10px;
-  padding: 10px 12px;
-  margin-bottom: 14px;
-  display: flex;
-  flex-direction: column;
   gap: 8px;
+}
+.btn-action {
+  font-size: 0.78rem;
+  font-weight: 700;
+  padding: 7px 12px;
+  border-radius: 8px;
+  border: 1px solid var(--border-color);
+  background: var(--bg-card);
+  color: var(--text-main);
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  transition: all 0.18s cubic-bezier(0.16, 1, 0.3, 1);
   box-shadow: var(--shadow-sm);
 }
-.filter-row {
+.btn-action:hover {
+  background: var(--bg-card-hover);
+  transform: translateY(-1px);
+}
+.btn-action.btn-line {
+  background: #06c755;
+  color: #ffffff;
+  border-color: #06c755;
+  box-shadow: 0 2px 8px rgba(6, 199, 85, 0.25);
+}
+.btn-action.btn-line:hover {
+  background: #05b34c;
+}
+
+/* Main Container */
+.main-wrapper {
+  max-width: 860px;
+  margin: 0 auto;
+  padding: 16px;
+}
+
+/* Modern Control Bar */
+.control-card {
+  background: var(--bg-card);
+  border: 1px solid var(--border-color);
+  border-radius: 14px;
+  padding: 14px 16px;
+  margin-bottom: 16px;
+  box-shadow: var(--shadow-sm);
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+.control-row {
   display: flex;
   align-items: center;
-  gap: 8px;
+  gap: 10px;
   flex-wrap: wrap;
 }
-.filter-label {
-  font-size: 0.74rem;
-  font-weight: 700;
+.control-label {
+  font-size: 0.75rem;
+  font-weight: 800;
   color: var(--text-muted);
-  min-width: 65px;
+  min-width: 72px;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
 }
-.filter-group {
-  display: flex;
-  background: var(--card-inner);
-  padding: 2px;
-  border-radius: 8px;
-  gap: 2px;
-  border: 1px solid var(--border-subtle);
+.segmented-control {
+  display: inline-flex;
+  background: var(--bg-card-subtle);
+  padding: 3px;
+  border-radius: 10px;
+  gap: 3px;
+  border: 1px solid var(--border-color);
   flex-wrap: wrap;
 }
-.filter-btn {
-  font-size: 0.74rem;
+.segment-btn {
+  font-size: 0.76rem;
   font-weight: 600;
-  padding: 5px 10px;
-  border-radius: 6px;
+  padding: 6px 12px;
+  border-radius: 7px;
   border: none;
   background: transparent;
   color: var(--text-muted);
   cursor: pointer;
-  transition: all 0.15s ease;
+  transition: all 0.18s ease;
   white-space: nowrap;
 }
-.filter-btn.active {
-  background: var(--card-bg);
-  color: var(--primary);
-  font-weight: 700;
-  box-shadow: var(--shadow-sm);
+.segment-btn:hover {
+  color: var(--text-main);
 }
-.filter-btn.cat-active {
-  background: var(--card-bg);
-  color: var(--accent);
-  font-weight: 700;
-  box-shadow: var(--shadow-sm);
+.segment-btn.active {
+  background: var(--bg-card);
+  color: var(--primary);
+  font-weight: 800;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.06);
+}
+.segment-btn.active-cat {
+  background: var(--bg-card);
+  color: var(--accent-gold);
+  font-weight: 800;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.06);
 }
 
-/* Strategy Banner */
-.strategy-box {
-  background: var(--weather-bg);
-  border: 1px solid var(--weather-border);
-  border-radius: 10px;
-  padding: 12px 14px;
-  margin-bottom: 14px;
+/* Strategic Pill Banner */
+.strategy-card {
+  background: linear-gradient(135deg, rgba(37, 99, 235, 0.04), rgba(2, 132, 199, 0.07));
+  border: 1px solid rgba(37, 99, 235, 0.18);
+  border-radius: 14px;
+  padding: 14px 16px;
+  margin-bottom: 20px;
   box-shadow: var(--shadow-sm);
 }
-.strategy-title {
+.strategy-header {
   font-size: 0.82rem;
   font-weight: 800;
-  color: var(--weather-text);
-  margin-bottom: 4px;
+  color: var(--primary);
+  margin-bottom: 6px;
   display: flex;
   align-items: center;
   gap: 6px;
 }
-.strategy-desc {
-  font-size: 0.76rem;
-  color: var(--text);
-  line-height: 1.5;
+.strategy-body {
+  font-size: 0.78rem;
+  color: var(--text-main);
+  line-height: 1.6;
 }
 
-/* Day Section */
-.day-section {
-  margin-bottom: 24px;
+/* Day Container */
+.day-block {
+  margin-bottom: 28px;
 }
-.day-header-card {
-  background: var(--card-bg);
-  border: 1px solid var(--border);
-  border-radius: 12px;
-  padding: 14px;
-  margin-bottom: 12px;
+.day-hero {
+  background: var(--bg-card);
+  border: 1px solid var(--border-color);
+  border-radius: 16px;
+  padding: 16px 18px;
+  margin-bottom: 16px;
   box-shadow: var(--shadow-sm);
 }
-.day-header-top {
+.day-hero-top {
   display: flex;
   align-items: center;
   justify-content: space-between;
   margin-bottom: 6px;
 }
-.day-title {
-  font-size: 1.15rem;
-  font-weight: 800;
+.day-hero-badge {
+  font-size: 1.25rem;
+  font-weight: 900;
   color: var(--primary);
-  display: flex;
-  align-items: center;
-  gap: 8px;
+  letter-spacing: -0.02em;
 }
-.day-date {
-  font-size: 0.78rem;
+.day-hero-date {
+  font-size: 0.82rem;
+  font-weight: 700;
   color: var(--text-muted);
-  font-weight: 600;
 }
-.day-sub {
-  font-size: 0.8rem;
-  font-weight: 600;
-  color: var(--text);
-  margin-bottom: 10px;
+.day-hero-subtitle {
+  font-size: 0.86rem;
+  font-weight: 700;
+  color: var(--text-main);
+  margin-bottom: 12px;
 }
-.macro-flow-box {
-  background: var(--card-inner);
-  border: 1px solid var(--border-subtle);
-  border-radius: 8px;
-  padding: 10px 12px;
-  font-size: 0.75rem;
+.flow-container {
+  background: var(--bg-card-subtle);
+  border: 1px solid var(--border-color);
+  border-radius: 10px;
+  padding: 10px 14px;
+  font-size: 0.77rem;
   line-height: 1.6;
 }
-.macro-flow-label {
+.flow-title {
   font-weight: 800;
-  color: var(--accent);
-  margin-bottom: 2px;
+  color: var(--accent-gold);
+  margin-bottom: 3px;
   display: flex;
   align-items: center;
-  gap: 4px;
+  gap: 5px;
 }
-.day-fullmap-link {
+.day-map-cta {
   display: inline-flex;
   align-items: center;
   gap: 6px;
-  margin-top: 8px;
-  font-size: 0.76rem;
+  margin-top: 10px;
+  font-size: 0.78rem;
   font-weight: 700;
   color: #fff;
-  background: var(--map-green);
-  padding: 6px 12px;
-  border-radius: 6px;
+  background: #059669;
+  padding: 8px 14px;
+  border-radius: 8px;
   text-decoration: none;
-  transition: background 0.2s;
+  transition: all 0.2s;
+  box-shadow: 0 2px 6px rgba(5, 150, 105, 0.25);
 }
-.day-fullmap-link:hover {
-  background: var(--map-green-hover);
+.day-map-cta:hover {
+  background: #047857;
+  transform: translateY(-1px);
+}
+
+/* Vertical Timeline */
+.timeline-vertical {
+  position: relative;
+  padding-left: 20px;
+}
+.timeline-vertical::before {
+  content: "";
+  position: absolute;
+  top: 14px;
+  bottom: 14px;
+  left: 6px;
+  width: 2px;
+  background: var(--line-connector);
 }
 
 /* Slot Card */
-.timeline-slot {
-  margin-bottom: 12px;
+.slot-node {
+  position: relative;
+  margin-bottom: 14px;
 }
-.slot-card {
-  background: var(--card-bg);
-  border: 1px solid var(--border);
-  border-radius: 10px;
+.slot-node::before {
+  content: "";
+  position: absolute;
+  top: 18px;
+  left: -20px;
+  width: 14px;
+  height: 14px;
+  border-radius: 50%;
+  background: var(--bg-card);
+  border: 3px solid var(--primary);
+  box-shadow: 0 0 0 3px var(--bg-page);
+  z-index: 2;
+}
+.slot-node.node-food::before { border-color: var(--cat-food); }
+.slot-node.node-sight::before { border-color: var(--cat-sight); }
+.slot-node.node-transit::before { border-color: var(--cat-transit); }
+
+.slot-card-modern {
+  background: var(--bg-card);
+  border: 1px solid var(--border-color);
+  border-radius: 14px;
   overflow: hidden;
   box-shadow: var(--shadow-sm);
-  transition: border-color 0.2s;
+  transition: border-color 0.2s, box-shadow 0.2s;
 }
-.slot-card[open] {
-  border-color: var(--primary);
+.slot-card-modern:hover {
+  box-shadow: var(--shadow-md);
 }
-.slot-summary {
+.slot-card-modern[open] {
+  border-color: rgba(37, 99, 235, 0.4);
+}
+
+.slot-trigger {
   list-style: none;
-  padding: 12px 14px;
+  padding: 14px 16px;
   cursor: pointer;
   user-select: none;
   display: flex;
   flex-direction: column;
-  gap: 6px;
+  gap: 8px;
 }
-.slot-summary::-webkit-details-marker {
-  display: none;
-}
-.slot-top-row {
+.slot-trigger::-webkit-details-marker { display: none; }
+
+.slot-meta-line {
   display: flex;
   align-items: center;
   justify-content: space-between;
   gap: 8px;
 }
-.slot-time-badge {
-  font-size: 0.76rem;
+.time-pill {
+  font-size: 0.78rem;
   font-weight: 800;
-  background: var(--card-inner);
-  border: 1px solid var(--border-subtle);
-  color: var(--text);
-  padding: 3px 8px;
+  background: var(--bg-card-subtle);
+  border: 1px solid var(--border-color);
+  color: var(--text-main);
+  padding: 3px 9px;
+  border-radius: 6px;
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+}
+.badge-stack {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+.cat-tag {
+  font-size: 0.7rem;
+  font-weight: 800;
+  padding: 2px 8px;
   border-radius: 6px;
   display: inline-flex;
   align-items: center;
   gap: 4px;
 }
-.badge-group {
-  display: flex;
-  align-items: center;
-  gap: 4px;
+.cat-tag.food {
+  background: var(--cat-food-bg);
+  color: var(--cat-food);
+  border: 1px solid var(--cat-food-border);
 }
-.cat-badge {
-  font-size: 0.68rem;
-  font-weight: 800;
-  padding: 2px 7px;
-  border-radius: 4px;
-  display: inline-flex;
-  align-items: center;
-  gap: 3px;
+.cat-tag.sightseeing {
+  background: var(--cat-sight-bg);
+  color: var(--cat-sight);
+  border: 1px solid var(--cat-sight-border);
 }
-.cat-badge.food {
-  background: #ffedd5;
-  color: #c2410c;
-  border: 1px solid #fed7aa;
-}
-[data-theme="dark"] .cat-badge.food {
-  background: rgba(234, 88, 12, 0.2);
-  color: #fb923c;
-  border-color: rgba(234, 88, 12, 0.4);
-}
-.cat-badge.sightseeing {
-  background: #e0f2fe;
-  color: #0369a1;
-  border: 1px solid #bae6fd;
-}
-[data-theme="dark"] .cat-badge.sightseeing {
-  background: rgba(2, 132, 199, 0.2);
-  color: #38bdf8;
-  border-color: rgba(2, 132, 199, 0.4);
-}
-.cat-badge.transit {
-  background: #f1f5f9;
-  color: #475569;
-  border: 1px solid #cbd5e1;
-}
-[data-theme="dark"] .cat-badge.transit {
-  background: rgba(71, 85, 105, 0.2);
-  color: #94a3b8;
-  border-color: rgba(71, 85, 105, 0.4);
+.cat-tag.transit {
+  background: var(--cat-transit-bg);
+  color: var(--cat-transit);
+  border: 1px solid var(--border-color);
 }
 
-.badge-tag {
-  font-size: 0.68rem;
-  font-weight: 700;
-  padding: 2px 6px;
-  border-radius: 4px;
-}
-.badge-national { background: #fee2e2; color: #991b1b; }
-.badge-food { background: #fef3c7; color: #92400e; }
-.badge-temple { background: #f3e8ff; color: #6b21a8; }
-.badge-transit { background: #f1f5f9; color: #475569; }
-[data-theme="dark"] .badge-national { background: rgba(185, 28, 28, 0.25); color: #fca5a5; }
-[data-theme="dark"] .badge-food { background: rgba(217, 119, 6, 0.25); color: #fcd34d; }
-[data-theme="dark"] .badge-temple { background: rgba(147, 51, 234, 0.25); color: #d8b4fe; }
-[data-theme="dark"] .badge-transit { background: rgba(71, 85, 105, 0.25); color: #cbd5e1; }
-
-.slot-title {
-  font-size: 0.95rem;
+.slot-heading {
+  font-size: 1.02rem;
   font-weight: 800;
-  color: var(--text);
-  line-height: 1.35;
+  color: var(--text-main);
+  line-height: 1.4;
+  letter-spacing: -0.01em;
 }
-.slot-overview-text {
-  font-size: 0.77rem;
+.slot-brief {
+  font-size: 0.8rem;
   color: var(--text-muted);
-  line-height: 1.45;
+  line-height: 1.5;
 }
-.slot-expand-hint {
-  font-size: 0.7rem;
-  font-weight: 600;
+.slot-toggle-indicator {
+  font-size: 0.72rem;
+  font-weight: 700;
   color: var(--primary);
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding-top: 4px;
-  border-top: 1px dashed var(--border-subtle);
+  padding-top: 6px;
+  border-top: 1px dashed var(--border-color);
 }
 
-.slot-body {
-  padding: 10px 14px 14px 14px;
-  border-top: 1px solid var(--border-subtle);
-  background: var(--card-bg);
+.slot-drawer {
+  padding: 12px 16px 16px 16px;
+  border-top: 1px solid var(--border-color);
+  background: var(--bg-card);
   display: flex;
   flex-direction: column;
-  gap: 12px;
+  gap: 14px;
 }
 
-/* 7-Factor Detailed Analysis Block */
-.factors-card {
-  background: var(--card-inner);
-  border: 1px solid var(--border);
-  border-radius: 8px;
-  padding: 10px 12px;
+/* Micro-steps Tactics */
+.section-card {
+  background: var(--bg-card-subtle);
+  border: 1px solid var(--border-color);
+  border-radius: 10px;
+  padding: 12px 14px;
 }
-.factors-card-title {
+.section-title {
   font-size: 0.78rem;
   font-weight: 800;
-  color: var(--primary);
   margin-bottom: 8px;
   display: flex;
   align-items: center;
   gap: 6px;
 }
-.factors-grid {
-  display: flex;
-  flex-direction: column;
-  gap: 8px;
-}
-.factor-row {
-  display: flex;
-  flex-direction: column;
-  gap: 2px;
-}
-.factor-header {
-  font-size: 0.74rem;
-  font-weight: 800;
-  color: var(--text);
-  display: flex;
-  align-items: center;
-  gap: 4px;
-}
-.factor-header.primary { color: var(--primary); }
-.factor-header.success { color: var(--success); }
-.factor-header.accent { color: var(--accent); }
-.factor-header.purple { color: var(--purple); }
-.factor-header.danger { color: var(--danger); }
+.section-title.tactics { color: #059669; }
+.section-title.spec { color: var(--primary); }
 
-.factor-content {
-  font-size: 0.75rem;
-  color: var(--text);
-  line-height: 1.45;
-  padding-left: 12px;
-}
-.factor-bullet-line {
-  display: flex;
-  align-items: flex-start;
-  gap: 6px;
-  margin-bottom: 2px;
-}
-.factor-bullet-dot {
-  color: var(--primary);
-  font-size: 0.8rem;
-  line-height: 1.3;
-}
-.factor-bullet-text {
-  flex: 1;
-}
-
-/* Standalone High-Visibility Tsuide (Bonus) Banner */
-.bonus-highlight-box {
-  background: var(--bonus-bg);
-  border: 2px solid var(--bonus-border);
-  border-radius: 8px;
-  padding: 10px 12px;
-  box-shadow: var(--shadow-sm);
-}
-.bonus-highlight-header {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  margin-bottom: 6px;
-}
-.bonus-highlight-title {
-  font-size: 0.8rem;
-  font-weight: 800;
-  color: var(--bonus-title);
-  display: flex;
-  align-items: center;
-  gap: 6px;
-}
-.bonus-highlight-badge {
-  font-size: 0.66rem;
-  font-weight: 800;
-  background: #f59e0b;
-  color: #000;
-  padding: 1px 6px;
-  border-radius: 4px;
-}
-.bonus-spot-list {
+.step-flow {
   display: flex;
   flex-direction: column;
   gap: 6px;
 }
-.bonus-spot-row {
-  background: var(--card-bg);
-  border: 1px solid var(--border-subtle);
-  border-radius: 6px;
-  padding: 8px 10px;
-  display: flex;
-  flex-direction: column;
-  gap: 3px;
-}
-.bonus-spot-top {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 8px;
-}
-.bonus-spot-name {
-  font-size: 0.77rem;
-  font-weight: 700;
-  color: var(--text);
-  display: flex;
-  align-items: center;
-  gap: 4px;
-}
-.bonus-map-btn {
-  font-size: 0.7rem;
-  font-weight: 700;
-  color: #fff;
-  background: #059669;
-  padding: 3px 8px;
-  border-radius: 4px;
-  text-decoration: none;
-  white-space: nowrap;
-}
-.bonus-map-btn:hover {
-  background: #047857;
-}
-.bonus-spot-desc {
-  font-size: 0.73rem;
-  color: var(--text-muted);
-  line-height: 1.4;
-}
-
-/* Micro-steps Tactics */
-.tactics-box {
-  background: var(--card-inner);
-  border: 1px solid var(--border-subtle);
-  border-radius: 8px;
-  padding: 10px 12px;
-}
-.tactics-title {
-  font-size: 0.76rem;
-  font-weight: 800;
-  color: var(--success);
-  margin-bottom: 6px;
-  display: flex;
-  align-items: center;
-  gap: 4px;
-}
-.step-row {
+.step-item {
   display: flex;
   align-items: flex-start;
   gap: 8px;
-  font-size: 0.75rem;
-  margin-bottom: 5px;
+  font-size: 0.78rem;
 }
-.step-num {
+.step-badge {
   font-size: 0.68rem;
   font-weight: 800;
   background: var(--primary);
@@ -629,112 +508,382 @@ header {
   padding: 1px 6px;
   border-radius: 4px;
   white-space: nowrap;
-  margin-top: 1px;
+  margin-top: 2px;
 }
-.step-text {
+.step-body {
   flex: 1;
-  color: var(--text);
-  line-height: 1.4;
+  color: var(--text-main);
+  line-height: 1.45;
 }
-.step-must {
-  font-size: 0.65rem;
+.tag-must {
+  font-size: 0.66rem;
+  font-weight: 800;
   background: #fee2e2;
   color: #b91c1c;
-  padding: 1px 4px;
-  border-radius: 3px;
-  font-weight: 700;
-  margin-left: 4px;
-}
-[data-theme="dark"] .step-must {
-  background: rgba(220, 38, 38, 0.25);
-  color: #fca5a5;
+  padding: 1px 5px;
+  border-radius: 4px;
+  margin-left: 5px;
 }
 
-/* Map Action Button */
-.slot-map-btn {
+/* Premium Tsuide (Bonus) Golden Highlight Banner */
+.bonus-golden-banner {
+  background: linear-gradient(135deg, var(--accent-gold-bg), var(--bg-card));
+  border: 2px solid var(--accent-gold-border);
+  border-radius: 12px;
+  padding: 12px 14px;
+  box-shadow: 0 4px 12px rgba(217, 119, 6, 0.08);
+}
+.bonus-header {
   display: flex;
   align-items: center;
-  justify-content: center;
+  justify-content: space-between;
+  margin-bottom: 8px;
+}
+.bonus-title-text {
+  font-size: 0.82rem;
+  font-weight: 800;
+  color: var(--accent-gold);
+  display: flex;
+  align-items: center;
   gap: 6px;
-  font-size: 0.76rem;
-  font-weight: 700;
-  color: #fff;
-  background: var(--map-green);
-  padding: 8px 12px;
+}
+.bonus-must-tag {
+  font-size: 0.68rem;
+  font-weight: 800;
+  background: var(--accent-gold);
+  color: #ffffff;
+  padding: 2px 7px;
   border-radius: 6px;
-  text-decoration: none;
-  transition: background 0.2s;
-  box-shadow: var(--shadow-sm);
 }
-.slot-map-btn:hover {
-  background: var(--map-green-hover);
+.bonus-grid {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
 }
-
-/* Bottom Floating Bar */
-.bottom-bar {
-  position: fixed;
-  bottom: 0;
-  left: 0;
-  right: 0;
-  background: var(--header-bg);
-  backdrop-filter: blur(8px);
-  border-top: 1px solid var(--border);
-  padding: 8px 14px;
-  z-index: 50;
-  box-shadow: 0 -2px 10px rgba(0,0,0,0.06);
+.bonus-card {
+  background: var(--bg-card);
+  border: 1px solid var(--border-color);
+  border-radius: 8px;
+  padding: 9px 12px;
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
 }
-.bottom-bar-inner {
-  max-width: 820px;
-  margin: 0 auto;
+.bonus-card-top {
   display: flex;
   align-items: center;
   justify-content: space-between;
   gap: 8px;
 }
-.btn-bottom {
-  flex: 1;
-  font-size: 0.75rem;
+.bonus-spot-title {
+  font-size: 0.8rem;
+  font-weight: 800;
+  color: var(--text-main);
+}
+.bonus-pin-btn {
+  font-size: 0.72rem;
   font-weight: 700;
-  padding: 8px 12px;
-  border-radius: 6px;
-  border: 1px solid var(--border);
-  background: var(--card-bg);
-  color: var(--text);
-  cursor: pointer;
+  color: #ffffff;
+  background: #059669;
+  padding: 3px 9px;
+  border-radius: 5px;
+  text-decoration: none;
+  white-space: nowrap;
+  transition: background 0.15s;
+}
+.bonus-pin-btn:hover { background: #047857; }
+.bonus-spot-desc {
+  font-size: 0.75rem;
+  color: var(--text-muted);
+  line-height: 1.45;
+}
+
+/* 7-Factor Structured Spec */
+.factors-spec-container {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+.factor-pill-row {
+  background: var(--bg-card);
+  border: 1px solid var(--border-color);
+  border-radius: 8px;
+  padding: 8px 11px;
+}
+.factor-tag {
+  font-size: 0.74rem;
+  font-weight: 800;
+  margin-bottom: 2px;
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+.factor-tag.p1 { color: #2563eb; }
+.factor-tag.p2 { color: #059669; }
+.factor-tag.p3 { color: #d97706; }
+.factor-tag.p4 { color: #7c3aed; }
+.factor-tag.p5 { color: #0891b2; }
+.factor-tag.p6 { color: #475569; }
+.factor-tag.p7 { color: #dc2626; }
+
+.factor-desc {
+  font-size: 0.77rem;
+  color: var(--text-main);
+  line-height: 1.5;
+  padding-left: 10px;
+}
+.bullet-line {
+  display: flex;
+  align-items: flex-start;
+  gap: 6px;
+  margin-bottom: 2px;
+}
+.bullet-dot {
+  color: var(--primary);
+  font-size: 0.85rem;
+  line-height: 1.3;
+}
+
+/* Spot Map CTA */
+.btn-spot-map {
   display: flex;
   align-items: center;
   justify-content: center;
-  gap: 4px;
+  gap: 6px;
+  font-size: 0.8rem;
+  font-weight: 700;
+  color: #fff;
+  background: #059669;
+  padding: 9px 14px;
+  border-radius: 8px;
   text-decoration: none;
+  transition: all 0.2s;
+  box-shadow: 0 2px 6px rgba(5, 150, 105, 0.2);
+}
+.btn-spot-map:hover {
+  background: #047857;
+  transform: translateY(-1px);
+}
+
+/* Modern Bottom Floating Bar */
+.bottom-floating-bar {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background: var(--header-bg);
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+  border-top: 1px solid var(--border-color);
+  padding: 10px 16px;
+  z-index: 100;
+  box-shadow: 0 -4px 20px rgba(0,0,0,0.06);
+}
+.bottom-bar-content {
+  max-width: 860px;
+  margin: 0 auto;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+.btn-float {
+  flex: 1;
+  font-size: 0.78rem;
+  font-weight: 700;
+  padding: 9px 12px;
+  border-radius: 8px;
+  border: 1px solid var(--border-color);
+  background: var(--bg-card);
+  color: var(--text-main);
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  text-decoration: none;
+  transition: all 0.18s;
+}
+.btn-float.primary {
+  background: #06c755;
+  color: #fff;
+  border-color: #06c755;
+  box-shadow: 0 2px 8px rgba(6, 199, 85, 0.25);
+}
+.btn-float.green {
+  background: #059669;
+  color: #fff;
+  border-color: #059669;
+}
+
+/* LINE Copy Modal */
+.modal-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(15, 23, 42, 0.55);
+  backdrop-filter: blur(4px);
+  -webkit-backdrop-filter: blur(4px);
+  z-index: 200;
+  display: none;
+  align-items: center;
+  justify-content: center;
+  padding: 16px;
+}
+.modal-overlay.open { display: flex; }
+.modal-dialog {
+  background: var(--bg-card);
+  border: 1px solid var(--border-color);
+  border-radius: 18px;
+  max-width: 620px;
+  width: 100%;
+  max-height: 85vh;
+  display: flex;
+  flex-direction: column;
+  box-shadow: var(--shadow-lg);
+  overflow: hidden;
+  animation: modalPop 0.22s cubic-bezier(0.16, 1, 0.3, 1);
+}
+@keyframes modalPop {
+  from { opacity: 0; transform: scale(0.96) translateY(10px); }
+  to { opacity: 1; transform: scale(1) translateY(0); }
+}
+.modal-top {
+  padding: 16px 20px;
+  border-bottom: 1px solid var(--border-color);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+.modal-title {
+  font-size: 1.02rem;
+  font-weight: 800;
+  color: var(--text-main);
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.btn-close-modal {
+  background: transparent;
+  border: none;
+  font-size: 1.2rem;
+  color: var(--text-muted);
+  cursor: pointer;
+  padding: 4px;
+}
+.modal-body {
+  padding: 16px 20px;
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+.modal-tabs {
+  display: flex;
+  gap: 6px;
+  background: var(--bg-card-subtle);
+  padding: 4px;
+  border-radius: 10px;
+  border: 1px solid var(--border-color);
+}
+.modal-tab-btn {
+  flex: 1;
+  font-size: 0.74rem;
+  font-weight: 700;
+  padding: 6px 10px;
+  border-radius: 7px;
+  border: none;
+  background: transparent;
+  color: var(--text-muted);
+  cursor: pointer;
+  text-align: center;
   transition: all 0.15s;
 }
-.btn-bottom.primary {
-  background: var(--primary);
-  color: #fff;
-  border-color: var(--primary);
+.modal-tab-btn.active {
+  background: var(--bg-card);
+  color: #06c755;
+  box-shadow: var(--shadow-sm);
 }
-.btn-bottom.green {
-  background: var(--map-green);
+.preview-textarea {
+  width: 100%;
+  height: 240px;
+  background: var(--bg-card-subtle);
+  border: 1px solid var(--border-color);
+  border-radius: 10px;
+  padding: 12px;
+  font-family: inherit;
+  font-size: 0.78rem;
+  color: var(--text-main);
+  line-height: 1.5;
+  resize: vertical;
+}
+.modal-foot {
+  padding: 14px 20px;
+  border-top: 1px solid var(--border-color);
+  display: flex;
+  justify-content: flex-end;
+  gap: 10px;
+}
+.btn-copy-action {
+  font-size: 0.82rem;
+  font-weight: 800;
+  padding: 10px 18px;
+  border-radius: 9px;
+  border: none;
+  background: #06c755;
   color: #fff;
-  border-color: var(--map-green);
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  box-shadow: 0 2px 8px rgba(6, 199, 85, 0.3);
+  transition: all 0.15s;
+}
+.btn-copy-action:hover {
+  background: #05b34c;
+}
+
+/* Toast Notification */
+.toast-msg {
+  position: fixed;
+  top: 70px;
+  left: 50%;
+  transform: translateX(-50%) translateY(-20px);
+  background: rgba(15, 23, 42, 0.94);
+  color: #ffffff;
+  padding: 9px 18px;
+  border-radius: 9999px;
+  font-size: 0.78rem;
+  font-weight: 700;
+  box-shadow: 0 4px 16px rgba(0,0,0,0.25);
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  opacity: 0;
+  pointer-events: none;
+  transition: all 0.24s cubic-bezier(0.16, 1, 0.3, 1);
+  z-index: 300;
+}
+.toast-msg.show {
+  opacity: 1;
+  transform: translateX(-50%) translateY(0);
 }
   </style>
 </head>
 <body>
+
+  <!-- Top Sticky Navigation Bar -->
   <header>
-    <div class="header-row">
-      <div class="title-group">
-        <span class="badge-beta">BETA</span>
-        <div class="title-main">
+    <div class="header-container">
+      <div class="brand-group">
+        <span class="badge-beta">Beta v2.2</span>
+        <div class="brand-title">
           <span>愛知・犬山・名古屋 旅程ナビ</span>
         </div>
-        <span class="badge-version">v2.1</span>
       </div>
       <div class="header-actions">
-        <button class="btn-header" onclick="copyCurrentPlan()">
-          <span>📋 LINE一括コピー</span>
+        <button class="btn-action btn-line" onclick="openLineModal()">
+          <span>💬 LINE一括共有</span>
         </button>
-        <button class="btn-header" onclick="toggleTheme()" id="theme-btn">
+        <button class="btn-action" onclick="toggleTheme()" id="theme-btn">
           <span id="theme-icon">☀️</span>
           <span id="theme-text">ライト</span>
         </button>
@@ -742,57 +891,90 @@ header {
     </div>
   </header>
 
-  <main class="main-content">
-    <!-- Filter Controls -->
-    <div class="filter-panel">
-      <div class="filter-row">
-        <span class="filter-label">📅 日程絞込:</span>
-        <div class="filter-group">
-          <button class="filter-btn active" id="day-all-btn" onclick="filterDay('all')">全日程 (11/7〜8)</button>
-          <button class="filter-btn" id="day-1-btn" onclick="filterDay('1')">11/7 (金) 名駅・熱田・夢語</button>
-          <button class="filter-btn" id="day-2-btn" onclick="filterDay('2')">11/8 (土) 犬山城・如庵・寂光院</button>
+  <!-- Main Content Area -->
+  <main class="main-wrapper">
+    <!-- Filter Controls (Segmented Pill Bars) -->
+    <div class="control-card">
+      <div class="control-row">
+        <span class="control-label">📅 日程切替:</span>
+        <div class="segmented-control">
+          <button class="segment-btn active" id="day-all-btn" onclick="filterDay('all')">全日程 (11/7〜8)</button>
+          <button class="segment-btn" id="day-1-btn" onclick="filterDay('1')">11/7 (金) 名駅・熱田・夢語</button>
+          <button class="segment-btn" id="day-2-btn" onclick="filterDay('2')">11/8 (土) 犬山城・如庵・寂光院</button>
         </div>
       </div>
-      <div class="filter-row">
-        <span class="filter-label">🎯 種別表示:</span>
-        <div class="filter-group">
-          <button class="filter-btn cat-active" id="cat-all-btn" onclick="filterCategory('all')">すべて表示</button>
-          <button class="filter-btn" id="cat-sightseeing-btn" onclick="filterCategory('sightseeing')">🏛️ 観光スポットのみ</button>
-          <button class="filter-btn" id="cat-food-btn" onclick="filterCategory('food')">🍴 飯・喫茶のみ</button>
+      <div class="control-row">
+        <span class="control-label">🎯 スポット分類:</span>
+        <div class="segmented-control">
+          <button class="segment-btn active-cat" id="cat-all-btn" onclick="filterCategory('all')">すべて表示</button>
+          <button class="segment-btn" id="cat-sightseeing-btn" onclick="filterCategory('sightseeing')">🏛️ 観光スポットのみ</button>
+          <button class="segment-btn" id="cat-food-btn" onclick="filterCategory('food')">🍴 飯・喫茶のみ</button>
         </div>
       </div>
     </div>
 
-    <!-- Strategy Summary -->
-    <div class="strategy-box">
-      <div class="strategy-title">
-        <span>💡 2026/11/7〜11/8 今回の確定戦略方針</span>
+    <!-- Strategy Summary Banner -->
+    <div class="strategy-card">
+      <div class="strategy-header">
+        <span>💡 2026/11/7〜11/8 確定戦略サマリー</span>
       </div>
-      <div class="strategy-desc">
-        ・<strong>名古屋名物は小倉トーストのみに完全特化</strong>（ひつまぶし・手羽先等は除外、BUCYO COFFEEまたはエスカ・アロマ珈琲）。<br>
-        ・<strong>熱田神宮＆草薙館の名刀鑑賞</strong>（平日午後の静けさ＋信長塀・次郎太刀実物大体験）。<br>
-        ・<strong>夢を語れ愛知（夜直撃）</strong>：東京にない直営二郎系。17:40着で夜営業ポールポジション確保。<br>
-        ・<strong>11/8 朝08:30発・家族車で犬山フル満喫</strong>：国宝犬山城登閣 ➔ 国宝茶室如庵 ➔ 城下町五平餅 ➔ 桃太郎神社 ➔ 寂光院 ➔ 名古屋・外食完全スルーで17:00実家直帰。
+      <div class="strategy-body">
+        ・<strong>名古屋名物は小倉トーストのみに完全特化</strong>（BUCYO COFFEEまたはエスカ・アロマ珈琲）。手羽先・ひつまぶし等は完全スルー。<br>
+        ・<strong>熱田神宮＆草薙館の名刀鑑賞</strong>（平日午後の静寂、信長塀、次郎太刀の実物大体験）。<br>
+        ・<strong>夢を語れ愛知（夜直撃）</strong>：東京にない直営二郎系。17:40着で夜営業ポールポジション奪取。<br>
+        ・<strong>11/8 朝08:30発・家族車で犬山フル攻略</strong>：国宝犬山城登閣 ➔ 国宝茶室如庵 ➔ 城下町五平餅 ➔ 桃太郎神社 ➔ 寂光院 ➔ 名古屋外食なしで17:00実家直帰。
       </div>
     </div>
 
-    <!-- Timeline Container -->
+    <!-- Dynamic Timeline Sections Container -->
     <div id="timeline-container"></div>
   </main>
 
-  <!-- Bottom Floating Action Bar -->
-  <div class="bottom-bar">
-    <div class="bottom-bar-inner">
-      <button class="btn-bottom" onclick="toggleAllAccordions()">
+  <!-- Bottom Floating Sticky Action Bar -->
+  <div class="bottom-floating-bar">
+    <div class="bottom-bar-content">
+      <button class="btn-float" onclick="toggleAllAccordions()">
         <span>↕️ 全詳細を開閉</span>
       </button>
-      <button class="btn-bottom primary" onclick="copyCurrentPlan()">
-        <span>📋 LINE用テキストコピー</span>
+      <button class="btn-float primary" onclick="openLineModal()">
+        <span>💬 LINE一括コピー</span>
       </button>
-      <a href="https://www.google.com/maps" target="_blank" class="btn-bottom green" id="bottom-map-link">
+      <a href="https://www.google.com/maps" target="_blank" class="btn-float green" id="bottom-map-link">
         <span>🗺️ 全ピン連動マップ</span>
       </a>
     </div>
+  </div>
+
+  <!-- Modern LINE Copy Modal -->
+  <div class="modal-overlay" id="line-modal" onclick="closeLineModal(event)">
+    <div class="modal-dialog" onclick="event.stopPropagation()">
+      <div class="modal-top">
+        <div class="modal-title">
+          <span>💬 LINE送信用テキスト一括コピー</span>
+        </div>
+        <button class="btn-close-modal" onclick="closeLineModal()">✕</button>
+      </div>
+      <div class="modal-body">
+        <div class="modal-tabs">
+          <button class="modal-tab-btn active" id="tab-all" onclick="switchCopyTab('all')">全日程</button>
+          <button class="modal-tab-btn" id="tab-d1" onclick="switchCopyTab('d1')">11/7(金)のみ</button>
+          <button class="modal-tab-btn" id="tab-d2" onclick="switchCopyTab('d2')">11/8(土)のみ</button>
+          <button class="modal-tab-btn" id="tab-summary" onclick="switchCopyTab('summary')">⚡ 要約版</button>
+        </div>
+        <textarea class="preview-textarea" id="line-preview-text" readonly></textarea>
+      </div>
+      <div class="modal-foot">
+        <button class="btn-action" onclick="closeLineModal()">閉じる</button>
+        <button class="btn-copy-action" onclick="executeLineCopy()">
+          <span>📋 クリップボードにコピー</span>
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Toast Notification -->
+  <div class="toast-msg" id="toast-notify">
+    <span>✓ クリップボードにコピーしました！そのままLINEに貼れます</span>
   </div>
 
   <script>
@@ -813,8 +995,7 @@ header {
               duration: "3時間00分",
               badge: "固定予定",
               badgeType: "transit",
-              category: "sightseeing",
-              categoryLabel: "予定",
+              category: "transit",
               title: "高蔵寺 近隣カラオケ（まねきねこ または 快活CLUB）",
               overview: "午前の固定カラオケタイム。歌唱とウォーミングアップ完了後、12:00きっかりに撤収し高蔵寺駅へ向かう。",
               tacticsTitle: "午前立ち回りステップ",
@@ -842,7 +1023,6 @@ header {
               badge: "JR快速移動",
               badgeType: "transit",
               category: "transit",
-              categoryLabel: "移動",
               title: "JR中央本線 快速 名古屋行（高蔵寺 ➔ 名古屋）",
               overview: "高蔵寺駅から名古屋駅へ直通快速移動。乗り換えなしで都心部へスムーズにアプローチ。",
               tacticsTitle: "移動シークエンス",
@@ -870,7 +1050,6 @@ header {
               badge: "小倉トースト限定",
               badgeType: "food",
               category: "food",
-              categoryLabel: "飯・喫茶",
               title: "名駅 小倉トースト ＆ 珈琲タイム（BUCYO COFFEE または エスカ・アロマ珈琲）",
               overview: "名古屋名物の中で唯一所望する「小倉トースト」を極限まで楽しむ喫茶枠。自家製あんこの豆感・厚切りバタートーストを堪能。",
               tacticsTitle: "小倉トースト攻略手順",
@@ -914,7 +1093,6 @@ header {
               badge: "JR東海道線",
               badgeType: "transit",
               category: "transit",
-              categoryLabel: "移動",
               title: "JR東海道本線 名古屋 ➔ 熱田駅 移動",
               overview: "名古屋駅から熱田神宮への最速・最安アクセス。電車8分＋徒歩3分で熱田神宮の東門へ至近アプローチ。",
               tacticsTitle: "JRアクセスステップ",
@@ -939,10 +1117,9 @@ header {
               id: "d1-atsuta-jingu",
               time: "14:20 - 16:45",
               duration: "2時間25分",
-              badge: "三種の神器・国宝名刀",
+              badge: "三種の神器・名刀鑑賞",
               badgeType: "temple",
               category: "sightseeing",
-              categoryLabel: "観光・名所",
               title: "熱田神宮 本殿・信長塀参拝 ＆ 剣の宝庫「草薙館」名刀鑑賞",
               overview: "三種の神器（草薙神剣）を祀る熱田神宮参拝と、全国屈指の名刀コレクション「草薙館」の鑑賞。平日の午後は静謐そのもの。",
               tacticsTitle: "熱田神宮＆草薙館 必勝ルート",
@@ -993,7 +1170,6 @@ header {
               badge: "タクシー移動",
               badgeType: "transit",
               category: "transit",
-              categoryLabel: "移動",
               title: "熱田神宮から瑞穂区滝子（夢を語れ愛知）へ移動",
               overview: "熱田神宮から「夢を語れ 愛知」への短距離移動。地下鉄よりタクシー直行が圧倒的に快適かつ最速（所要約8分・約1,200円）。",
               tacticsTitle: "移動シークエンス",
@@ -1018,10 +1194,9 @@ header {
               id: "d1-yume-wo-katare",
               time: "17:40 - 19:00",
               duration: "1時間20分",
-              badge: "東京未進出直営二郎系",
+              badge: "東京未進出二郎系",
               badgeType: "food",
               category: "food",
-              categoryLabel: "飯・喫茶",
               title: "夢を語れ 愛知（夜営業ポールポジション直撃）",
               overview: "東京に常設店舗が存在しない「夢を語れ」ブランド。瑞穂区滝子にて18:00開店のファーストロットを確実に奪取。",
               tacticsTitle: "夢を語れ ポールポジション奪取手順",
@@ -1056,7 +1231,6 @@ header {
               badge: "地下鉄＋JR帰還",
               badgeType: "transit",
               category: "transit",
-              categoryLabel: "移動",
               title: "桜山 ➔ 名古屋（または千種） ➔ 高蔵寺 帰還",
               overview: "地下鉄桜通線で桜山駅から都心へ戻り、JR中央線快速に乗り継いで高蔵寺へスムーズに帰宅。翌日の犬山城朝立ちに備えて十分な休養を確保。",
               tacticsTitle: "夜帰還ステップ",
@@ -1082,7 +1256,7 @@ header {
         {
           dayNum: 2,
           dateStr: "2026年11月8日 (土)",
-          subTitle: "朝08:30発 家族車で犬山フル満喫（国宝犬山城 ➔ 国宝茶室如庵 ➔ 城下町昼食 ➔ 桃太郎神社 ➔ 寂光院） ➔ 17:00実家直帰",
+          subTitle: "朝08:30発 家族車で犬山フル攻略（国宝犬山城 ➔ 国宝茶室如庵 ➔ 城下町昼食 ➔ 桃太郎神社 ➔ 寂光院） ➔ 17:00実家直帰",
           macroRoute: ["実家発（家族車08:30）", "犬山城第1駐車場", "国宝犬山城（天守登閣）", "三光稲荷・針綱神社", "有楽苑（国宝茶室如庵）", "犬山城下町（家族昼食・五平餅）", "桃太郎神社（浅野祥雲）", "寂光院（尾張のもみじ寺）", "実家直帰（17:00着）"],
           fullMapUrl: "https://www.google.com/maps/dir/?api=1&origin=春日井市高蔵寺町&destination=春日井市高蔵寺町&waypoints=犬山城第1駐車場|国宝犬山城|三光稲荷神社|有楽苑|山田五平餅店|桃太郎神社|寂光院",
           items: [
@@ -1093,7 +1267,6 @@ header {
               badge: "家族車直行",
               badgeType: "transit",
               category: "transit",
-              categoryLabel: "移動",
               title: "実家から家族車で国宝犬山城へ直行（車約35〜40分）",
               overview: "土曜日の混雑を完全回避するため朝08:30に家族車で出発。愛岐道路または県道27号を快走し、開門直後の犬山城第1駐車場へ09:15にスムーズ入庫。",
               tacticsTitle: "土曜朝の駐車場必勝ステップ",
@@ -1127,7 +1300,6 @@ header {
               badge: "現存12天守・国宝5城",
               badgeType: "national",
               category: "sightseeing",
-              categoryLabel: "観光・名所",
               title: "国宝 犬山城 天守登閣 ＋ 三光稲荷神社（銭洗・ハート絵馬）",
               overview: "室町時代に織田信長の叔父・織田信康が築いた日本最古級の現存天守。急勾配の階段を登り、廻縁（回廊）から木曽川と濃尾平野の絶景を360度大パノラマで展望。",
               tacticsTitle: "犬山城 最速登閣シークエンス",
@@ -1170,10 +1342,9 @@ header {
               id: "d2-urakuen-joan",
               time: "11:05 - 12:15",
               duration: "1時間10分",
-              badge: "国宝三茶室・如庵",
+              badge: "国宝茶室・如庵",
               badgeType: "national",
               category: "sightseeing",
-              categoryLabel: "観光・名所",
               title: "名鉄有楽苑 国宝茶室「如庵」 ＆ 重要文化財旧正伝院書院（呈茶席）",
               overview: "織田信長の実弟であり大茶人・織田有楽斎（長益）が建てた茶道史上の至宝、国宝三茶室の一つ「如庵」を間近に鑑賞。美しい日本庭園の中で抹茶と季節の和菓子を味わう静寂のひととき。",
               tacticsTitle: "有楽苑 優雅な鑑賞ステップ",
@@ -1219,7 +1390,6 @@ header {
               badge: "城下町名物グルメ",
               badgeType: "food",
               category: "food",
-              categoryLabel: "飯・喫茶",
               title: "犬山城下町（本町通り） 家族昼食 ＆ 山田五平餅・飛騨牛串食べ歩き",
               overview: "江戸時代の町割りが残る城下町・本町通り。登録有形文化財の古民家レストランで落ち着いた家族昼食をとり、名物の山田五平餅や飛騨牛にぎり寿しをつまみ食い散策。",
               tacticsTitle: "城下町 昼食＆食べ歩きステップ",
@@ -1267,10 +1437,9 @@ header {
               id: "d2-momotaro-shrine",
               time: "14:00 - 15:00",
               duration: "1時間00分",
-              badge: "浅野祥雲コンクリート像群",
+              badge: "浅野祥雲コンクリート群",
               badgeType: "temple",
               category: "sightseeing",
-              categoryLabel: "観光・名所",
               title: "桃太郎神社（日本屈指のB級シュール巨匠・浅野祥雲コンクリート像群）",
               overview: "木曽川沿いの桃太郎伝説の聖地。巨匠・浅野祥雲が昭和初期に手掛けた約20体の実物大カラーコンクリート彫刻（桃から生まれた桃太郎、鬼の涙痕、サル・キジ・イヌ）が境内に林立する唯一無二の異空間。",
               tacticsTitle: "桃太郎神社 撮影＆散策ステップ",
@@ -1316,7 +1485,6 @@ header {
               badge: "尾張のもみじ寺・信長史跡",
               badgeType: "temple",
               category: "sightseeing",
-              categoryLabel: "観光・名所",
               title: "継鹿尾山 寂光院（尾張のもみじ寺 ＆ 展望台から木曽川・犬山城大パノラマ）",
               overview: "白鳳時代（654年）創建、織田信長も参詣した尾張最古の霊場。境内全域に約1000本のもみじが生い茂り、本堂前の展望台からは木曽川と犬山城、遠く名駅ビル群まで見渡せる絶景スポット。",
               tacticsTitle: "寂光院 絶景アプローチステップ",
@@ -1362,7 +1530,6 @@ header {
               badge: "家族車直帰",
               badgeType: "transit",
               category: "transit",
-              categoryLabel: "帰着",
               title: "寂光院から家族車で実家（高蔵寺）へ直行帰宅（17:00帰着）",
               overview: "名古屋方面の渋滞や不要な寄り道を完全排除。県道27号・愛岐道路を使い、夕暮れ前の17:00に実家へスマートに直帰完了。",
               tacticsTitle: "直行帰還ステップ",
@@ -1398,7 +1565,7 @@ header {
       if (rawLines.length === 0) return '';
       return rawLines.map(line => {
         const cleaned = line.replace(/^[・\-\*]\s*/, '').trim();
-        return '<div class="factor-bullet-line"><span class="factor-bullet-dot">•</span><span class="factor-bullet-text">' + cleaned + '</span></div>';
+        return '<div class="bullet-line"><span class="bullet-dot">•</span><span>' + cleaned + '</span></div>';
       }).join('');
     }
 
@@ -1411,7 +1578,6 @@ header {
           return;
         }
 
-        // Filter items by category
         const filteredItems = day.items.filter(item => {
           if (TRIP_DATA.activeCategoryFilter === 'all') return true;
           return item.category === TRIP_DATA.activeCategoryFilter;
@@ -1419,11 +1585,13 @@ header {
 
         if (filteredItems.length === 0) {
           const emptyEl = document.createElement('div');
-          emptyEl.className = 'day-section';
+          emptyEl.className = 'day-block';
           emptyEl.innerHTML = `
-            <div class="day-header-card">
-              <div class="day-title">Day ${day.dayNum} (${day.dateStr})</div>
-              <div style="font-size:0.8rem; color:var(--text-muted); margin-top:8px;">選択されたカテゴリ「${TRIP_DATA.activeCategoryFilter === 'sightseeing' ? '観光スポット' : '飯・喫茶'}」に該当するスロットはありません。</div>
+            <div class="day-hero">
+              <div class="day-hero-badge">Day ${day.dayNum} (${day.dateStr})</div>
+              <div style="font-size:0.8rem; color:var(--text-muted); margin-top:8px;">
+                選択されたカテゴリ「${TRIP_DATA.activeCategoryFilter === 'sightseeing' ? '観光スポット' : '飯・喫茶'}」に該当するスロットはありません。
+              </div>
             </div>
           `;
           container.appendChild(emptyEl);
@@ -1431,41 +1599,41 @@ header {
         }
 
         const dayEl = document.createElement('div');
-        dayEl.className = 'day-section';
+        dayEl.className = 'day-block';
 
         let slotsHtml = filteredItems.map(item => {
           // 1. Tactics micro-steps
           const tacticsHtml = item.tactics && item.tactics.length > 0 ? `
-            <div class="tactics-box">
-              <div class="tactics-title">
+            <div class="section-card">
+              <div class="section-title tactics">
                 <span>🚶‍♂️ ${item.tacticsTitle || '立ち回り推奨ステップ'}</span>
               </div>
-              <div class="step-list">
+              <div class="step-flow">
                 ${item.tactics.map(s => `
-                  <div class="step-row">
-                    <span class="step-num">Step ${s.step}</span>
-                    <span class="step-text">${s.text}${s.must ? '<span class="step-must">必須</span>' : ''}</span>
+                  <div class="step-item">
+                    <span class="step-badge">Step ${s.step}</span>
+                    <span class="step-body">${s.text}${s.must ? '<span class="tag-must">必須</span>' : ''}</span>
                   </div>
                 `).join('')}
               </div>
             </div>
           ` : '';
 
-          // 2. High-Visibility Bonus Spots (ついで寄り道バナー)
+          // 2. High-Visibility Bonus Spots (Golden Accent Card)
           const bonusHtml = item.bonusSpots && item.bonusSpots.length > 0 ? `
-            <div class="bonus-highlight-box">
-              <div class="bonus-highlight-header">
-                <div class="bonus-highlight-title">
+            <div class="bonus-golden-banner">
+              <div class="bonus-header">
+                <div class="bonus-title-text">
                   <span>💡 忘れない寄り道チェック（ついで名所・スイーツ）</span>
                 </div>
-                <span class="bonus-highlight-badge">立ち寄り推奨</span>
+                <span class="bonus-must-tag">立ち寄り推奨</span>
               </div>
-              <div class="bonus-spot-list">
+              <div class="bonus-grid">
                 ${item.bonusSpots.map(b => `
-                  <div class="bonus-spot-row">
-                    <div class="bonus-spot-top">
-                      <span class="bonus-spot-name">📍 ${b.name}</span>
-                      <a href="${b.mapUrl}" target="_blank" class="bonus-map-btn">ピン地図 ↗</a>
+                  <div class="bonus-card">
+                    <div class="bonus-card-top">
+                      <span class="bonus-spot-title">📍 ${b.name}</span>
+                      <a href="${b.mapUrl}" target="_blank" class="bonus-pin-btn">ピン地図 ↗</a>
                     </div>
                     <div class="bonus-spot-desc">${b.desc}</div>
                   </div>
@@ -1474,69 +1642,71 @@ header {
             </div>
           ` : '';
 
-          // 3. 7-Factor Detailed Analysis Specs
+          // 3. 7-Factor Structured Spec
           const f = item.factors || {};
           const factorsHtml = `
-            <div class="factors-card">
-              <div class="factors-card-title">
+            <div class="section-card">
+              <div class="section-title spec">
                 <span>📋 7つの詳細分析スペック（完全項目化）</span>
               </div>
-              <div class="factors-grid">
-                <div class="factor-row">
-                  <div class="factor-header primary">① 概要・目的（何をする場所か）</div>
-                  <div class="factor-content">${toBullets(f.overview)}</div>
+              <div class="factors-spec-container">
+                <div class="factor-pill-row">
+                  <div class="factor-tag p1">① 概要・目的（何をする場所か）</div>
+                  <div class="factor-desc">${toBullets(f.overview)}</div>
                 </div>
-                <div class="factor-row">
-                  <div class="factor-header success">② 立ち回り＆基本戦略（最速・最適手順）</div>
-                  <div class="factor-content">${toBullets(f.tactics)}</div>
+                <div class="factor-pill-row">
+                  <div class="factor-tag p2">② 立ち回り＆基本戦略（最速・最適手順）</div>
+                  <div class="factor-desc">${toBullets(f.tactics)}</div>
                 </div>
-                <div class="factor-row">
-                  <div class="factor-header accent">③ 代替不可名物・限定体験（ここでしか味わえないもの）</div>
-                  <div class="factor-content">${toBullets(f.mustTry)}</div>
+                <div class="factor-pill-row">
+                  <div class="factor-tag p3">③ 代替不可名物・限定体験（ここでしか味わえないもの）</div>
+                  <div class="factor-desc">${toBullets(f.mustTry)}</div>
                 </div>
-                <div class="factor-row">
-                  <div class="factor-header purple">④ ついでに巡れる名所・スイーツ（立ち寄り推奨）</div>
-                  <div class="factor-content">${toBullets(f.plusOne)}</div>
+                <div class="factor-pill-row">
+                  <div class="factor-tag p4">④ ついでに巡れる名所・スイーツ（立ち寄り推奨）</div>
+                  <div class="factor-desc">${toBullets(f.plusOne)}</div>
                 </div>
-                <div class="factor-row">
-                  <div class="factor-header">⑤ 事前Tips・同行者配慮（歩行・トイレ・準備）</div>
-                  <div class="factor-content">${toBullets(f.tips)}</div>
+                <div class="factor-pill-row">
+                  <div class="factor-tag p5">⑤ 事前Tips・同行者配慮（歩行・トイレ・準備）</div>
+                  <div class="factor-desc">${toBullets(f.tips)}</div>
                 </div>
-                <div class="factor-row">
-                  <div class="factor-header accent">⑥ 交通・移動・駐車場評価（料金・ルート・入庫性）</div>
-                  <div class="factor-content">${toBullets(f.transit)}</div>
+                <div class="factor-pill-row">
+                  <div class="factor-tag p6">⑥ 交通・移動・駐車場評価（料金・ルート・入庫性）</div>
+                  <div class="factor-desc">${toBullets(f.transit)}</div>
                 </div>
-                <div class="factor-row">
-                  <div class="factor-header danger">⑦ スキップ基準・損切りタイムゲート（遅延時の判断）</div>
-                  <div class="factor-content">${toBullets(f.skipLimit)}</div>
+                <div class="factor-pill-row">
+                  <div class="factor-tag p7">⑦ スキップ基準・損切りタイムゲート（遅延時の判断）</div>
+                  <div class="factor-desc">${toBullets(f.skipLimit)}</div>
                 </div>
               </div>
             </div>
           `;
 
+          const nodeClass = item.category === 'food' ? 'node-food' : (item.category === 'sightseeing' ? 'node-sight' : 'node-transit');
+
           return `
-            <div class="timeline-slot">
-              <details class="slot-card" open>
-                <summary class="slot-summary">
-                  <div class="slot-top-row">
-                    <span class="slot-time-badge">⏰ ${item.time} (${item.duration})</span>
-                    <div class="badge-group">
-                      <span class="cat-badge ${item.category}">${item.category === 'food' ? '🍴 飯・喫茶' : (item.category === 'sightseeing' ? '🏛️ 観光・名所' : '🚆 移動・帰着')}</span>
-                      <span class="badge-tag badge-${item.badgeType}">${item.badge}</span>
+            <div class="slot-node ${nodeClass}">
+              <details class="slot-card-modern" open>
+                <summary class="slot-trigger">
+                  <div class="slot-meta-line">
+                    <span class="time-pill">⏰ ${item.time} (${item.duration})</span>
+                    <div class="badge-stack">
+                      <span class="cat-tag ${item.category}">${item.category === 'food' ? '🍴 飯・喫茶' : (item.category === 'sightseeing' ? '🏛️ 観光' : '🚆 移動')}</span>
+                      <span class="cat-tag transit">${item.badge}</span>
                     </div>
                   </div>
-                  <div class="slot-title">${item.title}</div>
-                  <div class="slot-overview-text">${item.overview}</div>
-                  <div class="slot-expand-hint">
-                    <span>詳細（立ち回り・ついで名所・7要素スペック）を展開中</span>
+                  <div class="slot-heading">${item.title}</div>
+                  <div class="slot-brief">${item.overview}</div>
+                  <div class="slot-toggle-indicator">
+                    <span>詳細（立ち回り・ついで名所・7要素スペック）</span>
                     <span>▲</span>
                   </div>
                 </summary>
-                <div class="slot-body">
+                <div class="slot-drawer">
                   ${tacticsHtml}
                   ${bonusHtml}
                   ${factorsHtml}
-                  ${item.mapUrl ? `<a href="${item.mapUrl}" target="_blank" class="slot-map-btn">🗺️ このスポットのGoogleマップピンを開く ↗</a>` : ''}
+                  ${item.mapUrl ? `<a href="${item.mapUrl}" target="_blank" class="btn-spot-map">🗺️ このスポットのGoogleマップを開く ↗</a>` : ''}
                 </div>
               </details>
             </div>
@@ -1544,41 +1714,37 @@ header {
         }).join('');
 
         dayEl.innerHTML = `
-          <div class="day-header-card">
-            <div class="day-header-top">
-              <div class="day-title">Day ${day.dayNum}</div>
-              <div class="day-date">${day.dateStr}</div>
+          <div class="day-hero">
+            <div class="day-hero-top">
+              <div class="day-hero-badge">Day ${day.dayNum}</div>
+              <div class="day-hero-date">${day.dateStr}</div>
             </div>
-            <div class="day-sub">${day.subTitle}</div>
-            <div class="macro-flow-box">
-              <div class="macro-flow-label">【マクロ行程フロー】</div>
+            <div class="day-hero-subtitle">${day.subTitle}</div>
+            <div class="flow-container">
+              <div class="flow-title">【マクロ行程フロー】</div>
               <div>${day.macroRoute.join(' ➔ ')}</div>
             </div>
-            <a href="${day.fullMapUrl}" target="_blank" class="day-fullmap-link">
-              🗺️ Day ${day.dayNum} ついでスポット含む全経由地Googleマップを開く ↗
+            <a href="${day.fullMapUrl}" target="_blank" class="day-map-cta">
+              🗺️ Day ${day.dayNum} ついでスポット含む全経由地マップを開く ↗
             </a>
           </div>
-          <div class="slots-container">${slotsHtml}</div>
+          <div class="timeline-vertical">${slotsHtml}</div>
         `;
 
         container.appendChild(dayEl);
       });
 
-      // Update bottom map link
+      // Bottom Map Link Sync
       const curDay = TRIP_DATA.days.find(d => String(d.dayNum) === TRIP_DATA.activeDayFilter);
       const bMap = document.getElementById('bottom-map-link');
       if (bMap) {
-        if (curDay) {
-          bMap.href = curDay.fullMapUrl;
-        } else {
-          bMap.href = TRIP_DATA.days[1].fullMapUrl; // Default to Day 2 full map
-        }
+        bMap.href = curDay ? curDay.fullMapUrl : TRIP_DATA.days[1].fullMapUrl;
       }
     }
 
     function filterDay(dayKey) {
       TRIP_DATA.activeDayFilter = dayKey;
-      document.querySelectorAll('.filter-row:first-child .filter-btn').forEach(btn => btn.classList.remove('active'));
+      document.querySelectorAll('.control-row:first-child .segment-btn').forEach(btn => btn.classList.remove('active'));
       const activeBtn = document.getElementById('day-' + dayKey + '-btn');
       if (activeBtn) activeBtn.classList.add('active');
       renderUI();
@@ -1586,68 +1752,113 @@ header {
 
     function filterCategory(catKey) {
       TRIP_DATA.activeCategoryFilter = catKey;
-      document.querySelectorAll('.filter-row:last-child .filter-btn').forEach(btn => btn.classList.remove('cat-active'));
+      document.querySelectorAll('.control-row:last-child .segment-btn').forEach(btn => btn.classList.remove('active-cat'));
       const activeBtn = document.getElementById('cat-' + catKey + '-btn');
-      if (activeBtn) activeBtn.classList.add('cat-active');
+      if (activeBtn) activeBtn.classList.add('active-cat');
       renderUI();
     }
 
     function toggleAllAccordions() {
-      const cards = document.querySelectorAll('.slot-card');
+      const cards = document.querySelectorAll('.slot-card-modern');
       const allOpen = Array.from(cards).every(c => c.open);
       cards.forEach(c => { c.open = !allOpen; });
     }
 
-    function copyCurrentPlan() {
-      let text = "🏯 【愛知・犬山・名古屋 リアルタイム旅程ナビ（Beta版）】\n\n";
-      
-      TRIP_DATA.days.forEach(day => {
-        text += "========================================\n";
-        text += "■ " + day.dateStr + " (Day " + day.dayNum + ")\n";
-        text += "マクロ: " + day.macroRoute.join(' ➔ ') + "\n";
-        text += "全体地図: " + day.fullMapUrl + "\n";
-        text += "========================================\n\n";
+    /* LINE Copy Modal & Generation */
+    let currentCopyMode = 'all';
+
+    function openLineModal() {
+      const modal = document.getElementById('line-modal');
+      modal.classList.add('open');
+      switchCopyTab('all');
+    }
+
+    function closeLineModal(e) {
+      const modal = document.getElementById('line-modal');
+      modal.classList.remove('open');
+    }
+
+    function switchCopyTab(mode) {
+      currentCopyMode = mode;
+      document.querySelectorAll('.modal-tab-btn').forEach(b => b.classList.remove('active'));
+      const activeTab = document.getElementById('tab-' + mode);
+      if (activeTab) activeTab.classList.add('active');
+
+      const textarea = document.getElementById('line-preview-text');
+      textarea.value = generateLineText(mode);
+    }
+
+    function generateLineText(mode) {
+      let t = "";
+
+      if (mode === 'summary') {
+        t += "🏯 【愛知・犬山 旅程サマリー】\n\n";
+        t += "■ 11/7(金) 午後名駅・熱田\n";
+        t += "・13:00 小倉トースト（BUCYO COFFEE）\n";
+        t += "・14:20 熱田神宮・草薙館（名刀）\n";
+        t += "・18:00 夢を語れ愛知（夜直撃）\n\n";
+        t += "■ 11/8(土) 家族車で犬山フル満喫\n";
+        t += "・08:30 実家発（車直行）\n";
+        t += "・09:15 国宝犬山城登閣＆三光稲荷\n";
+        t += "・11:05 有楽苑（国宝茶室如庵）\n";
+        t += "・12:20 城下町昼食＆五平餅\n";
+        t += "・14:00 桃太郎神社（浅野祥雲）\n";
+        t += "・15:05 寂光院（もみじ寺展望台）\n";
+        t += "・17:00 実家直帰完了\n\n";
+        t += "🌐 リアルタイムWebナビ:\nhttps://pithud.github.io/public/aichi_beta.html";
+        return t;
+      }
+
+      const daysToExport = mode === 'd1' ? [TRIP_DATA.days[0]] : (mode === 'd2' ? [TRIP_DATA.days[1]] : TRIP_DATA.days);
+
+      t += "🏯 【愛知・犬山・名古屋 決定版リアルタイム旅程】\n\n";
+
+      daysToExport.forEach(day => {
+        t += "━━━━━━━━━━━━━━\n";
+        t += "■ " + day.dateStr + " (Day " + day.dayNum + ")\n";
+        t += "行程: " + day.macroRoute.join(' ➔ ') + "\n";
+        t += "地図: " + day.fullMapUrl + "\n";
+        t += "━━━━━━━━━━━━━━\n\n";
 
         day.items.forEach(item => {
-          text += "【" + item.time + "】 " + item.title + "\n";
-          text += "・種別: " + (item.category === 'food' ? '🍴 飯・喫茶' : (item.category === 'sightseeing' ? '🏛️ 観光' : '🚆 移動')) + "\n";
-          text += "・概要: " + item.overview + "\n";
-          if (item.tactics && item.tactics.length > 0) {
-            text += "・立ち回り:\n";
-            item.tactics.forEach(t => {
-              text += "   Step " + t.step + ". " + t.text + (t.must ? " [必須]" : "") + "\n";
-            });
-          }
+          t += "【" + item.time + "】 " + item.title + "\n";
+          t += "・種別: " + (item.category === 'food' ? '🍴 飯・喫茶' : (item.category === 'sightseeing' ? '🏛️ 観光' : '🚆 移動')) + "\n";
+          t += "・概要: " + item.overview + "\n";
           if (item.bonusSpots && item.bonusSpots.length > 0) {
-            text += "・💡 忘れない寄り道チェック:\n";
-            item.bonusSpots.forEach(b => {
-              text += "   📍 " + b.name + ": " + b.desc + "\n";
-            });
+            t += "・💡 寄り道チェック: " + item.bonusSpots.map(b => b.name).join(' / ') + "\n";
           }
           if (item.factors) {
-            const f = item.factors;
-            text += "・7要素スペック:\n";
-            text += "   ① 概要: " + f.overview + "\n";
-            text += "   ② 戦略: " + f.tactics + "\n";
-            text += "   ③ 名物: " + f.mustTry + "\n";
-            text += "   ④ ついで: " + f.plusOne + "\n";
-            text += "   ⑤ Tips: " + f.tips + "\n";
-            text += "   ⑥ 交通: " + f.transit + "\n";
-            text += "   ⑦ 損切り: " + f.skipLimit + "\n";
+            t += "・名物/体験: " + item.factors.mustTry + "\n";
+            t += "・損切りゲート: " + item.factors.skipLimit + "\n";
           }
-          text += "\n";
+          t += "\n";
         });
       });
 
+      t += "🌐 旅程Webポータル:\nhttps://pithud.github.io/public/aichi_beta.html";
+      return t;
+    }
+
+    function executeLineCopy() {
+      const text = document.getElementById('line-preview-text').value;
       if (navigator.clipboard) {
         navigator.clipboard.writeText(text).then(() => {
-          alert('7要素スペック＆ついで名所を含む全旅程テキストをコピーしました！LINE等にそのまま貼り付け可能です。');
+          showToast();
+          closeLineModal();
         }).catch(() => {
           prompt('以下のテキストをコピーしてください:', text);
         });
       } else {
         prompt('以下のテキストをコピーしてください:', text);
       }
+    }
+
+    function showToast() {
+      const toast = document.getElementById('toast-notify');
+      toast.classList.add('show');
+      setTimeout(() => {
+        toast.classList.remove('show');
+      }, 2500);
     }
 
     function toggleTheme() {
