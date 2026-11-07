@@ -670,6 +670,66 @@ header {
   border-left: 3px solid #a78bfa;
 }
 
+/* Tactics Step Block */
+.tactics-box {
+  margin: 10px 18px 12px;
+  padding: 12px 14px;
+  background: rgba(2, 132, 199, 0.05);
+  border: 1px solid rgba(2, 132, 199, 0.2);
+  border-radius: 10px;
+}
+[data-theme="dark"] .tactics-box {
+  background: rgba(56, 189, 248, 0.06);
+  border-color: rgba(56, 189, 248, 0.25);
+}
+.tactics-header {
+  font-size: 0.8rem;
+  font-weight: 750;
+  color: #0284c7;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  margin-bottom: 8px;
+  letter-spacing: -0.01em;
+}
+[data-theme="dark"] .tactics-header {
+  color: #38bdf8;
+}
+.tactics-list {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+.tactics-step-row {
+  display: flex;
+  align-items: flex-start;
+  gap: 8px;
+  font-size: 0.8rem;
+  line-height: 1.5;
+  color: var(--text-primary);
+}
+.tactics-num {
+  flex-shrink: 0;
+  width: 19px;
+  height: 19px;
+  border-radius: 5px;
+  background: rgba(2, 132, 199, 0.15);
+  color: #0284c7;
+  font-size: 0.72rem;
+  font-weight: 750;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-top: 1px;
+}
+[data-theme="dark"] .tactics-num {
+  background: rgba(56, 189, 248, 0.2);
+  color: #38bdf8;
+}
+.tactics-text {
+  flex: 1;
+}
+
 .swap-guide-box {
   margin: 10px 18px 12px;
   padding: 11px 14px;
@@ -2816,6 +2876,24 @@ body.compact-mode .slot-details-body {
 
           const isFlexible = item.badgeType === 'flexible';
 
+          let tacticsHtml = '';
+          if (item.tactics && item.tactics.length > 0) {
+            const tTitle = item.tacticsTitle || '立ち回りステップ';
+            tacticsHtml = `
+              <div class="tactics-box">
+                <div class="tactics-header">🎯 ${tTitle}</div>
+                <div class="tactics-list">
+                  ${item.tactics.map(st => `
+                    <div class="tactics-step-row">
+                      <span class="tactics-num">${st.step}</span>
+                      <span class="tactics-text">${st.text}</span>
+                    </div>
+                  `).join('')}
+                </div>
+              </div>
+            `;
+          }
+
           let swapGuideHtml = '';
           if (item.swapGuide) {
             swapGuideHtml = `
@@ -2852,6 +2930,7 @@ body.compact-mode .slot-details-body {
                   <p class="spot-overview">${item.overview}</p>
                 </div>
                 ${swapGuideHtml}
+                ${tacticsHtml}
 
                 <!-- Unified Default-Open Route Checkpoints & Practical Footer -->
                 <div class="slot-details-body">
