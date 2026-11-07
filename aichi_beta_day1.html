@@ -1,0 +1,481 @@
+<!DOCTYPE html>
+<html lang="ja" data-theme="light">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <title>愛知・犬山・名古屋 決定版リアルタイム旅程マスター - Day 1</title>
+  <script>
+    // Anti-FOUC immediate theme application
+    (function() {
+      var t = localStorage.getItem('trip_nav_theme') || 'light';
+      document.documentElement.setAttribute('data-theme', t);
+    })();
+  </script>
+  <style>
+:root {
+  --bg: #f8fafc;
+  --surface: #ffffff;
+  --surface-subtle: #f1f5f9;
+  --text: #0f172a;
+  --text-muted: #64748b;
+  --border: #e2e8f0;
+  --primary: #0284c7;
+  --primary-hover: #0369a1;
+  --accent: #d97706;
+  --card-shadow: 0 1px 3px rgba(0,0,0,0.06), 0 1px 2px rgba(0,0,0,0.04);
+  --font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+}
+[data-theme="dark"] {
+  --bg: #090d16;
+  --surface: #131b2e;
+  --surface-subtle: #1e293b;
+  --text: #f8fafc;
+  --text-muted: #94a3b8;
+  --border: #1e293b;
+  --card-shadow: 0 4px 6px -1px rgba(0,0,0,0.3);
+}
+* { box-sizing: border-box; margin: 0; padding: 0; -webkit-tap-highlight-color: transparent; }
+body {
+  font-family: var(--font-family);
+  background-color: var(--bg);
+  color: var(--text);
+  line-height: 1.5;
+  font-size: 15px;
+  padding-bottom: 80px;
+}
+.header-bar {
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  background: rgba(255, 255, 255, 0.92);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border-bottom: 1px solid var(--border);
+  padding: 12px 16px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+[data-theme="dark"] .header-bar { background: rgba(19, 27, 46, 0.92); }
+.brand-title { font-size: 1.05rem; font-weight: 700; display: flex; align-items: center; gap: 8px; }
+.header-actions { display: flex; gap: 8px; align-items: center; }
+.btn-action {
+  background: var(--surface-subtle);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: 6px 12px;
+  font-size: 13px;
+  color: var(--text);
+  cursor: pointer;
+  text-decoration: none;
+}
+.container { max-width: 680px; margin: 0 auto; padding: 16px; }
+
+/* Day Navigation Bar */
+.nav-bar {
+  display: flex;
+  background: var(--surface-subtle);
+  padding: 6px;
+  border-radius: 10px;
+  margin-bottom: 16px;
+  gap: 6px;
+  align-items: center;
+  justify-content: space-between;
+}
+.nav-link {
+  flex: 1;
+  text-align: center;
+  padding: 7px 10px;
+  border-radius: 7px;
+  font-size: 13px;
+  font-weight: 600;
+  text-decoration: none;
+  color: var(--text-muted);
+  background: transparent;
+  border: none;
+  cursor: pointer;
+}
+.nav-link.active {
+  background: var(--surface);
+  color: var(--primary);
+  box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+}
+
+/* Quick Jump Chips */
+.jump-chips {
+  display: flex;
+  gap: 6px;
+  overflow-x: auto;
+  padding-bottom: 10px;
+  margin-bottom: 16px;
+  white-space: nowrap;
+  scrollbar-width: none;
+}
+.jump-chips::-webkit-scrollbar { display: none; }
+.jump-chip {
+  display: inline-block;
+  font-size: 12px;
+  font-weight: 600;
+  padding: 5px 10px;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 16px;
+  color: var(--text);
+  text-decoration: none;
+}
+
+/* Slot Cards */
+.day-block { margin-bottom: 32px; }
+.day-header {
+  font-size: 1.15rem;
+  font-weight: 700;
+  margin-bottom: 12px;
+  padding-bottom: 6px;
+  border-bottom: 2px solid var(--primary);
+  color: var(--primary);
+}
+.slot-card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  margin-bottom: 12px;
+  padding: 14px 16px;
+  box-shadow: var(--card-shadow);
+  transition: opacity 0.2s, background-color 0.2s;
+}
+.slot-card.is-dimmed { opacity: 0.45; filter: grayscale(40%); }
+.slot-card.is-must { border-left: 4px solid var(--accent); }
+.slot-meta { display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px; }
+.slot-time { font-size: 13px; font-weight: 700; font-variant-numeric: tabular-nums; }
+.slot-badge {
+  font-size: 11px;
+  font-weight: 700;
+  padding: 2px 8px;
+  border-radius: 4px;
+  text-transform: uppercase;
+}
+.badge-sightseeing { background: #d1fae5; color: #065f46; }
+.badge-food { background: #ffedd5; color: #9a3412; }
+.badge-transit { background: #e0e7ff; color: #3730a3; }
+[data-theme="dark"] .badge-sightseeing { background: #064e3b; color: #6ee7b7; }
+[data-theme="dark"] .badge-food { background: #7c2d12; color: #fdba74; }
+[data-theme="dark"] .badge-transit { background: #312e81; color: #a5b4fc; }
+
+.slot-title-row { display: flex; align-items: flex-start; gap: 8px; margin-bottom: 6px; }
+.slot-checkbox { margin-top: 3px; cursor: pointer; width: 18px; height: 18px; accent-color: var(--primary); }
+.slot-title { font-size: 1rem; font-weight: 700; line-height: 1.4; flex: 1; }
+.slot-desc { font-size: 13.5px; color: var(--text-muted); margin-bottom: 10px; line-height: 1.5; padding-left: 26px; }
+
+/* Swap Guide Box */
+.swap-box {
+  margin: 10px 0 10px 26px;
+  padding: 10px 12px;
+  border-radius: 8px;
+  background: rgba(217, 119, 6, 0.08);
+  border: 1px dashed var(--accent);
+  font-size: 12.5px;
+}
+.swap-title { font-weight: 700; color: var(--accent); margin-bottom: 4px; display: flex; align-items: center; gap: 4px; }
+
+.slot-foot { display: flex; justify-content: space-between; align-items: center; padding-top: 8px; border-top: 1px solid var(--border); margin-left: 26px; }
+.map-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  font-size: 12px;
+  font-weight: 600;
+  color: #1a73e8;
+  text-decoration: none;
+  background: rgba(26, 115, 232, 0.08);
+  padding: 4px 10px;
+  border-radius: 20px;
+}
+[data-theme="dark"] .map-pill { color: #8ab4f8; background: rgba(138, 180, 248, 0.12); }
+
+/* Print & Paged Media */
+@media print {
+  @page { size: A4 portrait; margin: 12mm 15mm; }
+  body { background: #fff !important; color: #000 !important; font-size: 11pt; }
+  .header-bar, .nav-bar, .jump-chips, .no-print { display: none !important; }
+  .day-block { page-break-after: always; break-after: page; }
+  .slot-card { break-inside: avoid; page-break-inside: avoid; box-shadow: none !important; border: 1px solid #ccc !important; }
+  .slot-card.is-dimmed { opacity: 1 !important; filter: none !important; }
+  .slot-checkbox { display: none !important; }
+  .slot-desc, .swap-box, .slot-foot { margin-left: 0 !important; padding-left: 0 !important; }
+}
+
+  </style>
+</head>
+<body>
+  <header class="header-bar">
+    <div class="brand-title">
+      <span>🏯</span>
+      <span>愛知・犬山・名古屋 決定版リアルタイム旅程マスター</span>
+    </div>
+    <div class="header-actions no-print">
+      <button class="btn-action" onclick="toggleTheme()">🌓 テーマ</button>
+      <button class="btn-action" onclick="window.print()">🖨️ 製本印刷</button>
+    </div>
+  </header>
+
+  <main class="container">
+    
+    <nav class="nav-bar no-print">
+      <a class="nav-link " href="aichi_beta.html">📑 全日程</a>
+      <a class="nav-link active" href="aichi_beta_day1.html">Day 1</a><a class="nav-link " href="aichi_beta_day2.html">Day 2</a>
+    </nav>
+    
+    <div class="jump-chips no-print">
+      
+        <a class="jump-chip" href="#d1-slot-3">🍜 名古屋城きしめん亭（</a>
+      
+        <a class="jump-chip" href="#d1-slot-4">📍 名古屋城 本丸御殿 </a>
+      
+        <a class="jump-chip" href="#d1-slot-6">📍 熱田神宮 草薙館（名</a>
+      
+        <a class="jump-chip" href="#d1-slot-7">🍜 熱田神宮境内 宮きし</a>
+      
+        <a class="jump-chip" href="#d1-slot-8">📍 熱田神宮 本宮参拝 </a>
+      
+        <a class="jump-chip" href="#d1-slot-10">🍜 夢を語れ 愛知（夜営</a>
+      
+    </div>
+    
+    <section class="day-block" id="day-sec-1">
+      <h2 class="day-header">Day 1: 2026年11月7日 (土)</h2>
+      <div class="slot-list">
+        
+    <article class="slot-card " id="d1-slot-1" data-slot-id="d1-slot-1">
+      <div class="slot-meta">
+        <span class="slot-time">⏱️ 09:00 - 12:00</span>
+        <span class="slot-badge badge-transit">固定予定</span>
+      </div>
+      <div class="slot-title-row">
+        <input type="checkbox" class="slot-checkbox no-print" onchange="toggleSlot('d1-slot-1', this.checked)" title="完了・スキップを消し込み">
+        <h3 class="slot-title">高蔵寺 カラオケ（ビッグエコー春日井坂下店）</h3>
+      </div>
+      <p class="slot-desc">3時間パック。11:50精算・12:00退店。車で実家へ戻り駅へ。</p>
+      
+      <div class="slot-foot">
+        <a class="map-pill" href="https://www.google.com/maps/search/?api=1&amp;query=%E9%AB%98%E8%94%B5%E5%AF%BA%20%E3%82%AB%E3%83%A9%E3%82%AA%E3%82%B1" target="_blank" rel="noopener">📍 Google Maps</a>
+        
+      </div>
+    </article>
+    <article class="slot-card " id="d1-slot-2" data-slot-id="d1-slot-2">
+      <div class="slot-meta">
+        <span class="slot-time">⏱️ 12:20 - 12:59</span>
+        <span class="slot-badge badge-transit">移動</span>
+      </div>
+      <div class="slot-title-row">
+        <input type="checkbox" class="slot-checkbox no-print" onchange="toggleSlot('d1-slot-2', this.checked)" title="完了・スキップを消し込み">
+        <h3 class="slot-title">高蔵寺駅 ➔ 大曽根駅 ➔ 名古屋城駅</h3>
+      </div>
+      <p class="slot-desc">JR快速＋名城線左回り（7番出口東門至近）。</p>
+      
+      <div class="slot-foot">
+        <a class="map-pill" href="https://www.google.com/maps/search/?api=1&amp;query=%E9%AB%98%E8%94%B5%E5%AF%BA%E9%A7%85" target="_blank" rel="noopener">📍 Google Maps</a>
+        
+      </div>
+    </article>
+    <article class="slot-card " id="d1-slot-3" data-slot-id="d1-slot-3">
+      <div class="slot-meta">
+        <span class="slot-time">⏱️ 13:00 - 13:20</span>
+        <span class="slot-badge badge-food">食事・喫茶</span>
+      </div>
+      <div class="slot-title-row">
+        <input type="checkbox" class="slot-checkbox no-print" onchange="toggleSlot('d1-slot-3', this.checked)" title="完了・スキップを消し込み">
+        <h3 class="slot-title">名古屋城きしめん亭（1杯目・赤つゆ温）</h3>
+      </div>
+      <p class="slot-desc">愛知県麺類組合直営50年。並びなしなら即食。</p>
+      
+      <div class="swap-box">
+        <div class="swap-title">🔀 スワップ・代替ルート候補</div>
+        <div><strong>プランA:</strong> きしめん亭（並びなし即食）</div><div><strong>プランB:</strong> 金シャチ横丁和カフェ（混雑回避）</div>
+      </div>
+      <div class="slot-foot">
+        <a class="map-pill" href="https://www.google.com/maps/search/?api=1&amp;query=%E5%90%8D%E5%8F%A4%E5%B1%8B%E5%9F%8E%E3%81%8D%E3%81%97%E3%82%81%E3%82%93%E4%BA%AD" target="_blank" rel="noopener">📍 Google Maps</a>
+        
+      </div>
+    </article>
+    <article class="slot-card is-must" id="d1-slot-4" data-slot-id="d1-slot-4">
+      <div class="slot-meta">
+        <span class="slot-time">⏱️ 13:20 - 14:15</span>
+        <span class="slot-badge badge-sightseeing">観光</span>
+      </div>
+      <div class="slot-title-row">
+        <input type="checkbox" class="slot-checkbox no-print" onchange="toggleSlot('d1-slot-4', this.checked)" title="完了・スキップを消し込み">
+        <h3 class="slot-title"><span style="color:var(--accent);">【必見】</span> 名古屋城 本丸御殿 ＆ 金シャチ外観</h3>
+      </div>
+      <p class="slot-desc">入場500円。復元本丸御殿（絢爛障壁画約45分）＋金シャチ。消化促進。</p>
+      
+      <div class="slot-foot">
+        <a class="map-pill" href="https://www.google.com/maps/search/?api=1&amp;query=%E5%90%8D%E5%8F%A4%E5%B1%8B%E5%9F%8E%20%E6%9C%AC%E4%B8%B8%E5%BE%A1%E6%AE%BF%20%EF%BC%86%20%E9%87%91%E3%82%B7%E3%83%A3%E3%83%81%E5%A4%96%E8%A6%B3" target="_blank" rel="noopener">📍 Google Maps</a>
+        <span style="font-size:12px;font-weight:700;color:var(--accent);">⭐ 必達スポット</span>
+      </div>
+    </article>
+    <article class="slot-card " id="d1-slot-5" data-slot-id="d1-slot-5">
+      <div class="slot-meta">
+        <span class="slot-time">⏱️ 14:20 - 14:37</span>
+        <span class="slot-badge badge-transit">移動</span>
+      </div>
+      <div class="slot-title-row">
+        <input type="checkbox" class="slot-checkbox no-print" onchange="toggleSlot('d1-slot-5', this.checked)" title="完了・スキップを消し込み">
+        <h3 class="slot-title">名古屋城駅 ➔ 熱田神宮西駅 移動</h3>
+      </div>
+      <p class="slot-desc">地下鉄名城線左回り直通（約17分・270円・乗り換えなし）。</p>
+      
+      <div class="slot-foot">
+        <a class="map-pill" href="https://www.google.com/maps/search/?api=1&amp;query=%E5%90%8D%E5%8F%A4%E5%B1%8B%E5%9F%8E%E9%A7%85" target="_blank" rel="noopener">📍 Google Maps</a>
+        
+      </div>
+    </article>
+    <article class="slot-card is-must" id="d1-slot-6" data-slot-id="d1-slot-6">
+      <div class="slot-meta">
+        <span class="slot-time">⏱️ 14:40 - 15:20</span>
+        <span class="slot-badge badge-sightseeing">観光</span>
+      </div>
+      <div class="slot-title-row">
+        <input type="checkbox" class="slot-checkbox no-print" onchange="toggleSlot('d1-slot-6', this.checked)" title="完了・スキップを消し込み">
+        <h3 class="slot-title"><span style="color:var(--accent);">【必見】</span> 熱田神宮 草薙館（名刀見学先行クリア）</h3>
+      </div>
+      <p class="slot-desc">草薙館（16:00最終入館）へ先行突入。名刀・次郎太刀重量体験を完全攻略。</p>
+      
+      <div class="slot-foot">
+        <a class="map-pill" href="https://www.google.com/maps/search/?api=1&amp;query=%E7%86%B1%E7%94%B0%E7%A5%9E%E5%AE%AE%20%E8%8D%89%E8%96%99%E9%A4%A8" target="_blank" rel="noopener">📍 Google Maps</a>
+        <span style="font-size:12px;font-weight:700;color:var(--accent);">⭐ 必達スポット</span>
+      </div>
+    </article>
+    <article class="slot-card " id="d1-slot-7" data-slot-id="d1-slot-7">
+      <div class="slot-meta">
+        <span class="slot-time">⏱️ 15:20 - 15:55</span>
+        <span class="slot-badge badge-food">食事・喫茶</span>
+      </div>
+      <div class="slot-title-row">
+        <input type="checkbox" class="slot-checkbox no-print" onchange="toggleSlot('d1-slot-7', this.checked)" title="完了・スキップを消し込み">
+        <h3 class="slot-title">熱田神宮境内 宮きしめん 神宮店（2杯目・白つゆ/冷）</h3>
+      </div>
+      <p class="slot-desc">大正12年創業・きしめん元祖横綱。深い杜のテラス席で絶品きしめん。</p>
+      
+      <div class="slot-foot">
+        <a class="map-pill" href="https://www.google.com/maps/search/?api=1&amp;query=%E7%86%B1%E7%94%B0%E7%A5%9E%E5%AE%AE%E5%A2%83%E5%86%85%20%E5%AE%AE%E3%81%8D%E3%81%97%E3%82%81%E3%82%93%20%E7%A5%9E%E5%AE%AE%E5%BA%97" target="_blank" rel="noopener">📍 Google Maps</a>
+        
+      </div>
+    </article>
+    <article class="slot-card " id="d1-slot-8" data-slot-id="d1-slot-8">
+      <div class="slot-meta">
+        <span class="slot-time">⏱️ 15:55 - 16:45</span>
+        <span class="slot-badge badge-sightseeing">観光</span>
+      </div>
+      <div class="slot-title-row">
+        <input type="checkbox" class="slot-checkbox no-print" onchange="toggleSlot('d1-slot-8', this.checked)" title="完了・スキップを消し込み">
+        <h3 class="slot-title">熱田神宮 本宮参拝 ＆ 信長塀 ＆ あつたnagAya</h3>
+      </div>
+      <p class="slot-desc">境内24h開放。夕暮れの杜をゆったり散策。</p>
+      
+      <div class="slot-foot">
+        <a class="map-pill" href="https://www.google.com/maps/search/?api=1&amp;query=%E7%86%B1%E7%94%B0%E7%A5%9E%E5%AE%AE%20%E6%9C%AC%E5%AE%AE%E5%8F%82%E6%8B%9D%20%EF%BC%86%20%E4%BF%A1%E9%95%B7%E5%A1%80%20%EF%BC%86%20%E3%81%82%E3%81%A4%E3%81%9FnagAya" target="_blank" rel="noopener">📍 Google Maps</a>
+        
+      </div>
+    </article>
+    <article class="slot-card " id="d1-slot-9" data-slot-id="d1-slot-9">
+      <div class="slot-meta">
+        <span class="slot-time">⏱️ 16:50 - 17:05</span>
+        <span class="slot-badge badge-transit">移動</span>
+      </div>
+      <div class="slot-title-row">
+        <input type="checkbox" class="slot-checkbox no-print" onchange="toggleSlot('d1-slot-9', this.checked)" title="完了・スキップを消し込み">
+        <h3 class="slot-title">熱田神宮 ➔ 瑞穂区滝子 移動</h3>
+      </div>
+      <p class="slot-desc">タクシー直行（約8分・約1,200円）。一本道で南東直行。</p>
+      
+      <div class="slot-foot">
+        <a class="map-pill" href="https://www.google.com/maps/search/?api=1&amp;query=%E7%86%B1%E7%94%B0%E7%A5%9E%E5%AE%AE" target="_blank" rel="noopener">📍 Google Maps</a>
+        
+      </div>
+    </article>
+    <article class="slot-card " id="d1-slot-10" data-slot-id="d1-slot-10">
+      <div class="slot-meta">
+        <span class="slot-time">⏱️ 18:00 - 19:00</span>
+        <span class="slot-badge badge-food">食事・喫茶</span>
+      </div>
+      <div class="slot-title-row">
+        <input type="checkbox" class="slot-checkbox no-print" onchange="toggleSlot('d1-slot-10', this.checked)" title="完了・スキップを消し込み">
+        <h3 class="slot-title">夢を語れ 愛知（夜営業マイペース直撃）</h3>
+      </div>
+      <p class="slot-desc">夜営業枠内（18:00〜21:00）で都合の良い時間に突入。極厚神豚とワシワシ麺を堪能。</p>
+      
+      <div class="slot-foot">
+        <a class="map-pill" href="https://www.google.com/maps/search/?api=1&amp;query=%E5%A4%A2%E3%82%92%E8%AA%9E%E3%82%8C%20%E6%84%9B%E7%9F%A5" target="_blank" rel="noopener">📍 Google Maps</a>
+        
+      </div>
+    </article>
+    <article class="slot-card " id="d1-slot-11" data-slot-id="d1-slot-11">
+      <div class="slot-meta">
+        <span class="slot-time">⏱️ 夜（自由）</span>
+        <span class="slot-badge badge-transit">移動</span>
+      </div>
+      <div class="slot-title-row">
+        <input type="checkbox" class="slot-checkbox no-print" onchange="toggleSlot('d1-slot-11', this.checked)" title="完了・スキップを消し込み">
+        <h3 class="slot-title">桜山駅 ➔ 高蔵寺 帰還</h3>
+      </div>
+      <p class="slot-desc">地下鉄桜通線 ➔ 名古屋/千種 ➔ JR快速で高蔵寺帰宅。帰宅時間フリー。</p>
+      
+      <div class="slot-foot">
+        <a class="map-pill" href="https://www.google.com/maps/search/?api=1&amp;query=%E6%A1%9C%E5%B1%B1%E9%A7%85" target="_blank" rel="noopener">📍 Google Maps</a>
+        
+      </div>
+    </article>
+      </div>
+    </section>
+  
+    
+    <nav class="nav-bar no-print" style="margin-top: 24px;">
+      <a class="nav-link " href="aichi_beta.html">📑 全日程（統合版）</a>
+      <a class="nav-link active" href="aichi_beta_day1.html">Day 1</a><a class="nav-link " href="aichi_beta_day2.html">Day 2</a>
+    </nav>
+  </main>
+
+  <script>
+    const STORAGE_KEY = 'aichi_completed_slots';
+    function toggleTheme() {
+      const cur = document.documentElement.getAttribute('data-theme') || 'light';
+      const nxt = cur === 'dark' ? 'light' : 'dark';
+      document.documentElement.setAttribute('data-theme', nxt);
+      localStorage.setItem('trip_nav_theme', nxt);
+    }
+
+    function getCompletedSlots() {
+      try {
+        return JSON.parse(localStorage.getItem(STORAGE_KEY) || '[]');
+      } catch (e) {
+        return [];
+      }
+    }
+
+    function toggleSlot(slotId, isDone) {
+      const card = document.getElementById(slotId);
+      let list = getCompletedSlots();
+      if (isDone) {
+        if (!list.includes(slotId)) list.push(slotId);
+        if (card) card.classList.add('is-dimmed');
+      } else {
+        list = list.filter(id => id !== slotId);
+        if (card) card.classList.remove('is-dimmed');
+      }
+      localStorage.setItem(STORAGE_KEY, JSON.stringify(list));
+    }
+
+    document.addEventListener('DOMContentLoaded', () => {
+      const list = getCompletedSlots();
+      list.forEach(slotId => {
+        const card = document.getElementById(slotId);
+        if (card) {
+          card.classList.add('is-dimmed');
+          const cb = card.querySelector('.slot-checkbox');
+          if (cb) cb.checked = true;
+        }
+      });
+    });
+  </script>
+</body>
+</html>
