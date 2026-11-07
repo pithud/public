@@ -1,0 +1,1288 @@
+<!DOCTYPE html>
+<html lang="ja" data-theme="light">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <title>愛知・犬山・名古屋 決定版リアルタイム旅程マスター - Day 1</title>
+  <script>
+    // Anti-FOUC immediate theme application
+    (function() {
+      var t = localStorage.getItem('trip_nav_theme') || 'light';
+      document.documentElement.setAttribute('data-theme', t);
+    })();
+  </script>
+  <style>
+:root {
+  --bg: #f8fafc;
+  --surface: #ffffff;
+  --surface-subtle: #f1f5f9;
+  --text: #0f172a;
+  --text-muted: #64748b;
+  --border: #e2e8f0;
+  --primary: #0284c7;
+  --primary-hover: #0369a1;
+  --accent: #d97706;
+  --card-shadow: 0 1px 3px rgba(0,0,0,0.06), 0 1px 2px rgba(0,0,0,0.04);
+  --font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+}
+[data-theme="dark"] {
+  --bg: #090d16;
+  --surface: #131b2e;
+  --surface-subtle: #1e293b;
+  --text: #f8fafc;
+  --text-muted: #94a3b8;
+  --border: #1e293b;
+  --card-shadow: 0 4px 6px -1px rgba(0,0,0,0.3);
+}
+* { box-sizing: border-box; margin: 0; padding: 0; -webkit-tap-highlight-color: transparent; }
+body {
+  font-family: var(--font-family);
+  background-color: var(--bg);
+  color: var(--text);
+  line-height: 1.5;
+  font-size: 15px;
+  padding-bottom: 80px;
+}
+.header-bar {
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  background: rgba(255, 255, 255, 0.92);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border-bottom: 1px solid var(--border);
+  padding: 12px 16px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+[data-theme="dark"] .header-bar { background: rgba(19, 27, 46, 0.92); }
+.brand-title { font-size: 1.05rem; font-weight: 700; display: flex; align-items: center; gap: 8px; }
+.header-actions { display: flex; gap: 8px; align-items: center; }
+.btn-action {
+  background: var(--surface-subtle);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: 6px 12px;
+  font-size: 13px;
+  color: var(--text);
+  cursor: pointer;
+  text-decoration: none;
+}
+.container { max-width: 680px; margin: 0 auto; padding: 16px; }
+
+/* Day Navigation Bar */
+.nav-bar {
+  display: flex;
+  background: var(--surface-subtle);
+  padding: 6px;
+  border-radius: 10px;
+  margin-bottom: 16px;
+  gap: 6px;
+  align-items: center;
+  justify-content: space-between;
+}
+.nav-link {
+  flex: 1;
+  text-align: center;
+  padding: 7px 10px;
+  border-radius: 7px;
+  font-size: 13px;
+  font-weight: 600;
+  text-decoration: none;
+  color: var(--text-muted);
+  background: transparent;
+  border: none;
+  cursor: pointer;
+}
+.nav-link.active {
+  background: var(--surface);
+  color: var(--primary);
+  box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+}
+
+/* Quick Jump Chips */
+.jump-chips {
+  display: flex;
+  gap: 6px;
+  overflow-x: auto;
+  padding-bottom: 10px;
+  margin-bottom: 16px;
+  white-space: nowrap;
+  scrollbar-width: none;
+}
+.jump-chips::-webkit-scrollbar { display: none; }
+.jump-chip {
+  display: inline-block;
+  font-size: 12px;
+  font-weight: 600;
+  padding: 5px 10px;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 16px;
+  color: var(--text);
+  text-decoration: none;
+}
+
+/* Slot Cards */
+.day-block { margin-bottom: 32px; }
+.day-header {
+  font-size: 1.15rem;
+  font-weight: 700;
+  margin-bottom: 12px;
+  padding-bottom: 6px;
+  border-bottom: 2px solid var(--primary);
+  color: var(--primary);
+}
+.slot-card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  margin-bottom: 12px;
+  padding: 14px 16px;
+  box-shadow: var(--card-shadow);
+  transition: opacity 0.2s, background-color 0.2s;
+}
+.slot-card.is-dimmed { opacity: 0.45; filter: grayscale(40%); }
+.slot-card.is-must { border-left: 4px solid var(--accent); }
+.slot-meta { display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px; }
+.slot-time { font-size: 13px; font-weight: 700; font-variant-numeric: tabular-nums; }
+.slot-badge {
+  font-size: 11px;
+  font-weight: 700;
+  padding: 2px 8px;
+  border-radius: 4px;
+  text-transform: uppercase;
+}
+.badge-sightseeing { background: #d1fae5; color: #065f46; }
+.badge-food { background: #ffedd5; color: #9a3412; }
+.badge-transit { background: #e0e7ff; color: #3730a3; }
+[data-theme="dark"] .badge-sightseeing { background: #064e3b; color: #6ee7b7; }
+[data-theme="dark"] .badge-food { background: #7c2d12; color: #fdba74; }
+[data-theme="dark"] .badge-transit { background: #312e81; color: #a5b4fc; }
+
+.slot-title-row { display: flex; align-items: flex-start; gap: 8px; margin-bottom: 6px; }
+.slot-checkbox { margin-top: 3px; cursor: pointer; width: 18px; height: 18px; accent-color: var(--primary); }
+.slot-title { font-size: 1rem; font-weight: 700; line-height: 1.4; flex: 1; }
+.slot-desc { font-size: 13.5px; color: var(--text-muted); margin-bottom: 10px; line-height: 1.5; padding-left: 26px; }
+
+/* Swap Guide Box */
+.swap-box {
+  margin: 10px 0 10px 26px;
+  padding: 10px 12px;
+  border-radius: 8px;
+  background: rgba(217, 119, 6, 0.08);
+  border: 1px dashed var(--accent);
+  font-size: 12.5px;
+}
+.swap-title { font-weight: 700; color: var(--accent); margin-bottom: 4px; display: flex; align-items: center; gap: 4px; }
+
+.slot-foot { display: flex; justify-content: space-between; align-items: center; padding-top: 8px; border-top: 1px solid var(--border); margin-left: 26px; }
+.map-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  font-size: 12px;
+  font-weight: 600;
+  color: #1a73e8;
+  text-decoration: none;
+  background: rgba(26, 115, 232, 0.08);
+  padding: 4px 10px;
+  border-radius: 20px;
+}
+[data-theme="dark"] .map-pill { color: #8ab4f8; background: rgba(138, 180, 248, 0.12); }
+
+/* Tactics Step Box */
+.tactics-box {
+  margin: 10px 0 10px 26px;
+  padding: 10px 12px;
+  background: rgba(2, 132, 199, 0.05);
+  border: 1px solid rgba(2, 132, 199, 0.2);
+  border-radius: 8px;
+}
+[data-theme="dark"] .tactics-box {
+  background: rgba(56, 189, 248, 0.06);
+  border-color: rgba(56, 189, 248, 0.25);
+}
+.tactics-header {
+  font-size: 12.5px;
+  font-weight: 700;
+  color: var(--primary);
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  margin-bottom: 6px;
+}
+[data-theme="dark"] .tactics-header { color: #38bdf8; }
+.tactics-list { display: flex; flex-direction: column; gap: 5px; }
+.tactics-step-row { display: flex; align-items: flex-start; gap: 6px; font-size: 12.5px; line-height: 1.45; }
+.tactics-num {
+  flex-shrink: 0;
+  width: 17px;
+  height: 17px;
+  border-radius: 4px;
+  background: rgba(2, 132, 199, 0.15);
+  color: var(--primary);
+  font-size: 11px;
+  font-weight: 700;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-top: 1px;
+}
+[data-theme="dark"] .tactics-num { background: rgba(56, 189, 248, 0.2); color: #38bdf8; }
+
+/* Checkpoints List */
+.checkpoint-list {
+  margin: 10px 0 10px 26px;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+.checkpoint-row {
+  display: flex;
+  align-items: flex-start;
+  gap: 8px;
+  font-size: 12px;
+  background: var(--surface-subtle);
+  padding: 8px 10px;
+  border-radius: 6px;
+  border: 1px solid var(--border);
+}
+.cp-badge {
+  font-size: 10px;
+  font-weight: 700;
+  padding: 1px 5px;
+  border-radius: 3px;
+  background: #0284c7;
+  color: #fff;
+  flex-shrink: 0;
+}
+.cp-title { font-weight: 600; color: var(--text); }
+.cp-desc { font-size: 11.5px; color: var(--text-muted); margin-top: 2px; }
+
+/* Practical Footer */
+.practical-footer {
+  margin: 10px 0 10px 26px;
+  padding: 8px 10px;
+  background: var(--surface-subtle);
+  border-left: 3px solid var(--accent);
+  border-radius: 4px;
+  font-size: 12px;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+.pf-row { display: flex; gap: 6px; }
+.pf-tag { font-weight: 700; color: var(--accent); flex-shrink: 0; min-width: 65px; }
+.pf-val { color: var(--text); }
+
+/* Print & Paged Media */
+@media print {
+  @page { size: A4 portrait; margin: 12mm 15mm; }
+  body { background: #fff !important; color: #000 !important; font-size: 11pt; }
+  .header-bar, .nav-bar, .jump-chips, .no-print { display: none !important; }
+  .day-block { page-break-after: always; break-after: page; }
+  .slot-card { break-inside: avoid; page-break-inside: avoid; box-shadow: none !important; border: 1px solid #ccc !important; }
+  .slot-card.is-dimmed { opacity: 1 !important; filter: none !important; }
+  .slot-checkbox { display: none !important; }
+  .slot-desc, .swap-box, .slot-foot { margin-left: 0 !important; padding-left: 0 !important; }
+}
+
+  </style>
+</head>
+<body>
+  <header class="header-bar">
+    <div class="brand-title">
+      <span>🏯</span>
+      <span>愛知・犬山・名古屋 決定版リアルタイム旅程マスター</span>
+    </div>
+    <div class="header-actions no-print">
+      <button class="btn-action" onclick="toggleTheme()">🌓 テーマ</button>
+      <button class="btn-action" onclick="window.print()">🖨️ 製本印刷</button>
+    </div>
+  </header>
+
+  <main class="container">
+    
+    <nav class="nav-bar no-print">
+      <a class="nav-link " href="aichi_beta.html">📑 全日程</a>
+      <a class="nav-link active" href="aichi_beta_day1.html">Day 1</a><a class="nav-link " href="aichi_beta_day2.html">Day 2</a>
+    </nav>
+    
+    <div class="jump-chips no-print">
+      
+        <a class="jump-chip" href="#d1-slot-4">📍 名古屋城きしめん亭（</a>
+      
+        <a class="jump-chip" href="#d1-slot-5">🍜 熱田神宮 宮きしめん</a>
+      
+        <a class="jump-chip" href="#d1-slot-7">📍 熱田神宮 剣の宝庫「</a>
+      
+        <a class="jump-chip" href="#d1-slot-9">🍜 夢を語れ 愛知（夜営</a>
+      
+        <a class="jump-chip" href="#d1-nagoya-castle">📍 名古屋城きしめん亭（</a>
+      
+        <a class="jump-chip" href="#d1-kishimen-atsuta">🍜 熱田神宮 宮きしめん</a>
+      
+        <a class="jump-chip" href="#d1-atsuta-jingu">📍 熱田神宮 剣の宝庫「</a>
+      
+        <a class="jump-chip" href="#d1-yume-wo-katare">🍜 夢を語れ 愛知（夜営</a>
+      
+    </div>
+    
+    <section class="day-block" id="day-sec-1">
+      <h2 class="day-header">Day 1: 2026年11月7日 (土)</h2>
+      <div class="slot-list">
+        
+    <article class="slot-card " id="d1-slot-1" data-slot-id="d1-slot-1">
+      <div class="slot-meta">
+        <span class="slot-time">⏱️ 09:00 - 12:00</span>
+        <span class="slot-badge badge-transit">移動</span>
+      </div>
+      <div class="slot-title-row">
+        <input type="checkbox" class="slot-checkbox no-print" onchange="toggleSlot('d1-slot-1', this.checked)" title="完了・スキップを消し込み">
+        <h3 class="slot-title">高蔵寺 ビッグエコー春日井坂下店（車） ➔ 実家格納 ➔ 高蔵寺駅</h3>
+      </div>
+      <p class="slot-desc">午前の固定カラオケタイム（3時間パック）。11:50精算・12:00退店。車で実...</p>
+      
+      
+      
+      <div class="checkpoint-list">
+        
+          <div class="checkpoint-row">
+            
+            <div>
+              <div class="cp-title">高蔵寺 ビッグエコー春日井坂下店（車） ➔ 実家格納 ➔ 高蔵寺駅</div>
+              <div class="cp-desc">午前の固定カラオケタイム（3時間パック）。11:50精算・12:00退店。車で実...</div>
+            </div>
+          </div>
+        
+      </div>
+      
+      <div class="slot-foot">
+        <span></span>
+        
+      </div>
+    </article>
+    <article class="slot-card " id="d1-slot-2" data-slot-id="d1-slot-2">
+      <div class="slot-meta">
+        <span class="slot-time">⏱️ 12:15 - 12:35</span>
+        <span class="slot-badge badge-transit">移動</span>
+      </div>
+      <div class="slot-title-row">
+        <input type="checkbox" class="slot-checkbox no-print" onchange="toggleSlot('d1-slot-2', this.checked)" title="完了・スキップを消し込み">
+        <h3 class="slot-title">高蔵寺駅 ➔ 大曽根 または 名古屋駅（先小倉/後小倉で選択）</h3>
+      </div>
+      <p class="slot-desc">【Pattern A：先小倉】なら終点「名古屋駅」まで快速直通（約28分・510...</p>
+      
+      
+      
+      <div class="checkpoint-list">
+        
+          <div class="checkpoint-row">
+            
+            <div>
+              <div class="cp-title">高蔵寺駅 ➔ 大曽根 または 名古屋駅（先小倉/後小倉で選択）</div>
+              <div class="cp-desc">【Pattern A：先小倉】なら終点「名古屋駅」まで快速直通（約28分・510...</div>
+            </div>
+          </div>
+        
+      </div>
+      
+      <div class="slot-foot">
+        <span></span>
+        
+      </div>
+    </article>
+    <article class="slot-card " id="d1-slot-3" data-slot-id="d1-slot-3">
+      <div class="slot-meta">
+        <span class="slot-time">⏱️ 12:38 - 12:50</span>
+        <span class="slot-badge badge-transit">移動</span>
+      </div>
+      <div class="slot-title-row">
+        <input type="checkbox" class="slot-checkbox no-print" onchange="toggleSlot('d1-slot-3', this.checked)" title="完了・スキップを消し込み">
+        <h3 class="slot-title">地下鉄名城線 大曽根 ➔ 名古屋城駅 移動</h3>
+      </div>
+      <p class="slot-desc">大曽根駅から名城線（左回り・栄・金山方面）でわずか5駅・11分で名古屋城駅へダイ...</p>
+      
+      
+      
+      <div class="checkpoint-list">
+        
+          <div class="checkpoint-row">
+            
+            <div>
+              <div class="cp-title">地下鉄名城線 大曽根 ➔ 名古屋城駅 移動</div>
+              <div class="cp-desc">大曽根駅から名城線（左回り・栄・金山方面）でわずか5駅・11分で名古屋城駅へダイ...</div>
+            </div>
+          </div>
+        
+      </div>
+      
+      <div class="slot-foot">
+        <span></span>
+        
+      </div>
+    </article>
+    <article class="slot-card " id="d1-slot-4" data-slot-id="d1-slot-4">
+      <div class="slot-meta">
+        <span class="slot-time">⏱️ 13:00 - 14:30</span>
+        <span class="slot-badge badge-sightseeing">観光</span>
+      </div>
+      <div class="slot-title-row">
+        <input type="checkbox" class="slot-checkbox no-print" onchange="toggleSlot('d1-slot-4', this.checked)" title="完了・スキップを消し込み">
+        <h3 class="slot-title">名古屋城きしめん亭（空席即食） ＆ 本丸御殿（絢爛障壁画） ＆ 金シャチ外観</h3>
+      </div>
+      <p class="slot-desc">東門入城後、まず直結動線上にある「名古屋城きしめん亭」の列を確認。空席なら即座に...</p>
+      
+      
+      
+      <div class="checkpoint-list">
+        
+          <div class="checkpoint-row">
+            
+            <div>
+              <div class="cp-title">名古屋城きしめん亭（空席即食） ＆ 本丸御殿（絢爛障壁画） ＆ 金シャチ外観</div>
+              <div class="cp-desc">東門入城後、まず直結動線上にある「名古屋城きしめん亭」の列を確認。空席なら即座に...</div>
+            </div>
+          </div>
+        
+      </div>
+      
+      <div class="slot-foot">
+        <span></span>
+        
+      </div>
+    </article>
+    <article class="slot-card " id="d1-slot-5" data-slot-id="d1-slot-5">
+      <div class="slot-meta">
+        <span class="slot-time">⏱️ 14:40 - 15:55</span>
+        <span class="slot-badge badge-food">食事・喫茶</span>
+      </div>
+      <div class="slot-title-row">
+        <input type="checkbox" class="slot-checkbox no-print" onchange="toggleSlot('d1-slot-5', this.checked)" title="完了・スキップを消し込み">
+        <h3 class="slot-title">熱田神宮 宮きしめん神宮店 ＆ 草薙館（行列確認で順序動的判定）</h3>
+      </div>
+      <p class="slot-desc">熱田神宮西駅到着（14:40）後、まず境内の「宮きしめん 神宮店」の注文列を確認...</p>
+      
+      
+      
+      <div class="checkpoint-list">
+        
+          <div class="checkpoint-row">
+            
+            <div>
+              <div class="cp-title">熱田神宮 宮きしめん神宮店 ＆ 草薙館（行列確認で順序動的判定）</div>
+              <div class="cp-desc">熱田神宮西駅到着（14:40）後、まず境内の「宮きしめん 神宮店」の注文列を確認...</div>
+            </div>
+          </div>
+        
+      </div>
+      
+      <div class="slot-foot">
+        <span></span>
+        
+      </div>
+    </article>
+    <article class="slot-card " id="d1-slot-6" data-slot-id="d1-slot-6">
+      <div class="slot-meta">
+        <span class="slot-time">⏱️ 14:40 - 15:00</span>
+        <span class="slot-badge badge-transit">移動</span>
+      </div>
+      <div class="slot-title-row">
+        <input type="checkbox" class="slot-checkbox no-print" onchange="toggleSlot('d1-slot-6', this.checked)" title="完了・スキップを消し込み">
+        <h3 class="slot-title">地下鉄名城線 名古屋城駅 ➔ 熱田神宮西駅（直通17分）</h3>
+      </div>
+      <p class="slot-desc">名古屋城駅から熱田神宮西駅へ名城線（左回り・栄・金山方面）で直通17分（乗り換え...</p>
+      
+      
+      
+      <div class="checkpoint-list">
+        
+          <div class="checkpoint-row">
+            
+            <div>
+              <div class="cp-title">地下鉄名城線 名古屋城駅 ➔ 熱田神宮西駅（直通17分）</div>
+              <div class="cp-desc">名古屋城駅から熱田神宮西駅へ名城線（左回り・栄・金山方面）で直通17分（乗り換え...</div>
+            </div>
+          </div>
+        
+      </div>
+      
+      <div class="slot-foot">
+        <span></span>
+        
+      </div>
+    </article>
+    <article class="slot-card " id="d1-slot-7" data-slot-id="d1-slot-7">
+      <div class="slot-meta">
+        <span class="slot-time">⏱️ 15:00 - 16:45</span>
+        <span class="slot-badge badge-sightseeing">観光</span>
+      </div>
+      <div class="slot-title-row">
+        <input type="checkbox" class="slot-checkbox no-print" onchange="toggleSlot('d1-slot-7', this.checked)" title="完了・スキップを消し込み">
+        <h3 class="slot-title">熱田神宮 剣の宝庫「草薙館」名刀鑑賞 ＆ 本殿・信長塀参拝</h3>
+      </div>
+      <p class="slot-desc">三種の神器（草薙神剣）を祀る古社。境内参拝は24時間可能だが、名刀展示の「草薙館...</p>
+      
+      
+      
+      <div class="checkpoint-list">
+        
+          <div class="checkpoint-row">
+            
+            <div>
+              <div class="cp-title">熱田神宮 剣の宝庫「草薙館」名刀鑑賞 ＆ 本殿・信長塀参拝</div>
+              <div class="cp-desc">三種の神器（草薙神剣）を祀る古社。境内参拝は24時間可能だが、名刀展示の「草薙館...</div>
+            </div>
+          </div>
+        
+      </div>
+      
+      <div class="slot-foot">
+        <span></span>
+        
+      </div>
+    </article>
+    <article class="slot-card " id="d1-slot-8" data-slot-id="d1-slot-8">
+      <div class="slot-meta">
+        <span class="slot-time">⏱️ 夕方（自由）</span>
+        <span class="slot-badge badge-transit">移動</span>
+      </div>
+      <div class="slot-title-row">
+        <input type="checkbox" class="slot-checkbox no-print" onchange="toggleSlot('d1-slot-8', this.checked)" title="完了・スキップを消し込み">
+        <h3 class="slot-title">熱田神宮 ➔ 瑞穂区滝子（夢を語れ愛知）移動</h3>
+      </div>
+      <p class="slot-desc">熱田神宮から「夢を語れ 愛知」へ移動。タクシー直行（約8分・約1,200円）が最...</p>
+      
+      
+      
+      <div class="checkpoint-list">
+        
+          <div class="checkpoint-row">
+            
+            <div>
+              <div class="cp-title">熱田神宮 ➔ 瑞穂区滝子（夢を語れ愛知）移動</div>
+              <div class="cp-desc">熱田神宮から「夢を語れ 愛知」へ移動。タクシー直行（約8分・約1,200円）が最...</div>
+            </div>
+          </div>
+        
+      </div>
+      
+      <div class="slot-foot">
+        <span></span>
+        
+      </div>
+    </article>
+    <article class="slot-card " id="d1-slot-9" data-slot-id="d1-slot-9">
+      <div class="slot-meta">
+        <span class="slot-time">⏱️ 夜（18:00〜21:00の間いつでも可）</span>
+        <span class="slot-badge badge-food">食事・喫茶</span>
+      </div>
+      <div class="slot-title-row">
+        <input type="checkbox" class="slot-checkbox no-print" onchange="toggleSlot('d1-slot-9', this.checked)" title="完了・スキップを消し込み">
+        <h3 class="slot-title">夢を語れ 愛知（夜営業マイペース直撃）</h3>
+      </div>
+      <p class="slot-desc">東京に常設店が存在しない伝説の二郎系屋号。夜営業（18:00〜21:00）の都合...</p>
+      
+      
+      
+      <div class="checkpoint-list">
+        
+          <div class="checkpoint-row">
+            
+            <div>
+              <div class="cp-title">夢を語れ 愛知（夜営業マイペース直撃）</div>
+              <div class="cp-desc">東京に常設店が存在しない伝説の二郎系屋号。夜営業（18:00〜21:00）の都合...</div>
+            </div>
+          </div>
+        
+      </div>
+      
+      <div class="slot-foot">
+        <span></span>
+        
+      </div>
+    </article>
+    <article class="slot-card " id="d1-karaoke" data-slot-id="d1-karaoke">
+      <div class="slot-meta">
+        <span class="slot-time">⏱️ 09:00 - 12:00</span>
+        <span class="slot-badge badge-transit">固定予定</span>
+      </div>
+      <div class="slot-title-row">
+        <input type="checkbox" class="slot-checkbox no-print" onchange="toggleSlot('d1-karaoke', this.checked)" title="完了・スキップを消し込み">
+        <h3 class="slot-title">高蔵寺 ビッグエコー春日井坂下店（車） ➔ 実家格納 ➔ 高蔵寺駅</h3>
+      </div>
+      <p class="slot-desc">午前の固定カラオケタイム（3時間パック）。11:50精算・12:00退店。車で実家へ戻り格納後、高蔵寺駅へ向かいJR快速に乗車。</p>
+      
+      
+      <div class="tactics-box">
+        <div class="tactics-header">🎯 午前立ち回りステップ</div>
+        <div class="tactics-list">
+          
+            <div class="tactics-step-row">
+              <span class="tactics-num">1</span>
+              <span class="tactics-text">09:00前に入店し、3時間パックを確保。ドリンクバー確保。</span>
+            </div>
+          
+            <div class="tactics-step-row">
+              <span class="tactics-num">2</span>
+              <span class="tactics-text">11:50に終了精算。手荷物・持ち物をまとめ退店準備。</span>
+            </div>
+          
+            <div class="tactics-step-row">
+              <span class="tactics-num">3</span>
+              <span class="tactics-text">12:00に高蔵寺駅北口へ移動（徒歩または送迎）。JR中央本線快速（12:15発または12:29発）に乗車。</span>
+            </div>
+          
+        </div>
+      </div>
+      
+      <div class="checkpoint-list">
+        
+          <div class="checkpoint-row">
+            <span class="cp-badge">必須</span>
+            <div>
+              <div class="cp-title">09:00 入店・3時間パック確保</div>
+              <div class="cp-desc">ビッグエコー春日井坂下店へ車で入店。ドリンクバーを確保しウォーミングアップ。</div>
+            </div>
+          </div>
+        
+          <div class="checkpoint-row">
+            <span class="cp-badge">必須</span>
+            <div>
+              <div class="cp-title">11:50 精算 ➔ 12:00 退店 ➔ 実家へ車格納</div>
+              <div class="cp-desc">11:50に終了精算。車で実家へ戻り車を格納後、高蔵寺駅へ移動（快速12:34発に乗車）。</div>
+            </div>
+          </div>
+        
+      </div>
+      
+      <div class="practical-footer">
+        <div class="pf-row"><span class="pf-tag">🚗 移動・駐車:</span><span class="pf-val">JR中央本線 快速名古屋行（所要約26〜30分、運賃510円）。日中10〜15分ヘッドで運行。</span></div>
+        <div class="pf-row"><span class="pf-tag">💡 現地Tips:</span><span class="pf-val">荷物はリュック1つにコンパクト化し、名駅コインロッカー不要の機動力を維持。</span></div>
+        <div class="pf-row"><span class="pf-tag">⏱️ 撤収基準:</span><span class="pf-val">12:30高蔵寺駅発の電車に乗れば13:00の名駅到着に完全間に合う。</span></div>
+      </div>
+      <div class="slot-foot">
+        <a class="map-pill" href="https://www.google.com/maps/search/?api=1&amp;query=高蔵寺駅" target="_blank" rel="noopener">📍 Google Maps</a>
+        
+      </div>
+    </article>
+    <article class="slot-card " id="d1-jr-ozone" data-slot-id="d1-jr-ozone">
+      <div class="slot-meta">
+        <span class="slot-time">⏱️ 12:15 - 12:35</span>
+        <span class="slot-badge badge-flexible">分岐移動枠</span>
+      </div>
+      <div class="slot-title-row">
+        <input type="checkbox" class="slot-checkbox no-print" onchange="toggleSlot('d1-jr-ozone', this.checked)" title="完了・スキップを消し込み">
+        <h3 class="slot-title">高蔵寺駅 ➔ 大曽根 または 名古屋駅（先小倉/後小倉で選択）</h3>
+      </div>
+      <p class="slot-desc">【Pattern A：先小倉】なら終点「名古屋駅」まで快速直通（約28分・510円）。【Pattern B：後小倉】なら手前の「大曽根駅」で下車（約16分・330円）し地下鉄名城線へショートカット。</p>
+      
+      
+      <div class="tactics-box">
+        <div class="tactics-header">🎯 大曽根ショートカット手順</div>
+        <div class="tactics-list">
+          
+            <div class="tactics-step-row">
+              <span class="tactics-num">1</span>
+              <span class="tactics-text">高蔵寺駅北口からJR中央本線快速（名古屋行）に乗車。</span>
+            </div>
+          
+            <div class="tactics-step-row">
+              <span class="tactics-num">2</span>
+              <span class="tactics-text">わずか3駅・16分で「大曽根駅」に到着（運賃330円）。名駅まで行くより12分早い。</span>
+            </div>
+          
+            <div class="tactics-step-row">
+              <span class="tactics-num">3</span>
+              <span class="tactics-text">大曽根駅南口改札を出て、地下鉄名城線連絡通路へ向かう（乗り換え約3分）。</span>
+            </div>
+          
+        </div>
+      </div>
+      
+      <div class="checkpoint-list">
+        
+          <div class="checkpoint-row">
+            <span class="cp-badge">必須</span>
+            <div>
+              <div class="cp-title">高蔵寺駅 ➔ JR中央本線快速に乗車（3駅・16分）</div>
+              <div class="cp-desc">ICカードで入場し快速に乗車。名駅まで行かずに手前の大曽根駅で下車（330円）。</div>
+            </div>
+          </div>
+        
+          <div class="checkpoint-row">
+            <span class="cp-badge">必須</span>
+            <div>
+              <div class="cp-title">大曽根駅 ➔ 地下鉄名城線連絡通路へ移動</div>
+              <div class="cp-desc">改札を出て案内表示に従い地下鉄名城線ホームへ（徒歩約3分）。</div>
+            </div>
+          </div>
+        
+      </div>
+      
+      <div class="practical-footer">
+        <div class="pf-row"><span class="pf-tag">🚗 移動・駐車:</span><span class="pf-val">JR中央本線快速で16分、330円。</span></div>
+        <div class="pf-row"><span class="pf-tag">💡 現地Tips:</span><span class="pf-val">大曽根駅はJRと地下鉄名城線の乗り換えが非常にコンパクト。</span></div>
+        <div class="pf-row"><span class="pf-tag">⏱️ 撤収基準:</span><span class="pf-val">12:35までに大曽根に着けば13:00前に名古屋城へ到着可能。</span></div>
+      </div>
+      <div class="slot-foot">
+        <a class="map-pill" href="https://www.google.com/maps/dir/?api=1&amp;origin=高蔵寺駅&amp;destination=大曽根駅" target="_blank" rel="noopener">📍 Google Maps</a>
+        
+      </div>
+    </article>
+    <article class="slot-card " id="d1-meijo-nagoyajo" data-slot-id="d1-meijo-nagoyajo">
+      <div class="slot-meta">
+        <span class="slot-time">⏱️ 12:38 - 12:50</span>
+        <span class="slot-badge badge-transit">名城線移動</span>
+      </div>
+      <div class="slot-title-row">
+        <input type="checkbox" class="slot-checkbox no-print" onchange="toggleSlot('d1-meijo-nagoyajo', this.checked)" title="完了・スキップを消し込み">
+        <h3 class="slot-title">地下鉄名城線 大曽根 ➔ 名古屋城駅 移動</h3>
+      </div>
+      <p class="slot-desc">大曽根駅から名城線（左回り・栄・金山方面）でわずか5駅・11分で名古屋城駅へダイレクト直行。</p>
+      
+      
+      <div class="tactics-box">
+        <div class="tactics-header">🎯 名城線直行ステップ</div>
+        <div class="tactics-list">
+          
+            <div class="tactics-step-row">
+              <span class="tactics-num">1</span>
+              <span class="tactics-text">大曽根駅から名城線左回り（2番ホーム・市役所・栄方面）に乗車。</span>
+            </div>
+          
+            <div class="tactics-step-row">
+              <span class="tactics-num">2</span>
+              <span class="tactics-text">平安通・黒川・名城公園を通過し、11分で「名古屋城駅」に到着（運賃210円）。</span>
+            </div>
+          
+            <div class="tactics-step-row">
+              <span class="tactics-num">3</span>
+              <span class="tactics-text">7番出口を出ると、目の前が名古屋城東門・金シャチ横丁（宗春ゾーン）。</span>
+            </div>
+          
+        </div>
+      </div>
+      
+      <div class="checkpoint-list">
+        
+          <div class="checkpoint-row">
+            <span class="cp-badge">必須</span>
+            <div>
+              <div class="cp-title">大曽根駅 ➔ 名城線左回り（栄方面）に乗車</div>
+              <div class="cp-desc">5駅・約11分で名古屋城駅へ（運賃210円）。前寄り車両推奨。</div>
+            </div>
+          </div>
+        
+          <div class="checkpoint-row">
+            <span class="cp-badge">必須</span>
+            <div>
+              <div class="cp-title">名古屋城駅 7番出口 ➔ 東門へアプローチ</div>
+              <div class="cp-desc">7番出口を出て徒歩3分で名古屋城東門・金シャチ横丁（宗春ゾーン）へ到着。</div>
+            </div>
+          </div>
+        
+      </div>
+      
+      <div class="practical-footer">
+        <div class="pf-row"><span class="pf-tag">🚗 移動・駐車:</span><span class="pf-val">地下鉄名城線で11分、210円。</span></div>
+        <div class="pf-row"><span class="pf-tag">💡 現地Tips:</span><span class="pf-val">7番出口が東門への最短ルート（徒歩3分）。</span></div>
+        <div class="pf-row"><span class="pf-tag">⏱️ 撤収基準:</span><span class="pf-val">12:55までに名古屋城駅に着けば、御殿鑑賞に1時間20分を確保可能。</span></div>
+      </div>
+      <div class="slot-foot">
+        <a class="map-pill" href="https://www.google.com/maps/dir/?api=1&amp;origin=大曽根駅&amp;destination=名古屋城駅" target="_blank" rel="noopener">📍 Google Maps</a>
+        
+      </div>
+    </article>
+    <article class="slot-card " id="d1-nagoya-castle" data-slot-id="d1-nagoya-castle">
+      <div class="slot-meta">
+        <span class="slot-time">⏱️ 13:00 - 14:30</span>
+        <span class="slot-badge badge-sightseeing">【必見】16:00最終入場</span>
+      </div>
+      <div class="slot-title-row">
+        <input type="checkbox" class="slot-checkbox no-print" onchange="toggleSlot('d1-nagoya-castle', this.checked)" title="完了・スキップを消し込み">
+        <h3 class="slot-title">名古屋城きしめん亭（空席即食） ＆ 本丸御殿（絢爛障壁画） ＆ 金シャチ外観</h3>
+      </div>
+      <p class="slot-desc">東門入城後、まず直結動線上にある「名古屋城きしめん亭」の列を確認。空席なら即座に1杯目（赤つゆ温・約15分）を摂取。行列があれば迷わずスキップして本丸御殿へ直行。10年の歳月で復元された本丸御殿（上洛殿・表書院）を鑑賞し、本丸広場から金シャチを仰ぎ見る。</p>
+      
+      
+      <div class="tactics-box">
+        <div class="tactics-header">🎯 名古屋城きしめん判定＆御殿鑑賞ステップ</div>
+        <div class="tactics-list">
+          
+            <div class="tactics-step-row">
+              <span class="tactics-num">1</span>
+              <span class="tactics-text">東門から入城（観覧券500円）後、正面の「名古屋城きしめん亭」の列を確認。</span>
+            </div>
+          
+            <div class="tactics-step-row">
+              <span class="tactics-num">2</span>
+              <span class="tactics-text">【きしめん1杯目判定】空席ありなら即食券購入し温かい赤つゆきしめんを摂取（約15分）。行列時は即スキップ。</span>
+            </div>
+          
+            <div class="tactics-step-row">
+              <span class="tactics-num">3</span>
+              <span class="tactics-text">「本丸御殿」に入場。狩野派の虎豹図、最高格式「上洛殿」の極彩色欄間と金箔天井を鑑賞（約45分）。歩行で消化促進。</span>
+            </div>
+          
+            <div class="tactics-step-row">
+              <span class="tactics-num">4</span>
+              <span class="tactics-text">本丸広場から金シャチ・巨城天守の外観を撮影後、東門から名古屋城駅へ戻り熱田神宮へ直行。</span>
+            </div>
+          
+        </div>
+      </div>
+      
+      <div class="checkpoint-list">
+        
+          <div class="checkpoint-row">
+            <span class="cp-badge">必須</span>
+            <div>
+              <div class="cp-title">東門入城 ➔ 名古屋城きしめん亭の列確認（空席即食 / 行列時スキップ）</div>
+              <div class="cp-desc">東門から入ってすぐのきしめん亭を確認。並びがなければ1杯目（赤つゆ温）を摂取。並んでいれば1秒も迷わずスルー。</div>
+            </div>
+          </div>
+        
+          <div class="checkpoint-row">
+            <span class="cp-badge">必須</span>
+            <div>
+              <div class="cp-title">本丸御殿入場（表書院 ➔ 上洛殿 絢爛金箔障壁画鑑賞）</div>
+              <div class="cp-desc">靴を脱いで入場。狩野派の障壁画・極彩色欄間・金箔天井画を堪能（約45分）。</div>
+            </div>
+          </div>
+        
+          <div class="checkpoint-row">
+            <span class="cp-badge">必須</span>
+            <div>
+              <div class="cp-title">本丸広場から大天守閣 ＆ 金の鯱鉾外観撮影 ➔ 東門退出</div>
+              <div class="cp-desc">天守閣外観と金の鯱鉾を鑑賞・記念撮影後、東門から名古屋城駅へ（徒歩3分）。</div>
+            </div>
+          </div>
+        
+      </div>
+      
+      <div class="practical-footer">
+        <div class="pf-row"><span class="pf-tag">🚗 移動・駐車:</span><span class="pf-val">東門を出て地下鉄名城線「名古屋城駅」7番出口へ徒歩3分。</span></div>
+        <div class="pf-row"><span class="pf-tag">💡 現地Tips:</span><span class="pf-val">御殿内は靴下着用必須。手荷物は100円返却式ロッカーへ。</span></div>
+        <div class="pf-row"><span class="pf-tag">⏱️ 撤収基準:</span><span class="pf-val">本丸御殿は16:00最終入場・16:30閉門のため13時台の訪問が鉄則。</span></div>
+      </div>
+      <div class="slot-foot">
+        <a class="map-pill" href="https://www.google.com/maps/search/?api=1&amp;query=名古屋城" target="_blank" rel="noopener">📍 Google Maps</a>
+        
+      </div>
+    </article>
+    <article class="slot-card " id="d1-kishimen-atsuta" data-slot-id="d1-kishimen-atsuta">
+      <div class="slot-meta">
+        <span class="slot-time">⏱️ 14:40 - 15:55</span>
+        <span class="slot-badge badge-food">🍜</span>
+      </div>
+      <div class="slot-title-row">
+        <input type="checkbox" class="slot-checkbox no-print" onchange="toggleSlot('d1-kishimen-atsuta', this.checked)" title="完了・スキップを消し込み">
+        <h3 class="slot-title">熱田神宮 宮きしめん神宮店 ＆ 草薙館（行列確認で順序動的判定）</h3>
+      </div>
+      <p class="slot-desc">熱田神宮西駅到着（14:40）後、まず境内の「宮きしめん 神宮店」の注文列を確認。注文待ちがゼロなら即座に2杯目（白つゆ または 冷ころ）を喫食（14:45〜15:15）➔ 草薙館へ入場（15:20〜16:10・最終入館16:00の40分前で完全安全）。並んでいれば草薙館先行（14:40〜15:20）➔ 宮きしめん（15:20〜15:55・L.O. 16:30）へ切り替える。</p>
+      
+      
+      <div class="tactics-box">
+        <div class="tactics-header">🎯 熱田神宮・宮きしめん判定プロトコル</div>
+        <div class="tactics-list">
+          
+            <div class="tactics-step-row">
+              <span class="tactics-num">1</span>
+              <span class="tactics-text">14:40に熱田神宮境内に入り、まず「宮きしめん 神宮店」の店頭列を確認。</span>
+            </div>
+          
+            <div class="tactics-step-row">
+              <span class="tactics-num">2</span>
+              <span class="tactics-text">【カウンター空席時】：即座に宮きしめん（白つゆ または 冷やし）を注文・完食（14:45〜15:15）➔ 15:20に草薙館へ入場。</span>
+            </div>
+          
+            <div class="tactics-step-row">
+              <span class="tactics-num">3</span>
+              <span class="tactics-text">【行列・混雑時】：きしめんを後回しにし、草薙館へ直行（14:40〜15:20鑑賞）➔ 出た後に宮きしめんへ（15:20〜15:55）。</span>
+            </div>
+          
+            <div class="tactics-step-row">
+              <span class="tactics-num">4</span>
+              <span class="tactics-text">食後・鑑賞後に本宮参拝、信長塀見学、あつたnagAya散策を行い、16:50にタクシーで滝子へ移動。</span>
+            </div>
+          
+        </div>
+      </div>
+      
+      <div class="checkpoint-list">
+        
+          <div class="checkpoint-row">
+            <span class="cp-badge">必須</span>
+            <div>
+              <div class="cp-title">14:40 境内到着 ➔ 宮きしめん神宮店の店頭列をチェック</div>
+              <div class="cp-desc">注文カウンターを確認。ゼロ人待ちなら即食い、並んでいれば即草薙館へ先行。</div>
+            </div>
+          </div>
+        
+          <div class="checkpoint-row">
+            <span class="cp-badge">必須</span>
+            <div>
+              <div class="cp-title">【ルートA：空席時】宮きしめん即食（14:45〜15:15）➔ 草薙館入館（15:20）</div>
+              <div class="cp-desc">白つゆまたは冷やし宮きしめんを摂取後、15:20に草薙館へ入館（16:00最終入館の40分前）。</div>
+            </div>
+          </div>
+        
+          <div class="checkpoint-row">
+            <span class="cp-badge">必須</span>
+            <div>
+              <div class="cp-title">【ルートB：行列時】草薙館へ直行（14:40〜15:20）➔ 宮きしめん回収（15:20〜15:55）</div>
+              <div class="cp-desc">先に展示を完全攻略し、15:20に宮きしめんへ（16:30L.O.のため余裕）。</div>
+            </div>
+          </div>
+        
+      </div>
+      
+      <div class="practical-footer">
+        <div class="pf-row"><span class="pf-tag">🚗 移動・駐車:</span><span class="pf-val">すべて名城線沿線（名古屋城駅・久屋大通駅・熱田神宮西駅・神宮前駅）で完結。</span></div>
+        <div class="pf-row"><span class="pf-tag">💡 現地Tips:</span><span class="pf-val">喫茶店は夕方（17:00〜18:00）に閉まる店が多いため、14時〜16時台の利用が確実。</span></div>
+        <div class="pf-row"><span class="pf-tag">⏱️ 撤収基準:</span><span class="pf-val">お腹が空いていなければスキップして二郎系へ直行も可能。</span></div>
+      </div>
+      <div class="slot-foot">
+        <a class="map-pill" href="https://www.google.com/maps/search/?api=1&amp;query=加藤珈琲店+久屋大通" target="_blank" rel="noopener">📍 Google Maps</a>
+        
+      </div>
+    </article>
+    <article class="slot-card " id="d1-meijo-move" data-slot-id="d1-meijo-move">
+      <div class="slot-meta">
+        <span class="slot-time">⏱️ 14:40 - 15:00</span>
+        <span class="slot-badge badge-transit">名城線直通</span>
+      </div>
+      <div class="slot-title-row">
+        <input type="checkbox" class="slot-checkbox no-print" onchange="toggleSlot('d1-meijo-move', this.checked)" title="完了・スキップを消し込み">
+        <h3 class="slot-title">地下鉄名城線 名古屋城駅 ➔ 熱田神宮西駅（直通17分）</h3>
+      </div>
+      <p class="slot-desc">名古屋城駅から熱田神宮西駅へ名城線（左回り・栄・金山方面）で直通17分（乗り換えなし・270円）。※途中の久屋大通で加藤珈琲店に下車・再乗車も自在。</p>
+      
+      
+      <div class="tactics-box">
+        <div class="tactics-header">🎯 名城線ダイレクトアクセス</div>
+        <div class="tactics-list">
+          
+            <div class="tactics-step-row">
+              <span class="tactics-num">1</span>
+              <span class="tactics-text">名古屋城駅7番出口から名城線改札へ。左回り（2番ホーム）に乗車。</span>
+            </div>
+          
+            <div class="tactics-step-row">
+              <span class="tactics-num">2</span>
+              <span class="tactics-text">加藤珈琲店に寄る場合は1駅目の「久屋大通駅」で下車。直行する場合はそのまま乗車（栄・金山経由）。</span>
+            </div>
+          
+            <div class="tactics-step-row">
+              <span class="tactics-num">3</span>
+              <span class="tactics-text">「熱田神宮西駅」に到着。2番出口を出て徒歩1分で熱田神宮西門へ直結。</span>
+            </div>
+          
+        </div>
+      </div>
+      
+      <div class="checkpoint-list">
+        
+          <div class="checkpoint-row">
+            <span class="cp-badge">必須</span>
+            <div>
+              <div class="cp-title">名古屋城駅 ➔ 名城線左回りに乗車（熱田神宮西駅まで直通17分）</div>
+              <div class="cp-desc">乗り換えなし直通8駅・約17分（270円）。久屋大通で途中下車も可能。</div>
+            </div>
+          </div>
+        
+          <div class="checkpoint-row">
+            <span class="cp-badge">必須</span>
+            <div>
+              <div class="cp-title">熱田神宮西駅 2番出口 ➔ 西門から境内へ直行</div>
+              <div class="cp-desc">2番出口を出て徒歩1分で西門鳥居。草薙館へ向かう。</div>
+            </div>
+          </div>
+        
+      </div>
+      
+      <div class="practical-footer">
+        <div class="pf-row"><span class="pf-tag">🚗 移動・駐車:</span><span class="pf-val">地下鉄名城線左回りで17分、270円。</span></div>
+        <div class="pf-row"><span class="pf-tag">💡 現地Tips:</span><span class="pf-val">熱田神宮西駅の2番出口が西門至近。</span></div>
+        <div class="pf-row"><span class="pf-tag">⏱️ 撤収基準:</span><span class="pf-val">草薙館の最終入館（16:00）に間に合うよう15:40までに熱田神宮西駅へ。</span></div>
+      </div>
+      <div class="slot-foot">
+        <a class="map-pill" href="https://www.google.com/maps/dir/?api=1&amp;origin=名古屋城駅&amp;destination=熱田神宮西駅" target="_blank" rel="noopener">📍 Google Maps</a>
+        
+      </div>
+    </article>
+    <article class="slot-card " id="d1-atsuta-jingu" data-slot-id="d1-atsuta-jingu">
+      <div class="slot-meta">
+        <span class="slot-time">⏱️ 15:00 - 16:45</span>
+        <span class="slot-badge badge-temple">【必見】草薙館16:00最終入館</span>
+      </div>
+      <div class="slot-title-row">
+        <input type="checkbox" class="slot-checkbox no-print" onchange="toggleSlot('d1-atsuta-jingu', this.checked)" title="完了・スキップを消し込み">
+        <h3 class="slot-title">熱田神宮 剣の宝庫「草薙館」名刀鑑賞 ＆ 本殿・信長塀参拝</h3>
+      </div>
+      <p class="slot-desc">三種の神器（草薙神剣）を祀る古社。境内参拝は24時間可能だが、名刀展示の「草薙館」は16:00最終入館・16:30閉館。草薙館で国宝級名刀鑑賞と次郎太刀重量体験を満喫し、夕暮れの静謐な本宮拝殿参拝と信長塀をゆったり散策。</p>
+      
+      
+      <div class="tactics-box">
+        <div class="tactics-header">🎯 草薙館優先＆熱田神宮 攻略手順</div>
+        <div class="tactics-list">
+          
+            <div class="tactics-step-row">
+              <span class="tactics-num">1</span>
+              <span class="tactics-text">西門から草薙館へ直行（入館料500円）。16:00最終入館に余裕を持って入館。</span>
+            </div>
+          
+            <div class="tactics-step-row">
+              <span class="tactics-num">2</span>
+              <span class="tactics-text">草薙館で名刀展示を鑑賞し、体験コーナーで刃長166cm・5kgの「次郎太刀」実物大レプリカを持ち上げる（約35分）。</span>
+            </div>
+          
+            <div class="tactics-step-row">
+              <span class="tactics-num">3</span>
+              <span class="tactics-text">本宮拝殿へ進み参拝。樹齢千年超の御神木「大楠」を仰ぐ（約20分）。</span>
+            </div>
+          
+            <div class="tactics-step-row">
+              <span class="tactics-num">4</span>
+              <span class="tactics-text">織田信長奉納の「信長塀」の瓦土構造を観察（約10分）。</span>
+            </div>
+          
+            <div class="tactics-step-row">
+              <span class="tactics-num">5</span>
+              <span class="tactics-text">門前のきよめ餅総本家やあつたnagAyaで甘味・土産を散策（自由）。</span>
+            </div>
+          
+        </div>
+      </div>
+      
+      <div class="checkpoint-list">
+        
+          <div class="checkpoint-row">
+            <span class="cp-badge">必須</span>
+            <div>
+              <div class="cp-title">【16:00最終入館】剣の宝庫「草薙館」直行 ＆ 次郎太刀（5kg）体験</div>
+              <div class="cp-desc">西門から草薙館へ直行（入館料500円）。名刀鑑賞と次郎太刀の圧倒的重量を体感（約35分）。</div>
+            </div>
+          </div>
+        
+          <div class="checkpoint-row">
+            <span class="cp-badge">必須</span>
+            <div>
+              <div class="cp-title">本宮（拝殿）参拝 ＆ 樹齢千年超「大楠」</div>
+              <div class="cp-desc">草薙館を出て本宮拝殿で参拝。手水舎北側の御神木「大楠」を仰ぐ（約20分・24時間参拝可）。</div>
+            </div>
+          </div>
+        
+          <div class="checkpoint-row">
+            <span class="cp-badge">必須</span>
+            <div>
+              <div class="cp-title">信長塀（日本三大土塀・桶狭間戦勝御礼）</div>
+              <div class="cp-desc">信長が奉納した歴史的土塀。重厚な瓦土構造を観察（約10分）。</div>
+            </div>
+          </div>
+        
+          <div class="checkpoint-row">
+            
+            <div>
+              <div class="cp-title">きよめ餅総本家 または あつた nagAya 散策</div>
+              <div class="cp-desc">門前町で名物きよめ餅調達や最新カフェの雰囲気を楽しむ（自由）。</div>
+            </div>
+          </div>
+        
+      </div>
+      
+      <div class="practical-footer">
+        <div class="pf-row"><span class="pf-tag">🚗 移動・駐車:</span><span class="pf-val">地下鉄熱田神宮西駅徒歩1分、名鉄神宮前駅徒歩3分。</span></div>
+        <div class="pf-row"><span class="pf-tag">💡 現地Tips:</span><span class="pf-val">境内は夜間も歩行・参拝可能。静かな夕暮れの社叢林の雰囲気も格別。</span></div>
+        <div class="pf-row"><span class="pf-tag">⏱️ 撤収基準:</span><span class="pf-val">草薙館へ16:00までに入館できれば参拝は日没後でも完全に可能。</span></div>
+      </div>
+      <div class="slot-foot">
+        <a class="map-pill" href="https://www.google.com/maps/search/?api=1&amp;query=熱田神宮" target="_blank" rel="noopener">📍 Google Maps</a>
+        
+      </div>
+    </article>
+    <article class="slot-card " id="d1-move-yume" data-slot-id="d1-move-yume">
+      <div class="slot-meta">
+        <span class="slot-time">⏱️ 夕方（自由）</span>
+        <span class="slot-badge badge-transit">移動（何時でも可）</span>
+      </div>
+      <div class="slot-title-row">
+        <input type="checkbox" class="slot-checkbox no-print" onchange="toggleSlot('d1-move-yume', this.checked)" title="完了・スキップを消し込み">
+        <h3 class="slot-title">熱田神宮 ➔ 瑞穂区滝子（夢を語れ愛知）移動</h3>
+      </div>
+      <p class="slot-desc">熱田神宮から「夢を語れ 愛知」へ移動。タクシー直行（約8分・約1,200円）が最速。地下鉄利用の場合は金山経由桜通線「桜山駅」下車徒歩8分、または名城線「新瑞橋」経由。</p>
+      
+      
+      <div class="tactics-box">
+        <div class="tactics-header">🎯 移動シークエンス</div>
+        <div class="tactics-list">
+          
+            <div class="tactics-step-row">
+              <span class="tactics-num">1</span>
+              <span class="tactics-text">参拝終了後、名鉄神宮前駅前または熱田神宮前からタクシーに乗車（約8分・約1,200円）。「滝子の名古屋市大前交差点まで」と指定。</span>
+            </div>
+          
+            <div class="tactics-step-row">
+              <span class="tactics-num">2</span>
+              <span class="tactics-text">または地下鉄利用: 神宮前駅➔金山駅（名鉄2分）➔桜通線桜山駅（地下鉄10分）➔徒歩8分。</span>
+            </div>
+          
+        </div>
+      </div>
+      
+      <div class="checkpoint-list">
+        
+          <div class="checkpoint-row">
+            <span class="cp-badge">必須</span>
+            <div>
+              <div class="cp-title">熱田神宮からタクシーまたは地下鉄で瑞穂区滝子へ</div>
+              <div class="cp-desc">タクシー直行約8分（約1,200円）または金山乗換地下鉄。時間は完全自由。</div>
+            </div>
+          </div>
+        
+      </div>
+      
+      <div class="practical-footer">
+        <div class="pf-row"><span class="pf-tag">🚗 移動・駐車:</span><span class="pf-val">タクシー約8分（約1,200円）。</span></div>
+        <div class="pf-row"><span class="pf-tag">💡 現地Tips:</span><span class="pf-val">二郎系の前にお茶を調達しておくと快適。</span></div>
+        <div class="pf-row"><span class="pf-tag">⏱️ 撤収基準:</span><span class="pf-val">20:30頃までに店舗に到着すれば夜営業のラストオーダーに間に合う。</span></div>
+      </div>
+      <div class="slot-foot">
+        <a class="map-pill" href="https://www.google.com/maps/dir/?api=1&amp;origin=熱田神宮&amp;destination=夢を語れ+愛知" target="_blank" rel="noopener">📍 Google Maps</a>
+        
+      </div>
+    </article>
+    <article class="slot-card " id="d1-yume-wo-katare" data-slot-id="d1-yume-wo-katare">
+      <div class="slot-meta">
+        <span class="slot-time">⏱️ 夜（18:00〜21:00の間いつでも可）</span>
+        <span class="slot-badge badge-food">夜営業フリー枠</span>
+      </div>
+      <div class="slot-title-row">
+        <input type="checkbox" class="slot-checkbox no-print" onchange="toggleSlot('d1-yume-wo-katare', this.checked)" title="完了・スキップを消し込み">
+        <h3 class="slot-title">夢を語れ 愛知（夜営業マイペース直撃）</h3>
+      </div>
+      <p class="slot-desc">東京に常設店が存在しない伝説の二郎系屋号。夜営業（18:00〜21:00）の都合の良いタイミングで訪問。18:00開店直後に突入しても、観光後に19時〜20時台にゆったり訪れても完全自由。極厚神豚とワシワシ麺を堪能。</p>
+      
+      
+      <div class="tactics-box">
+        <div class="tactics-header">🎯 夢を語れ 攻略手順</div>
+        <div class="tactics-list">
+          
+            <div class="tactics-step-row">
+              <span class="tactics-num">1</span>
+              <span class="tactics-text">夜営業（18:00〜21:00）の都合の良い時間に店頭へ到着。列に接続。</span>
+            </div>
+          
+            <div class="tactics-step-row">
+              <span class="tactics-num">2</span>
+              <span class="tactics-text">券売機で「ラーメン（麺量200gまたは300g）」の食券を購入。豚増しも選択可。</span>
+            </div>
+          
+            <div class="tactics-step-row">
+              <span class="tactics-num">3</span>
+              <span class="tactics-text">コール確認時「ニンニクあり・アブラマシ」で極厚神豚とワシワシ麺を堪能。</span>
+            </div>
+          
+            <div class="tactics-step-row">
+              <span class="tactics-num">4</span>
+              <span class="tactics-text">完食後、桜山駅（地下鉄桜通線）へ徒歩8分で移動。帰路へ。</span>
+            </div>
+          
+        </div>
+      </div>
+      
+      <div class="checkpoint-list">
+        
+          <div class="checkpoint-row">
+            <span class="cp-badge">必須</span>
+            <div>
+              <div class="cp-title">店頭到着 ➔ 食券購入（夜営業18:00〜21:00内いつでも）</div>
+              <div class="cp-desc">都合の良いタイミングで店頭へ。ラーメン食券を購入し列に接続。</div>
+            </div>
+          </div>
+        
+          <div class="checkpoint-row">
+            <span class="cp-badge">必須</span>
+            <div>
+              <div class="cp-title">コール ➔ 極厚神豚＆極太ワシワシ麺を堪能</div>
+              <div class="cp-desc">ニンニク・アブラなどお好みのコールで極上の一杯を味わう。</div>
+            </div>
+          </div>
+        
+          <div class="checkpoint-row">
+            <span class="cp-badge">必須</span>
+            <div>
+              <div class="cp-title">完食退店 ➔ 桜山駅へ徒歩8分（帰りは何時でも可）</div>
+              <div class="cp-desc">桜山駅から地下鉄桜通線に乗車し、実家（高蔵寺）へゆったり帰還。</div>
+            </div>
+          </div>
+        
+      </div>
+      
+      <div class="practical-footer">
+        <div class="pf-row"><span class="pf-tag">🚗 移動・駐車:</span><span class="pf-val">地下鉄桜通線「桜山駅」4番出口から西へ徒歩約8分。</span></div>
+        <div class="pf-row"><span class="pf-tag">💡 現地Tips:</span><span class="pf-val">麺量300gはかなりボリュームがあるため、お腹の減り具合に応じて200g（少なめ）指定も安心。</span></div>
+        <div class="pf-row"><span class="pf-tag">⏱️ 撤収基準:</span><span class="pf-val">21:00閉店（20:30頃までの到着推奨）。</span></div>
+      </div>
+      <div class="slot-foot">
+        <a class="map-pill" href="https://www.google.com/maps/search/?api=1&amp;query=夢を語れ+愛知" target="_blank" rel="noopener">📍 Google Maps</a>
+        
+      </div>
+    </article>
+      </div>
+    </section>
+  
+    
+    <nav class="nav-bar no-print" style="margin-top: 24px;">
+      <a class="nav-link " href="aichi_beta.html">📑 全日程（統合版）</a>
+      <a class="nav-link active" href="aichi_beta_day1.html">Day 1</a><a class="nav-link " href="aichi_beta_day2.html">Day 2</a>
+    </nav>
+  </main>
+
+  <script>
+    const STORAGE_KEY = 'aichi_completed_slots';
+    function toggleTheme() {
+      const cur = document.documentElement.getAttribute('data-theme') || 'light';
+      const nxt = cur === 'dark' ? 'light' : 'dark';
+      document.documentElement.setAttribute('data-theme', nxt);
+      localStorage.setItem('trip_nav_theme', nxt);
+    }
+
+    function getCompletedSlots() {
+      try {
+        return JSON.parse(localStorage.getItem(STORAGE_KEY) || '[]');
+      } catch (e) {
+        return [];
+      }
+    }
+
+    function toggleSlot(slotId, isDone) {
+      const card = document.getElementById(slotId);
+      let list = getCompletedSlots();
+      if (isDone) {
+        if (!list.includes(slotId)) list.push(slotId);
+        if (card) card.classList.add('is-dimmed');
+      } else {
+        list = list.filter(id => id !== slotId);
+        if (card) card.classList.remove('is-dimmed');
+      }
+      localStorage.setItem(STORAGE_KEY, JSON.stringify(list));
+    }
+
+    document.addEventListener('DOMContentLoaded', () => {
+      const list = getCompletedSlots();
+      list.forEach(slotId => {
+        const card = document.getElementById(slotId);
+        if (card) {
+          card.classList.add('is-dimmed');
+          const cb = card.querySelector('.slot-checkbox');
+          if (cb) cb.checked = true;
+        }
+      });
+    });
+  </script>
+</body>
+</html>

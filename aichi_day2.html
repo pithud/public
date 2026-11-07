@@ -1,0 +1,1537 @@
+<!DOCTYPE html>
+<html lang="ja" data-theme="light">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <title>愛知・犬山・名古屋 決定版リアルタイム旅程マスター - Day 2</title>
+  <script>
+    // Anti-FOUC immediate theme application
+    (function() {
+      var t = localStorage.getItem('trip_nav_theme') || 'light';
+      document.documentElement.setAttribute('data-theme', t);
+    })();
+  </script>
+  <style>
+:root {
+  --bg: #f8fafc;
+  --surface: #ffffff;
+  --surface-subtle: #f1f5f9;
+  --text: #0f172a;
+  --text-muted: #64748b;
+  --border: #e2e8f0;
+  --primary: #0284c7;
+  --primary-hover: #0369a1;
+  --accent: #d97706;
+  --card-shadow: 0 1px 3px rgba(0,0,0,0.06), 0 1px 2px rgba(0,0,0,0.04);
+  --font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+}
+[data-theme="dark"] {
+  --bg: #090d16;
+  --surface: #131b2e;
+  --surface-subtle: #1e293b;
+  --text: #f8fafc;
+  --text-muted: #94a3b8;
+  --border: #1e293b;
+  --card-shadow: 0 4px 6px -1px rgba(0,0,0,0.3);
+}
+* { box-sizing: border-box; margin: 0; padding: 0; -webkit-tap-highlight-color: transparent; }
+body {
+  font-family: var(--font-family);
+  background-color: var(--bg);
+  color: var(--text);
+  line-height: 1.5;
+  font-size: 15px;
+  padding-bottom: 80px;
+}
+.header-bar {
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  background: rgba(255, 255, 255, 0.92);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border-bottom: 1px solid var(--border);
+  padding: 12px 16px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+[data-theme="dark"] .header-bar { background: rgba(19, 27, 46, 0.92); }
+.brand-title { font-size: 1.05rem; font-weight: 700; display: flex; align-items: center; gap: 8px; }
+.header-actions { display: flex; gap: 8px; align-items: center; }
+.btn-action {
+  background: var(--surface-subtle);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: 6px 12px;
+  font-size: 13px;
+  color: var(--text);
+  cursor: pointer;
+  text-decoration: none;
+}
+.container { max-width: 680px; margin: 0 auto; padding: 16px; }
+
+/* Day Navigation Bar */
+.nav-bar {
+  display: flex;
+  background: var(--surface-subtle);
+  padding: 6px;
+  border-radius: 10px;
+  margin-bottom: 16px;
+  gap: 6px;
+  align-items: center;
+  justify-content: space-between;
+}
+.nav-link {
+  flex: 1;
+  text-align: center;
+  padding: 7px 10px;
+  border-radius: 7px;
+  font-size: 13px;
+  font-weight: 600;
+  text-decoration: none;
+  color: var(--text-muted);
+  background: transparent;
+  border: none;
+  cursor: pointer;
+}
+.nav-link.active {
+  background: var(--surface);
+  color: var(--primary);
+  box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+}
+
+/* Quick Jump Chips */
+.jump-chips {
+  display: flex;
+  gap: 6px;
+  overflow-x: auto;
+  padding-bottom: 10px;
+  margin-bottom: 16px;
+  white-space: nowrap;
+  scrollbar-width: none;
+}
+.jump-chips::-webkit-scrollbar { display: none; }
+.jump-chip {
+  display: inline-block;
+  font-size: 12px;
+  font-weight: 600;
+  padding: 5px 10px;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 16px;
+  color: var(--text);
+  text-decoration: none;
+}
+
+/* Slot Cards */
+.day-block { margin-bottom: 32px; }
+.day-header {
+  font-size: 1.15rem;
+  font-weight: 700;
+  margin-bottom: 12px;
+  padding-bottom: 6px;
+  border-bottom: 2px solid var(--primary);
+  color: var(--primary);
+}
+.slot-card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  margin-bottom: 12px;
+  padding: 14px 16px;
+  box-shadow: var(--card-shadow);
+  transition: opacity 0.2s, background-color 0.2s;
+}
+.slot-card.is-dimmed { opacity: 0.45; filter: grayscale(40%); }
+.slot-card.is-must { border-left: 4px solid var(--accent); }
+.slot-meta { display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px; }
+.slot-time { font-size: 13px; font-weight: 700; font-variant-numeric: tabular-nums; }
+.slot-badge {
+  font-size: 11px;
+  font-weight: 700;
+  padding: 2px 8px;
+  border-radius: 4px;
+  text-transform: uppercase;
+}
+.badge-sightseeing { background: #d1fae5; color: #065f46; }
+.badge-food { background: #ffedd5; color: #9a3412; }
+.badge-transit { background: #e0e7ff; color: #3730a3; }
+[data-theme="dark"] .badge-sightseeing { background: #064e3b; color: #6ee7b7; }
+[data-theme="dark"] .badge-food { background: #7c2d12; color: #fdba74; }
+[data-theme="dark"] .badge-transit { background: #312e81; color: #a5b4fc; }
+
+.slot-title-row { display: flex; align-items: flex-start; gap: 8px; margin-bottom: 6px; }
+.slot-checkbox { margin-top: 3px; cursor: pointer; width: 18px; height: 18px; accent-color: var(--primary); }
+.slot-title { font-size: 1rem; font-weight: 700; line-height: 1.4; flex: 1; }
+.slot-desc { font-size: 13.5px; color: var(--text-muted); margin-bottom: 10px; line-height: 1.5; padding-left: 26px; }
+
+/* Swap Guide Box */
+.swap-box {
+  margin: 10px 0 10px 26px;
+  padding: 10px 12px;
+  border-radius: 8px;
+  background: rgba(217, 119, 6, 0.08);
+  border: 1px dashed var(--accent);
+  font-size: 12.5px;
+}
+.swap-title { font-weight: 700; color: var(--accent); margin-bottom: 4px; display: flex; align-items: center; gap: 4px; }
+
+.slot-foot { display: flex; justify-content: space-between; align-items: center; padding-top: 8px; border-top: 1px solid var(--border); margin-left: 26px; }
+.map-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  font-size: 12px;
+  font-weight: 600;
+  color: #1a73e8;
+  text-decoration: none;
+  background: rgba(26, 115, 232, 0.08);
+  padding: 4px 10px;
+  border-radius: 20px;
+}
+[data-theme="dark"] .map-pill { color: #8ab4f8; background: rgba(138, 180, 248, 0.12); }
+
+/* Tactics Step Box */
+.tactics-box {
+  margin: 10px 0 10px 26px;
+  padding: 10px 12px;
+  background: rgba(2, 132, 199, 0.05);
+  border: 1px solid rgba(2, 132, 199, 0.2);
+  border-radius: 8px;
+}
+[data-theme="dark"] .tactics-box {
+  background: rgba(56, 189, 248, 0.06);
+  border-color: rgba(56, 189, 248, 0.25);
+}
+.tactics-header {
+  font-size: 12.5px;
+  font-weight: 700;
+  color: var(--primary);
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  margin-bottom: 6px;
+}
+[data-theme="dark"] .tactics-header { color: #38bdf8; }
+.tactics-list { display: flex; flex-direction: column; gap: 5px; }
+.tactics-step-row { display: flex; align-items: flex-start; gap: 6px; font-size: 12.5px; line-height: 1.45; }
+.tactics-num {
+  flex-shrink: 0;
+  width: 17px;
+  height: 17px;
+  border-radius: 4px;
+  background: rgba(2, 132, 199, 0.15);
+  color: var(--primary);
+  font-size: 11px;
+  font-weight: 700;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-top: 1px;
+}
+[data-theme="dark"] .tactics-num { background: rgba(56, 189, 248, 0.2); color: #38bdf8; }
+
+/* Checkpoints List */
+.checkpoint-list {
+  margin: 10px 0 10px 26px;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+.checkpoint-row {
+  display: flex;
+  align-items: flex-start;
+  gap: 8px;
+  font-size: 12px;
+  background: var(--surface-subtle);
+  padding: 8px 10px;
+  border-radius: 6px;
+  border: 1px solid var(--border);
+}
+.cp-badge {
+  font-size: 10px;
+  font-weight: 700;
+  padding: 1px 5px;
+  border-radius: 3px;
+  background: #0284c7;
+  color: #fff;
+  flex-shrink: 0;
+}
+.cp-title { font-weight: 600; color: var(--text); }
+.cp-desc { font-size: 11.5px; color: var(--text-muted); margin-top: 2px; }
+
+/* Practical Footer */
+.practical-footer {
+  margin: 10px 0 10px 26px;
+  padding: 8px 10px;
+  background: var(--surface-subtle);
+  border-left: 3px solid var(--accent);
+  border-radius: 4px;
+  font-size: 12px;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+.pf-row { display: flex; gap: 6px; }
+.pf-tag { font-weight: 700; color: var(--accent); flex-shrink: 0; min-width: 65px; }
+.pf-val { color: var(--text); }
+
+/* Print & Paged Media */
+@media print {
+  @page { size: A4 portrait; margin: 12mm 15mm; }
+  body { background: #fff !important; color: #000 !important; font-size: 11pt; }
+  .header-bar, .nav-bar, .jump-chips, .no-print { display: none !important; }
+  .day-block { page-break-after: always; break-after: page; }
+  .slot-card { break-inside: avoid; page-break-inside: avoid; box-shadow: none !important; border: 1px solid #ccc !important; }
+  .slot-card.is-dimmed { opacity: 1 !important; filter: none !important; }
+  .slot-checkbox { display: none !important; }
+  .slot-desc, .swap-box, .slot-foot { margin-left: 0 !important; padding-left: 0 !important; }
+}
+
+  </style>
+</head>
+<body>
+  <header class="header-bar">
+    <div class="brand-title">
+      <span>🏯</span>
+      <span>愛知・犬山・名古屋 決定版リアルタイム旅程マスター</span>
+    </div>
+    <div class="header-actions no-print">
+      <button class="btn-action" onclick="toggleTheme()">🌓 テーマ</button>
+      <button class="btn-action" onclick="window.print()">🖨️ 製本印刷</button>
+    </div>
+  </header>
+
+  <main class="container">
+    
+    <nav class="nav-bar no-print">
+      <a class="nav-link " href="aichi.html">📑 全日程</a>
+      <a class="nav-link " href="aichi_day1.html">Day 1</a><a class="nav-link active" href="aichi_day2.html">Day 2</a>
+    </nav>
+    
+    <div class="jump-chips no-print">
+      
+        <a class="jump-chip" href="#d2-slot-2">📍 国宝 犬山城 天守登</a>
+      
+        <a class="jump-chip" href="#d2-slot-3">📍 名鉄有楽苑 国宝茶室</a>
+      
+        <a class="jump-chip" href="#d2-slot-4">🍜 犬山城下町（本町通り</a>
+      
+        <a class="jump-chip" href="#d2-slot-5">📍 成田山名古屋別院 大</a>
+      
+        <a class="jump-chip" href="#d2-slot-6">📍 桃太郎神社（日本屈指</a>
+      
+        <a class="jump-chip" href="#d2-slot-7">📍 継鹿尾山 寂光院（尾</a>
+      
+        <a class="jump-chip" href="#d2-slot-10">🍜 名駅エスカ一括回収：</a>
+      
+        <a class="jump-chip" href="#d2-inuyama-castle">📍 国宝 犬山城 天守登</a>
+      
+        <a class="jump-chip" href="#d2-urakuen-joan">📍 名鉄有楽苑 国宝茶室</a>
+      
+        <a class="jump-chip" href="#d2-inuyama-castle-town">🍜 犬山城下町（本町通り</a>
+      
+        <a class="jump-chip" href="#d2-naritasan-daishoji">📍 成田山名古屋別院 大</a>
+      
+        <a class="jump-chip" href="#d2-momotaro-shrine">📍 桃太郎神社（日本屈指</a>
+      
+        <a class="jump-chip" href="#d2-jakkoin-temple">📍 継鹿尾山 寂光院（尾</a>
+      
+        <a class="jump-chip" href="#d2-sugakiya-esca">🍜 名駅エスカ一括回収：</a>
+      
+    </div>
+    
+    <section class="day-block" id="day-sec-2">
+      <h2 class="day-header">Day 2: 2026年11月8日 (日)</h2>
+      <div class="slot-list">
+        
+    <article class="slot-card " id="d2-slot-1" data-slot-id="d2-slot-1">
+      <div class="slot-meta">
+        <span class="slot-time">⏱️ 08:30 - 09:15</span>
+        <span class="slot-badge badge-transit">移動</span>
+      </div>
+      <div class="slot-title-row">
+        <input type="checkbox" class="slot-checkbox no-print" onchange="toggleSlot('d2-slot-1', this.checked)" title="完了・スキップを消し込み">
+        <h3 class="slot-title">実家から家族車で国宝犬山城へ直行（車約35〜40分）</h3>
+      </div>
+      <p class="slot-desc">日曜日の混雑を完全回避するため朝08:30に家族車で出発。愛岐道路または県道27...</p>
+      
+      
+      
+      <div class="checkpoint-list">
+        
+          <div class="checkpoint-row">
+            
+            <div>
+              <div class="cp-title">実家から家族車で国宝犬山城へ直行（車約35〜40分）</div>
+              <div class="cp-desc">日曜日の混雑を完全回避するため朝08:30に家族車で出発。愛岐道路または県道27...</div>
+            </div>
+          </div>
+        
+      </div>
+      
+      <div class="slot-foot">
+        <span></span>
+        
+      </div>
+    </article>
+    <article class="slot-card " id="d2-slot-2" data-slot-id="d2-slot-2">
+      <div class="slot-meta">
+        <span class="slot-time">⏱️ 09:15 - 11:00</span>
+        <span class="slot-badge badge-sightseeing">観光</span>
+      </div>
+      <div class="slot-title-row">
+        <input type="checkbox" class="slot-checkbox no-print" onchange="toggleSlot('d2-slot-2', this.checked)" title="完了・スキップを消し込み">
+        <h3 class="slot-title">国宝 犬山城 天守登閣 ＋ 三光稲荷神社（銭洗・ハート絵馬）</h3>
+      </div>
+      <p class="slot-desc">室町時代に織田信長の叔父・織田信康が築いた日本最古級の現存天守。急勾配の階段を登...</p>
+      
+      
+      
+      <div class="checkpoint-list">
+        
+          <div class="checkpoint-row">
+            
+            <div>
+              <div class="cp-title">国宝 犬山城 天守登閣 ＋ 三光稲荷神社（銭洗・ハート絵馬）</div>
+              <div class="cp-desc">室町時代に織田信長の叔父・織田信康が築いた日本最古級の現存天守。急勾配の階段を登...</div>
+            </div>
+          </div>
+        
+      </div>
+      
+      <div class="slot-foot">
+        <span></span>
+        
+      </div>
+    </article>
+    <article class="slot-card " id="d2-slot-3" data-slot-id="d2-slot-3">
+      <div class="slot-meta">
+        <span class="slot-time">⏱️ 11:05 - 12:15</span>
+        <span class="slot-badge badge-sightseeing">観光</span>
+      </div>
+      <div class="slot-title-row">
+        <input type="checkbox" class="slot-checkbox no-print" onchange="toggleSlot('d2-slot-3', this.checked)" title="完了・スキップを消し込み">
+        <h3 class="slot-title">名鉄有楽苑 国宝茶室「如庵」 ＆ 重要文化財旧正伝院書院（呈茶席）</h3>
+      </div>
+      <p class="slot-desc">織田信長の実弟であり大茶人・織田有楽斎（長益）が建てた茶道史上の至宝、国宝三茶室...</p>
+      
+      
+      
+      <div class="checkpoint-list">
+        
+          <div class="checkpoint-row">
+            
+            <div>
+              <div class="cp-title">名鉄有楽苑 国宝茶室「如庵」 ＆ 重要文化財旧正伝院書院（呈茶席）</div>
+              <div class="cp-desc">織田信長の実弟であり大茶人・織田有楽斎（長益）が建てた茶道史上の至宝、国宝三茶室...</div>
+            </div>
+          </div>
+        
+      </div>
+      
+      <div class="slot-foot">
+        <span></span>
+        
+      </div>
+    </article>
+    <article class="slot-card " id="d2-slot-4" data-slot-id="d2-slot-4">
+      <div class="slot-meta">
+        <span class="slot-time">⏱️ 12:20 - 13:45</span>
+        <span class="slot-badge badge-food">食事・喫茶</span>
+      </div>
+      <div class="slot-title-row">
+        <input type="checkbox" class="slot-checkbox no-print" onchange="toggleSlot('d2-slot-4', this.checked)" title="完了・スキップを消し込み">
+        <h3 class="slot-title">犬山城下町（本町通り） 家族昼食 ＆ 山田五平餅・飛騨牛串食べ歩き</h3>
+      </div>
+      <p class="slot-desc">江戸時代の町割りが残る城下町・本町通り。登録有形文化財の古民家レストランで落ち着...</p>
+      
+      
+      
+      <div class="checkpoint-list">
+        
+          <div class="checkpoint-row">
+            
+            <div>
+              <div class="cp-title">犬山城下町（本町通り） 家族昼食 ＆ 山田五平餅・飛騨牛串食べ歩き</div>
+              <div class="cp-desc">江戸時代の町割りが残る城下町・本町通り。登録有形文化財の古民家レストランで落ち着...</div>
+            </div>
+          </div>
+        
+      </div>
+      
+      <div class="slot-foot">
+        <span></span>
+        
+      </div>
+    </article>
+    <article class="slot-card " id="d2-slot-5" data-slot-id="d2-slot-5">
+      <div class="slot-meta">
+        <span class="slot-time">⏱️ 13:50 - 14:05</span>
+        <span class="slot-badge badge-sightseeing">観光</span>
+      </div>
+      <div class="slot-title-row">
+        <input type="checkbox" class="slot-checkbox no-print" onchange="toggleSlot('d2-slot-5', this.checked)" title="完了・スキップを消し込み">
+        <h3 class="slot-title">成田山名古屋別院 大聖寺（犬山成田山・写真撮影10分クイック寄り道）</h3>
+      </div>
+      <p class="slot-desc">城下町から桃太郎神社への道中にある高台の名刹。父母は既に参拝済みのため、無料駐車...</p>
+      
+      
+      
+      <div class="checkpoint-list">
+        
+          <div class="checkpoint-row">
+            
+            <div>
+              <div class="cp-title">成田山名古屋別院 大聖寺（犬山成田山・写真撮影10分クイック寄り道）</div>
+              <div class="cp-desc">城下町から桃太郎神社への道中にある高台の名刹。父母は既に参拝済みのため、無料駐車...</div>
+            </div>
+          </div>
+        
+      </div>
+      
+      <div class="slot-foot">
+        <span></span>
+        
+      </div>
+    </article>
+    <article class="slot-card " id="d2-slot-6" data-slot-id="d2-slot-6">
+      <div class="slot-meta">
+        <span class="slot-time">⏱️ 14:10 - 15:00</span>
+        <span class="slot-badge badge-sightseeing">観光</span>
+      </div>
+      <div class="slot-title-row">
+        <input type="checkbox" class="slot-checkbox no-print" onchange="toggleSlot('d2-slot-6', this.checked)" title="完了・スキップを消し込み">
+        <h3 class="slot-title">桃太郎神社（日本屈指のB級シュール巨匠・浅野祥雲コンクリート像群）</h3>
+      </div>
+      <p class="slot-desc">木曽川沿いの桃太郎伝説の聖地。巨匠・浅野祥雲が昭和初期に手掛けた約20体の実物大...</p>
+      
+      
+      
+      <div class="checkpoint-list">
+        
+          <div class="checkpoint-row">
+            
+            <div>
+              <div class="cp-title">桃太郎神社（日本屈指のB級シュール巨匠・浅野祥雲コンクリート像群）</div>
+              <div class="cp-desc">木曽川沿いの桃太郎伝説の聖地。巨匠・浅野祥雲が昭和初期に手掛けた約20体の実物大...</div>
+            </div>
+          </div>
+        
+      </div>
+      
+      <div class="slot-foot">
+        <span></span>
+        
+      </div>
+    </article>
+    <article class="slot-card " id="d2-slot-7" data-slot-id="d2-slot-7">
+      <div class="slot-meta">
+        <span class="slot-time">⏱️ 15:05 - 16:20</span>
+        <span class="slot-badge badge-sightseeing">観光</span>
+      </div>
+      <div class="slot-title-row">
+        <input type="checkbox" class="slot-checkbox no-print" onchange="toggleSlot('d2-slot-7', this.checked)" title="完了・スキップを消し込み">
+        <h3 class="slot-title">継鹿尾山 寂光院（尾張のもみじ寺 ＆ 展望台から木曽川・犬山城大パノラマ）</h3>
+      </div>
+      <p class="slot-desc">白鳳時代（654年）創建、織田信長も参詣した尾張最古の霊場。境内全域に約1000...</p>
+      
+      
+      
+      <div class="checkpoint-list">
+        
+          <div class="checkpoint-row">
+            
+            <div>
+              <div class="cp-title">継鹿尾山 寂光院（尾張のもみじ寺 ＆ 展望台から木曽川・犬山城大パノラマ）</div>
+              <div class="cp-desc">白鳳時代（654年）創建、織田信長も参詣した尾張最古の霊場。境内全域に約1000...</div>
+            </div>
+          </div>
+        
+      </div>
+      
+      <div class="slot-foot">
+        <span></span>
+        
+      </div>
+    </article>
+    <article class="slot-card " id="d2-slot-8" data-slot-id="d2-slot-8">
+      <div class="slot-meta">
+        <span class="slot-time">⏱️ 16:25 - 16:40</span>
+        <span class="slot-badge badge-transit">移動</span>
+      </div>
+      <div class="slot-title-row">
+        <input type="checkbox" class="slot-checkbox no-print" onchange="toggleSlot('d2-slot-8', this.checked)" title="完了・スキップを消し込み">
+        <h3 class="slot-title">寂光院 ➔ 犬山駅（家族車で送迎・自分だけドロップオフ）</h3>
+      </div>
+      <p class="slot-desc">寂光院の散策終了後、家族車で犬山駅東口へ（車で約8〜10分）。家族はそのまま高蔵...</p>
+      
+      
+      
+      <div class="checkpoint-list">
+        
+          <div class="checkpoint-row">
+            
+            <div>
+              <div class="cp-title">寂光院 ➔ 犬山駅（家族車で送迎・自分だけドロップオフ）</div>
+              <div class="cp-desc">寂光院の散策終了後、家族車で犬山駅東口へ（車で約8〜10分）。家族はそのまま高蔵...</div>
+            </div>
+          </div>
+        
+      </div>
+      
+      <div class="slot-foot">
+        <span></span>
+        
+      </div>
+    </article>
+    <article class="slot-card " id="d2-slot-9" data-slot-id="d2-slot-9">
+      <div class="slot-meta">
+        <span class="slot-time">⏱️ 16:45 - 17:15</span>
+        <span class="slot-badge badge-transit">移動</span>
+      </div>
+      <div class="slot-title-row">
+        <input type="checkbox" class="slot-checkbox no-print" onchange="toggleSlot('d2-slot-9', this.checked)" title="完了・スキップを消し込み">
+        <h3 class="slot-title">名鉄犬山線 快速特急/特急（犬山 ➔ 名鉄名古屋）</h3>
+      </div>
+      <p class="slot-desc">犬山駅から名鉄快速特急または特急に乗車。乗り換えなし・わずか25〜29分（運賃5...</p>
+      
+      
+      
+      <div class="checkpoint-list">
+        
+          <div class="checkpoint-row">
+            
+            <div>
+              <div class="cp-title">名鉄犬山線 快速特急/特急（犬山 ➔ 名鉄名古屋）</div>
+              <div class="cp-desc">犬山駅から名鉄快速特急または特急に乗車。乗り換えなし・わずか25〜29分（運賃5...</div>
+            </div>
+          </div>
+        
+      </div>
+      
+      <div class="slot-foot">
+        <span></span>
+        
+      </div>
+    </article>
+    <article class="slot-card " id="d2-slot-10" data-slot-id="d2-slot-10">
+      <div class="slot-meta">
+        <span class="slot-time">⏱️ 17:20 - 18:05</span>
+        <span class="slot-badge badge-food">食事・喫茶</span>
+      </div>
+      <div class="slot-title-row">
+        <input type="checkbox" class="slot-checkbox no-print" onchange="toggleSlot('d2-slot-10', this.checked)" title="完了・スキップを消し込み">
+        <h3 class="slot-title">名駅エスカ一括回収：スガキヤ ＆ 喫茶リッチ（小倉トースト ＆ 珈琲）</h3>
+      </div>
+      <p class="slot-desc">新幹線改札から徒歩1分のエスカ地下街にて、スガキヤの伝統和風とんこつラーメンと、...</p>
+      
+      
+      
+      <div class="checkpoint-list">
+        
+          <div class="checkpoint-row">
+            
+            <div>
+              <div class="cp-title">名駅エスカ一括回収：スガキヤ ＆ 喫茶リッチ（小倉トースト ＆ 珈琲）</div>
+              <div class="cp-desc">新幹線改札から徒歩1分のエスカ地下街にて、スガキヤの伝統和風とんこつラーメンと、...</div>
+            </div>
+          </div>
+        
+      </div>
+      
+      <div class="slot-foot">
+        <span></span>
+        
+      </div>
+    </article>
+    <article class="slot-card " id="d2-slot-11" data-slot-id="d2-slot-11">
+      <div class="slot-meta">
+        <span class="slot-time">⏱️ 18:20 - 20:00</span>
+        <span class="slot-badge badge-transit">移動</span>
+      </div>
+      <div class="slot-title-row">
+        <input type="checkbox" class="slot-checkbox no-print" onchange="toggleSlot('d2-slot-11', this.checked)" title="完了・スキップを消し込み">
+        <h3 class="slot-title">東海道新幹線 のぞみ（名古屋 ➔ 東京 帰還）</h3>
+      </div>
+      <p class="slot-desc">名古屋駅から東海道新幹線のぞみ号に乗車。18時台発の新幹線に乗れるため、20:0...</p>
+      
+      
+      
+      <div class="checkpoint-list">
+        
+          <div class="checkpoint-row">
+            
+            <div>
+              <div class="cp-title">東海道新幹線 のぞみ（名古屋 ➔ 東京 帰還）</div>
+              <div class="cp-desc">名古屋駅から東海道新幹線のぞみ号に乗車。18時台発の新幹線に乗れるため、20:0...</div>
+            </div>
+          </div>
+        
+      </div>
+      
+      <div class="slot-foot">
+        <span></span>
+        
+      </div>
+    </article>
+    <article class="slot-card " id="d2-depart-inuyama" data-slot-id="d2-depart-inuyama">
+      <div class="slot-meta">
+        <span class="slot-time">⏱️ 08:30 - 09:15</span>
+        <span class="slot-badge badge-transit">家族車直行</span>
+      </div>
+      <div class="slot-title-row">
+        <input type="checkbox" class="slot-checkbox no-print" onchange="toggleSlot('d2-depart-inuyama', this.checked)" title="完了・スキップを消し込み">
+        <h3 class="slot-title">実家から家族車で国宝犬山城へ直行（車約35〜40分）</h3>
+      </div>
+      <p class="slot-desc">日曜日の混雑を完全回避するため朝08:30に家族車で出発。愛岐道路または県道27号を快走し、開門直後の犬山城第1駐車場へ09:15にスムーズ入庫。</p>
+      
+      
+      <div class="tactics-box">
+        <div class="tactics-header">🎯 日曜朝の駐車場必勝ステップ</div>
+        <div class="tactics-list">
+          
+            <div class="tactics-step-row">
+              <span class="tactics-num">1</span>
+              <span class="tactics-text">08:30に実家を出発。ナビ目的地を「犬山城第1駐車場（キャッスルパーキング）」にセット。</span>
+            </div>
+          
+            <div class="tactics-step-row">
+              <span class="tactics-num">2</span>
+              <span class="tactics-text">県道27号・春日井犬山線を経由して木曽川方面へ北上（約18km）。</span>
+            </div>
+          
+            <div class="tactics-step-row">
+              <span class="tactics-num">3</span>
+              <span class="tactics-text">09:15に「犬山城第1駐車場」（1回500円・140台）に余裕で駐車完了。満車・行列ストレス皆無。</span>
+            </div>
+          
+        </div>
+      </div>
+      
+      <div class="checkpoint-list">
+        
+          <div class="checkpoint-row">
+            <span class="cp-badge">必須</span>
+            <div>
+              <div class="cp-title">08:30 実家を家族車で出発（県道27号・春日井犬山線）</div>
+              <div class="cp-desc">日曜日の観光バス・一般客ラッシュを出し抜くため08:30出発を厳守。ナビを「犬山城第1駐車場」にセットし、県道27号または愛岐道路で木曽川方面へ約18km北上（所要約35〜40分）。</div>
+            </div>
+          </div>
+        
+          <div class="checkpoint-row">
+            <span class="cp-badge">必須</span>
+            <div>
+              <div class="cp-title">09:15 犬山城第1駐車場（キャッスルパーキング）入庫</div>
+              <div class="cp-desc">犬山城前広場に最も近い大型駐車場（普通車1回500円・140台）。09:30過ぎには満車待ちが発生するため、09:15入庫でストレスなく確保。</div>
+            </div>
+          </div>
+        
+          <div class="checkpoint-row">
+            
+            <div>
+              <div class="cp-title">駐車場脇「犬山口観光案内所」で散策マップ入手</div>
+              <div class="cp-desc">登城坂へ向かう途中に通過。必要であれば紙マップを入手（本Webナビがあればスキップ可）。</div>
+            </div>
+          </div>
+        
+      </div>
+      
+      <div class="practical-footer">
+        <div class="pf-row"><span class="pf-tag">🚗 移動・駐車:</span><span class="pf-val">自家用車移動（春日井/高蔵寺 ➔ 犬山城、約18km・所要約35〜40分）。普通車駐車料金500円。</span></div>
+        <div class="pf-row"><span class="pf-tag">💡 現地Tips:</span><span class="pf-val">09:45以降は駐車場待ちの車列が伸びるため、08:30出発の遵守が必須。</span></div>
+        <div class="pf-row"><span class="pf-tag">⏱️ 撤収基準:</span><span class="pf-val">09:00までに出発できれば09:45前に入庫可能。</span></div>
+      </div>
+      <div class="slot-foot">
+        <a class="map-pill" href="https://www.google.com/maps/search/?api=1&amp;query=犬山城第1駐車場" target="_blank" rel="noopener">📍 Google Maps</a>
+        
+      </div>
+    </article>
+    <article class="slot-card " id="d2-inuyama-castle" data-slot-id="d2-inuyama-castle">
+      <div class="slot-meta">
+        <span class="slot-time">⏱️ 09:15 - 11:00</span>
+        <span class="slot-badge badge-national">現存12天守・国宝5城</span>
+      </div>
+      <div class="slot-title-row">
+        <input type="checkbox" class="slot-checkbox no-print" onchange="toggleSlot('d2-inuyama-castle', this.checked)" title="完了・スキップを消し込み">
+        <h3 class="slot-title">国宝 犬山城 天守登閣 ＋ 三光稲荷神社（銭洗・ハート絵馬）</h3>
+      </div>
+      <p class="slot-desc">室町時代に織田信長の叔父・織田信康が築いた日本最古級の現存天守。急勾配の階段を登り、廻縁（回廊）から木曽川と濃尾平野の絶景を360度大パノラマで展望。</p>
+      
+      
+      <div class="tactics-box">
+        <div class="tactics-header">🎯 犬山城 最速登閣シークエンス</div>
+        <div class="tactics-list">
+          
+            <div class="tactics-step-row">
+              <span class="tactics-num">1</span>
+              <span class="tactics-text">駐車場から登城坂を上がり、本丸入場券売場へ（大人550円、有楽苑とのセット券は有楽苑側で購入も可）。</span>
+            </div>
+          
+            <div class="tactics-step-row">
+              <span class="tactics-num">2</span>
+              <span class="tactics-text">09:25までに天守閣入口へ。混雑前のため靴を脱いですぐに入城可能（昼間は天守登閣60分待ちになる名所）。</span>
+            </div>
+          
+            <div class="tactics-step-row">
+              <span class="tactics-num">3</span>
+              <span class="tactics-text">急勾配の武者走りを登り、最上階「望楼」の廻縁へ。木曽川と伊吹山、御嶽山を望む雄大な絶景を鑑賞。</span>
+            </div>
+          
+            <div class="tactics-step-row">
+              <span class="tactics-num">4</span>
+              <span class="tactics-text">下城後、麓に鎮座する「三光稲荷神社」で銭洗池の清めとお札清め体験。インスタで有名なピンクのハート絵馬トンネルを家族で散策。</span>
+            </div>
+          
+            <div class="tactics-step-row">
+              <span class="tactics-num">5</span>
+              <span class="tactics-text">隣接する「針綱神社」で延命長寿と旅の安全を祈願。11:00に有楽苑へ移動。</span>
+            </div>
+          
+        </div>
+      </div>
+      
+      <div class="checkpoint-list">
+        
+          <div class="checkpoint-row">
+            <span class="cp-badge">必須</span>
+            <div>
+              <div class="cp-title">国宝 犬山城 天守登閣 ＆ 最上階「望楼」廻縁360度パノラマ</div>
+              <div class="cp-desc">現存12天守・国宝5城の一角（入場料550円）。昼間は登閣60分待ちになる急勾配（約50度）の武者走り階段を09:30前の先頭集団でスムーズに登り切る。最上階の外回廊（廻縁）に出た瞬間の木曽川・濃尾平野・御嶽山の絶景と爽快な風は必見。</div>
+            </div>
+          </div>
+        
+          <div class="checkpoint-row">
+            
+            <div>
+              <div class="cp-title">三光稲荷神社（銭洗池・ピンクのハート絵馬トンネル）</div>
+              <div class="cp-desc">下城後、登城口にある古社へ立ち寄り。御神水でお金を洗うと何倍にもなって返るとされる「銭洗池」体験と鮮やかなピンクのハート絵馬トンネル散策（混雑時や足元疲労時は短縮・スキップ可）。</div>
+            </div>
+          </div>
+        
+          <div class="checkpoint-row">
+            
+            <div>
+              <div class="cp-title">猿田彦神社（三光稲荷境内すぐ・みちひらきの大神・所要3分）</div>
+              <div class="cp-desc">三光稲荷神社のすぐ隣に鎮座する「みちひらき（道開き）の神様」。古来より万人万事を良い方向へ導き、道中安全・開運・事業発展のご利益。通り道沿いのため3分でサッと参拝可能（スキップ可）。</div>
+            </div>
+          </div>
+        
+          <div class="checkpoint-row">
+            
+            <div>
+              <div class="cp-title">針綱神社（犬山城守護神・犬山祭主幹社）</div>
+              <div class="cp-desc">三光稲荷に隣接する織田信康ゆかりの延命長寿・安産・厄除け神社。参拝後、車を第1駐車場に置いたまま東へ徒歩5分の「有楽苑」へ移動（時間調整時はスキップ可）。</div>
+            </div>
+          </div>
+        
+      </div>
+      
+      <div class="practical-footer">
+        <div class="pf-row"><span class="pf-tag">🚗 移動・駐車:</span><span class="pf-val">犬山城第1駐車場から登城坂を徒歩約5分。段差あり。</span></div>
+        <div class="pf-row"><span class="pf-tag">💡 現地Tips:</span><span class="pf-val">天守階段は傾斜角度が非常に急（約50度）。足元に注意し、手荷物はコンパクトに。</span></div>
+        <div class="pf-row"><span class="pf-tag">⏱️ 撤収基準:</span><span class="pf-val">11:00までに下城・神社参拝を終えれば次行程の有楽苑にゆとりで繋がる。</span></div>
+      </div>
+      <div class="slot-foot">
+        <a class="map-pill" href="https://www.google.com/maps/search/?api=1&amp;query=国宝犬山城" target="_blank" rel="noopener">📍 Google Maps</a>
+        
+      </div>
+    </article>
+    <article class="slot-card " id="d2-urakuen-joan" data-slot-id="d2-urakuen-joan">
+      <div class="slot-meta">
+        <span class="slot-time">⏱️ 11:05 - 12:15</span>
+        <span class="slot-badge badge-national">国宝茶室・如庵</span>
+      </div>
+      <div class="slot-title-row">
+        <input type="checkbox" class="slot-checkbox no-print" onchange="toggleSlot('d2-urakuen-joan', this.checked)" title="完了・スキップを消し込み">
+        <h3 class="slot-title">名鉄有楽苑 国宝茶室「如庵」 ＆ 重要文化財旧正伝院書院（呈茶席）</h3>
+      </div>
+      <p class="slot-desc">織田信長の実弟であり大茶人・織田有楽斎（長益）が建てた茶道史上の至宝、国宝三茶室の一つ「如庵」を間近に鑑賞。美しい日本庭園の中で抹茶と季節の和菓子を味わう静寂のひととき。</p>
+      
+      
+      <div class="tactics-box">
+        <div class="tactics-header">🎯 有楽苑 優雅な鑑賞ステップ</div>
+        <div class="tactics-list">
+          
+            <div class="tactics-step-row">
+              <span class="tactics-num">1</span>
+              <span class="tactics-text">犬山城から東へ徒歩約5分、名鉄有楽苑の正門へ（入園料1,200円、呈茶付きセット推奨）。</span>
+            </div>
+          
+            <div class="tactics-step-row">
+              <span class="tactics-num">2</span>
+              <span class="tactics-text">苔むした静謐な庭園を進み、国宝茶室「如庵」の杮葺き屋根・有楽窓（暦張り）・躙口を外観鑑賞。</span>
+            </div>
+          
+            <div class="tactics-step-row">
+              <span class="tactics-num">3</span>
+              <span class="tactics-text">重要文化財「旧正伝院書院」へ。長谷川等伯や狩野山楽の襖絵（複製）が彩る洗練された空間を鑑賞。</span>
+            </div>
+          
+            <div class="tactics-step-row">
+              <span class="tactics-num">4</span>
+              <span class="tactics-text">庭園内の茶房にて、如庵を眺めながら本格的な呈茶（お抹茶と有楽苑銘菓「有楽風」）で一服。</span>
+            </div>
+          
+            <div class="tactics-step-row">
+              <span class="tactics-num">5</span>
+              <span class="tactics-text">12:15に有楽苑を出て、徒歩3分で賑わう犬山城下町の本町通りへ。</span>
+            </div>
+          
+        </div>
+      </div>
+      
+      <div class="checkpoint-list">
+        
+          <div class="checkpoint-row">
+            <span class="cp-badge">必須</span>
+            <div>
+              <div class="cp-title">名鉄有楽苑 国宝茶室「如庵」外観鑑賞</div>
+              <div class="cp-desc">犬山城から徒歩5分（入園料1,200円・呈茶セット推奨）。織田信長の実弟・織田有楽斎が建てた国宝三茶室の一つ「如庵」の杮葺き屋根、古暦を貼った「有楽窓」、躙口を静謐な日本庭園内で間近に鑑賞。</div>
+            </div>
+          </div>
+        
+          <div class="checkpoint-row">
+            <span class="cp-badge">必須</span>
+            <div>
+              <div class="cp-title">呈茶席（抹茶と銘菓「有楽風」）で庭園一服</div>
+              <div class="cp-desc">如庵を眺めながら本格的なお抹茶と有楽苑限定の上品な和菓子「有楽風」で静寂のひとときを楽しむ。</div>
+            </div>
+          </div>
+        
+          <div class="checkpoint-row">
+            
+            <div>
+              <div class="cp-title">重要文化財「旧正伝院書院」＆ 隣接ホテルインディゴ借景</div>
+              <div class="cp-desc">有楽斎の隠居所として建てられた書院（長谷川等伯・狩野山楽の襖絵複製）と、隣接するホテルインディゴ犬山有楽苑の建築美を観賞（時間に合わせ散策短縮・スキップ可）。12:15に徒歩3分の城下町本町通りへ。</div>
+            </div>
+          </div>
+        
+      </div>
+      
+      <div class="practical-footer">
+        <div class="pf-row"><span class="pf-tag">🚗 移動・駐車:</span><span class="pf-val">犬山城本丸・三光稲荷から徒歩約5〜7分。</span></div>
+        <div class="pf-row"><span class="pf-tag">💡 現地Tips:</span><span class="pf-val">犬山城から徒歩すぐなので車を動かす必要なし。靴を脱いで上がる場所があるため脱ぎ履きしやすい靴が吉。</span></div>
+        <div class="pf-row"><span class="pf-tag">⏱️ 撤収基準:</span><span class="pf-val">12:15に苑を出れば、城下町のランチ混雑ピークを回避して昼食に滑り込める。</span></div>
+      </div>
+      <div class="slot-foot">
+        <a class="map-pill" href="https://www.google.com/maps/search/?api=1&amp;query=有楽苑" target="_blank" rel="noopener">📍 Google Maps</a>
+        
+      </div>
+    </article>
+    <article class="slot-card " id="d2-inuyama-castle-town" data-slot-id="d2-inuyama-castle-town">
+      <div class="slot-meta">
+        <span class="slot-time">⏱️ 12:20 - 13:45</span>
+        <span class="slot-badge badge-food">城下町名物グルメ</span>
+      </div>
+      <div class="slot-title-row">
+        <input type="checkbox" class="slot-checkbox no-print" onchange="toggleSlot('d2-inuyama-castle-town', this.checked)" title="完了・スキップを消し込み">
+        <h3 class="slot-title">犬山城下町（本町通り） 家族昼食 ＆ 山田五平餅・飛騨牛串食べ歩き</h3>
+      </div>
+      <p class="slot-desc">江戸時代の町割りが残る城下町・本町通り。登録有形文化財の古民家レストランで落ち着いた家族昼食をとり、名物の山田五平餅や飛騨牛にぎり寿しをつまみ食い散策。</p>
+      
+      
+      <div class="tactics-box">
+        <div class="tactics-header">🎯 城下町 昼食＆食べ歩きステップ</div>
+        <div class="tactics-list">
+          
+            <div class="tactics-step-row">
+              <span class="tactics-num">1</span>
+              <span class="tactics-text">有楽苑から本町通り北端へ進入。まずは落ち着いて昼食をとれる食事処を確保。</span>
+            </div>
+          
+            <div class="tactics-step-row">
+              <span class="tactics-num">2</span>
+              <span class="tactics-text">【昼食候補】「蕎麦正 まつい 犬山店」（手打ち蕎麦）または「香味茶寮 壽俵屋 犬山井上邸」（守口漬焼きおにぎり・和食膳）に入店。</span>
+            </div>
+          
+            <div class="tactics-step-row">
+              <span class="tactics-num">3</span>
+              <span class="tactics-text">食後、登録有形文化財の「山田五平餅店」へ立ち寄り、香ばしい団子型五平餅（ゴマ・クルミ・ピーナッツの特製タレ）を1本味わう。</span>
+            </div>
+          
+            <div class="tactics-step-row">
+              <span class="tactics-num">4</span>
+              <span class="tactics-text">「犬山牛太郎」の飛騨牛にぎり寿し（A5等級）や、犬山どんでん館（祭り車山展示）の勇姿を横目に散策。</span>
+            </div>
+          
+            <div class="tactics-step-row">
+              <span class="tactics-num">5</span>
+              <span class="tactics-text">13:45に犬山城第1駐車場へ戻り、家族車に乗車して桃太郎神社へ移動。</span>
+            </div>
+          
+        </div>
+      </div>
+      
+      <div class="checkpoint-list">
+        
+          <div class="checkpoint-row">
+            <span class="cp-badge">必須</span>
+            <div>
+              <div class="cp-title">本町通りで家族昼食（「蕎麦正 まつい」または「香味茶寮 壽俵屋 犬山井上邸」）</div>
+              <div class="cp-desc">有楽苑から本町通り北端へ進入し、まず座って落ち着ける昼食処を確保。手打ち蕎麦の「蕎麦正 まつい」または犬山名産・守口漬の老舗茶寮「壽俵屋 犬山井上邸」（醤油おこげ焼きおにぎり・和食膳）へ。</div>
+            </div>
+          </div>
+        
+          <div class="checkpoint-row">
+            <span class="cp-badge">必須</span>
+            <div>
+              <div class="cp-title">山田五平餅店（登録有形文化財）の団子型五平餅</div>
+              <div class="cp-desc">犬山城下町を代表する五平餅の超名店。注文後に炭火で香ばしく焼き上げる、すりつぶしたゴマ・クルミ・ピーナッツ特製ダレの団子型五平餅を1本味わう。</div>
+            </div>
+          </div>
+        
+          <div class="checkpoint-row">
+            
+            <div>
+              <div class="cp-title">犬山牛太郎（A5飛騨牛にぎり寿し）</div>
+              <div class="cp-desc">A5ランク飛騨牛を目の前で炙り、えびせんべいの上に乗せて提供。わさび醤油と塩しょうがが絶品（昼食でお腹いっぱいの場合や行列時はスキップ可）。</div>
+            </div>
+          </div>
+        
+          <div class="checkpoint-row">
+            
+            <div>
+              <div class="cp-title">どんでん館（犬山祭の豪華車山展示）＆ 守口漬お土産</div>
+              <div class="cp-desc">高さ8m・重さ3トン超の祭りの車山（やま）を常設展示する迫力施設（余力があれば入館、なければ外観のみでスキップ可）。13:45に第1駐車場へ戻り車で桃太郎神社へ。</div>
+            </div>
+          </div>
+        
+      </div>
+      
+      <div class="practical-footer">
+        <div class="pf-row"><span class="pf-tag">🚗 移動・駐車:</span><span class="pf-val">有楽苑から徒歩約3分で本町通りへ進入。駐車場までは徒歩約8分。</span></div>
+        <div class="pf-row"><span class="pf-tag">💡 現地Tips:</span><span class="pf-val">日曜昼は通り全体が賑わう。食べ歩きは指定のベンチやゴミ箱のある店先でマナー良く行う。</span></div>
+        <div class="pf-row"><span class="pf-tag">⏱️ 撤収基準:</span><span class="pf-val">13:50までに駐車場を出発できれば桃太郎神社と寂光院を完全コンプリート可能。</span></div>
+      </div>
+      <div class="slot-foot">
+        <a class="map-pill" href="https://www.google.com/maps/search/?api=1&amp;query=犬山城下町" target="_blank" rel="noopener">📍 Google Maps</a>
+        
+      </div>
+    </article>
+    <article class="slot-card " id="d2-naritasan-daishoji" data-slot-id="d2-naritasan-daishoji">
+      <div class="slot-meta">
+        <span class="slot-time">⏱️ 13:50 - 14:05</span>
+        <span class="slot-badge badge-flexible">クイック写真10分</span>
+      </div>
+      <div class="slot-title-row">
+        <input type="checkbox" class="slot-checkbox no-print" onchange="toggleSlot('d2-naritasan-daishoji', this.checked)" title="完了・スキップを消し込み">
+        <h3 class="slot-title">成田山名古屋別院 大聖寺（犬山成田山・写真撮影10分クイック寄り道）</h3>
+      </div>
+      <p class="slot-desc">城下町から桃太郎神社への道中にある高台の名刹。父母は既に参拝済みのため、無料駐車場に車を停めて本堂前展望テラスから犬山城・木曽川の絶景と巨大寺院建築の写真を撮る10分のクイック回収枠。</p>
+      
+      
+      
+      <div class="checkpoint-list">
+        
+          <div class="checkpoint-row">
+            <span class="cp-badge">必須</span>
+            <div>
+              <div class="cp-title">大本堂前 展望テラス（犬山城 ＆ 木曽川の遠望撮影）</div>
+              <div class="cp-desc">白山平の高台から犬山城天守と木曽川の雄大なパノラマを撮影（約5分）。山頂駐車場から階段なしでアクセス可能。</div>
+            </div>
+          </div>
+        
+          <div class="checkpoint-row">
+            
+            <div>
+              <div class="cp-title">本堂・五重塔・巨大境内 外観チェック</div>
+              <div class="cp-desc">父母参拝済みのため内部参拝は省略し、荘厳な本堂外観をサッと撮影して桃太郎神社へ即移動（約5分・スキップ可）。</div>
+            </div>
+          </div>
+        
+      </div>
+      
+      <div class="slot-foot">
+        <a class="map-pill" href="https://www.google.com/maps/search/?api=1&amp;query=%E6%88%90%E7%94%B0%E5%B1%B1%E5%90%8D%E5%8F%A4%E5%B1%8B%E5%88%A5%E9%99%A2+%E5%A4%A7%E8%81%96%E5%AF%BA" target="_blank" rel="noopener">📍 Google Maps</a>
+        
+      </div>
+    </article>
+    <article class="slot-card " id="d2-momotaro-shrine" data-slot-id="d2-momotaro-shrine">
+      <div class="slot-meta">
+        <span class="slot-time">⏱️ 14:10 - 15:00</span>
+        <span class="slot-badge badge-temple">浅野祥雲コンクリート群</span>
+      </div>
+      <div class="slot-title-row">
+        <input type="checkbox" class="slot-checkbox no-print" onchange="toggleSlot('d2-momotaro-shrine', this.checked)" title="完了・スキップを消し込み">
+        <h3 class="slot-title">桃太郎神社（日本屈指のB級シュール巨匠・浅野祥雲コンクリート像群）</h3>
+      </div>
+      <p class="slot-desc">木曽川沿いの桃太郎伝説の聖地。巨匠・浅野祥雲が昭和初期に手掛けた約20体の実物大カラーコンクリート彫刻（桃から生まれた桃太郎、鬼の涙痕、サル・キジ・イヌ）が境内に林立する唯一無二の異空間。</p>
+      
+      
+      <div class="tactics-box">
+        <div class="tactics-header">🎯 桃太郎神社 撮影＆散策ステップ</div>
+        <div class="tactics-list">
+          
+            <div class="tactics-step-row">
+              <span class="tactics-num">1</span>
+              <span class="tactics-text">犬山城駐車場を出発し、木曽川沿いの県道を東へ約10分車で直行。</span>
+            </div>
+          
+            <div class="tactics-step-row">
+              <span class="tactics-num">2</span>
+              <span class="tactics-text">桃太郎神社の無料大駐車場に入庫（車でないとアクセス困難な隠れ名所）。</span>
+            </div>
+          
+            <div class="tactics-step-row">
+              <span class="tactics-num">3</span>
+              <span class="tactics-text">桃型の珍しい鳥居をくぐり、境内に点在する極彩色の浅野祥雲コンクリート像と記念撮影。</span>
+            </div>
+          
+            <div class="tactics-step-row">
+              <span class="tactics-num">4</span>
+              <span class="tactics-text">奥の有料宝物館エリア（大人200円）へ。鬼の金棒や鬼のミイラの写真、シュール極まる鬼の涙痕像を鑑賞。</span>
+            </div>
+          
+            <div class="tactics-step-row">
+              <span class="tactics-num">5</span>
+              <span class="tactics-text">15:00に駐車場へ戻り、車で3分の隣山「寂光院」へ移動。</span>
+            </div>
+          
+        </div>
+      </div>
+      
+      <div class="checkpoint-list">
+        
+          <div class="checkpoint-row">
+            <span class="cp-badge">必須</span>
+            <div>
+              <div class="cp-title">桃型鳥居 ＆ 浅野祥雲の極彩色コンクリート彫刻群（境内無料）</div>
+              <div class="cp-desc">犬山城駐車場から木曽川沿いを車で東へ約10分（無料大駐車場完備）。くぐると悪霊退散のご利益がある「桃型鳥居」と、昭和のB級シュール巨匠・浅野祥雲が手掛けた約20体の実物大カラーコンクリート像（桃から飛び出す桃太郎、サル・キジ・イヌ）を巡り記念撮影。</div>
+            </div>
+          </div>
+        
+          <div class="checkpoint-row">
+            
+            <div>
+              <div class="cp-title">桃太郎神社 宝物館（大人200円・鬼の涙痕像＆珍宝展示）</div>
+              <div class="cp-desc">鬼の金棒や鬼のミイラ写真、涙を流して反省するシュールな赤鬼像など浅野祥雲ワールドの真骨頂（時間があれば入場推奨、急ぎなら境内のみでスキップ可）。</div>
+            </div>
+          </div>
+        
+          <div class="checkpoint-row">
+            
+            <div>
+              <div class="cp-title">木曽川桃太郎公園（芝生広場）＆ 門前茶屋のみたらし団子</div>
+              <div class="cp-desc">神社隣接の開放的な木曽川河畔広場と門前茶屋の「桃太郎みたらし団子」「木の芽田楽」（小腹具合に応じてスキップ可）。15:00に車で3分の隣山・寂光院へ。</div>
+            </div>
+          </div>
+        
+      </div>
+      
+      <div class="practical-footer">
+        <div class="pf-row"><span class="pf-tag">🚗 移動・駐車:</span><span class="pf-val">犬山城駐車場から車で約10分（約4.5km）。無料駐車場完備。</span></div>
+        <div class="pf-row"><span class="pf-tag">💡 現地Tips:</span><span class="pf-val">浅野祥雲の彫刻は色鮮やかに修復されており、写真映えが極めて良い。入場無料（宝物館のみ200円）。</span></div>
+        <div class="pf-row"><span class="pf-tag">⏱️ 撤収基準:</span><span class="pf-val">15:00に出発できれば、最終目的地・寂光院の拝観受付に余裕で間に合う。</span></div>
+      </div>
+      <div class="slot-foot">
+        <a class="map-pill" href="https://www.google.com/maps/search/?api=1&amp;query=桃太郎神社" target="_blank" rel="noopener">📍 Google Maps</a>
+        
+      </div>
+    </article>
+    <article class="slot-card " id="d2-jakkoin-temple" data-slot-id="d2-jakkoin-temple">
+      <div class="slot-meta">
+        <span class="slot-time">⏱️ 15:05 - 16:20</span>
+        <span class="slot-badge badge-temple">尾張のもみじ寺・信長史跡</span>
+      </div>
+      <div class="slot-title-row">
+        <input type="checkbox" class="slot-checkbox no-print" onchange="toggleSlot('d2-jakkoin-temple', this.checked)" title="完了・スキップを消し込み">
+        <h3 class="slot-title">継鹿尾山 寂光院（尾張のもみじ寺 ＆ 展望台から木曽川・犬山城大パノラマ）</h3>
+      </div>
+      <p class="slot-desc">白鳳時代（654年）創建、織田信長も参詣した尾張最古の霊場。境内全域に約1000本のもみじが生い茂り、本堂前の展望台からは木曽川と犬山城、遠く名駅ビル群まで見渡せる絶景スポット。</p>
+      
+      
+      <div class="tactics-box">
+        <div class="tactics-header">🎯 寂光院 絶景アプローチステップ</div>
+        <div class="tactics-list">
+          
+            <div class="tactics-step-row">
+              <span class="tactics-num">1</span>
+              <span class="tactics-text">桃太郎神社から車でわずか3分、寂光院山麓の無料大駐車場に入庫。</span>
+            </div>
+          
+            <div class="tactics-step-row">
+              <span class="tactics-num">2</span>
+              <span class="tactics-text">本堂への参道へ。「七福神坂」の石段（約320段）を登るか、足腰に配慮してスロープカー（電動モノレール・片道200円）を利用。</span>
+            </div>
+          
+            <div class="tactics-step-row">
+              <span class="tactics-num">3</span>
+              <span class="tactics-text">山上の本堂（重要文化財・千手観音）へ参拝。信長が清須城から岐阜城へ向かう途中に立ち寄った歴史を偲ぶ。</span>
+            </div>
+          
+            <div class="tactics-step-row">
+              <span class="tactics-num">4</span>
+              <span class="tactics-text">本堂広場の展望台へ。木曽川の壮大な流れと、午前中に登った国宝犬山城の遠景をパノラマ一望。</span>
+            </div>
+          
+            <div class="tactics-step-row">
+              <span class="tactics-num">5</span>
+              <span class="tactics-text">16:20に下山し駐車場へ。全行程コンプリートの充実感とともに家族車で実家直帰へ。</span>
+            </div>
+          
+        </div>
+      </div>
+      
+      <div class="checkpoint-list">
+        
+          <div class="checkpoint-row">
+            <span class="cp-badge">必須</span>
+            <div>
+              <div class="cp-title">山麓無料駐車場 ➔ スロープカー（もみじロード・片道200円）で山上本堂へ</div>
+              <div class="cp-desc">桃太郎神社から車で3分。約320段の石段「七福神坂」もあるが、家族の足腰に配慮し行きは斜行エレベーター「スロープカー」（片道200円）でもみじのトンネルを眺めながら一気に山上へ上がるのが最も快適。</div>
+            </div>
+          </div>
+        
+          <div class="checkpoint-row">
+            <span class="cp-badge">必須</span>
+            <div>
+              <div class="cp-title">継鹿尾山 寂光院 本堂参拝 ＆ 本堂展望台パノラマ（犬山城・木曽川一望）</div>
+              <div class="cp-desc">白鳳時代（654年）創建・織田信長も参詣した約1000本のもみじ寺。標高273mの本堂展望台から、木曽川の雄大な流れと午前中に登った国宝犬山城、遠く名駅ビル群まで大パノラマを一望。</div>
+            </div>
+          </div>
+        
+          <div class="checkpoint-row">
+            
+            <div>
+              <div class="cp-title">筆弘法大師像 ＆ もみじ石段下山（または帰路もスロープカー）</div>
+              <div class="cp-desc">弘法大師空海ゆかりの筆弘法大師像や本堂横の茶屋・千手観音御守りをチェック（疲れ具合に応じて石段散策はスキップし帰路もスロープカー利用可）。16:20に下山し駐車場へ。</div>
+            </div>
+          </div>
+        
+      </div>
+      
+      <div class="practical-footer">
+        <div class="pf-row"><span class="pf-tag">🚗 移動・駐車:</span><span class="pf-val">桃太郎神社から車で約3分（約1.5km）。駐車場無料完備。</span></div>
+        <div class="pf-row"><span class="pf-tag">💡 現地Tips:</span><span class="pf-val">石段は約320段あるため家族の体力に応じてスロープカーを活用。境内拝観無料。</span></div>
+        <div class="pf-row"><span class="pf-tag">⏱️ 撤収基準:</span><span class="pf-val">16:25までに車に乗車すれば17:05には実家へ完全帰着。</span></div>
+      </div>
+      <div class="slot-foot">
+        <a class="map-pill" href="https://www.google.com/maps/search/?api=1&amp;query=継鹿尾山+寂光院" target="_blank" rel="noopener">📍 Google Maps</a>
+        
+      </div>
+    </article>
+    <article class="slot-card " id="d2-inuyama-station-drop" data-slot-id="d2-inuyama-station-drop">
+      <div class="slot-meta">
+        <span class="slot-time">⏱️ 16:25 - 16:40</span>
+        <span class="slot-badge badge-transit">【推奨】犬山駅解散</span>
+      </div>
+      <div class="slot-title-row">
+        <input type="checkbox" class="slot-checkbox no-print" onchange="toggleSlot('d2-inuyama-station-drop', this.checked)" title="完了・スキップを消し込み">
+        <h3 class="slot-title">寂光院 ➔ 犬山駅（家族車で送迎・自分だけドロップオフ）</h3>
+      </div>
+      <p class="slot-desc">寂光院の散策終了後、家族車で犬山駅東口へ（車で約8〜10分）。家族はそのまま高蔵寺実家へ直帰し、自分だけ犬山駅から名鉄特急に乗車。実家への往復時間を1時間以上ショートカットする最強の分散解散。</p>
+      
+      
+      <div class="tactics-box">
+        <div class="tactics-header">🎯 犬山駅解散ステップ</div>
+        <div class="tactics-list">
+          
+            <div class="tactics-step-row">
+              <span class="tactics-num">1</span>
+              <span class="tactics-text">寂光院駐車場を出発。県道185号・県道27号を経由し、犬山駅東口ロータリーへ（約3.5km・約8〜10分）。</span>
+            </div>
+          
+            <div class="tactics-step-row">
+              <span class="tactics-num">2</span>
+              <span class="tactics-text">犬山駅東口ロータリーで手荷物（リュック等）を持って下車。家族を見送り改札へ向かう。</span>
+            </div>
+          
+            <div class="tactics-step-row">
+              <span class="tactics-num">3</span>
+              <span class="tactics-text">名鉄犬山線改札（2階コンコース）へ。交通系ICカードでタッチ入場。</span>
+            </div>
+          
+        </div>
+      </div>
+      
+      <div class="checkpoint-list">
+        
+          <div class="checkpoint-row">
+            <span class="cp-badge">必須</span>
+            <div>
+              <div class="cp-title">寂光院 ➔ 家族車で犬山駅東口ロータリーへ（約8〜10分）</div>
+              <div class="cp-desc">家族車で犬山駅東口へ直行。手荷物をピックアップして下車。家族はそのまま高蔵寺へ直帰。</div>
+            </div>
+          </div>
+        
+          <div class="checkpoint-row">
+            <span class="cp-badge">必須</span>
+            <div>
+              <div class="cp-title">犬山駅改札 ➔ 名鉄線ホームへ（ICカード入場）</div>
+              <div class="cp-desc">ICカードで入場し、1・2番線（名鉄名古屋・中部国際空港方面）ホームへ。</div>
+            </div>
+          </div>
+        
+      </div>
+      
+      <div class="practical-footer">
+        <div class="pf-row"><span class="pf-tag">🚗 移動・駐車:</span><span class="pf-val">寂光院から犬山駅まで車で約8〜10分。</span></div>
+        <div class="pf-row"><span class="pf-tag">💡 現地Tips:</span><span class="pf-val">手荷物はあらかじめ家族車内でリュックにまとめておくと下車がスムーズ。</span></div>
+        <div class="pf-row"><span class="pf-tag">⏱️ 撤収基準:</span><span class="pf-val">※実家に立ち寄る必要がある場合は、そのまま家族車で実家へ帰還（17:05着）も選択可。</span></div>
+      </div>
+      <div class="slot-foot">
+        <a class="map-pill" href="https://www.google.com/maps/dir/?api=1&amp;origin=寂光院&amp;destination=犬山駅" target="_blank" rel="noopener">📍 Google Maps</a>
+        
+      </div>
+    </article>
+    <article class="slot-card " id="d2-meitetsu-limited" data-slot-id="d2-meitetsu-limited">
+      <div class="slot-meta">
+        <span class="slot-time">⏱️ 16:45 - 17:15</span>
+        <span class="slot-badge badge-transit">名鉄特急直通25分</span>
+      </div>
+      <div class="slot-title-row">
+        <input type="checkbox" class="slot-checkbox no-print" onchange="toggleSlot('d2-meitetsu-limited', this.checked)" title="完了・スキップを消し込み">
+        <h3 class="slot-title">名鉄犬山線 快速特急/特急（犬山 ➔ 名鉄名古屋）</h3>
+      </div>
+      <p class="slot-desc">犬山駅から名鉄快速特急または特急に乗車。乗り換えなし・わずか25〜29分（運賃570円）で名鉄名古屋駅（名駅直結）へワープ。一般車（特別料金不要）で快適移動。</p>
+      
+      
+      <div class="tactics-box">
+        <div class="tactics-header">🎯 名鉄特急アクセス手順</div>
+        <div class="tactics-list">
+          
+            <div class="tactics-step-row">
+              <span class="tactics-num">1</span>
+              <span class="tactics-text">犬山駅1・2番線から名鉄名古屋方面の「快速特急」または「特急」（または急行）に乗車。</span>
+            </div>
+          
+            <div class="tactics-step-row">
+              <span class="tactics-num">2</span>
+              <span class="tactics-text">江南・岩倉のみ停車の高速運転で、わずか25分で名鉄名古屋駅に到着（運賃570円）。</span>
+            </div>
+          
+            <div class="tactics-step-row">
+              <span class="tactics-num">3</span>
+              <span class="tactics-text">名鉄名古屋駅中央改札口を出て、地下街直結で太閤通口（新幹線口・エスカ）へ徒歩3分。</span>
+            </div>
+          
+        </div>
+      </div>
+      
+      <div class="checkpoint-list">
+        
+          <div class="checkpoint-row">
+            <span class="cp-badge">必須</span>
+            <div>
+              <div class="cp-title">犬山駅 ➔ 名鉄快速特急/特急（名鉄名古屋行）に乗車</div>
+              <div class="cp-desc">江南・岩倉停車の俊足特急。一般車なら運賃570円のみで乗車可能（約25分）。</div>
+            </div>
+          </div>
+        
+          <div class="checkpoint-row">
+            <span class="cp-badge">必須</span>
+            <div>
+              <div class="cp-title">名鉄名古屋駅到着 ➔ 中央改札からエスカ地下街へ直行（徒歩3分）</div>
+              <div class="cp-desc">中央改札を出て地下通路を通り、太閤通口（新幹線口）エスカ地下街へ直行。</div>
+            </div>
+          </div>
+        
+      </div>
+      
+      <div class="practical-footer">
+        <div class="pf-row"><span class="pf-tag">🚗 移動・駐車:</span><span class="pf-val">名鉄犬山線快速特急/特急で約25分〜29分、570円。</span></div>
+        <div class="pf-row"><span class="pf-tag">💡 現地Tips:</span><span class="pf-val">特急・快速特急は昼〜夕方15分ヘッドで運行。</span></div>
+        <div class="pf-row"><span class="pf-tag">⏱️ 撤収基準:</span><span class="pf-val">17時台前半には名駅に到着するため、スガキヤとお土産選びに圧倒的ゆとりが生まれる。</span></div>
+      </div>
+      <div class="slot-foot">
+        <a class="map-pill" href="https://www.google.com/maps/dir/?api=1&amp;origin=犬山駅&amp;destination=名鉄名古屋駅" target="_blank" rel="noopener">📍 Google Maps</a>
+        
+      </div>
+    </article>
+    <article class="slot-card " id="d2-sugakiya-esca" data-slot-id="d2-sugakiya-esca">
+      <div class="slot-meta">
+        <span class="slot-time">⏱️ 17:20 - 18:05</span>
+        <span class="slot-badge badge-food">【必食】ソウルフード回収</span>
+      </div>
+      <div class="slot-title-row">
+        <input type="checkbox" class="slot-checkbox no-print" onchange="toggleSlot('d2-sugakiya-esca', this.checked)" title="完了・スキップを消し込み">
+        <h3 class="slot-title">名駅エスカ一括回収：スガキヤ ＆ 喫茶リッチ（小倉トースト ＆ 珈琲）</h3>
+      </div>
+      <p class="slot-desc">新幹線改札から徒歩1分のエスカ地下街にて、スガキヤの伝統和風とんこつラーメンと、昭和46年開業純喫茶「喫茶リッチ」の本間パン使用・極厚小倉トーストを一括連続制覇。同一地下街の至近距離に揃っているため移動ロスゼロ。新幹線発車時刻は完全フリーでマイペースに東京へ帰還。</p>
+      
+      
+      <div class="tactics-box">
+        <div class="tactics-header">🎯 名駅エスカ一括回収手順</div>
+        <div class="tactics-list">
+          
+            <div class="tactics-step-row">
+              <span class="tactics-num">1</span>
+              <span class="tactics-text">エスカ地下街のスガキヤへ入店。伝統のラーメン（390円）を注文し、ラーメンフォークで和風とんこつスープを堪能。</span>
+            </div>
+          
+            <div class="tactics-step-row">
+              <span class="tactics-num">2</span>
+              <span class="tactics-text">スガキヤ退店後、同じエスカ地下街内の純喫茶「喫茶リッチ」へ直行。</span>
+            </div>
+          
+            <div class="tactics-step-row">
+              <span class="tactics-num">3</span>
+              <span class="tactics-text">昭和46年創業のレトロな店内で、本間パンの香ばしい厚切りトーストに上品な粒あんがたっぷり乗った「小倉トースト」とブレンド珈琲を味わう。</span>
+            </div>
+          
+            <div class="tactics-step-row">
+              <span class="tactics-num">4</span>
+              <span class="tactics-text">新幹線改札口へ移動（徒歩1分）。のぞみ号でスマートに東京へ帰還。</span>
+            </div>
+          
+        </div>
+      </div>
+      
+      <div class="checkpoint-list">
+        
+          <div class="checkpoint-row">
+            <span class="cp-badge">必須</span>
+            <div>
+              <div class="cp-title">スガキヤ 名古屋エスカ店で伝統ラーメン摂取</div>
+              <div class="cp-desc">新幹線改札徒歩1分。白濁和風とんこつラーメンを名物ラーメンフォークで味わう（20分）。</div>
+            </div>
+          </div>
+        
+          <div class="checkpoint-row">
+            <span class="cp-badge">必須</span>
+            <div>
+              <div class="cp-title">喫茶リッチで本間パンの極厚小倉トースト ＆ 珈琲</div>
+              <div class="cp-desc">同一エスカ地下街内。昭和46年創業の純喫茶で名物小倉トーストと珈琲を堪能（25分）。</div>
+            </div>
+          </div>
+        
+          <div class="checkpoint-row">
+            <span class="cp-badge">必須</span>
+            <div>
+              <div class="cp-title">新幹線改札口へ移動 ➔ のぞみ号乗車（時間フリー）</div>
+              <div class="cp-desc">改札まで徒歩1分。お土産を調達し、マイペースに東京へ帰還。</div>
+            </div>
+          </div>
+        
+      </div>
+      
+      <div class="practical-footer">
+        <div class="pf-row"><span class="pf-tag">🚗 移動・駐車:</span><span class="pf-val">JR名古屋駅新幹線改札から徒歩約1分（地下街エスカ内）。</span></div>
+        <div class="pf-row"><span class="pf-tag">💡 現地Tips:</span><span class="pf-val">エスカ店は完全禁煙、回転が早く列があってもすぐ着席可能。各種電子マネー対応。</span></div>
+        <div class="pf-row"><span class="pf-tag">⏱️ 撤収基準:</span><span class="pf-val">新幹線発車時刻の20分前に退店すれば余裕でホームへ到達可能。</span></div>
+      </div>
+      <div class="slot-foot">
+        <a class="map-pill" href="https://www.google.com/maps/search/?api=1&amp;query=スガキヤ+名古屋エスカ店" target="_blank" rel="noopener">📍 Google Maps</a>
+        
+      </div>
+    </article>
+    <article class="slot-card " id="d2-shinkansen-tokyo" data-slot-id="d2-shinkansen-tokyo">
+      <div class="slot-meta">
+        <span class="slot-time">⏱️ 18:20 - 20:00</span>
+        <span class="slot-badge badge-transit">新幹線のぞみ</span>
+      </div>
+      <div class="slot-title-row">
+        <input type="checkbox" class="slot-checkbox no-print" onchange="toggleSlot('d2-shinkansen-tokyo', this.checked)" title="完了・スキップを消し込み">
+        <h3 class="slot-title">東海道新幹線 のぞみ（名古屋 ➔ 東京 帰還）</h3>
+      </div>
+      <p class="slot-desc">名古屋駅から東海道新幹線のぞみ号に乗車。18時台発の新幹線に乗れるため、20:00頃には東京駅へ快適帰還。日曜夜に余裕を持って帰還し翌日（月曜日）に響かない完璧な週末スケジュール。</p>
+      
+      
+      <div class="tactics-box">
+        <div class="tactics-header">🎯 新幹線帰還ステップ</div>
+        <div class="tactics-list">
+          
+            <div class="tactics-step-row">
+              <span class="tactics-num">1</span>
+              <span class="tactics-text">新幹線南口/北口改札をEX-ICまたはスマートEX（モバイルSuica）でタッチ入場。</span>
+            </div>
+          
+            <div class="tactics-step-row">
+              <span class="tactics-num">2</span>
+              <span class="tactics-text">14・15番線ホーム（上り 東京方面）へ。のぞみ号に乗車。</span>
+            </div>
+          
+            <div class="tactics-step-row">
+              <span class="tactics-num">3</span>
+              <span class="tactics-text">新横浜・品川を経て20:00頃東京駅に到着。帰宅。</span>
+            </div>
+          
+        </div>
+      </div>
+      
+      <div class="checkpoint-list">
+        
+          <div class="checkpoint-row">
+            <span class="cp-badge">必須</span>
+            <div>
+              <div class="cp-title">新幹線改札入場 ➔ 14・15番線ホーム（東京行）へ</div>
+              <div class="cp-desc">EX-ICでタッチ入場しホームへ上がる。</div>
+            </div>
+          </div>
+        
+          <div class="checkpoint-row">
+            <span class="cp-badge">必須</span>
+            <div>
+              <div class="cp-title">のぞみ号乗車 ➔ 東京駅到着（20:00頃・愛知遠征完結）</div>
+              <div class="cp-desc">所要約1時間40分で東京駅着。早い時間に無事帰還。</div>
+            </div>
+          </div>
+        
+      </div>
+      
+      <div class="practical-footer">
+        <div class="pf-row"><span class="pf-tag">🚗 移動・駐車:</span><span class="pf-val">東海道新幹線のぞみ号で約1時間37分〜1時間40分。</span></div>
+        <div class="pf-row"><span class="pf-tag">💡 現地Tips:</span><span class="pf-val">のぞみ号は3〜5分間隔で運行されているため時間変更も自在。</span></div>
+        <div class="pf-row"><span class="pf-tag">⏱️ 撤収基準:</span><span class="pf-val">※遅い時間（19時台・20時台）への新幹線変更もEX予約で1タップで可能。</span></div>
+      </div>
+      <div class="slot-foot">
+        <a class="map-pill" href="https://www.google.com/maps/dir/?api=1&amp;origin=名古屋駅&amp;destination=東京駅" target="_blank" rel="noopener">📍 Google Maps</a>
+        
+      </div>
+    </article>
+      </div>
+    </section>
+  
+    
+    <nav class="nav-bar no-print" style="margin-top: 24px;">
+      <a class="nav-link " href="aichi.html">📑 全日程（統合版）</a>
+      <a class="nav-link " href="aichi_day1.html">Day 1</a><a class="nav-link active" href="aichi_day2.html">Day 2</a>
+    </nav>
+  </main>
+
+  <script>
+    const STORAGE_KEY = 'aichi_completed_slots';
+    function toggleTheme() {
+      const cur = document.documentElement.getAttribute('data-theme') || 'light';
+      const nxt = cur === 'dark' ? 'light' : 'dark';
+      document.documentElement.setAttribute('data-theme', nxt);
+      localStorage.setItem('trip_nav_theme', nxt);
+    }
+
+    function getCompletedSlots() {
+      try {
+        return JSON.parse(localStorage.getItem(STORAGE_KEY) || '[]');
+      } catch (e) {
+        return [];
+      }
+    }
+
+    function toggleSlot(slotId, isDone) {
+      const card = document.getElementById(slotId);
+      let list = getCompletedSlots();
+      if (isDone) {
+        if (!list.includes(slotId)) list.push(slotId);
+        if (card) card.classList.add('is-dimmed');
+      } else {
+        list = list.filter(id => id !== slotId);
+        if (card) card.classList.remove('is-dimmed');
+      }
+      localStorage.setItem(STORAGE_KEY, JSON.stringify(list));
+    }
+
+    document.addEventListener('DOMContentLoaded', () => {
+      const list = getCompletedSlots();
+      list.forEach(slotId => {
+        const card = document.getElementById(slotId);
+        if (card) {
+          card.classList.add('is-dimmed');
+          const cb = card.querySelector('.slot-checkbox');
+          if (cb) cb.checked = true;
+        }
+      });
+    });
+  </script>
+</body>
+</html>
