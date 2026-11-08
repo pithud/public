@@ -1,0 +1,747 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>三重 ｜ 伊勢 ＋ 志摩 旅アルバム 2026 ｜ ポップ行動ログ（完全確定版）</title>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <script>
+    (function() {
+      var t = localStorage.getItem('trip_nav_theme') || 'light';
+      document.documentElement.setAttribute('data-theme', t);
+    })();
+  </script>
+  <link rel="stylesheet" href="../assets/album.css?v=20261108_2355">
+</head>
+<body>
+
+  <!-- Sticky Header -->
+  <header>
+    <div class="container header-inner">
+      <div class="logo-area"><div class="logo"><span>📸</span> 三重 ｜ 伊勢 ＋ 志摩 旅アルバム</div></div>
+      <div class="header-actions">
+        <a href="index.html" class="nav-btn">◀ 旅ポータル</a>
+        <a href="prod.html" class="nav-btn">最終版</a>
+        <button class="theme-toggle" id="themeBtn" aria-label="テーマ切替">🌙</button>
+      </div>
+    </div>
+  </header>
+
+  <main class="container">
+
+    <!-- Album Hero -->
+    <div class="album-hero">
+      <div class="tape">GOOGLE TIMELINE & APPLE HEALTH VERIFIED</div>
+      <h1 class="hero-title">三重 ｜ 伊勢 ＋ 志摩 弾丸行動アルバム</h1>
+      <p style="font-size: 0.9rem; color: var(--text-muted); font-weight: 700;">Googleマップ タイムライン ＆ Apple Health 実測同期完了版</p>
+      
+      <div class="hero-tags">
+        <span class="tag-badge tag-blue">📅 2026.11.02 - 11.03</span>
+        <span class="tag-badge tag-orange">🚗 拠点発 陸路完走</span>
+        <span class="tag-badge tag-green">🛡️ 写真ゼロ・完全公開仕様</span>
+        <span class="tag-badge tag-purple">⚡ 実測 63,091歩 / 20.25km</span>
+      </div>
+
+      <!-- Health KPI Real Data -->
+      <div class="health-kpi-grid">
+        <div class="health-kpi-card">
+          <div class="kpi-title">2日間 合計歩数</div>
+          <div class="kpi-val primary">63,091 歩</div>
+        </div>
+        <div class="health-kpi-card">
+          <div class="kpi-title">2日間 歩行距離</div>
+          <div class="kpi-val mint">20.25 km</div>
+        </div>
+        <div class="health-kpi-card">
+          <div class="kpi-title">11/2 (月) 外宮・内宮・宿</div>
+          <div class="kpi-val" style="font-size: 1.1rem;">31,837歩 / 10.02km</div>
+        </div>
+        <div class="health-kpi-card">
+          <div class="kpi-title">11/3 (祝) 賢島・横山・VISON</div>
+          <div class="kpi-val" style="font-size: 1.1rem;">31,254歩 / 10.24km</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 1. 計画 vs 実績 照らし合わせ（時系列完全整列） -->
+    <section>
+      <div class="section-header">
+        <div class="section-icon">⚖️</div>
+        <h2 class="section-title">計画（mie.html）vs 実際の行動（時系列完全整列）</h2>
+      </div>
+
+      <div class="diff-table-card">
+        <div class="diff-table-wrapper">
+          <table class="diff-table">
+            <colgroup>
+              <col class="col-spot">
+              <col class="col-plan">
+              <col class="col-actual">
+              <col class="col-verdict">
+            </colgroup>
+          <thead>
+            <tr>
+              <th scope="col">スポット・行程</th>
+              <th scope="col">当初計画</th>
+              <th scope="col">実測行動ログ（Timeline）</th>
+              <th scope="col" class="col-center">判定</th>
+            </tr>
+          </thead>
+          <tbody>
+            <!-- Day 1 時系列完全整列 -->
+            <tr class="day-divider-row">
+              <td colspan="4"><span>📅 Day 1: 11/2 (月) 伊勢（外宮・内宮・おはらい町・宿）</span></td>
+            </tr>
+            <tr>
+              <td><strong>① 二見興玉神社 / 夫婦岩</strong></td>
+              <td>外宮前立ち寄り候補</td>
+              <td><strong>09:52 - 10:17</strong>（王道順路通り最初に参拝）</td>
+              <td><span class="stamp stamp-win">計画通り</span></td>
+            </tr>
+            <tr>
+              <td><strong>② 外宮（豊受大神宮）</strong></td>
+              <td>写真5分で通過予定</td>
+              <td><strong>10:39 - 11:30</strong>（第3駐車場から参拝）</td>
+              <td><span class="stamp stamp-win">満喫</span></td>
+            </tr>
+            <tr>
+              <td><strong>③ 内宮（皇大神宮）参拝</strong></td>
+              <td>B5駐車場から参拝</td>
+              <td><strong>11:45 - 12:20</strong>（正宮・宇治橋・五十鈴川）</td>
+              <td><span class="stamp stamp-win">本命参拝</span></td>
+            </tr>
+            <tr>
+              <td><strong>④ おはらい町＆おかげ横丁</strong></td>
+              <td>散策＆昼食選択</td>
+              <td><strong>12:20〜</strong>（横丁エリアへ突入）</td>
+              <td><span class="stamp stamp-win">散策開始</span></td>
+            </tr>
+            <tr>
+              <td><strong>⑤ 赤福 お土産購入</strong></td>
+              <td>白あん・名物枠</td>
+              <td><strong>12:30頃</strong>（白餅黒餅テイクアウト）</td>
+              <td><span class="stamp stamp-bad">大福感</span></td>
+            </tr>
+            <tr>
+              <td><strong>⑥ すし久（内宮昼食）</strong></td>
+              <td>昼食候補の1つ</td>
+              <td><strong>12:45 - 13:30</strong>（てこね寿司梅で大勝利）</td>
+              <td><span class="stamp stamp-god">旅程MVP</span></td>
+            </tr>
+            <tr>
+              <td><strong>⑦ 豚捨（コロッケ）</strong></td>
+              <td>食べ歩き名物</td>
+              <td><strong>13:35 - 13:50</strong>（20人列をテイクアウト即買い）</td>
+              <td><span class="stamp stamp-bad">マック味</span></td>
+            </tr>
+            <tr>
+              <td><strong>⑧ 大水神社＆合格神社等 参拝</strong></td>
+              <td>横丁散策・周辺社</td>
+              <td><strong>13:55 - 14:15</strong>（瀧祭間違い＆Google珍レビュー）</td>
+              <td><span class="stamp stamp-win">これも一興</span></td>
+            </tr>
+            <tr>
+              <td><strong>⑨ 猿田彦神社 参拝</strong></td>
+              <td>みちひらき参拝枠</td>
+              <td><strong>14:20 - 14:35</strong>（方除・開運の神へ参拝）</td>
+              <td><span class="stamp stamp-win">満喫</span></td>
+            </tr>
+            <tr>
+              <td><strong>⑩ B5駐車場へ帰着</strong></td>
+              <td>内宮エリア撤収</td>
+              <td><strong>14:40</strong>（車へ戻り次工程の判断）</td>
+              <td><span class="stamp stamp-win">定刻</span></td>
+            </tr>
+            <tr>
+              <td><strong>⑪ 伊勢志摩スカイライン</strong></td>
+              <td>朝熊山展望台経由</td>
+              <td><strong>14:45頃 スキップ判断</strong>（有料道路パス・宿直行）</td>
+              <td><span class="stamp stamp-skip">即切り損切</span></td>
+            </tr>
+            <tr>
+              <td><strong>⑫ 大江戸温泉物語 伊勢志摩</strong></td>
+              <td>鵜倉園地夕日・宿泊</td>
+              <td><strong>16:14チェックイン</strong>（展望台パス・館内ステイ）</td>
+              <td><span class="stamp stamp-win">宿ステイ</span></td>
+            </tr>
+            <!-- Day 2 時系列完全整列 -->
+            <tr class="day-divider-row">
+              <td colspan="4"><span>📅 Day 2: 11/3 (祝) 志摩（賢島・横山展望台・地中海村・VISON）</span></td>
+            </tr>
+            <tr>
+              <td><strong>⑬ 賢島クルーズ</strong></td>
+              <td>エスペランサ乗船</td>
+              <td><strong>09:32 - 10:23</strong>（航行9.8km、後方デッキ確保）</td>
+              <td><span class="stamp stamp-win">立ち回り勝</span></td>
+            </tr>
+            <tr>
+              <td><strong>⑭ 賢島〜地中海村フェリー</strong></td>
+              <td>海上定期船利用案</td>
+              <td><strong>フェリー即切り</strong>（時刻縛り回避・車直行）</td>
+              <td><span class="stamp stamp-win">陸路正解</span></td>
+            </tr>
+            <tr>
+              <td><strong>⑮ 横山石神神社</strong></td>
+              <td>展望台周辺散策</td>
+              <td><strong>10:45頃</strong>（神主「写真撮った！？」遭遇）</td>
+              <td><span class="stamp stamp-bad">神主老害感</span></td>
+            </tr>
+            <tr>
+              <td><strong>⑯ 横山展望台（天空カフェ）</strong></td>
+              <td>英虞湾パノラマ</td>
+              <td><strong>11:00 - 11:30</strong>（石神神社後に登頂・絶景満喫）</td>
+              <td><span class="stamp stamp-win">絶景制覇</span></td>
+            </tr>
+            <tr>
+              <td><strong>⑰ 志摩地中海村</strong></td>
+              <td>散策リゾート</td>
+              <td><strong>12:38 - 13:36</strong>（車で直行・白壁散策）</td>
+              <td><span class="stamp stamp-win">満喫</span></td>
+            </tr>
+            <tr>
+              <td><strong>⑱ 多気 VISON</strong></td>
+              <td>帰路立ち寄り散策</td>
+              <td><strong>15:52 - 16:38</strong>（出店巡り＋うどん再戦）</td>
+              <td><span class="stamp stamp-bad">麺撃沈</span></td>
+            </tr>
+          </tbody>
+        </table>
+        </div>
+      </div>
+    </section>
+
+    <!-- 2. Day 1 詳細個別イベントカード -->
+    <section>
+      <div class="section-header">
+        <div class="section-icon">⛩️</div>
+        <h2 class="section-title">Day 1: 実動順イベント別 詳細アクションログ（実測 31,837歩）</h2>
+      </div>
+
+      <div class="polaroid-grid">
+
+        <!-- 1. 二見浦・夫婦岩 -->
+        <div class="polaroid-card">
+          <div>
+            <div class="card-top">
+              <div>
+                <span class="spot-time">09:52 - 10:17</span>
+                <div class="spot-name">1. 二見興玉神社 / 夫婦岩</div>
+              </div>
+              <span class="stamp stamp-win">旅の起点</span>
+            </div>
+            <div class="punchline">
+              「厳選王道ルート。朝一番の潮風で身を清めてから伊勢へ突入。」
+            </div>
+            <ul class="fact-bullet">
+              <li>06:54拠点発 ➜ 88km走行し09:52到着。</li>
+              <li>滞在25分。二見浦で夫婦岩を見てから外宮へ向かう王道順序を踏破。</li>
+            </ul>
+          </div>
+        </div>
+
+        <!-- 2. 外宮 -->
+        <div class="polaroid-card">
+          <div>
+            <div class="card-top">
+              <div>
+                <span class="spot-time">10:39 - 11:30</span>
+                <div class="spot-name">2. 外宮（豊受大神宮）</div>
+              </div>
+              <span class="stamp stamp-win">しっかり参拝</span>
+            </div>
+            <div class="punchline">
+              「本殿、白い布の向こうの扉に祈ってるだけ感。」
+            </div>
+            <ul class="fact-bullet">
+              <li>第3駐車場に駐車。写真5分の予定から約50分じっくり参拝。</li>
+              <li>巨木と建築の佇まいは見応えあり。11時台だけで6,553歩計測。</li>
+            </ul>
+          </div>
+        </div>
+
+        <!-- 3. 内宮参拝 -->
+        <div class="polaroid-card">
+          <div>
+            <div class="card-top">
+              <div>
+                <span class="spot-time">11:45 - 12:20</span>
+                <div class="spot-name">3. 内宮（皇大神宮）参拝</div>
+              </div>
+              <span class="stamp stamp-win">本命参拝</span>
+            </div>
+            <div class="punchline">
+              「宇治橋を渡り正宮へ。伊勢の神域コアをしっかり踏破。」
+            </div>
+            <ul class="fact-bullet">
+              <li>B5駐車場に駐車後、五十鈴川の御手洗場を経て正宮へ参拝。</li>
+              <li>格式高い木造建築の重厚感を体感。</li>
+            </ul>
+          </div>
+        </div>
+
+        <!-- 4. おはらい町＆おかげ横丁 -->
+        <div class="polaroid-card">
+          <div>
+            <div class="card-top">
+              <div>
+                <span class="spot-time">12:20〜</span>
+                <div class="spot-name">4. おはらい町＆おかげ横丁</div>
+              </div>
+              <span class="stamp stamp-win">散策突入</span>
+            </div>
+            <div class="punchline">
+              「参拝完了後、そのまま賑わう門前町ストリートへ直行。」
+            </div>
+            <ul class="fact-bullet">
+              <li>石畳の通りに並ぶ土産物屋や食事処を散策開始。</li>
+            </ul>
+          </div>
+        </div>
+
+        <!-- 5. 赤福お土産 -->
+        <div class="polaroid-card">
+          <div>
+            <div class="card-top">
+              <div>
+                <span class="spot-time">12:30頃</span>
+                <div class="spot-name">5. 赤福（お土産・白餅黒餅）</div>
+              </div>
+              <span class="stamp stamp-bad">ただの大福感</span>
+            </div>
+            <div class="punchline danger">
+              「赤福の白黒はただの大福。黒は黒糖でクセ強い。」
+            </div>
+            <ul class="fact-bullet">
+              <li>定番の赤福派生「白餅黒餅」をお土産に確保。通常の赤福と比べると素朴な大福の印象。</li>
+            </ul>
+          </div>
+        </div>
+
+        <!-- 6. すし久 -->
+        <div class="polaroid-card">
+          <div>
+            <div class="card-top">
+              <div>
+                <span class="spot-time">12:45 - 13:30</span>
+                <div class="spot-name">6. おはらい町 すし久</div>
+              </div>
+              <span class="stamp stamp-god">旅程MVP</span>
+            </div>
+            <div class="punchline success">
+              「梅で1600円。松竹梅でなぜか梅が一番デカい謎。めちゃくちゃうまい。」
+            </div>
+            <ul class="fact-bullet">
+              <li>鰹の漬けダレと酢飯の相性が抜群。味・コスパともに今回の旅で圧倒的No.1。</li>
+            </ul>
+          </div>
+        </div>
+
+        <!-- 7. 豚捨 -->
+        <div class="polaroid-card">
+          <div>
+            <div class="card-top">
+              <div>
+                <span class="spot-time">13:35 - 13:50</span>
+                <div class="spot-name">7. 豚捨（コロッケ）</div>
+              </div>
+              <span class="stamp stamp-bad">マックの味？</span>
+            </div>
+            <div class="punchline danger">
+              「豚捨コロッケは肉どこ？ほぼじゃがいもでマックの味。」
+            </div>
+            <ul class="fact-bullet">
+              <li>20人並びをテイクアウト窓口で即突破。油の風味がファストフード調。</li>
+            </ul>
+          </div>
+        </div>
+
+        <!-- 8. 大水神社＆合格神社 -->
+        <div class="polaroid-card">
+          <div>
+            <div class="card-top">
+              <div>
+                <span class="spot-time">13:55 - 14:15</span>
+                <div class="spot-name">8. 大水神社＆合格神社等 参拝</div>
+              </div>
+              <span class="stamp stamp-win">珍レビュー</span>
+            </div>
+            <div class="punchline warning">
+              「合格神社はGoogleレビューが面白すぎた。大水神社は瀧祭間違いだが一興。」
+            </div>
+            <ul class="fact-bullet">
+              <li>横丁周辺の神社を探索参拝。本命スルーも含めて旅のハプニングとして楽しむ。</li>
+            </ul>
+          </div>
+        </div>
+
+        <!-- 9. 猿田彦神社 -->
+        <div class="polaroid-card">
+          <div>
+            <div class="card-top">
+              <div>
+                <span class="spot-time">14:20 - 14:35</span>
+                <div class="spot-name">9. 猿田彦神社 参拝</div>
+              </div>
+              <span class="stamp stamp-win">みちひらき</span>
+            </div>
+            <div class="punchline">
+              「みちひらきの神へしっかり参拝。旅の安全と開運を祈願。」
+            </div>
+            <ul class="fact-bullet">
+              <li>内宮散策の締めくくりとして猿田彦神社へ立ち寄り。方位石なども確認。</li>
+            </ul>
+          </div>
+        </div>
+
+        <!-- 10. 駐車場戻り＆スカイラインスキップ -->
+        <div class="polaroid-card">
+          <div>
+            <div class="card-top">
+              <div>
+                <span class="spot-time">14:40 - 14:45</span>
+                <div class="spot-name">10. 駐車場戻り ＆ スカイラインスキップ</div>
+              </div>
+              <span class="stamp stamp-skip">即切り損切</span>
+            </div>
+            <div class="punchline">
+              「B5駐車場へ戻り、有料スカイラインは即スキップして宿へ直行。」
+            </div>
+            <ul class="fact-bullet">
+              <li>時間配分と疲労度を考慮し、朝熊山展望台をカットして宿へ直行する好判断。</li>
+            </ul>
+          </div>
+        </div>
+
+        <!-- 11. 大江戸温泉物語 伊勢志摩 -->
+        <div class="polaroid-card" style="grid-column: 1 / -1;">
+          <div>
+            <div class="card-top">
+              <div>
+                <span class="spot-time">16:14 チェックイン〜夜</span>
+                <div class="spot-name">11. 大江戸温泉物語 伊勢志摩</div>
+              </div>
+              <span class="stamp stamp-win">夜のハイライト</span>
+            </div>
+            <div class="punchline success">
+              「ハーゲンダッツ苺を乱れ食い。あおさ醤油がうまい。夜のito大会が最高。」
+            </div>
+            <ul class="fact-bullet">
+              <li>鵜倉園地夕日ドライブもパスして16:14即チェックイン。余力温存が完全正解。</li>
+              <li><strong>ボードゲームito:</strong>「旅で一番印象に残っている度」ルールで大盛り上がり。</li>
+              <li><strong>マッサージチェア:</strong> 300円。骨が痛いが終わると体が軽い。効果あり。</li>
+              <li><strong>寝具:</strong> 敷布団よりベッドの方が腰が安定。</li>
+            </ul>
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- 3. Day 2 詳細個別イベントカード -->
+    <section>
+      <div class="section-header">
+        <div class="section-icon">🚢</div>
+        <h2 class="section-title">Day 2: 実動順イベント別 詳細アクションログ（実測 31,254歩）</h2>
+      </div>
+
+      <div class="polaroid-grid">
+
+        <!-- 1. 賢島クルーズ -->
+        <div class="polaroid-card">
+          <div>
+            <div class="card-top">
+              <div>
+                <span class="spot-time">09:32 - 10:23</span>
+                <div class="spot-name">1. 賢島クルーズ（エスペランサ）</div>
+              </div>
+              <span class="stamp stamp-win">動線勝利</span>
+            </div>
+            <div class="punchline success">
+              「後方デッキ席の確保＋下船直前の出口ダッシュ。立ち回りの完全勝利。」
+            </div>
+            <ul class="fact-bullet">
+              <li>51分間、英虞湾を9,888m航行（Googleタイムラインがサイクリングと判定）。</li>
+              <li>風が抜ける後方デッキが快適。進行方向は陸側を向くのが鉄則。</li>
+            </ul>
+          </div>
+        </div>
+
+        <!-- 2. 地中海村フェリー即切り -->
+        <div class="polaroid-card">
+          <div>
+            <div class="card-top">
+              <div>
+                <span class="spot-time">10:25頃</span>
+                <div class="spot-name">2. 賢島〜地中海村フェリー</div>
+              </div>
+              <span class="stamp stamp-skip">陸路即断</span>
+            </div>
+            <div class="punchline">
+              「船の時刻縛りは不要。フェリー即切りで車移動に切り替え。」
+            </div>
+            <ul class="fact-bullet">
+              <li>賢島下船後、フェリーを待たずにマイカーで横山石神神社・展望台方面へ向かう自由度を選択。</li>
+            </ul>
+          </div>
+        </div>
+
+        <!-- 3. 横山石神神社（先） -->
+        <div class="polaroid-card">
+          <div>
+            <div class="card-top">
+              <div>
+                <span class="spot-time">10:45頃</span>
+                <div class="spot-name">3. 横山石神神社</div>
+              </div>
+              <span class="stamp stamp-bad">神主老害感</span>
+            </div>
+            <div class="punchline danger">
+              「神主が老害感。急に『写真撮った！？』と遠くから叫ばれて坂東英二かと思った。」
+            </div>
+            <ul class="fact-bullet">
+              <li>展望台の前に立ち寄り。『撮ってないです』と返すと『ここから撮るといいよー』と案内。</li>
+              <li>親切だったのか撮影位置制限の注意だったのかは今も謎。</li>
+            </ul>
+          </div>
+        </div>
+
+        <!-- 4. 横山展望台（後） -->
+        <div class="polaroid-card">
+          <div>
+            <div class="card-top">
+              <div>
+                <span class="spot-time">11:00 - 11:30</span>
+                <div class="spot-name">4. 横山展望台（天空カフェ）</div>
+              </div>
+              <span class="stamp stamp-win">絶景スポット</span>
+            </div>
+            <div class="punchline success">
+              「英虞湾のリアス海岸が一望。クルーズ後に登ると地形の全体像が掴めて最高。」
+            </div>
+            <ul class="fact-bullet">
+              <li>石神神社参拝後に登頂。ウッドデッキテラスからの絶景を満喫（10-11時台で9,037歩）。</li>
+            </ul>
+          </div>
+        </div>
+
+        <!-- 5. 志摩地中海村 -->
+        <div class="polaroid-card">
+          <div>
+            <div class="card-top">
+              <div>
+                <span class="spot-time">12:38 - 13:36</span>
+                <div class="spot-name">5. 志摩地中海村</div>
+              </div>
+              <span class="stamp stamp-win">陸路ワープ</span>
+            </div>
+            <div class="punchline">
+              「フェリー飛ばして陸路直行が正解。約1時間で白壁散策を完了。」
+            </div>
+            <ul class="fact-bullet">
+              <li>12:38着でスムーズに入村。写真映えする白壁リゾート空間を落ち着いて散策。</li>
+            </ul>
+          </div>
+        </div>
+
+        <!-- 6. 多気VISON＆伊勢うどん -->
+        <div class="polaroid-card">
+          <div>
+            <div class="card-top">
+              <div>
+                <span class="spot-time">15:52 - 16:38</span>
+                <div class="spot-name">6. 多気 VISON</div>
+              </div>
+              <span class="stamp stamp-bad">伊勢うどん終焉</span>
+            </div>
+            <div class="punchline danger">
+              「伊勢うどん再戦するも撃沈。タレが良くても麺のベースが無理。」
+            </div>
+            <ul class="fact-bullet">
+              <li>地中海村から32km走行して15:52到着。駐車場側のマルシェ出店を散策。</li>
+              <li>コシのない柔らかい麺が合わないことを完全確認し、16:38に旅を結了・帰路へ。</li>
+            </ul>
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- 4. インタラクティブ・アクティビティグラフ -->
+    <section>
+      <div class="section-header">
+        <div class="section-icon">📈</div>
+        <h2 class="section-title">インタラクティブ・アクティビティ分析</h2>
+      </div>
+
+      <div class="chart-card">
+        <!-- Chart Controls -->
+        <div class="chart-tabs">
+          <button class="chart-tab-btn active" data-view="hourly">🐾 時間帯別 歩数推移</button>
+          <button class="chart-tab-btn" data-view="duration">⏱️ スポット別 滞在時間 (分)</button>
+          <button class="chart-tab-btn" data-view="cumulative">📈 2日間 累積歩数カーブ</button>
+        </div>
+
+        <div class="chart-wrapper">
+          <canvas id="mainChartCanvas" role="img" aria-label="旅行アクティビティ推移グラフ（時間帯別歩数・スポット滞在時間・累積歩数）"></canvas>
+        </div>
+
+        <div class="chart-meta-caption" id="chartCaption">
+          📊 タブを切り替えて「時間帯別歩数」「スポット滞在時間」「累積歩数カーブ」をインタラクティブに分析可能
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <footer>
+    <div class="container">
+      2026 Mie & Ise-Shima Travel Scrapbook ｜ <a href="../index.html" style="color: var(--primary); text-decoration: none; font-weight: 800;">旅行総合ポータルへ戻る</a>
+    </div>
+  </footer>
+
+    <!-- Injected Chart Data -->
+  <script>
+    window.__ALBUM_CHART_DATA__ = {
+  "hourly": {
+    "type": "bar",
+    "caption": "📊 <strong>時間帯別 歩数推移:</strong> 初日（外宮・内宮・おはらい町 31,837歩） vs 2日目（賢島・横山・VISON 31,254歩）",
+    "labels": [
+      "06時",
+      "08時",
+      "09時",
+      "10時",
+      "11時",
+      "12時",
+      "13時",
+      "14時",
+      "15時",
+      "16時",
+      "18時",
+      "19時"
+    ],
+    "datasets": [
+      {
+        "label": "11/2 外宮・内宮・宿 (31,837歩)",
+        "data": [
+          385,
+          585,
+          1020,
+          2780,
+          6553,
+          5816,
+          2756,
+          6649,
+          498,
+          1659,
+          628,
+          932
+        ],
+        "backgroundColor": "#0284c7",
+        "borderRadius": 6
+      },
+      {
+        "label": "11/3 賢島・横山・VISON (31,254歩)",
+        "data": [
+          412,
+          1293,
+          1805,
+          5022,
+          4015,
+          2640,
+          2109,
+          2381,
+          3387,
+          3804,
+          2300,
+          776
+        ],
+        "backgroundColor": "#f59e0b",
+        "borderRadius": 6
+      }
+    ]
+  },
+  "duration": {
+    "type": "doughnut",
+    "caption": "⏱️ <strong>主要スポット別 滞在時間（実測分）:</strong> 内宮参拝・おはらい町・おかげ横丁（すし久・豚捨・赤福・猿田彦）散策が最長（170分）。賢島クルーズ51分、地中海村58分。",
+    "labels": [
+      "夫婦岩 (25分)",
+      "外宮参拝 (51分)",
+      "内宮・横丁・すし久・猿田彦 (170分)",
+      "賢島クルーズ (51分)",
+      "横山石神＆展望台 (58分)",
+      "志摩地中海村 (58分)",
+      "多気 VISON (46分)"
+    ],
+    "datasets": [
+      {
+        "data": [
+          25,
+          51,
+          170,
+          51,
+          58,
+          58,
+          46
+        ],
+        "backgroundColor": [
+          "#38bdf8",
+          "#0284c7",
+          "#f59e0b",
+          "#10b981",
+          "#059669",
+          "#ec4899",
+          "#f97316"
+        ],
+        "borderWidth": 2
+      }
+    ]
+  },
+  "cumulative": {
+    "type": "line",
+    "yTitle": "累計歩数",
+    "caption": "📈 <strong>2日間 累積歩数ペース（合計 63,091歩）:</strong> 2日間にわたって時速約3,000〜6,000歩のハイペースで歩行を継続。",
+    "labels": [
+      "初日朝",
+      "外宮参拝",
+      "内宮・すし久",
+      "横丁・猿田彦",
+      "宿チェックイン",
+      "2日目朝",
+      "賢島クルーズ",
+      "横山展望台",
+      "地中海村",
+      "多気VISON",
+      "帰着"
+    ],
+    "datasets": [
+      {
+        "label": "累積歩数 (Steps)",
+        "data": [
+          2000,
+          11333,
+          17149,
+          26554,
+          31837,
+          36465,
+          41487,
+          48142,
+          52891,
+          60082,
+          63091
+        ],
+        "borderColor": "#10b981",
+        "backgroundColor": "rgba(16, 185, 129, 0.15)",
+        "borderWidth": 3,
+        "fill": true,
+        "tension": 0.35,
+        "pointBackgroundColor": "#10b981",
+        "pointRadius": 6,
+        "pointHoverRadius": 8
+      }
+    ]
+  }
+};
+  </script>
+  <script src="../assets/album_runtime.js?v=20261108_2355"></script>
+</body>
+</html>

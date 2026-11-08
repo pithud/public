@@ -1,0 +1,1141 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>三重・伊勢志摩 旅アルバム 2026 ｜ ポップ行動ログ（完全確定版）</title>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <script>
+    (function() {
+      var t = localStorage.getItem('trip_nav_theme') || 'light';
+      document.documentElement.setAttribute('data-theme', t);
+    })();
+  </script>
+  <style>
+    :root, [data-theme="light"] {
+      --bg: #fdfbf7;
+      --card-bg: #ffffff;
+      --card-inner: #f8fafc;
+      --header-bg: rgba(253, 251, 247, 0.95);
+      --border: #e2e8f0;
+      --text: #0f172a;
+      --text-muted: #64748b;
+      --primary: #0284c7;
+      --coral: #ff6b6b;
+      --sun: #f59e0b;
+      --mint: #10b981;
+      --purple: #8b5cf6;
+      --tape: #fde047;
+      --shadow-album: 0 10px 25px -5px rgba(0, 0, 0, 0.05), 0 8px 10px -6px rgba(0, 0, 0, 0.03);
+      --card-shadow: 0 4px 14px rgba(0, 0, 0, 0.06);
+      --tab-active-bg: #0284c7;
+      --tab-active-text: #ffffff;
+    }
+    [data-theme="dark"] {
+      --bg: #0f172a;
+      --card-bg: #1e293b;
+      --card-inner: #0b1120;
+      --header-bg: rgba(15, 23, 42, 0.95);
+      --border: #334155;
+      --text: #f8fafc;
+      --text-muted: #94a3b8;
+      --primary: #38bdf8;
+      --coral: #fb7185;
+      --sun: #fbbf24;
+      --mint: #34d399;
+      --purple: #c084fc;
+      --tape: #854d0e;
+      --shadow-album: 0 10px 25px -5px rgba(0, 0, 0, 0.3);
+      --card-shadow: 0 4px 14px rgba(0, 0, 0, 0.25);
+      --tab-active-bg: #38bdf8;
+      --tab-active-text: #0f172a;
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Hiragino Maru Gothic ProN", "Yu Gothic", sans-serif;
+      background-color: var(--bg);
+      color: var(--text);
+      line-height: 1.6;
+      padding-bottom: 90px;
+    }
+    .container {
+      max-width: 860px;
+      margin: 0 auto;
+      padding: 0 16px;
+    }
+
+    /* Sticky Header */
+    header {
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      background: var(--header-bg);
+      backdrop-filter: blur(10px);
+      border-bottom: 2px dashed var(--border);
+      padding: 12px 0;
+    }
+    .header-inner {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    .logo-area h1 {
+      font-size: 1.1rem;
+      font-weight: 800;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .header-actions {
+      display: flex;
+      gap: 8px;
+      align-items: center;
+    }
+    .nav-btn {
+      text-decoration: none;
+      font-size: 0.8rem;
+      font-weight: 700;
+      color: var(--text);
+      padding: 6px 12px;
+      border: 2px solid var(--border);
+      border-radius: 9999px;
+      background: var(--card-bg);
+      box-shadow: 0 2px 0 var(--border);
+      transition: all 0.15s;
+    }
+    .nav-btn:active { transform: translateY(2px); box-shadow: none; }
+    .theme-toggle {
+      background: var(--card-bg);
+      color: var(--text);
+      border: 2px solid var(--border);
+      padding: 6px 12px;
+      border-radius: 9999px;
+      font-size: 0.8rem;
+      cursor: pointer;
+      font-weight: 700;
+      box-shadow: 0 2px 0 var(--border);
+    }
+    .theme-toggle:active { transform: translateY(2px); box-shadow: none; }
+
+    /* Album Hero */
+    .album-hero {
+      margin: 28px 0 24px;
+      background: var(--card-bg);
+      border: 2px solid var(--border);
+      border-radius: 24px;
+      padding: 28px 20px;
+      text-align: center;
+      position: relative;
+      box-shadow: var(--shadow-album);
+    }
+    .tape {
+      position: absolute;
+      top: -12px;
+      left: 50%;
+      transform: translateX(-50%) rotate(-2deg);
+      background: var(--tape);
+      color: #713f12;
+      font-size: 0.72rem;
+      font-weight: 800;
+      padding: 3px 24px;
+      border-radius: 2px;
+      letter-spacing: 1px;
+      box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    }
+    .hero-title {
+      font-size: 1.6rem;
+      font-weight: 900;
+      color: var(--text);
+      margin-top: 6px;
+      margin-bottom: 8px;
+    }
+    .hero-tags {
+      display: flex;
+      justify-content: center;
+      gap: 8px;
+      flex-wrap: wrap;
+      margin-top: 12px;
+    }
+    .tag-badge {
+      font-size: 0.78rem;
+      font-weight: 800;
+      padding: 4px 12px;
+      border-radius: 9999px;
+      border: 1.5px solid transparent;
+    }
+    .tag-blue { background: #e0f2fe; color: #0369a1; border-color: #bae6fd; }
+    .tag-orange { background: #ffedd5; color: #c2410c; border-color: #fed7aa; }
+    .tag-green { background: #dcfce7; color: #15803d; border-color: #bbf7d0; }
+    .tag-purple { background: #f3e8ff; color: #7e22ce; border-color: #e9d5ff; }
+
+    /* Quick Health Summary Grid */
+    .health-kpi-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+      gap: 12px;
+      margin-top: 20px;
+    }
+    .health-kpi-card {
+      background: var(--card-inner);
+      border: 1.5px solid var(--border);
+      border-radius: 14px;
+      padding: 12px;
+      text-align: center;
+    }
+    .kpi-title {
+      font-size: 0.74rem;
+      font-weight: 700;
+      color: var(--text-muted);
+    }
+    .kpi-val {
+      font-size: 1.35rem;
+      font-weight: 900;
+      color: var(--primary);
+      margin-top: 2px;
+    }
+
+    /* Section Styling */
+    section {
+      margin-top: 36px;
+    }
+    .section-header {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      margin-bottom: 16px;
+    }
+    .section-icon {
+      font-size: 1.4rem;
+      background: var(--card-bg);
+      border: 2px solid var(--border);
+      width: 40px;
+      height: 40px;
+      border-radius: 12px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      box-shadow: 0 2px 0 var(--border);
+    }
+    .section-title {
+      font-size: 1.2rem;
+      font-weight: 900;
+    }
+
+    /* Sticker / Stamp Cards */
+    .polaroid-grid {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 16px;
+    }
+    @media (min-width: 640px) {
+      .polaroid-grid { grid-template-columns: 1fr 1fr; }
+    }
+
+    .polaroid-card {
+      background: var(--card-bg);
+      border: 2px solid var(--border);
+      border-radius: 18px;
+      padding: 16px;
+      position: relative;
+      box-shadow: var(--card-shadow);
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      transition: transform 0.15s;
+    }
+    .polaroid-card:hover { transform: translateY(-3px); }
+
+    .card-top {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      margin-bottom: 10px;
+    }
+    .spot-time {
+      font-size: 0.76rem;
+      font-weight: 800;
+      color: var(--primary);
+      background: var(--card-inner);
+      padding: 2px 8px;
+      border-radius: 6px;
+      border: 1px solid var(--border);
+    }
+    .spot-name {
+      font-size: 1.05rem;
+      font-weight: 900;
+      margin-top: 4px;
+    }
+    
+    /* Stamps */
+    .stamp {
+      font-size: 0.72rem;
+      font-weight: 900;
+      padding: 3px 8px;
+      border-radius: 8px;
+      border: 2px dashed;
+      transform: rotate(3deg);
+      text-transform: uppercase;
+      white-space: nowrap;
+    }
+    .stamp-god { color: #dc2626; border-color: #dc2626; background: rgba(220, 38, 38, 0.08); }
+    .stamp-win { color: #059669; border-color: #059669; background: rgba(5, 150, 105, 0.08); }
+    .stamp-skip { color: #64748b; border-color: #64748b; background: rgba(100, 116, 139, 0.08); }
+    .stamp-bad { color: #d97706; border-color: #d97706; background: rgba(217, 119, 6, 0.08); }
+
+    /* Punchline Phrase Box */
+    .punchline {
+      background: var(--card-inner);
+      border-left: 4px solid var(--primary);
+      border-radius: 0 10px 10px 0;
+      padding: 10px 12px;
+      margin-top: 10px;
+      font-size: 0.88rem;
+      font-weight: 700;
+      line-height: 1.45;
+    }
+    .punchline.danger { border-left-color: var(--coral); }
+    .punchline.success { border-left-color: var(--mint); }
+    .punchline.warning { border-left-color: var(--sun); }
+
+    .fact-bullet {
+      font-size: 0.82rem;
+      color: var(--text-muted);
+      margin-top: 8px;
+      list-style: none;
+    }
+    .fact-bullet li {
+      margin-bottom: 4px;
+      position: relative;
+      padding-left: 16px;
+    }
+    .fact-bullet li::before {
+      content: "・";
+      position: absolute;
+      left: 0;
+      font-weight: 900;
+      color: var(--primary);
+    }
+
+    /* Comparison Table Album Style */
+    .diff-table-card {
+      background: var(--card-bg);
+      border: 2px solid var(--border);
+      border-radius: 20px;
+      overflow: hidden;
+      box-shadow: var(--card-shadow);
+      margin-bottom: 20px;
+    }
+    .diff-table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 0.85rem;
+    }
+    .diff-table th, .diff-table td {
+      padding: 12px 14px;
+      border-bottom: 1px solid var(--border);
+    }
+    .diff-table th {
+      background: var(--card-inner);
+      font-weight: 800;
+      color: var(--text-muted);
+    }
+    .diff-table tr:last-child td { border-bottom: none; }
+
+    /* Interactive Chart Controls & Card */
+    .chart-card {
+      background: var(--card-bg);
+      border: 2px solid var(--border);
+      border-radius: 20px;
+      padding: 20px;
+      box-shadow: var(--card-shadow);
+    }
+    .chart-tabs {
+      display: flex;
+      gap: 8px;
+      margin-bottom: 16px;
+      flex-wrap: wrap;
+      justify-content: center;
+    }
+    .chart-tab-btn {
+      background: var(--card-inner);
+      border: 1.5px solid var(--border);
+      color: var(--text);
+      padding: 6px 14px;
+      border-radius: 9999px;
+      font-size: 0.82rem;
+      font-weight: 800;
+      cursor: pointer;
+      transition: all 0.15s;
+    }
+    .chart-tab-btn.active {
+      background: var(--tab-active-bg);
+      color: var(--tab-active-text);
+      border-color: var(--tab-active-bg);
+    }
+    .chart-wrapper {
+      position: relative;
+      height: 280px;
+      width: 100%;
+    }
+    .chart-meta-caption {
+      font-size: 0.78rem;
+      color: var(--text-muted);
+      text-align: center;
+      margin-top: 14px;
+      font-weight: 700;
+    }
+
+    footer {
+      margin-top: 50px;
+      text-align: center;
+      font-size: 0.78rem;
+      font-weight: 700;
+      color: var(--text-muted);
+      border-top: 2px dashed var(--border);
+      padding: 30px 0 10px;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Sticky Header -->
+  <header>
+    <div class="container header-inner">
+      <div class="logo-area">
+        <h1><span>📸</span> 三重旅アルバム 2026</h1>
+      </div>
+      <div class="header-actions">
+        <a href="mie.html" class="nav-btn">🗺️ 計画ポータル</a>
+        <button class="theme-toggle" onclick="toggleTheme()">🌓 テーマ切替</button>
+      </div>
+    </div>
+  </header>
+
+  <main class="container">
+
+    <!-- Album Hero -->
+    <div class="album-hero">
+      <div class="tape">GOOGLE TIMELINE & APPLE HEALTH VERIFIED</div>
+      <h1 class="hero-title">三重・伊勢志摩 弾丸行動アルバム</h1>
+      <p style="font-size: 0.9rem; color: var(--text-muted); font-weight: 700;">Googleマップ タイムライン ＆ Apple Health 実測同期完了版</p>
+      
+      <div class="hero-tags">
+        <span class="tag-badge tag-blue">📅 2026.11.02 - 11.03</span>
+        <span class="tag-badge tag-orange">🚗 拠点発 陸路完走</span>
+        <span class="tag-badge tag-green">🛡️ 写真ゼロ・完全公開仕様</span>
+        <span class="tag-badge tag-purple">⚡ 実測 63,091歩 / 20.25km</span>
+      </div>
+
+      <!-- Health KPI Real Data -->
+      <div class="health-kpi-grid">
+        <div class="health-kpi-card">
+          <div class="kpi-title">2日間 合計歩数</div>
+          <div class="kpi-val" style="color: #0284c7;">63,091 歩</div>
+        </div>
+        <div class="health-kpi-card">
+          <div class="kpi-title">2日間 歩行距離</div>
+          <div class="kpi-val" style="color: #10b981;">20.25 km</div>
+        </div>
+        <div class="health-kpi-card">
+          <div class="kpi-title">11/2 (月) 外宮・内宮・宿</div>
+          <div class="kpi-val" style="font-size: 1.1rem;">31,837歩 / 10.02km</div>
+        </div>
+        <div class="health-kpi-card">
+          <div class="kpi-title">11/3 (祝) 賢島・横山・VISON</div>
+          <div class="kpi-val" style="font-size: 1.1rem;">31,254歩 / 10.24km</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 1. 計画 vs 実績 照らし合わせ（時系列完全整列） -->
+    <section>
+      <div class="section-header">
+        <div class="section-icon">⚖️</div>
+        <div class="section-title">計画（mie.html）vs 実際の行動（時系列完全整列）</div>
+      </div>
+
+      <div class="diff-table-card">
+        <table class="diff-table">
+          <thead>
+            <tr>
+              <th>スポット・行程</th>
+              <th>当初計画</th>
+              <th>実測行動ログ（Timeline）</th>
+              <th>判定</th>
+            </tr>
+          </thead>
+          <tbody>
+            <!-- Day 1 時系列完全整列 -->
+            <tr>
+              <td><strong>① 二見興玉神社 / 夫婦岩</strong></td>
+              <td>外宮前立ち寄り候補</td>
+              <td><strong>09:52 - 10:17</strong>（王道順路通り最初に参拝）</td>
+              <td><span class="stamp stamp-win">計画通り</span></td>
+            </tr>
+            <tr>
+              <td><strong>② 外宮（豊受大神宮）</strong></td>
+              <td>写真5分で通過予定</td>
+              <td><strong>10:39 - 11:30</strong>（第3駐車場から参拝）</td>
+              <td><span class="stamp stamp-win">満喫</span></td>
+            </tr>
+            <tr>
+              <td><strong>③ 内宮（皇大神宮）参拝</strong></td>
+              <td>B5駐車場から参拝</td>
+              <td><strong>11:45 - 12:20</strong>（正宮・宇治橋・五十鈴川）</td>
+              <td><span class="stamp stamp-win">本命参拝</span></td>
+            </tr>
+            <tr>
+              <td><strong>④ おはらい町＆おかげ横丁</strong></td>
+              <td>散策＆昼食選択</td>
+              <td><strong>12:20〜</strong>（横丁エリアへ突入）</td>
+              <td><span class="stamp stamp-win">散策開始</span></td>
+            </tr>
+            <tr>
+              <td><strong>⑤ 赤福 お土産購入</strong></td>
+              <td>白あん・名物枠</td>
+              <td><strong>12:30頃</strong>（白餅黒餅テイクアウト）</td>
+              <td><span class="stamp stamp-bad">大福感</span></td>
+            </tr>
+            <tr>
+              <td><strong>⑥ すし久（内宮昼食）</strong></td>
+              <td>昼食候補の1つ</td>
+              <td><strong>12:45 - 13:30</strong>（てこね寿司梅で大勝利）</td>
+              <td><span class="stamp stamp-god">旅程MVP</span></td>
+            </tr>
+            <tr>
+              <td><strong>⑦ 豚捨（コロッケ）</strong></td>
+              <td>食べ歩き名物</td>
+              <td><strong>13:35 - 13:50</strong>（20人列をテイクアウト即買い）</td>
+              <td><span class="stamp stamp-bad">マック味</span></td>
+            </tr>
+            <tr>
+              <td><strong>⑧ 大水神社＆合格神社等 参拝</strong></td>
+              <td>横丁散策・周辺社</td>
+              <td><strong>13:55 - 14:15</strong>（瀧祭間違い＆Google珍レビュー）</td>
+              <td><span class="stamp stamp-win">これも一興</span></td>
+            </tr>
+            <tr>
+              <td><strong>⑨ 猿田彦神社 参拝</strong></td>
+              <td>みちひらき参拝枠</td>
+              <td><strong>14:20 - 14:35</strong>（方除・開運の神へ参拝）</td>
+              <td><span class="stamp stamp-win">満喫</span></td>
+            </tr>
+            <tr>
+              <td><strong>⑩ B5駐車場へ帰着</strong></td>
+              <td>内宮エリア撤収</td>
+              <td><strong>14:40</strong>（車へ戻り次工程の判断）</td>
+              <td><span class="stamp stamp-win">定刻</span></td>
+            </tr>
+            <tr>
+              <td><strong>⑪ 伊勢志摩スカイライン</strong></td>
+              <td>朝熊山展望台経由</td>
+              <td><strong>14:45頃 スキップ判断</strong>（有料道路パス・宿直行）</td>
+              <td><span class="stamp stamp-skip">即切り損切</span></td>
+            </tr>
+            <tr>
+              <td><strong>⑫ 大江戸温泉物語 伊勢志摩</strong></td>
+              <td>鵜倉園地夕日・宿泊</td>
+              <td><strong>16:14チェックイン</strong>（展望台パス・館内ステイ）</td>
+              <td><span class="stamp stamp-win">宿ステイ</span></td>
+            </tr>
+            <!-- Day 2 時系列完全整列 -->
+            <tr>
+              <td><strong>⑬ 賢島クルーズ</strong></td>
+              <td>エスペランサ乗船</td>
+              <td><strong>09:32 - 10:23</strong>（航行9.8km、後方デッキ確保）</td>
+              <td><span class="stamp stamp-win">立ち回り勝</span></td>
+            </tr>
+            <tr>
+              <td><strong>⑭ 賢島〜地中海村フェリー</strong></td>
+              <td>海上定期船利用案</td>
+              <td><strong>フェリー即切り</strong>（時刻縛り回避・車直行）</td>
+              <td><span class="stamp stamp-win">陸路正解</span></td>
+            </tr>
+            <tr>
+              <td><strong>⑮ 横山石神神社</strong></td>
+              <td>展望台周辺散策</td>
+              <td><strong>10:45頃</strong>（神主「写真撮った！？」遭遇）</td>
+              <td><span class="stamp stamp-bad">神主老害感</span></td>
+            </tr>
+            <tr>
+              <td><strong>⑯ 横山展望台（天空カフェ）</strong></td>
+              <td>英虞湾パノラマ</td>
+              <td><strong>11:00 - 11:30</strong>（石神神社後に登頂・絶景満喫）</td>
+              <td><span class="stamp stamp-win">絶景制覇</span></td>
+            </tr>
+            <tr>
+              <td><strong>⑰ 志摩地中海村</strong></td>
+              <td>散策リゾート</td>
+              <td><strong>12:38 - 13:36</strong>（車で直行・白壁散策）</td>
+              <td><span class="stamp stamp-win">満喫</span></td>
+            </tr>
+            <tr>
+              <td><strong>⑱ 多気 VISON</strong></td>
+              <td>帰路立ち寄り散策</td>
+              <td><strong>15:52 - 16:38</strong>（出店巡り＋うどん再戦）</td>
+              <td><span class="stamp stamp-bad">麺撃沈</span></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <!-- 2. Day 1 詳細個別イベントカード -->
+    <section>
+      <div class="section-header">
+        <div class="section-icon">⛩️</div>
+        <div class="section-title">Day 1: 実動順イベント別 詳細アクションログ（実測 31,837歩）</div>
+      </div>
+
+      <div class="polaroid-grid">
+
+        <!-- 1. 二見浦・夫婦岩 -->
+        <div class="polaroid-card">
+          <div>
+            <div class="card-top">
+              <div>
+                <span class="spot-time">09:52 - 10:17</span>
+                <div class="spot-name">1. 二見興玉神社 / 夫婦岩</div>
+              </div>
+              <span class="stamp stamp-win">旅の起点</span>
+            </div>
+            <div class="punchline">
+              「厳選王道ルート。朝一番の潮風で身を清めてから伊勢へ突入。」
+            </div>
+            <ul class="fact-bullet">
+              <li>06:54拠点発 ➜ 88km走行し09:52到着。</li>
+              <li>滞在25分。二見浦で夫婦岩を見てから外宮へ向かう王道順序を踏破。</li>
+            </ul>
+          </div>
+        </div>
+
+        <!-- 2. 外宮 -->
+        <div class="polaroid-card">
+          <div>
+            <div class="card-top">
+              <div>
+                <span class="spot-time">10:39 - 11:30</span>
+                <div class="spot-name">2. 外宮（豊受大神宮）</div>
+              </div>
+              <span class="stamp stamp-win">しっかり参拝</span>
+            </div>
+            <div class="punchline">
+              「本殿、白い布の向こうの扉に祈ってるだけ感。」
+            </div>
+            <ul class="fact-bullet">
+              <li>第3駐車場に駐車。写真5分の予定から約50分じっくり参拝。</li>
+              <li>巨木と建築の佇まいは見応えあり。11時台だけで6,553歩計測。</li>
+            </ul>
+          </div>
+        </div>
+
+        <!-- 3. 内宮参拝 -->
+        <div class="polaroid-card">
+          <div>
+            <div class="card-top">
+              <div>
+                <span class="spot-time">11:45 - 12:20</span>
+                <div class="spot-name">3. 内宮（皇大神宮）参拝</div>
+              </div>
+              <span class="stamp stamp-win">本命参拝</span>
+            </div>
+            <div class="punchline">
+              「宇治橋を渡り正宮へ。伊勢の神域コアをしっかり踏破。」
+            </div>
+            <ul class="fact-bullet">
+              <li>B5駐車場に駐車後、五十鈴川の御手洗場を経て正宮へ参拝。</li>
+              <li>格式高い木造建築の重厚感を体感。</li>
+            </ul>
+          </div>
+        </div>
+
+        <!-- 4. おはらい町＆おかげ横丁 -->
+        <div class="polaroid-card">
+          <div>
+            <div class="card-top">
+              <div>
+                <span class="spot-time">12:20〜</span>
+                <div class="spot-name">4. おはらい町＆おかげ横丁</div>
+              </div>
+              <span class="stamp stamp-win">散策突入</span>
+            </div>
+            <div class="punchline">
+              「参拝完了後、そのまま賑わう門前町ストリートへ直行。」
+            </div>
+            <ul class="fact-bullet">
+              <li>石畳の通りに並ぶ土産物屋や食事処を散策開始。</li>
+            </ul>
+          </div>
+        </div>
+
+        <!-- 5. 赤福お土産 -->
+        <div class="polaroid-card">
+          <div>
+            <div class="card-top">
+              <div>
+                <span class="spot-time">12:30頃</span>
+                <div class="spot-name">5. 赤福（お土産・白餅黒餅）</div>
+              </div>
+              <span class="stamp stamp-bad">ただの大福感</span>
+            </div>
+            <div class="punchline danger">
+              「赤福の白黒はただの大福。黒は黒糖でクセ強い。」
+            </div>
+            <ul class="fact-bullet">
+              <li>定番の赤福派生「白餅黒餅」をお土産に確保。通常の赤福と比べると素朴な大福の印象。</li>
+            </ul>
+          </div>
+        </div>
+
+        <!-- 6. すし久 -->
+        <div class="polaroid-card">
+          <div>
+            <div class="card-top">
+              <div>
+                <span class="spot-time">12:45 - 13:30</span>
+                <div class="spot-name">6. おはらい町 すし久</div>
+              </div>
+              <span class="stamp stamp-god">旅程MVP</span>
+            </div>
+            <div class="punchline success">
+              「梅で1600円。松竹梅でなぜか梅が一番デカい謎。めちゃくちゃうまい。」
+            </div>
+            <ul class="fact-bullet">
+              <li>鰹の漬けダレと酢飯の相性が抜群。味・コスパともに今回の旅で圧倒的No.1。</li>
+            </ul>
+          </div>
+        </div>
+
+        <!-- 7. 豚捨 -->
+        <div class="polaroid-card">
+          <div>
+            <div class="card-top">
+              <div>
+                <span class="spot-time">13:35 - 13:50</span>
+                <div class="spot-name">7. 豚捨（コロッケ）</div>
+              </div>
+              <span class="stamp stamp-bad">マックの味？</span>
+            </div>
+            <div class="punchline danger">
+              「豚捨コロッケは肉どこ？ほぼじゃがいもでマックの味。」
+            </div>
+            <ul class="fact-bullet">
+              <li>20人並びをテイクアウト窓口で即突破。油の風味がファストフード調。</li>
+            </ul>
+          </div>
+        </div>
+
+        <!-- 8. 大水神社＆合格神社 -->
+        <div class="polaroid-card">
+          <div>
+            <div class="card-top">
+              <div>
+                <span class="spot-time">13:55 - 14:15</span>
+                <div class="spot-name">8. 大水神社＆合格神社等 参拝</div>
+              </div>
+              <span class="stamp stamp-win">珍レビュー</span>
+            </div>
+            <div class="punchline warning">
+              「合格神社はGoogleレビューが面白すぎた。大水神社は瀧祭間違いだが一興。」
+            </div>
+            <ul class="fact-bullet">
+              <li>横丁周辺の神社を探索参拝。本命スルーも含めて旅のハプニングとして楽しむ。</li>
+            </ul>
+          </div>
+        </div>
+
+        <!-- 9. 猿田彦神社 -->
+        <div class="polaroid-card">
+          <div>
+            <div class="card-top">
+              <div>
+                <span class="spot-time">14:20 - 14:35</span>
+                <div class="spot-name">9. 猿田彦神社 参拝</div>
+              </div>
+              <span class="stamp stamp-win">みちひらき</span>
+            </div>
+            <div class="punchline">
+              「みちひらきの神へしっかり参拝。旅の安全と開運を祈願。」
+            </div>
+            <ul class="fact-bullet">
+              <li>内宮散策の締めくくりとして猿田彦神社へ立ち寄り。方位石なども確認。</li>
+            </ul>
+          </div>
+        </div>
+
+        <!-- 10. 駐車場戻り＆スカイラインスキップ -->
+        <div class="polaroid-card">
+          <div>
+            <div class="card-top">
+              <div>
+                <span class="spot-time">14:40 - 14:45</span>
+                <div class="spot-name">10. 駐車場戻り ＆ スカイラインスキップ</div>
+              </div>
+              <span class="stamp stamp-skip">即切り損切</span>
+            </div>
+            <div class="punchline">
+              「B5駐車場へ戻り、有料スカイラインは即スキップして宿へ直行。」
+            </div>
+            <ul class="fact-bullet">
+              <li>時間配分と疲労度を考慮し、朝熊山展望台をカットして宿へ直行する好判断。</li>
+            </ul>
+          </div>
+        </div>
+
+        <!-- 11. 大江戸温泉物語 伊勢志摩 -->
+        <div class="polaroid-card" style="grid-column: 1 / -1;">
+          <div>
+            <div class="card-top">
+              <div>
+                <span class="spot-time">16:14 チェックイン〜夜</span>
+                <div class="spot-name">11. 大江戸温泉物語 伊勢志摩</div>
+              </div>
+              <span class="stamp stamp-win">夜のハイライト</span>
+            </div>
+            <div class="punchline success">
+              「ハーゲンダッツ苺を乱れ食い。あおさ醤油がうまい。夜のito大会が最高。」
+            </div>
+            <ul class="fact-bullet">
+              <li>鵜倉園地夕日ドライブもパスして16:14即チェックイン。余力温存が完全正解。</li>
+              <li><strong>ボードゲームito:</strong>「旅で一番印象に残っている度」ルールで大盛り上がり。</li>
+              <li><strong>マッサージチェア:</strong> 300円。骨が痛いが終わると体が軽い。効果あり。</li>
+              <li><strong>寝具:</strong> 敷布団よりベッドの方が腰が安定。</li>
+            </ul>
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- 3. Day 2 詳細個別イベントカード -->
+    <section>
+      <div class="section-header">
+        <div class="section-icon">🚢</div>
+        <div class="section-title">Day 2: 実動順イベント別 詳細アクションログ（実測 31,254歩）</div>
+      </div>
+
+      <div class="polaroid-grid">
+
+        <!-- 1. 賢島クルーズ -->
+        <div class="polaroid-card">
+          <div>
+            <div class="card-top">
+              <div>
+                <span class="spot-time">09:32 - 10:23</span>
+                <div class="spot-name">1. 賢島クルーズ（エスペランサ）</div>
+              </div>
+              <span class="stamp stamp-win">動線勝利</span>
+            </div>
+            <div class="punchline success">
+              「後方デッキ席の確保＋下船直前の出口ダッシュ。立ち回りの完全勝利。」
+            </div>
+            <ul class="fact-bullet">
+              <li>51分間、英虞湾を9,888m航行（Googleタイムラインがサイクリングと判定）。</li>
+              <li>風が抜ける後方デッキが快適。進行方向は陸側を向くのが鉄則。</li>
+            </ul>
+          </div>
+        </div>
+
+        <!-- 2. 地中海村フェリー即切り -->
+        <div class="polaroid-card">
+          <div>
+            <div class="card-top">
+              <div>
+                <span class="spot-time">10:25頃</span>
+                <div class="spot-name">2. 賢島〜地中海村フェリー</div>
+              </div>
+              <span class="stamp stamp-skip">陸路即断</span>
+            </div>
+            <div class="punchline">
+              「船の時刻縛りは不要。フェリー即切りで車移動に切り替え。」
+            </div>
+            <ul class="fact-bullet">
+              <li>賢島下船後、フェリーを待たずにマイカーで横山石神神社・展望台方面へ向かう自由度を選択。</li>
+            </ul>
+          </div>
+        </div>
+
+        <!-- 3. 横山石神神社（先） -->
+        <div class="polaroid-card">
+          <div>
+            <div class="card-top">
+              <div>
+                <span class="spot-time">10:45頃</span>
+                <div class="spot-name">3. 横山石神神社</div>
+              </div>
+              <span class="stamp stamp-bad">神主老害感</span>
+            </div>
+            <div class="punchline danger">
+              「神主が老害感。急に『写真撮った！？』と遠くから叫ばれて坂東英二かと思った。」
+            </div>
+            <ul class="fact-bullet">
+              <li>展望台の前に立ち寄り。『撮ってないです』と返すと『ここから撮るといいよー』と案内。</li>
+              <li>親切だったのか撮影位置制限の注意だったのかは今も謎。</li>
+            </ul>
+          </div>
+        </div>
+
+        <!-- 4. 横山展望台（後） -->
+        <div class="polaroid-card">
+          <div>
+            <div class="card-top">
+              <div>
+                <span class="spot-time">11:00 - 11:30</span>
+                <div class="spot-name">4. 横山展望台（天空カフェ）</div>
+              </div>
+              <span class="stamp stamp-win">絶景スポット</span>
+            </div>
+            <div class="punchline success">
+              「英虞湾のリアス海岸が一望。クルーズ後に登ると地形の全体像が掴めて最高。」
+            </div>
+            <ul class="fact-bullet">
+              <li>石神神社参拝後に登頂。ウッドデッキテラスからの絶景を満喫（10-11時台で9,037歩）。</li>
+            </ul>
+          </div>
+        </div>
+
+        <!-- 5. 志摩地中海村 -->
+        <div class="polaroid-card">
+          <div>
+            <div class="card-top">
+              <div>
+                <span class="spot-time">12:38 - 13:36</span>
+                <div class="spot-name">5. 志摩地中海村</div>
+              </div>
+              <span class="stamp stamp-win">陸路ワープ</span>
+            </div>
+            <div class="punchline">
+              「フェリー飛ばして陸路直行が正解。約1時間で白壁散策を完了。」
+            </div>
+            <ul class="fact-bullet">
+              <li>12:38着でスムーズに入村。写真映えする白壁リゾート空間を落ち着いて散策。</li>
+            </ul>
+          </div>
+        </div>
+
+        <!-- 6. 多気VISON＆伊勢うどん -->
+        <div class="polaroid-card">
+          <div>
+            <div class="card-top">
+              <div>
+                <span class="spot-time">15:52 - 16:38</span>
+                <div class="spot-name">6. 多気 VISON</div>
+              </div>
+              <span class="stamp stamp-bad">伊勢うどん終焉</span>
+            </div>
+            <div class="punchline danger">
+              「伊勢うどん再戦するも撃沈。タレが良くても麺のベースが無理。」
+            </div>
+            <ul class="fact-bullet">
+              <li>地中海村から32km走行して15:52到着。駐車場側のマルシェ出店を散策。</li>
+              <li>コシのない柔らかい麺が合わないことを完全確認し、16:38に旅を結了・帰路へ。</li>
+            </ul>
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- 4. インタラクティブ・アクティビティグラフ -->
+    <section>
+      <div class="section-header">
+        <div class="section-icon">📈</div>
+        <div class="section-title">インタラクティブ・アクティビティ分析</div>
+      </div>
+
+      <div class="chart-card">
+        <!-- Chart Controls -->
+        <div class="chart-tabs">
+          <button class="chart-tab-btn active" onclick="switchChart('hourly')">🐾 時間帯別 歩数推移</button>
+          <button class="chart-tab-btn" onclick="switchChart('duration')">⏱️ スポット別 滞在時間 (分)</button>
+          <button class="chart-tab-btn" onclick="switchChart('cumulative')">📈 2日間 累積歩数カーブ</button>
+        </div>
+
+        <div class="chart-wrapper">
+          <canvas id="mainChartCanvas"></canvas>
+        </div>
+
+        <div class="chart-meta-caption" id="chartCaption">
+          📊 タブを切り替えて「時間帯別歩数」「スポット滞在時間」「累積歩数カーブ」をインタラクティブに分析可能
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <footer>
+    <div class="container">
+      2026 Mie & Ise-Shima Travel Scrapbook ｜ Google Timeline & Apple Health Verified Edition
+    </div>
+  </footer>
+
+  <script>
+    function toggleTheme() {
+      var cur = document.documentElement.getAttribute('data-theme') || 'light';
+      var nxt = cur === 'light' ? 'dark' : 'light';
+      document.documentElement.setAttribute('data-theme', nxt);
+      localStorage.setItem('trip_nav_theme', nxt);
+      if (window.activeChart) renderCurrentChart();
+    }
+
+    var activeChart = null;
+    var currentView = 'hourly';
+
+    function getThemeColors() {
+      var isDark = document.documentElement.getAttribute('data-theme') === 'dark';
+      return {
+        isDark: isDark,
+        text: isDark ? '#94a3b8' : '#475569',
+        title: isDark ? '#f8fafc' : '#0f172a',
+        grid: isDark ? '#334155' : '#f1f5f9'
+      };
+    }
+
+    function switchChart(viewType) {
+      currentView = viewType;
+      var buttons = document.querySelectorAll('.chart-tab-btn');
+      buttons.forEach(function(btn, i) {
+        btn.classList.remove('active');
+        if ((viewType === 'hourly' && i === 0) ||
+            (viewType === 'duration' && i === 1) ||
+            (viewType === 'cumulative' && i === 2)) {
+          btn.classList.add('active');
+        }
+      });
+      renderCurrentChart();
+    }
+
+    function renderCurrentChart() {
+      if (activeChart) {
+        activeChart.destroy();
+      }
+
+      var tc = getThemeColors();
+      var ctx = document.getElementById('mainChartCanvas').getContext('2d');
+      var caption = document.getElementById('chartCaption');
+
+      if (currentView === 'hourly') {
+        caption.innerHTML = '📊 <strong>時間帯別 歩数推移:</strong> 初日（外宮・内宮・おはらい町 31,837歩） vs 2日目（賢島・横山・VISON 31,254歩）';
+        var hourlyLabels = ['06時', '08時', '09時', '10時', '11時', '12時', '13時', '14時', '15時', '16時', '18時', '19時'];
+        var d1 = [385, 585, 1020, 2780, 6553, 5816, 2756, 6649, 498, 1659, 628, 932];
+        var d2 = [412, 1293, 1805, 5022, 4015, 2640, 2109, 2381, 3387, 3804, 2300, 776];
+
+        activeChart = new Chart(ctx, {
+          type: 'bar',
+          data: {
+            labels: hourlyLabels,
+            datasets: [
+              {
+                label: '11/2 外宮・内宮・宿 (31,837歩)',
+                data: d1,
+                backgroundColor: '#0284c7',
+                borderRadius: 6
+              },
+              {
+                label: '11/3 賢島・横山・VISON (31,254歩)',
+                data: d2,
+                backgroundColor: '#f59e0b',
+                borderRadius: 6
+              }
+            ]
+          },
+          options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            scales: {
+              x: { ticks: { color: tc.text, font: { weight: 'bold', size: 11 } }, grid: { display: false } },
+              y: { ticks: { color: tc.text }, grid: { color: tc.grid } }
+            },
+            plugins: {
+              legend: { labels: { color: tc.title, font: { weight: 'bold', size: 11 } } }
+            }
+          }
+        });
+
+      } else if (currentView === 'duration') {
+        caption.innerHTML = '⏱️ <strong>主要スポット別 滞在時間（実測分）:</strong> 内宮参拝・おはらい町・おかげ横丁（すし久・豚捨・赤福・猿田彦）散策が最長（170分）。賢島クルーズ51分、地中海村58分。';
+        var spots = [
+          '夫婦岩 (25分)',
+          '外宮参拝 (51分)',
+          '内宮・横丁・すし久・猿田彦 (170分)',
+          '賢島クルーズ (51分)',
+          '横山石神＆展望台 (58分)',
+          '志摩地中海村 (58分)',
+          '多気 VISON (46分)'
+        ];
+        var durations = [25, 51, 170, 51, 58, 58, 46];
+
+        activeChart = new Chart(ctx, {
+          type: 'doughnut',
+          data: {
+            labels: spots,
+            datasets: [{
+              data: durations,
+              backgroundColor: [
+                '#38bdf8', '#0284c7', '#f59e0b',
+                '#10b981', '#059669', '#ec4899', '#f97316'
+              ],
+              borderWidth: 2,
+              borderColor: tc.isDark ? '#1e293b' : '#ffffff'
+            }]
+          },
+          options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            plugins: {
+              legend: {
+                position: 'right',
+                labels: { color: tc.title, font: { size: 10, weight: 'bold' } }
+              }
+            }
+          }
+        });
+
+      } else if (currentView === 'cumulative') {
+        caption.innerHTML = '📈 <strong>2日間 累積歩数ペース（合計 63,091歩）:</strong> 2日間にわたって時速約3,000〜6,000歩のハイペースで歩行を継続。';
+        var cumLabels = ['初日朝', '外宮参拝', '内宮・すし久', '横丁・猿田彦', '宿チェックイン', '2日目朝', '賢島クルーズ', '横山展望台', '地中海村', '多気VISON', '帰着'];
+        var cumData = [2000, 11333, 17149, 26554, 31837, 36465, 41487, 48142, 52891, 60082, 63091];
+
+        activeChart = new Chart(ctx, {
+          type: 'line',
+          data: {
+            labels: cumLabels,
+            datasets: [{
+              label: '累積歩数 (Steps)',
+              data: cumData,
+              borderColor: '#10b981',
+              backgroundColor: 'rgba(16, 185, 129, 0.15)',
+              borderWidth: 3,
+              fill: true,
+              tension: 0.35,
+              pointBackgroundColor: '#10b981',
+              pointRadius: 6,
+              pointHoverRadius: 8
+            }]
+          },
+          options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            scales: {
+              x: { ticks: { color: tc.text, font: { weight: 'bold', size: 11 } }, grid: { display: false } },
+              y: {
+                ticks: { color: tc.text },
+                grid: { color: tc.grid },
+                title: { display: true, text: '累計歩数', color: tc.text }
+              }
+            },
+            plugins: {
+              legend: { labels: { color: tc.title, font: { weight: 'bold', size: 11 } } }
+            }
+          }
+        });
+      }
+    }
+
+    window.addEventListener('DOMContentLoaded', function() {
+      renderCurrentChart();
+    });
+  </script>
+</body>
+</html>
