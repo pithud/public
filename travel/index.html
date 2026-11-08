@@ -46,6 +46,7 @@
       --map-prefecture-default: #1e293b;
       --map-prefecture-stroke: #334155;
     }
+    html { scroll-behavior: smooth; }
     * { box-sizing: border-box; margin: 0; padding: 0; -webkit-tap-highlight-color: transparent; }
     body {
       font-family: var(--font-family);
@@ -356,6 +357,26 @@
     }
     .section-title { font-size: 1.15rem; font-weight: 800; color: var(--text); }
     .section-sub { font-size: 12px; color: var(--text-muted); }
+    .section-map-link {
+      font-size: 12px;
+      font-weight: 700;
+      color: var(--primary);
+      text-decoration: none;
+      padding: 5px 12px;
+      border-radius: 6px;
+      background: var(--surface-subtle);
+      border: 1px solid var(--border);
+      transition: all 0.15s ease;
+      white-space: nowrap;
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+    }
+    .section-map-link:hover {
+      border-color: var(--primary);
+      background: var(--surface);
+      color: var(--primary-hover);
+    }
 
     .trip-list { display: flex; flex-direction: column; gap: 16px; }
 
@@ -424,6 +445,110 @@
   </header>
 
   <main class="main-wrap">
+    <!-- Trip Cards SSOT List -->
+    <div class="section-divider">
+      <div>
+        <h2 class="section-title">遠征一覧＆確定旅程アーカイブ</h2>
+        <span class="section-sub">確定タイムチャート（最終版）＆実走アルバム</span>
+      </div>
+      <a href="#conquestMapSection" class="section-map-link">🗺️ 全体マップ・制覇状況 ↓</a>
+    </div>
+
+    <div class="trip-list">
+
+      <!-- 愛知 ｜ 名古屋 ＋ 犬山 -->
+      <article class="trip-card" id="card-20261107_aichi">
+        <div class="trip-series">🔗 中部・拠点帰省 2026【後編】</div>
+        <div class="trip-card-head">
+          <h2 class="trip-name">愛知 ｜ 名古屋 ＋ 犬山</h2>
+          <span class="trip-badge" style="background: rgba(16, 185, 129, 0.12); color: #059669;">実走済</span>
+        </div>
+        <div class="trip-date">2026年11月7日(土) 〜 11月8日(日)</div>
+        <p class="trip-desc">名古屋モーニング、熱田神宮、大須商店街、犬山城下町・国宝天守を巡る秋の帰省・遠征フィナーレ。</p>
+        <div class="sub-links"><a href="20261107_aichi/prod.html" class="sub-btn">最終版</a><a href="20261107_aichi/album.html" class="sub-btn">アルバム</a></div>
+      </article>
+
+      <!-- 三重 ｜ 伊勢 ＋ 志摩 -->
+      <article class="trip-card" id="card-20261102_mie">
+        <div class="trip-series">🔗 中部・拠点帰省 2026【中編】</div>
+        <div class="trip-card-head">
+          <h2 class="trip-name">三重 ｜ 伊勢 ＋ 志摩</h2>
+          <span class="trip-badge" style="background: rgba(16, 185, 129, 0.12); color: #059669;">実走済</span>
+        </div>
+        <div class="trip-date">2026年11月2日(月) 〜 11月3日(火・祝)</div>
+        <p class="trip-desc">拠点を拠点に出撃。伊勢神宮外宮・内宮、おかげ横丁、志摩地中海村・賢島を巡る秋の伊勢志摩走破。</p>
+        <div class="sub-links"><a href="20261102_mie/prod.html" class="sub-btn">最終版</a><a href="20261102_mie/album.html" class="sub-btn">アルバム</a></div>
+      </article>
+
+      <!-- 長野 ｜ 戸隠 ＋ 善光寺 ＋ 小布施 ＋ 松本城下町 -->
+      <article class="trip-card" id="card-20261031_nagano">
+        <div class="trip-series">🔗 中部・拠点帰省 2026【前編】</div>
+        <div class="trip-card-head">
+          <h2 class="trip-name">長野 ｜ 戸隠 ＋ 善光寺 ＋ 小布施 ＋ 松本城下町</h2>
+          <span class="trip-badge" style="background: rgba(16, 185, 129, 0.12); color: #059669;">実走済</span>
+        </div>
+        <div class="trip-date">2026年10月31日(土) 〜 11月1日(日)</div>
+        <p class="trip-desc">戸隠神社奥社、国宝善光寺お戒壇巡り、小布施新栗スイーツ、国宝松本城天守登閣、縄手・中町土蔵街、珈琲美学アベを1泊2日で駆け抜け（奈良井宿は疲労・改修を考慮し安全スキップ）、多治見経由で拠点へ直行した有休ゼロ信州スプリント。</p>
+        <div class="sub-links"><a href="20261031_nagano/prod.html" class="sub-btn">最終版</a></div>
+      </article>
+
+      <!-- 北海道 ｜ 函館 ＋ 道南・道央周遊（洞爺・登別・小樽・札幌） -->
+      <article class="trip-card" id="card-20260911_hokkaido">
+        <div class="trip-series">🔗 北日本縦走 2026【後編】</div>
+        <div class="trip-card-head">
+          <h2 class="trip-name">北海道 ｜ 函館 ＋ 道南・道央周遊（洞爺・登別・小樽・札幌）</h2>
+          <span class="trip-badge" style="background: rgba(16, 185, 129, 0.12); color: #059669;">実走済</span>
+        </div>
+        <div class="trip-date">2026年9月15日(火) 〜 9月20日(日)</div>
+        <p class="trip-desc">青森からフェリーで函館入り。函館夜景・朝市、大沼だんご、洞爺湖、登別温泉地獄谷、白老ウポポイ、支笏湖、札幌オータムフェスト、余市ニッカ蒸溜所、小樽運河、千歳サケ遡上を完全制覇した5泊6日。</p>
+        <div class="sub-links"><span class="sub-btn disabled">準備中</span></div>
+      </article>
+
+      <!-- 青森 ｜ 津軽 ＋ 下北 ＋ 恐山 -->
+      <article class="trip-card" id="card-20260911_aomori">
+        <div class="trip-series">🔗 北日本縦走 2026【前編】</div>
+        <div class="trip-card-head">
+          <h2 class="trip-name">青森 ｜ 津軽 ＋ 下北 ＋ 恐山</h2>
+          <span class="trip-badge" style="background: rgba(16, 185, 129, 0.12); color: #059669;">実走済</span>
+        </div>
+        <div class="trip-date">2026年9月11日(金) 〜 9月15日(火)</div>
+        <p class="trip-desc">三内丸山遺跡、十二湖青池、髙山稲荷、青函トンネルもぐら号、龍飛崎、むつ湾フェリー、仏ヶ浦、大間マグロ、恐山宿坊「吉祥閣」、浅虫水族館を巡り津軽海峡フェリーへ繋ぐ4泊5日車旅。</p>
+        <div class="sub-links"><span class="sub-btn disabled">準備中</span></div>
+      </article>
+
+      <!-- 北陸・信越 ｜ 草津 ＋ 長岡 ＋ 富山 ＋ 金沢 ＋ 飛騨 -->
+      <article class="trip-card" id="card-20260802_hokuriku">
+        <div class="trip-series">🔗 夏の大遠征 2026（前編：友人車旅 ｜ 中編：単独 ｜ 後編：グループ合流）</div>
+        <div class="trip-card-head">
+          <h2 class="trip-name">北陸・信越 ｜ 草津 ＋ 長岡 ＋ 富山 ＋ 金沢 ＋ 飛騨</h2>
+          <span class="trip-badge" style="background: rgba(16, 185, 129, 0.12); color: #059669;">実走済</span>
+        </div>
+        <div class="trip-date">2026年8月2日(日) 〜 8月11日(火)</div>
+        <p class="trip-desc">友人との信越北陸ドライブ（草津温泉感謝祭・長岡花火・雨晴海岸・金沢）から、単独での白川郷・高山・飛騨古川、そしてグループ合流・拠点帰省へと至る10泊11日の夏休み大遠征。</p>
+        <div class="sub-links"><span class="sub-btn disabled">準備中</span></div>
+      </article>
+
+      <!-- 東北 ｜ 仙台 ＋ 松島 ＋ 平泉 ＋ 秋田・山形・会津 -->
+      <article class="trip-card" id="card-20260428_tohoku">
+        <div class="trip-series">🔗 一人旅の原点 2026（前編：友人車旅 ｜ 中編：単独自立 ｜ 後編：南東北縦走）</div>
+        <div class="trip-card-head">
+          <h2 class="trip-name">東北 ｜ 仙台 ＋ 松島 ＋ 平泉 ＋ 秋田・山形・会津</h2>
+          <span class="trip-badge" style="background: rgba(16, 185, 129, 0.12); color: #059669;">実走済</span>
+        </div>
+        <div class="trip-date">2026年4月28日(火) 〜 5月10日(日)</div>
+        <p class="trip-desc">「このままじゃつまんないし、とりあえず行ってみよう！」と飛び出したGW12連休。雨の中の友人仙台車旅（おっぺしゃんラーメン、仙台城跡、巨大大仏・仙台大観音、秋保）から、松島・一ノ関で孤独と向き合い「今の旅行スタイルの原型」を確立し東北5県を縦断した全ての始まりの旅。</p>
+        <div class="sub-links"><span class="sub-btn disabled">準備中</span></div>
+      </article>
+    </div>
+
+    <!-- Conquest & Map Section (Macro View at Bottom) -->
+    <div class="section-divider" id="conquestMapSection" style="margin-top: 44px;">
+      <div>
+        <h2 class="section-title">🗾 全国走破マップ＆制覇ステータス</h2>
+        <span class="section-sub">全7大遠征の軌跡・47都道府県制覇記録</span>
+      </div>
+    </div>
+
     <!-- Conquest Statistics Card -->
     <section class="conquest-card">
       <div class="conquest-head">
@@ -729,102 +854,9 @@
           <div class="active-trip-title" id="activeTripTitle">🌟 全7大遠征の軌跡と主要スポット</div>
           <div class="active-trip-sub" id="activeTripSub">ピンやルートをタップすると訪問スポットの詳細とプランへジャンプできます</div>
         </div>
-        <a href="#card-20261107_aichi" class="active-trip-jump" id="activeTripJump">一覧へ ↓</a>
+        <a href="#card-20261107_aichi" class="active-trip-jump" id="activeTripJump">最新の遠征へ ↑</a>
       </div>
     </section>
-
-    <!-- Trip Cards SSOT List -->
-    <div class="section-divider">
-      <h2 class="section-title">遠征一覧＆確定旅程アーカイブ</h2>
-      <span class="section-sub">確定タイムチャート（最終版）＆実走アルバム</span>
-    </div>
-
-    <div class="trip-list">
-
-      <!-- 愛知 ｜ 名古屋 ＋ 犬山 -->
-      <article class="trip-card" id="card-20261107_aichi">
-        <div class="trip-series">🔗 中部・拠点帰省 2026【後編】</div>
-        <div class="trip-card-head">
-          <h2 class="trip-name">愛知 ｜ 名古屋 ＋ 犬山</h2>
-          <span class="trip-badge" style="background: rgba(16, 185, 129, 0.12); color: #059669;">実走済</span>
-        </div>
-        <div class="trip-date">2026年11月7日(土) 〜 11月8日(日)</div>
-        <p class="trip-desc">名古屋モーニング、熱田神宮、大須商店街、犬山城下町・国宝天守を巡る秋の帰省・遠征フィナーレ。</p>
-        <div class="sub-links"><a href="20261107_aichi/prod.html" class="sub-btn">最終版</a><a href="20261107_aichi/album.html" class="sub-btn">アルバム</a></div>
-      </article>
-
-      <!-- 三重 ｜ 伊勢 ＋ 志摩 -->
-      <article class="trip-card" id="card-20261102_mie">
-        <div class="trip-series">🔗 中部・拠点帰省 2026【中編】</div>
-        <div class="trip-card-head">
-          <h2 class="trip-name">三重 ｜ 伊勢 ＋ 志摩</h2>
-          <span class="trip-badge" style="background: rgba(16, 185, 129, 0.12); color: #059669;">実走済</span>
-        </div>
-        <div class="trip-date">2026年11月2日(月) 〜 11月3日(火・祝)</div>
-        <p class="trip-desc">拠点を拠点に出撃。伊勢神宮外宮・内宮、おかげ横丁、志摩地中海村・賢島を巡る秋の伊勢志摩走破。</p>
-        <div class="sub-links"><a href="20261102_mie/prod.html" class="sub-btn">最終版</a><a href="20261102_mie/album.html" class="sub-btn">アルバム</a></div>
-      </article>
-
-      <!-- 長野 ｜ 戸隠 ＋ 善光寺 ＋ 小布施 ＋ 松本城下町 -->
-      <article class="trip-card" id="card-20261031_nagano">
-        <div class="trip-series">🔗 中部・拠点帰省 2026【前編】</div>
-        <div class="trip-card-head">
-          <h2 class="trip-name">長野 ｜ 戸隠 ＋ 善光寺 ＋ 小布施 ＋ 松本城下町</h2>
-          <span class="trip-badge" style="background: rgba(16, 185, 129, 0.12); color: #059669;">実走済</span>
-        </div>
-        <div class="trip-date">2026年10月31日(土) 〜 11月1日(日)</div>
-        <p class="trip-desc">戸隠神社奥社、国宝善光寺お戒壇巡り、小布施新栗スイーツ、国宝松本城天守登閣、縄手・中町土蔵街、珈琲美学アベを1泊2日で駆け抜け（奈良井宿は疲労・改修を考慮し安全スキップ）、多治見経由で拠点へ直行した有休ゼロ信州スプリント。</p>
-        <div class="sub-links"><a href="20261031_nagano/prod.html" class="sub-btn">最終版</a></div>
-      </article>
-
-      <!-- 北海道 ｜ 函館 ＋ 道南・道央周遊（洞爺・登別・小樽・札幌） -->
-      <article class="trip-card" id="card-20260911_hokkaido">
-        <div class="trip-series">🔗 北日本縦走 2026【後編】</div>
-        <div class="trip-card-head">
-          <h2 class="trip-name">北海道 ｜ 函館 ＋ 道南・道央周遊（洞爺・登別・小樽・札幌）</h2>
-          <span class="trip-badge" style="background: rgba(16, 185, 129, 0.12); color: #059669;">実走済</span>
-        </div>
-        <div class="trip-date">2026年9月15日(火) 〜 9月20日(日)</div>
-        <p class="trip-desc">青森からフェリーで函館入り。函館夜景・朝市、大沼だんご、洞爺湖、登別温泉地獄谷、白老ウポポイ、支笏湖、札幌オータムフェスト、余市ニッカ蒸溜所、小樽運河、千歳サケ遡上を完全制覇した5泊6日。</p>
-        <div class="sub-links"><span class="sub-btn disabled">準備中</span></div>
-      </article>
-
-      <!-- 青森 ｜ 津軽 ＋ 下北 ＋ 恐山 -->
-      <article class="trip-card" id="card-20260911_aomori">
-        <div class="trip-series">🔗 北日本縦走 2026【前編】</div>
-        <div class="trip-card-head">
-          <h2 class="trip-name">青森 ｜ 津軽 ＋ 下北 ＋ 恐山</h2>
-          <span class="trip-badge" style="background: rgba(16, 185, 129, 0.12); color: #059669;">実走済</span>
-        </div>
-        <div class="trip-date">2026年9月11日(金) 〜 9月15日(火)</div>
-        <p class="trip-desc">三内丸山遺跡、十二湖青池、髙山稲荷、青函トンネルもぐら号、龍飛崎、むつ湾フェリー、仏ヶ浦、大間マグロ、恐山宿坊「吉祥閣」、浅虫水族館を巡り津軽海峡フェリーへ繋ぐ4泊5日車旅。</p>
-        <div class="sub-links"><span class="sub-btn disabled">準備中</span></div>
-      </article>
-
-      <!-- 北陸・信越 ｜ 草津 ＋ 長岡 ＋ 富山 ＋ 金沢 ＋ 飛騨 -->
-      <article class="trip-card" id="card-20260802_hokuriku">
-        <div class="trip-series">🔗 夏の大遠征 2026（前編：友人車旅 ｜ 中編：単独 ｜ 後編：グループ合流）</div>
-        <div class="trip-card-head">
-          <h2 class="trip-name">北陸・信越 ｜ 草津 ＋ 長岡 ＋ 富山 ＋ 金沢 ＋ 飛騨</h2>
-          <span class="trip-badge" style="background: rgba(16, 185, 129, 0.12); color: #059669;">実走済</span>
-        </div>
-        <div class="trip-date">2026年8月2日(日) 〜 8月11日(火)</div>
-        <p class="trip-desc">友人との信越北陸ドライブ（草津温泉感謝祭・長岡花火・雨晴海岸・金沢）から、単独での白川郷・高山・飛騨古川、そしてグループ合流・拠点帰省へと至る10泊11日の夏休み大遠征。</p>
-        <div class="sub-links"><span class="sub-btn disabled">準備中</span></div>
-      </article>
-
-      <!-- 東北 ｜ 仙台 ＋ 松島 ＋ 平泉 ＋ 秋田・山形・会津 -->
-      <article class="trip-card" id="card-20260428_tohoku">
-        <div class="trip-series">🔗 一人旅の原点 2026（前編：友人車旅 ｜ 中編：単独自立 ｜ 後編：南東北縦走）</div>
-        <div class="trip-card-head">
-          <h2 class="trip-name">東北 ｜ 仙台 ＋ 松島 ＋ 平泉 ＋ 秋田・山形・会津</h2>
-          <span class="trip-badge" style="background: rgba(16, 185, 129, 0.12); color: #059669;">実走済</span>
-        </div>
-        <div class="trip-date">2026年4月28日(火) 〜 5月10日(日)</div>
-        <p class="trip-desc">「このままじゃつまんないし、とりあえず行ってみよう！」と飛び出したGW12連休。雨の中の友人仙台車旅（おっぺしゃんラーメン、仙台城跡、巨大大仏・仙台大観音、秋保）から、松島・一ノ関で孤独と向き合い「今の旅行スタイルの原型」を確立し東北5県を縦断した全ての始まりの旅。</p>
-        <div class="sub-links"><span class="sub-btn disabled">準備中</span></div>
-      </article>
-    </div>
   </main>
 
   <script>
@@ -934,13 +966,13 @@
         barTitle.textContent = '🌟 全7大遠征の軌跡と主要スポット';
         barSub.textContent = 'ピンやルートをタップすると訪問スポットの詳細とプランへジャンプできます';
         barJump.href = '#card-20261107_aichi';
-        barJump.textContent = '一覧へ ↓';
+        barJump.textContent = '最新の遠征へ ↑';
       } else if (TRIP_ROUTES[tripId]) {
         const t = TRIP_ROUTES[tripId];
         barTitle.textContent = t.name;
         barSub.textContent = '走破ルート表示中（ピンタップで詳細表示）';
         barJump.href = '#card-' + tripId;
-        barJump.textContent = '旅程カードを見る ↓';
+        barJump.textContent = '旅程カードを見る ↑';
       }
 
       renderTimelineElements();
