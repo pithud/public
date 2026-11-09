@@ -1,0 +1,997 @@
+<!DOCTYPE html>
+<html lang="ja" data-theme="light">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <title>青森 ｜ 津軽・下北・恐山 完全縦断4泊5日 しおり - Day 2</title>
+  <script>
+    // Anti-FOUC immediate theme application
+    (function() {
+      var t = localStorage.getItem('trip_nav_theme') || 'light';
+      document.documentElement.setAttribute('data-theme', t);
+    })();
+  </script>
+  <style>
+:root {
+  --bg: #f8fafc;
+  --surface: #ffffff;
+  --surface-subtle: #f1f5f9;
+  --text: #0f172a;
+  --text-muted: #64748b;
+  --border: #e2e8f0;
+  --primary: #0284c7;
+  --primary-hover: #0369a1;
+  --accent: #d97706;
+  --card-shadow: 0 1px 3px rgba(0,0,0,0.06), 0 1px 2px rgba(0,0,0,0.04);
+  --font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+}
+[data-theme="dark"] {
+  --bg: #090d16;
+  --surface: #131b2e;
+  --surface-subtle: #1e293b;
+  --text: #f8fafc;
+  --text-muted: #94a3b8;
+  --border: #1e293b;
+  --card-shadow: 0 4px 6px -1px rgba(0,0,0,0.3);
+}
+* { box-sizing: border-box; margin: 0; padding: 0; -webkit-tap-highlight-color: transparent; }
+body {
+  font-family: var(--font-family);
+  background-color: var(--bg);
+  color: var(--text);
+  line-height: 1.5;
+  font-size: 15px;
+  padding-bottom: 80px;
+}
+.header-bar {
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  background: rgba(255, 255, 255, 0.92);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border-bottom: 1px solid var(--border);
+  padding: 12px 16px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+[data-theme="dark"] .header-bar { background: rgba(19, 27, 46, 0.92); }
+.brand-title { font-size: 1.05rem; font-weight: 700; display: flex; align-items: center; gap: 8px; }
+.header-actions { display: flex; gap: 8px; align-items: center; }
+.btn-action {
+  background: var(--surface-subtle);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: 6px 12px;
+  font-size: 13px;
+  color: var(--text);
+  cursor: pointer;
+  text-decoration: none;
+}
+.container { max-width: 680px; margin: 0 auto; padding: 16px; }
+
+/* Day Navigation Bar */
+.nav-bar {
+  display: flex;
+  background: var(--surface-subtle);
+  padding: 6px;
+  border-radius: 10px;
+  margin-bottom: 16px;
+  gap: 6px;
+  align-items: center;
+  justify-content: space-between;
+}
+.nav-link {
+  flex: 1;
+  text-align: center;
+  padding: 7px 10px;
+  border-radius: 7px;
+  font-size: 13px;
+  font-weight: 600;
+  text-decoration: none;
+  color: var(--text-muted);
+  background: transparent;
+  border: none;
+  cursor: pointer;
+}
+.nav-link.active {
+  background: var(--surface);
+  color: var(--primary);
+  box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+}
+
+/* Quick Jump Chips */
+.jump-chips {
+  display: flex;
+  gap: 6px;
+  overflow-x: auto;
+  padding-bottom: 10px;
+  margin-bottom: 16px;
+  white-space: nowrap;
+  scrollbar-width: none;
+}
+.jump-chips::-webkit-scrollbar { display: none; }
+.jump-chip {
+  display: inline-block;
+  font-size: 12px;
+  font-weight: 600;
+  padding: 5px 10px;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 16px;
+  color: var(--text);
+  text-decoration: none;
+}
+
+/* Slot Cards */
+.day-block { margin-bottom: 32px; }
+.day-header {
+  font-size: 1.15rem;
+  font-weight: 700;
+  margin-bottom: 12px;
+  padding-bottom: 6px;
+  border-bottom: 2px solid var(--primary);
+  color: var(--primary);
+}
+
+/* Macro Route Box (Day全体ルート立ち回り) */
+.macro-route-box {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-left: 4px solid var(--primary);
+  border-radius: 10px;
+  padding: 12px 14px;
+  margin-bottom: 16px;
+  box-shadow: var(--card-shadow);
+}
+.macro-route-head {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 6px;
+}
+.macro-route-title {
+  font-size: 13px;
+  font-weight: 800;
+  color: var(--primary);
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+[data-theme="dark"] .macro-route-title { color: #38bdf8; }
+.macro-route-body {
+  font-size: 13px;
+  line-height: 1.55;
+  color: var(--text);
+  margin-bottom: 8px;
+}
+.macro-map-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  font-size: 12px;
+  font-weight: 700;
+  color: var(--primary);
+  text-decoration: none;
+  background: rgba(2, 132, 199, 0.08);
+  padding: 4px 10px;
+  border-radius: 6px;
+  border: 1px solid rgba(2, 132, 199, 0.2);
+}
+[data-theme="dark"] .macro-map-link {
+  color: #38bdf8;
+  background: rgba(56, 189, 248, 0.1);
+  border-color: rgba(56, 189, 248, 0.3);
+}
+.slot-card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  margin-bottom: 12px;
+  padding: 14px 16px;
+  box-shadow: var(--card-shadow);
+  transition: opacity 0.2s, background-color 0.2s;
+}
+.slot-card.is-dimmed { opacity: 0.45; filter: grayscale(40%); }
+.slot-card.is-must { border-left: 4px solid var(--accent); }
+.slot-meta { display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px; }
+.slot-time { font-size: 13px; font-weight: 700; font-variant-numeric: tabular-nums; }
+.slot-badge {
+  font-size: 11px;
+  font-weight: 700;
+  padding: 2px 8px;
+  border-radius: 4px;
+  text-transform: uppercase;
+}
+.badge-sightseeing { background: #d1fae5; color: #065f46; }
+.badge-food { background: #ffedd5; color: #9a3412; }
+.badge-transit { background: #e0e7ff; color: #3730a3; }
+[data-theme="dark"] .badge-sightseeing { background: #064e3b; color: #6ee7b7; }
+[data-theme="dark"] .badge-food { background: #7c2d12; color: #fdba74; }
+[data-theme="dark"] .badge-transit { background: #312e81; color: #a5b4fc; }
+
+.slot-title-row { display: flex; align-items: flex-start; gap: 8px; margin-bottom: 6px; }
+.slot-checkbox { margin-top: 3px; cursor: pointer; width: 18px; height: 18px; accent-color: var(--primary); }
+.slot-title { font-size: 1rem; font-weight: 700; line-height: 1.4; flex: 1; }
+.slot-desc { font-size: 13.5px; color: var(--text-muted); margin-bottom: 10px; line-height: 1.5; padding-left: 26px; }
+
+/* Swap Guide Box */
+.swap-box {
+  margin: 10px 0 10px 26px;
+  padding: 10px 12px;
+  border-radius: 8px;
+  background: rgba(217, 119, 6, 0.08);
+  border: 1px dashed var(--accent);
+  font-size: 12.5px;
+}
+.swap-title { font-weight: 700; color: var(--accent); margin-bottom: 4px; display: flex; align-items: center; gap: 4px; }
+
+.slot-foot { display: flex; justify-content: space-between; align-items: center; padding-top: 8px; border-top: 1px solid var(--border); margin-left: 26px; }
+.map-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  font-size: 12px;
+  font-weight: 600;
+  color: #1a73e8;
+  text-decoration: none;
+  background: rgba(26, 115, 232, 0.08);
+  padding: 4px 10px;
+  border-radius: 20px;
+}
+[data-theme="dark"] .map-pill { color: #8ab4f8; background: rgba(138, 180, 248, 0.12); }
+
+/* Tactics Step Box (立ち回り・攻略手順) */
+.tactics-box {
+  margin: 12px 0 12px 26px;
+  padding: 10px 14px;
+  background: rgba(2, 132, 199, 0.06);
+  border: 1px solid rgba(2, 132, 199, 0.25);
+  border-left: 3.5px solid var(--primary);
+  border-radius: 8px;
+}
+[data-theme="dark"] .tactics-box {
+  background: rgba(56, 189, 248, 0.08);
+  border-color: rgba(56, 189, 248, 0.3);
+  border-left-color: #38bdf8;
+}
+.tactics-header {
+  font-size: 13px;
+  font-weight: 700;
+  color: var(--primary);
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  margin-bottom: 8px;
+}
+.tactics-tag {
+  font-size: 10px;
+  font-weight: 800;
+  background: var(--primary);
+  color: #fff;
+  padding: 1px 6px;
+  border-radius: 4px;
+  letter-spacing: 0.05em;
+}
+[data-theme="dark"] .tactics-header { color: #38bdf8; }
+[data-theme="dark"] .tactics-tag { background: #0284c7; }
+.tactics-list { display: flex; flex-direction: column; gap: 6px; }
+.tactics-step-row { display: flex; align-items: flex-start; gap: 8px; font-size: 12.5px; line-height: 1.5; }
+.tactics-num {
+  flex-shrink: 0;
+  width: 18px;
+  height: 18px;
+  border-radius: 4px;
+  background: rgba(2, 132, 199, 0.18);
+  color: var(--primary);
+  font-size: 11px;
+  font-weight: 800;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-top: 1px;
+}
+[data-theme="dark"] .tactics-num { background: rgba(56, 189, 248, 0.25); color: #38bdf8; }
+
+/* Checkpoints List */
+.checkpoint-list {
+  margin: 10px 0 10px 26px;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+.checkpoint-row {
+  display: flex;
+  align-items: flex-start;
+  gap: 8px;
+  font-size: 12px;
+  background: var(--surface-subtle);
+  padding: 8px 10px;
+  border-radius: 6px;
+  border: 1px solid var(--border);
+}
+.cp-badge {
+  font-size: 10px;
+  font-weight: 700;
+  padding: 1px 5px;
+  border-radius: 3px;
+  background: #0284c7;
+  color: #fff;
+  flex-shrink: 0;
+}
+.cp-title { font-weight: 600; color: var(--text); }
+.cp-desc { font-size: 11.5px; color: var(--text-muted); margin-top: 2px; }
+
+/* Practical Footer */
+.practical-footer {
+  margin: 10px 0 10px 26px;
+  padding: 8px 10px;
+  background: var(--surface-subtle);
+  border-left: 3px solid var(--accent);
+  border-radius: 4px;
+  font-size: 12px;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+.pf-row { display: flex; gap: 6px; }
+.pf-tag { font-weight: 700; color: var(--accent); flex-shrink: 0; min-width: 65px; }
+.pf-val { color: var(--text); }
+
+/* Print & Paged Media */
+@media print {
+  @page { size: A4 portrait; margin: 12mm 15mm; }
+  body { background: #fff !important; color: #000 !important; font-size: 11pt; }
+  .header-bar, .nav-bar, .jump-chips, .no-print { display: none !important; }
+  .day-block { page-break-after: always; break-after: page; }
+  .slot-card { break-inside: avoid; page-break-inside: avoid; box-shadow: none !important; border: 1px solid #ccc !important; }
+  .slot-card.is-dimmed { opacity: 1 !important; filter: none !important; }
+  .slot-checkbox { display: none !important; }
+  .slot-desc, .swap-box, .slot-foot { margin-left: 0 !important; padding-left: 0 !important; }
+}
+
+  </style>
+</head>
+<body>
+  <header class="header-bar">
+    <div class="brand-title">
+      <span>🍎</span>
+      <span>青森 ｜ 津軽・下北・恐山 完全縦断4泊5日 しおり</span>
+    </div>
+    <div class="header-actions no-print">
+      <button class="btn-action" onclick="toggleTheme()">🌓 テーマ</button>
+      <button class="btn-action" onclick="window.print()">🖨️ 製本印刷</button>
+    </div>
+  </header>
+
+  <main class="container">
+    
+    <nav class="nav-bar no-print">
+      <a class="nav-link" href="aomori.html">📑 全日程</a>
+      <a class="nav-link " href="aomori_day1.html">Day 1</a><a class="nav-link active" href="aomori_day2.html">Day 2</a><a class="nav-link " href="aomori_day3.html">Day 3</a><a class="nav-link " href="aomori_day4.html">Day 4</a><a class="nav-link " href="aomori_day5.html">Day 5</a>
+    </nav>
+    
+    <div class="jump-chips no-print">
+      
+        <a class="jump-chip" href="#d2-takayama-inari" data-day="2">📍 髙山稲荷神社（日本庭</a>
+      
+        <a class="jump-chip" href="#d2-nakadomari-mebaru" data-day="2">🍜 中泊町「おさかな海岸</a>
+      
+        <a class="jump-chip" href="#d2-seikan-tunnel" data-day="2">📍 青函トンネル記念館 </a>
+      
+        <a class="jump-chip" href="#d2-tappizaki-kaidan" data-day="2">📍 龍飛崎灯台・津軽海峡</a>
+      
+        <a class="jump-chip" href="#d2-kanita-sasaki" data-day="2">🍜 蟹田「佐々木旅館」チ</a>
+      
+    </div>
+    
+      <section class="day-block" id="day-sec-2" data-day="2">
+        <h2 class="day-header">Day 2: 2026年9月12日 (土)</h2>
+        
+        <div class="macro-route-box">
+          <div class="macro-route-head">
+            <span class="macro-route-title">🗺️ 【全体ルート立ち回り】マクロ動線シークエンス</span>
+            <a class="macro-map-link" href="https://www.google.com/maps/dir/%E9%BB%84%E9%87%91%E5%B4%8E%E4%B8%8D%E8%80%81%E3%81%B5%E6%AD%BB%E6%B8%A9%E6%B3%89/%E9%AB%98%E5%B1%B1%E7%A8%B2%E8%8D%B7%E7%A5%9E%E7%A4%BE/%E3%81%8A%E3%81%95%E3%81%8B%E3%81%AA%E6%B5%B7%E5%B2%B8/%E9%9D%92%E5%87%BD%E3%83%88%E3%83%B3%E3%83%8D%E3%83%AB%E8%A8%98%E5%BF%B5%E9%A4%A8/%E9%BE%8D%E9%A3%9B%E5%B4%8E/%E4%BD%90%E3%80%85%E6%9C%A8%E6%97%85%E9%A4%A8+%E8%9F%B9%E7%94%B0" target="_blank" rel="noopener">📍 広域Google Maps</a>
+          </div>
+          <div class="macro-route-body">黄金崎不老ふ死温泉（08:00発） ➔ 髙山稲荷神社（千本鳥居・日本庭園） ➔ おさかな海岸（中泊メバル膳ランチ） ➔ 竜泊ライン（眺瞰台） ➔ 青函トンネル記念館（体験坑道もぐら号） ➔ 龍飛崎・階段国道339号線 ➔ 蟹田「佐々木旅館」（ホタテ会席・宿泊）</div>
+        </div>
+        <div class="slot-list">
+          
+    <article class="slot-card " id="d2-drive-tsugaru" data-slot-id="d2-drive-tsugaru">
+      <div class="slot-meta">
+        <span class="slot-time">⏱️ 08:00 - 09:30</span>
+        <span class="slot-badge badge-transit">西海岸90分北上</span>
+      </div>
+      <div class="slot-title-row">
+        <input type="checkbox" class="slot-checkbox no-print" onchange="toggleSlot('d2-drive-tsugaru', this.checked)" title="完了・スキップを消し込み">
+        <h3 class="slot-title">黄金崎不老ふ死温泉 ➔ 津軽西海岸・七里長浜北上ドライブ</h3>
+      </div>
+      <p class="slot-desc">不老ふ死温泉で朝食バイキングを済ませ、08:00にチェックアウト。深浦から鰺ヶ沢・つがる市（屏風山広域農道/メロンロード）を経由して津軽半島西岸の髙山稲荷神社へ一気に北上。</p>
+      
+      
+      <div class="tactics-box">
+        <div class="tactics-header">
+          <span>🎯</span>
+          <span class="tactics-tag">個別立ち回り</span>
+          <span>【構内順路】攻略戦術</span>
+        </div>
+        <div class="tactics-list">
+          
+            <div class="tactics-step-row">
+              <span class="tactics-num">1</span>
+              <span class="tactics-text">07:00から朝食バイキングを摂取し、08:00ジャストに不老ふ死温泉を出発。</span>
+            </div>
+          
+            <div class="tactics-step-row">
+              <span class="tactics-num">2</span>
+              <span class="tactics-text">国道101号を北上し、鰺ヶ沢から県道12号・屏風山メロンロードへ入って信号の少ない直線快走路を走る。</span>
+            </div>
+          
+            <div class="tactics-step-row">
+              <span class="tactics-num">3</span>
+              <span class="tactics-text">09:30に髙山稲荷神社の無料大駐車場へ到着（約75km）。</span>
+            </div>
+          
+        </div>
+      </div>
+      
+      <div class="checkpoint-list">
+        
+          <div class="checkpoint-row">
+            <span class="cp-badge">必須</span>
+            <div>
+              <div class="cp-title">08:00 不老ふ死温泉 チェックアウト ➔ 国道101号北上</div>
+              <div class="cp-desc">日本海と岩木山を望みながらの爽快なモーニングドライブ。</div>
+            </div>
+          </div>
+        
+          <div class="checkpoint-row">
+            <span class="cp-badge">必須</span>
+            <div>
+              <div class="cp-title">09:30 髙山稲荷神社 駐車場到着</div>
+              <div class="cp-desc">団体客が増える10時前に到着し、千本鳥居の無人ショットを狙う。</div>
+            </div>
+          </div>
+        
+      </div>
+      
+      <div class="practical-footer">
+        <div class="pf-row"><span class="pf-tag">🚗 移動・駐車:</span><span class="pf-val">約75km、所要約1時間30分。信号が少なく流れは非常にスムーズ。</span></div>
+        <div class="pf-row"><span class="pf-tag">💡 現地Tips:</span><span class="pf-val">途中のローソンや道の駅もりた等で車内用ドリンクを補給。</span></div>
+        <div class="pf-row"><span class="pf-tag">⏱️ 撤収基準:</span><span class="pf-val">08:15までに出発できれば午後の青函トンネル記念館「もぐら号」の乗車枠に余裕で間に合う。</span></div>
+      </div>
+      <div class="slot-foot">
+        <a class="map-pill" href="https://www.google.com/maps/dir/?api=1&amp;origin=黄金崎不老ふ死温泉&amp;destination=高山稲荷神社" target="_blank" rel="noopener">📍 Google Maps</a>
+        
+      </div>
+    </article>
+    <article class="slot-card is-must" id="d2-takayama-inari" data-slot-id="d2-takayama-inari">
+      <div class="slot-meta">
+        <span class="slot-time">⏱️ 09:30 - 10:50</span>
+        <span class="slot-badge badge-temple">【必見】圧巻の千本鳥居</span>
+      </div>
+      <div class="slot-title-row">
+        <input type="checkbox" class="slot-checkbox no-print" onchange="toggleSlot('d2-takayama-inari', this.checked)" title="完了・スキップを消し込み">
+        <h3 class="slot-title"><span style="color:var(--accent);">【必見】</span> 髙山稲荷神社（日本庭園にうねる朱色の千本鳥居 ＆ キツネ像群）</h3>
+      </div>
+      <p class="slot-desc">五穀豊穣・海上安全・商売繁盛の霊験あらたかな津軽随一の稲荷神社。高台の拝殿を参拝したのち階段を下ると、太鼓橋と池を配した美しい日本庭園の中に、龍がうねるように朱色の「千本鳥居」が連なる異界の絶景が広がる。</p>
+      
+      
+      <div class="tactics-box">
+        <div class="tactics-header">
+          <span>🎯</span>
+          <span class="tactics-tag">個別立ち回り</span>
+          <span>【構内順路】攻略戦術</span>
+        </div>
+        <div class="tactics-list">
+          
+            <div class="tactics-step-row">
+              <span class="tactics-num">1</span>
+              <span class="tactics-text">駐車場から大鳥居をくぐり、まず急な石段を登って高台の「拝殿（本殿）」へ正式参拝。</span>
+            </div>
+          
+            <div class="tactics-step-row">
+              <span class="tactics-num">2</span>
+              <span class="tactics-text">拝殿奥の坂・階段を下り、池泉回遊式の日本庭園へ降り立つ。朱色の太鼓橋と水面に映る鳥居を撮影。</span>
+            </div>
+          
+            <div class="tactics-step-row">
+              <span class="tactics-num">3</span>
+              <span class="tactics-text">龍のごとくS字に蛇行する「千本鳥居（200基超）」をくぐり抜けながら最奥の高台展望所へ登り、上から鳥居のうねり全景を見下ろすベストアングルを撮影。</span>
+            </div>
+          
+            <div class="tactics-step-row">
+              <span class="tactics-num">4</span>
+              <span class="tactics-text">最奥の「狐の霊場（役目を終えた無数の白狐・石狐像が並ぶ神秘空間）」を見学し、10:50に駐車場へ戻る。</span>
+            </div>
+          
+        </div>
+      </div>
+      
+      <div class="checkpoint-list">
+        
+          <div class="checkpoint-row">
+            <span class="cp-badge">必須</span>
+            <div>
+              <div class="cp-title">日本庭園 × 朱色の千本鳥居（龍のうねり全景）</div>
+              <div class="cp-desc">京都・伏見稲荷とは異なり「日本庭園の池と緑の中をS字にうねりながら登る」唯一無二の立体構図。終点の高台からの俯瞰ショットが最高峰。</div>
+            </div>
+          </div>
+        
+          <div class="checkpoint-row">
+            <span class="cp-badge">必須</span>
+            <div>
+              <div class="cp-title">奥の院・狐の祠（無数の奉納狐像群）</div>
+              <div class="cp-desc">千本鳥居を抜けた先に広がる、全国から奉納された石狐・陶狐がずらりと並ぶ圧巻のスピリチュアルゾーン。</div>
+            </div>
+          </div>
+        
+      </div>
+      
+      <div class="practical-footer">
+        <div class="pf-row"><span class="pf-tag">🚗 移動・駐車:</span><span class="pf-val">無料大型駐車場完備。拝殿への登り階段と庭園への下り・登り返しがあるためアップダウンが多い（この日の176階相当上昇の一翼！）。</span></div>
+        <div class="pf-row"><span class="pf-tag">💡 現地Tips:</span><span class="pf-val">参拝無料。授与所で千本鳥居デザインの御朱印も頒布。</span></div>
+        <div class="pf-row"><span class="pf-tag">⏱️ 撤収基準:</span><span class="pf-val">10:50に出発し、中泊町・小泊の「おさかな海岸」へ11:30頃に到着してランチ行列を回避する。</span></div>
+      </div>
+      <div class="slot-foot">
+        <a class="map-pill" href="https://www.google.com/maps/search/?api=1&amp;query=高山稲荷神社+つがる市" target="_blank" rel="noopener">📍 Google Maps</a>
+        <span style="font-size:12px;font-weight:700;color:var(--accent);">⭐ 必達スポット</span>
+      </div>
+    </article>
+    <article class="slot-card is-must" id="d2-nakadomari-mebaru" data-slot-id="d2-nakadomari-mebaru">
+      <div class="slot-meta">
+        <span class="slot-time">⏱️ 11:30 - 12:40</span>
+        <span class="slot-badge badge-food">【必食】中泊メバル膳</span>
+      </div>
+      <div class="slot-title-row">
+        <input type="checkbox" class="slot-checkbox no-print" onchange="toggleSlot('d2-nakadomari-mebaru', this.checked)" title="完了・スキップを消し込み">
+        <h3 class="slot-title"><span style="color:var(--accent);">【必見】</span> 中泊町「おさかな海岸」名物『津軽海峡メバル膳』昼食</h3>
+      </div>
+      <p class="slot-desc">津軽半島・中泊町が誇るご当地グルメの最高峰「中泊メバルの刺身と煮付け膳」。津軽海峡の荒波で育った高級白身魚「津軽海峡メバル（ウスメバル）」を、サクサク・プリプリの活造り刺身、特製ダレのまるごと姿煮付け、イカ刺し、メバル潮汁のフルコースで堪能。</p>
+      
+      <div class="swap-box">
+        <div class="swap-title">🔀 スワップ・代替ルート候補</div>
+        <div><strong>プランA:</strong> おさかな海岸で中泊メバル膳</div><div><strong>プランB:</strong> 道の駅こどまりポントマリでメバル膳＆イカ焼き</div><div><strong>おさかな海岸（本命）:</strong> 折腰内海岸の目の前で味わう元祖・中泊メバル膳の人気店</div><div><strong>道の駅こどまり ポントマリ:</strong> おさかな海岸から車3分。2階レストラン「竜泊」でも公式の中泊メバル膳を提供</div>
+      </div>
+      
+      <div class="tactics-box">
+        <div class="tactics-header">
+          <span>🎯</span>
+          <span class="tactics-tag">個別立ち回り</span>
+          <span>【構内順路】攻略戦術</span>
+        </div>
+        <div class="tactics-list">
+          
+            <div class="tactics-step-row">
+              <span class="tactics-num">1</span>
+              <span class="tactics-text">髙山稲荷神社から十三湖（しじみ亭奈良屋前）を経由し、国道339号で小泊の海沿い「おさかな海岸」へ11:30に到着。</span>
+            </div>
+          
+            <div class="tactics-step-row">
+              <span class="tactics-num">2</span>
+              <span class="tactics-text">看板メニューの「中泊メバルの刺身と煮付け膳（約2,300円）」をオーダー。</span>
+            </div>
+          
+            <div class="tactics-step-row">
+              <span class="tactics-num">3</span>
+              <span class="tactics-text">銅製の特製鍋で熱々に炊かれた丸ごと1尾の姿煮付けと、氷の上に盛り付けられた透明感のあるメバルの薄造り刺身を味わう（歯切れの良い白身魚食感の真髄！）。</span>
+            </div>
+          
+        </div>
+      </div>
+      
+      <div class="checkpoint-list">
+        
+          <div class="checkpoint-row">
+            <span class="cp-badge">必須</span>
+            <div>
+              <div class="cp-title">中泊メバルの刺身と煮付け膳（ウスメバル1.5尾使用）</div>
+              <div class="cp-desc">1人前に高級魚ウスメバルを贅沢に1尾半使用。コリコリ・サクサクした白身刺身の歯ごたえと、ふっくら甘辛い煮付けの二刀流。</div>
+            </div>
+          </div>
+        
+          <div class="checkpoint-row">
+            
+            <div>
+              <div class="cp-title">十三湖畔ドライブ通過（十三湖大橋）</div>
+              <div class="cp-desc">道中でシジミ漁で有名な十三湖の広大な汽水湖と日本海の境界を眺めながら通過。</div>
+            </div>
+          </div>
+        
+      </div>
+      
+      <div class="practical-footer">
+        <div class="pf-row"><span class="pf-tag">🚗 移動・駐車:</span><span class="pf-val">髙山稲荷神社から車で約40分（約28km）。店舗前に無料駐車場あり。</span></div>
+        <div class="pf-row"><span class="pf-tag">💡 現地Tips:</span><span class="pf-val">1日限定食数があるため11時台〜12時前の入店が確実。現金・PayPay等対応。</span></div>
+        <div class="pf-row"><span class="pf-tag">⏱️ 撤収基準:</span><span class="pf-val">12:40に出発し、竜泊ライン経由で青函トンネル記念館へ向かう。</span></div>
+      </div>
+      <div class="slot-foot">
+        <a class="map-pill" href="https://www.google.com/maps/search/?api=1&amp;query=おさかな海岸+中泊町" target="_blank" rel="noopener">📍 Google Maps</a>
+        <span style="font-size:12px;font-weight:700;color:var(--accent);">⭐ 必達スポット</span>
+      </div>
+    </article>
+    <article class="slot-card " id="d2-tatsudomari-line" data-slot-id="d2-tatsudomari-line">
+      <div class="slot-meta">
+        <span class="slot-time">⏱️ 12:45 - 13:40</span>
+        <span class="slot-badge badge-transit">絶景山岳海洋道路</span>
+      </div>
+      <div class="slot-title-row">
+        <input type="checkbox" class="slot-checkbox no-print" onchange="toggleSlot('d2-tatsudomari-line', this.checked)" title="完了・スキップを消し込み">
+        <h3 class="slot-title">国道339号「竜泊（たつどまり）ライン」絶景ワインディング ＆ 眺瞰台</h3>
+      </div>
+      <p class="slot-desc">小泊（道の駅こどまり）から龍飛崎までの約20kmを結ぶ国道339号のハイライト区間「竜泊ライン」。海抜0mの海岸線から急勾配のヘアピンカーブで標高475mの「眺瞰台（ちょうかんだい）」まで一気に駆け上がり、日本海・権現崎・北海道松前半島を一望。</p>
+      
+      
+      <div class="tactics-box">
+        <div class="tactics-header">
+          <span>🎯</span>
+          <span class="tactics-tag">個別立ち回り</span>
+          <span>【構内順路】攻略戦術</span>
+        </div>
+        <div class="tactics-list">
+          
+            <div class="tactics-step-row">
+              <span class="tactics-num">1</span>
+              <span class="tactics-text">道の駅こどまり（ポントマリ）を過ぎ、海岸線から山岳ワインディングへ突入。</span>
+            </div>
+          
+            <div class="tactics-step-row">
+              <span class="tactics-num">2</span>
+              <span class="tactics-text">連続するつづら折りを登り切った頂上付近の「眺瞰台（ちょうかんだい）」駐車場に10分立ち寄り。</span>
+            </div>
+          
+            <div class="tactics-step-row">
+              <span class="tactics-num">3</span>
+              <span class="tactics-text">展望台から、今登ってきた竜泊ラインのダイナミックな蛇行道路と日本海の断崖、北の津軽海峡・北海道のシルエットをパノラマ撮影。</span>
+            </div>
+          
+        </div>
+      </div>
+      
+      <div class="checkpoint-list">
+        
+          <div class="checkpoint-row">
+            <span class="cp-badge">必須</span>
+            <div>
+              <div class="cp-title">竜泊ライン 眺瞰台（標高475m・360度パノラマ展望台）</div>
+              <div class="cp-desc">眼下にうねる竜泊ラインのワインディングと権現崎、晴天時は北海道・松前半島まで見渡せる津軽随一のドライブ展望所。</div>
+            </div>
+          </div>
+        
+      </div>
+      
+      <div class="practical-footer">
+        <div class="pf-row"><span class="pf-tag">🚗 移動・駐車:</span><span class="pf-val">おさかな海岸から青函トンネル記念館まで約22km（所要約45〜50分）。眺瞰台に無料駐車場・トイレあり。</span></div>
+        <div class="pf-row"><span class="pf-tag">💡 現地Tips:</span><span class="pf-val">カーブと高低差が連続するため、同乗者は酔い止め対策をして車窓を楽しむ。</span></div>
+        <div class="pf-row"><span class="pf-tag">⏱️ 撤収基準:</span><span class="pf-val">青函トンネル記念館のケーブルカー「もぐら号」の発車時刻（毎時40分発など）の15分前までに記念館へ到着する。</span></div>
+      </div>
+      <div class="slot-foot">
+        <a class="map-pill" href="https://www.google.com/maps/search/?api=1&amp;query=竜泊ライン+眺瞰台" target="_blank" rel="noopener">📍 Google Maps</a>
+        
+      </div>
+    </article>
+    <article class="slot-card is-must" id="d2-seikan-tunnel" data-slot-id="d2-seikan-tunnel">
+      <div class="slot-meta">
+        <span class="slot-time">⏱️ 13:45 - 15:15</span>
+        <span class="slot-badge badge-sightseeing">【必見】海面下140m潜入</span>
+      </div>
+      <div class="slot-title-row">
+        <input type="checkbox" class="slot-checkbox no-print" onchange="toggleSlot('d2-seikan-tunnel', this.checked)" title="完了・スキップを消し込み">
+        <h3 class="slot-title"><span style="color:var(--accent);">【必見】</span> 青函トンネル記念館 ＆ 海面下140m体験坑道「もぐら号」</h3>
+      </div>
+      <p class="slot-desc">24年の歳月をかけて世紀の難工事を完遂した青函トンネルの記念館。日本一短い私鉄ケーブルカー「青函トンネル竜飛斜坑線 もぐら号」に乗車し、斜度14度・全長778mの斜坑を約7分かけて海面下140mの「体験坑道」へ潜入する大迫力インフラツアー。</p>
+      
+      
+      <div class="tactics-box">
+        <div class="tactics-header">
+          <span>🎯</span>
+          <span class="tactics-tag">個別立ち回り</span>
+          <span>【構内順路】攻略戦術</span>
+        </div>
+        <div class="tactics-list">
+          
+            <div class="tactics-step-row">
+              <span class="tactics-num">1</span>
+              <span class="tactics-text">記念館到着後、まず券売窓口で「体験坑道乗車券＋展示ホールセット券（大人1,500円・現金）」を購入し、直近の「もぐら号」便を確保。</span>
+            </div>
+          
+            <div class="tactics-step-row">
+              <span class="tactics-num">2</span>
+              <span class="tactics-text">オレンジ色の斜坑ケーブルカー「もぐら号」に乗車し、一気に海面下140mの海底作業坑へ降下（所要約7分）。</span>
+            </div>
+          
+            <div class="tactics-step-row">
+              <span class="tactics-num">3</span>
+              <span class="tactics-text">風門（気圧調整扉）を抜けて体験坑道内を見学。当時の掘削重機（ジャンボ・吹き付け機）、異常出水との闘いの記録、すぐ隣を北海道新幹線が駆け抜ける海底の空気と冷気（通年約14〜15℃）を肌で体感（約40分ツアー）。</span>
+            </div>
+          
+            <div class="tactics-step-row">
+              <span class="tactics-num">4</span>
+              <span class="tactics-text">地上に戻った後、展示ホールで青函トンネルの立体構造模型や音響映像を鑑賞。</span>
+            </div>
+          
+        </div>
+      </div>
+      
+      <div class="checkpoint-list">
+        
+          <div class="checkpoint-row">
+            <span class="cp-badge">必須</span>
+            <div>
+              <div class="cp-title">斜坑ケーブルカー「もぐら号」で海面下140mへ降下</div>
+              <div class="cp-desc">鉄道事業法に基づく正式なケーブルカー路線としては日本最短。海底へ向かう急勾配のワクワク感が抜群。</div>
+            </div>
+          </div>
+        
+          <div class="checkpoint-row">
+            <span class="cp-badge">必須</span>
+            <div>
+              <div class="cp-title">海面下140m「体験坑道」ツアー（約40分）</div>
+              <div class="cp-desc">実際に工事で使われた作業坑を歩き、湧き出る海底水や当時の掘削マシンを間近で見学。</div>
+            </div>
+          </div>
+        
+      </div>
+      
+      <div class="practical-footer">
+        <div class="pf-row"><span class="pf-tag">🚗 移動・駐車:</span><span class="pf-val">記念館前に無料大型駐車場完備。龍飛崎までは車でわずか3分。</span></div>
+        <div class="pf-row"><span class="pf-tag">💡 現地Tips:</span><span class="pf-val">海底坑道内は湿度が高く気温15℃前後と肌寒いため、薄手の防風パーカを羽織って乗車する。チケットは現金決済（Walica 1,500円/人登録）。</span></div>
+        <div class="pf-row"><span class="pf-tag">⏱️ 撤収基準:</span><span class="pf-val">15:15に記念館を出発し、すぐ上の龍飛崎灯台・階段国道へ移動する。</span></div>
+      </div>
+      <div class="slot-foot">
+        <a class="map-pill" href="https://www.google.com/maps/search/?api=1&amp;query=青函トンネル記念館" target="_blank" rel="noopener">📍 Google Maps</a>
+        <span style="font-size:12px;font-weight:700;color:var(--accent);">⭐ 必達スポット</span>
+      </div>
+    </article>
+    <article class="slot-card is-must" id="d2-tappizaki-kaidan" data-slot-id="d2-tappizaki-kaidan">
+      <div class="slot-meta">
+        <span class="slot-time">⏱️ 15:20 - 16:40</span>
+        <span class="slot-badge badge-sightseeing">【必見】階段国道＆歌碑</span>
+      </div>
+      <div class="slot-title-row">
+        <input type="checkbox" class="slot-checkbox no-print" onchange="toggleSlot('d2-tappizaki-kaidan', this.checked)" title="完了・スキップを消し込み">
+        <h3 class="slot-title"><span style="color:var(--accent);">【必見】</span> 龍飛崎灯台・津軽海峡冬景色歌碑 ＆ 階段国道339号線踏破</h3>
+      </div>
+      <p class="slot-desc">津軽半島最北端の断崖岬「龍飛崎（竜飛崎）」。強風が吹き抜ける龍飛埼灯台と津軽海峡・北海道の絶景を拝み、赤いボタンを押すと石川さゆりの名曲が爆音で響き渡る「津軽海峡・冬景色歌謡碑」を体験。さらに日本で唯一の歩行者専用階段国道「国道339号」全362段を帯島・漁港まで完全往復踏破！</p>
+      
+      
+      <div class="tactics-box">
+        <div class="tactics-header">
+          <span>🎯</span>
+          <span class="tactics-tag">個別立ち回り</span>
+          <span>【構内順路】攻略戦術</span>
+        </div>
+        <div class="tactics-list">
+          
+            <div class="tactics-step-row">
+              <span class="tactics-num">1</span>
+              <span class="tactics-text">龍飛崎駐車場に車を停め、白亜の「龍飛埼灯台（日本の灯台50選）」と展望台へ登り、眼下の帯島と対岸約20km先の北海道（白神岬）を一望。</span>
+            </div>
+          
+            <div class="tactics-step-row">
+              <span class="tactics-num">2</span>
+              <span class="tactics-text">灯台下の「津軽海峡・冬景色歌謡碑」へ移動し、赤いボタンを押して『ご覧あれが竜飛岬 北のはずれと〜♪』の2番フルコーラスを海峡の風の中で聴く。</span>
+            </div>
+          
+            <div class="tactics-step-row">
+              <span class="tactics-num">3</span>
+              <span class="tactics-text">歌碑のすぐ横にある「階段国道339号線（上り口）」から、全362段・高低差約70mの階段国道を下まで降り、漁港側の「階段国道入口」標識と帯島を撮影して再び登り返す（この日のApple Health 36,397歩・176階上昇の最大要因！）。</span>
+            </div>
+          
+        </div>
+      </div>
+      
+      <div class="checkpoint-list">
+        
+          <div class="checkpoint-row">
+            <span class="cp-badge">必須</span>
+            <div>
+              <div class="cp-title">津軽海峡・冬景色 歌謡碑（爆音再生ボタン）</div>
+              <div class="cp-desc">赤いボタンを押すと周囲一帯に石川さゆりの歌声が響き渡る名物スポット。記念撮影必須。</div>
+            </div>
+          </div>
+        
+          <div class="checkpoint-row">
+            <span class="cp-badge">必須</span>
+            <div>
+              <div class="cp-title">日本唯一！階段国道339号線（全362段・延長388.2m）往復踏破</div>
+              <div class="cp-desc">車両通行不能、人間しか通れないのに歴とした「一般国道339号」のおにぎり標識が立つ珍百景インフラ。下から上までの完全踏破で脚力を試す。</div>
+            </div>
+          </div>
+        
+          <div class="checkpoint-row">
+            <span class="cp-badge">必須</span>
+            <div>
+              <div class="cp-title">龍飛埼灯台 ＆ 北海道遠望展望所</div>
+              <div class="cp-desc">津軽海峡の潮目と北海道松前半島を望む北の果ての絶景。</div>
+            </div>
+          </div>
+        
+      </div>
+      
+      <div class="practical-footer">
+        <div class="pf-row"><span class="pf-tag">🚗 移動・駐車:</span><span class="pf-val">龍飛崎灯台・歌碑前に無料駐車場完備。</span></div>
+        <div class="pf-row"><span class="pf-tag">💡 現地Tips:</span><span class="pf-val">年間平均風速10m「風の岬」と呼ばれるほど強風が吹くため、帽子飛びやドアパンチ（車のドア開閉時の強風煽り）に厳重注意。</span></div>
+        <div class="pf-row"><span class="pf-tag">⏱️ 撤収基準:</span><span class="pf-val">16:40に龍飛崎を出発し、国道280号（津軽海峡・平舘海峡沿い）を南下して17:30に蟹田「佐々木旅館」へチェックインする。</span></div>
+      </div>
+      <div class="slot-foot">
+        <a class="map-pill" href="https://www.google.com/maps/search/?api=1&amp;query=龍飛崎" target="_blank" rel="noopener">📍 Google Maps</a>
+        <span style="font-size:12px;font-weight:700;color:var(--accent);">⭐ 必達スポット</span>
+      </div>
+    </article>
+    <article class="slot-card " id="d2-kanita-sasaki" data-slot-id="d2-kanita-sasaki">
+      <div class="slot-meta">
+        <span class="slot-time">⏱️ 17:30 - 21:00</span>
+        <span class="slot-badge badge-food">蟹田港至近・ホタテ会席</span>
+      </div>
+      <div class="slot-title-row">
+        <input type="checkbox" class="slot-checkbox no-print" onchange="toggleSlot('d2-kanita-sasaki', this.checked)" title="完了・スキップを消し込み">
+        <h3 class="slot-title">蟹田「佐々木旅館」チェックイン ＆ 陸奥湾ホタテ・地魚会席</h3>
+      </div>
+      <p class="slot-desc">翌朝09:20発のむつ湾フェリー（蟹田港）まで車でわずか3分の東津軽郡外ヶ浜町・蟹田にある家庭的な名宿「佐々木旅館」（1泊2食付・実費9,150円/人）。陸奥湾で水揚げされたばかりの肉厚ホタテや新鮮地魚が並ぶボリューム満点の夕食会席を味わい、翌朝の海峡横断に備える。</p>
+      
+      
+      <div class="tactics-box">
+        <div class="tactics-header">
+          <span>🎯</span>
+          <span class="tactics-tag">個別立ち回り</span>
+          <span>【構内順路】攻略戦術</span>
+        </div>
+        <div class="tactics-list">
+          
+            <div class="tactics-step-row">
+              <span class="tactics-num">1</span>
+              <span class="tactics-text">龍飛崎から三厩・今別・平舘を経由する国道280号を約50分ドライブし、17:30に蟹田の「佐々木旅館」へチェックイン。</span>
+            </div>
+          
+            <div class="tactics-step-row">
+              <span class="tactics-num">2</span>
+              <span class="tactics-text">入浴で階段国道踏破の汗を流し、18:30から陸奥湾名産のホタテ料理・刺身・焼き魚・小鉢がずらりと並ぶ海鮮夕食を堪能。</span>
+            </div>
+          
+            <div class="tactics-step-row">
+              <span class="tactics-num">3</span>
+              <span class="tactics-text">翌朝のむつ湾フェリー（08:50蟹田港窓口集合）に向け、車検証の用意を再確認して早めに就寝。</span>
+            </div>
+          
+        </div>
+      </div>
+      
+      <div class="checkpoint-list">
+        
+          <div class="checkpoint-row">
+            <span class="cp-badge">必須</span>
+            <div>
+              <div class="cp-title">17:30 蟹田「佐々木旅館」チェックイン</div>
+              <div class="cp-desc">むつ湾フェリー蟹田港ターミナルまで車3分の戦略的拠点宿。</div>
+            </div>
+          </div>
+        
+          <div class="checkpoint-row">
+            <span class="cp-badge">必須</span>
+            <div>
+              <div class="cp-title">18:30 陸奥湾ホタテ・地魚夕食会席</div>
+              <div class="cp-desc">甘み抜群の陸奥湾ホタテと旬の地魚料理でお腹いっぱいに。</div>
+            </div>
+          </div>
+        
+      </div>
+      
+      <div class="practical-footer">
+        <div class="pf-row"><span class="pf-tag">🚗 移動・駐車:</span><span class="pf-val">龍飛崎から国道280号経由で約38km（車約50分）。旅館前に無料駐車場あり。</span></div>
+        <div class="pf-row"><span class="pf-tag">💡 現地Tips:</span><span class="pf-val">近くにコンビニ（ファミリーマート等）もあるため、翌朝のフェリー船内用の飲み物・酔い止めを調達可能。</span></div>
+        <div class="pf-row"><span class="pf-tag">⏱️ 撤収基準:</span><span class="pf-val">翌朝08:40には宿を出発できるよう、07:30朝食・08:30パッキング完了を徹底。</span></div>
+      </div>
+      <div class="slot-foot">
+        <a class="map-pill" href="https://www.google.com/maps/search/?api=1&amp;query=佐々木旅館+外ヶ浜町蟹田" target="_blank" rel="noopener">📍 Google Maps</a>
+        
+      </div>
+    </article>
+        </div>
+      </section>
+    
+    <nav class="nav-bar no-print" style="margin-top: 24px;">
+      <a class="nav-link" href="aomori.html">📑 全日程（統合版）</a>
+      <a class="nav-link " href="aomori_day1.html">Day 1</a><a class="nav-link active" href="aomori_day2.html">Day 2</a><a class="nav-link " href="aomori_day3.html">Day 3</a><a class="nav-link " href="aomori_day4.html">Day 4</a><a class="nav-link " href="aomori_day5.html">Day 5</a>
+    </nav>
+  </main>
+
+  <script>
+    const STORAGE_KEY = 'aomori_completed_slots';
+
+    function toggleTheme() {
+      const cur = document.documentElement.getAttribute('data-theme') || 'light';
+      const nxt = cur === 'dark' ? 'light' : 'dark';
+      document.documentElement.setAttribute('data-theme', nxt);
+      localStorage.setItem('trip_nav_theme', nxt);
+    }
+
+    function getCompletedSlots() {
+      try {
+        return JSON.parse(localStorage.getItem(STORAGE_KEY) || '[]');
+      } catch (e) {
+        return [];
+      }
+    }
+
+    function toggleSlot(slotId, isDone) {
+      const card = document.getElementById(slotId);
+      let list = getCompletedSlots();
+      if (isDone) {
+        if (!list.includes(slotId)) list.push(slotId);
+        if (card) card.classList.add('is-dimmed');
+      } else {
+        list = list.filter(id => id !== slotId);
+        if (card) card.classList.remove('is-dimmed');
+      }
+      localStorage.setItem(STORAGE_KEY, JSON.stringify(list));
+    }
+
+    // In-page Day Segment Switcher (Instant filter without HTTP reload)
+    function switchDay(targetDay) {
+      const dayBlocks = document.querySelectorAll('.day-block');
+      const jumpChips = document.querySelectorAll('.jump-chip');
+      const navLinks = document.querySelectorAll('.nav-link[data-day]');
+
+      // 1. Filter Day Sections
+      dayBlocks.forEach(sec => {
+        const secDay = sec.getAttribute('data-day');
+        if (targetDay === 'all' || secDay === String(targetDay)) {
+          sec.style.display = '';
+        } else {
+          sec.style.display = 'none';
+        }
+      });
+
+      // 2. Filter Jump Chips
+      jumpChips.forEach(chip => {
+        const chipDay = chip.getAttribute('data-day');
+        if (targetDay === 'all' || chipDay === String(targetDay)) {
+          chip.style.display = '';
+        } else {
+          chip.style.display = 'none';
+        }
+      });
+
+      // 3. Update Nav Active State
+      navLinks.forEach(link => {
+        if (link.getAttribute('data-day') === String(targetDay)) {
+          link.classList.add('active');
+        } else {
+          link.classList.remove('active');
+        }
+      });
+
+      // 4. Sync Hash (optional bookmarking)
+      if (history.replaceState) {
+        const newHash = targetDay === 'all' ? '' : `#day${targetDay}`;
+        history.replaceState(null, '', newHash || window.location.pathname);
+      }
+    }
+
+    // Initialize state on load
+    document.addEventListener('DOMContentLoaded', () => {
+      // Restore checked slots
+      const list = getCompletedSlots();
+      list.forEach(slotId => {
+        const card = document.getElementById(slotId);
+        if (card) {
+          card.classList.add('is-dimmed');
+          const cb = card.querySelector('.slot-checkbox');
+          if (cb) cb.checked = true;
+        }
+      });
+
+      // Initial day selection from URL hash: e.g. #day1, #day2
+      const hash = window.location.hash.toLowerCase();
+      const match = hash.match(/^#day(\d+)$/);
+      if (match) {
+        switchDay(match[1]);
+      } else {
+        switchDay('all');
+      }
+    });
+  </script>
+</body>
+</html>

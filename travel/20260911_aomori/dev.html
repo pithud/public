@@ -1,0 +1,2494 @@
+<!DOCTYPE html>
+<html lang="ja" data-theme="light">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <title>青森 ｜ 津軽・下北・恐山 完全縦断4泊5日 しおり</title>
+  <script>
+    // Anti-FOUC immediate theme application
+    (function() {
+      var t = localStorage.getItem('trip_nav_theme') || 'light';
+      document.documentElement.setAttribute('data-theme', t);
+    })();
+  </script>
+  <style>
+:root {
+  --bg: #f8fafc;
+  --surface: #ffffff;
+  --surface-subtle: #f1f5f9;
+  --text: #0f172a;
+  --text-muted: #64748b;
+  --border: #e2e8f0;
+  --primary: #0284c7;
+  --primary-hover: #0369a1;
+  --accent: #d97706;
+  --card-shadow: 0 1px 3px rgba(0,0,0,0.06), 0 1px 2px rgba(0,0,0,0.04);
+  --font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+}
+[data-theme="dark"] {
+  --bg: #090d16;
+  --surface: #131b2e;
+  --surface-subtle: #1e293b;
+  --text: #f8fafc;
+  --text-muted: #94a3b8;
+  --border: #1e293b;
+  --card-shadow: 0 4px 6px -1px rgba(0,0,0,0.3);
+}
+* { box-sizing: border-box; margin: 0; padding: 0; -webkit-tap-highlight-color: transparent; }
+body {
+  font-family: var(--font-family);
+  background-color: var(--bg);
+  color: var(--text);
+  line-height: 1.5;
+  font-size: 15px;
+  padding-bottom: 80px;
+}
+.header-bar {
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  background: rgba(255, 255, 255, 0.92);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border-bottom: 1px solid var(--border);
+  padding: 12px 16px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+[data-theme="dark"] .header-bar { background: rgba(19, 27, 46, 0.92); }
+.brand-title { font-size: 1.05rem; font-weight: 700; display: flex; align-items: center; gap: 8px; }
+.header-actions { display: flex; gap: 8px; align-items: center; }
+.btn-action {
+  background: var(--surface-subtle);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: 6px 12px;
+  font-size: 13px;
+  color: var(--text);
+  cursor: pointer;
+  text-decoration: none;
+}
+.container { max-width: 680px; margin: 0 auto; padding: 16px; }
+
+/* Day Navigation Bar */
+.nav-bar {
+  display: flex;
+  background: var(--surface-subtle);
+  padding: 6px;
+  border-radius: 10px;
+  margin-bottom: 16px;
+  gap: 6px;
+  align-items: center;
+  justify-content: space-between;
+}
+.nav-link {
+  flex: 1;
+  text-align: center;
+  padding: 7px 10px;
+  border-radius: 7px;
+  font-size: 13px;
+  font-weight: 600;
+  text-decoration: none;
+  color: var(--text-muted);
+  background: transparent;
+  border: none;
+  cursor: pointer;
+}
+.nav-link.active {
+  background: var(--surface);
+  color: var(--primary);
+  box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+}
+
+/* Quick Jump Chips */
+.jump-chips {
+  display: flex;
+  gap: 6px;
+  overflow-x: auto;
+  padding-bottom: 10px;
+  margin-bottom: 16px;
+  white-space: nowrap;
+  scrollbar-width: none;
+}
+.jump-chips::-webkit-scrollbar { display: none; }
+.jump-chip {
+  display: inline-block;
+  font-size: 12px;
+  font-weight: 600;
+  padding: 5px 10px;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 16px;
+  color: var(--text);
+  text-decoration: none;
+}
+
+/* Slot Cards */
+.day-block { margin-bottom: 32px; }
+.day-header {
+  font-size: 1.15rem;
+  font-weight: 700;
+  margin-bottom: 12px;
+  padding-bottom: 6px;
+  border-bottom: 2px solid var(--primary);
+  color: var(--primary);
+}
+
+/* Macro Route Box (Day全体ルート立ち回り) */
+.macro-route-box {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-left: 4px solid var(--primary);
+  border-radius: 10px;
+  padding: 12px 14px;
+  margin-bottom: 16px;
+  box-shadow: var(--card-shadow);
+}
+.macro-route-head {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 6px;
+}
+.macro-route-title {
+  font-size: 13px;
+  font-weight: 800;
+  color: var(--primary);
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+[data-theme="dark"] .macro-route-title { color: #38bdf8; }
+.macro-route-body {
+  font-size: 13px;
+  line-height: 1.55;
+  color: var(--text);
+  margin-bottom: 8px;
+}
+.macro-map-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  font-size: 12px;
+  font-weight: 700;
+  color: var(--primary);
+  text-decoration: none;
+  background: rgba(2, 132, 199, 0.08);
+  padding: 4px 10px;
+  border-radius: 6px;
+  border: 1px solid rgba(2, 132, 199, 0.2);
+}
+[data-theme="dark"] .macro-map-link {
+  color: #38bdf8;
+  background: rgba(56, 189, 248, 0.1);
+  border-color: rgba(56, 189, 248, 0.3);
+}
+.slot-card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  margin-bottom: 12px;
+  padding: 14px 16px;
+  box-shadow: var(--card-shadow);
+  transition: opacity 0.2s, background-color 0.2s;
+}
+.slot-card.is-dimmed { opacity: 0.45; filter: grayscale(40%); }
+.slot-card.is-must { border-left: 4px solid var(--accent); }
+.slot-meta { display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px; }
+.slot-time { font-size: 13px; font-weight: 700; font-variant-numeric: tabular-nums; }
+.slot-badge {
+  font-size: 11px;
+  font-weight: 700;
+  padding: 2px 8px;
+  border-radius: 4px;
+  text-transform: uppercase;
+}
+.badge-sightseeing { background: #d1fae5; color: #065f46; }
+.badge-food { background: #ffedd5; color: #9a3412; }
+.badge-transit { background: #e0e7ff; color: #3730a3; }
+[data-theme="dark"] .badge-sightseeing { background: #064e3b; color: #6ee7b7; }
+[data-theme="dark"] .badge-food { background: #7c2d12; color: #fdba74; }
+[data-theme="dark"] .badge-transit { background: #312e81; color: #a5b4fc; }
+
+.slot-title-row { display: flex; align-items: flex-start; gap: 8px; margin-bottom: 6px; }
+.slot-checkbox { margin-top: 3px; cursor: pointer; width: 18px; height: 18px; accent-color: var(--primary); }
+.slot-title { font-size: 1rem; font-weight: 700; line-height: 1.4; flex: 1; }
+.slot-desc { font-size: 13.5px; color: var(--text-muted); margin-bottom: 10px; line-height: 1.5; padding-left: 26px; }
+
+/* Swap Guide Box */
+.swap-box {
+  margin: 10px 0 10px 26px;
+  padding: 10px 12px;
+  border-radius: 8px;
+  background: rgba(217, 119, 6, 0.08);
+  border: 1px dashed var(--accent);
+  font-size: 12.5px;
+}
+.swap-title { font-weight: 700; color: var(--accent); margin-bottom: 4px; display: flex; align-items: center; gap: 4px; }
+
+.slot-foot { display: flex; justify-content: space-between; align-items: center; padding-top: 8px; border-top: 1px solid var(--border); margin-left: 26px; }
+.map-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  font-size: 12px;
+  font-weight: 600;
+  color: #1a73e8;
+  text-decoration: none;
+  background: rgba(26, 115, 232, 0.08);
+  padding: 4px 10px;
+  border-radius: 20px;
+}
+[data-theme="dark"] .map-pill { color: #8ab4f8; background: rgba(138, 180, 248, 0.12); }
+
+/* Tactics Step Box (立ち回り・攻略手順) */
+.tactics-box {
+  margin: 12px 0 12px 26px;
+  padding: 10px 14px;
+  background: rgba(2, 132, 199, 0.06);
+  border: 1px solid rgba(2, 132, 199, 0.25);
+  border-left: 3.5px solid var(--primary);
+  border-radius: 8px;
+}
+[data-theme="dark"] .tactics-box {
+  background: rgba(56, 189, 248, 0.08);
+  border-color: rgba(56, 189, 248, 0.3);
+  border-left-color: #38bdf8;
+}
+.tactics-header {
+  font-size: 13px;
+  font-weight: 700;
+  color: var(--primary);
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  margin-bottom: 8px;
+}
+.tactics-tag {
+  font-size: 10px;
+  font-weight: 800;
+  background: var(--primary);
+  color: #fff;
+  padding: 1px 6px;
+  border-radius: 4px;
+  letter-spacing: 0.05em;
+}
+[data-theme="dark"] .tactics-header { color: #38bdf8; }
+[data-theme="dark"] .tactics-tag { background: #0284c7; }
+.tactics-list { display: flex; flex-direction: column; gap: 6px; }
+.tactics-step-row { display: flex; align-items: flex-start; gap: 8px; font-size: 12.5px; line-height: 1.5; }
+.tactics-num {
+  flex-shrink: 0;
+  width: 18px;
+  height: 18px;
+  border-radius: 4px;
+  background: rgba(2, 132, 199, 0.18);
+  color: var(--primary);
+  font-size: 11px;
+  font-weight: 800;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-top: 1px;
+}
+[data-theme="dark"] .tactics-num { background: rgba(56, 189, 248, 0.25); color: #38bdf8; }
+
+/* Checkpoints List */
+.checkpoint-list {
+  margin: 10px 0 10px 26px;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+.checkpoint-row {
+  display: flex;
+  align-items: flex-start;
+  gap: 8px;
+  font-size: 12px;
+  background: var(--surface-subtle);
+  padding: 8px 10px;
+  border-radius: 6px;
+  border: 1px solid var(--border);
+}
+.cp-badge {
+  font-size: 10px;
+  font-weight: 700;
+  padding: 1px 5px;
+  border-radius: 3px;
+  background: #0284c7;
+  color: #fff;
+  flex-shrink: 0;
+}
+.cp-title { font-weight: 600; color: var(--text); }
+.cp-desc { font-size: 11.5px; color: var(--text-muted); margin-top: 2px; }
+
+/* Practical Footer */
+.practical-footer {
+  margin: 10px 0 10px 26px;
+  padding: 8px 10px;
+  background: var(--surface-subtle);
+  border-left: 3px solid var(--accent);
+  border-radius: 4px;
+  font-size: 12px;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+.pf-row { display: flex; gap: 6px; }
+.pf-tag { font-weight: 700; color: var(--accent); flex-shrink: 0; min-width: 65px; }
+.pf-val { color: var(--text); }
+
+/* Print & Paged Media */
+@media print {
+  @page { size: A4 portrait; margin: 12mm 15mm; }
+  body { background: #fff !important; color: #000 !important; font-size: 11pt; }
+  .header-bar, .nav-bar, .jump-chips, .no-print { display: none !important; }
+  .day-block { page-break-after: always; break-after: page; }
+  .slot-card { break-inside: avoid; page-break-inside: avoid; box-shadow: none !important; border: 1px solid #ccc !important; }
+  .slot-card.is-dimmed { opacity: 1 !important; filter: none !important; }
+  .slot-checkbox { display: none !important; }
+  .slot-desc, .swap-box, .slot-foot { margin-left: 0 !important; padding-left: 0 !important; }
+}
+
+  </style>
+</head>
+<body>
+  <header class="header-bar">
+    <div class="brand-title">
+      <span>🍎</span>
+      <span>青森 ｜ 津軽・下北・恐山 完全縦断4泊5日 しおり</span>
+    </div>
+    <div class="header-actions no-print">
+      <button class="btn-action" onclick="toggleTheme()">🌓 テーマ</button>
+      <button class="btn-action" onclick="window.print()">🖨️ 製本印刷</button>
+    </div>
+  </header>
+
+  <main class="container">
+    
+    <nav class="nav-bar no-print">
+      <button type="button" class="nav-link active" data-day="all" onclick="switchDay('all')">📑 全日程</button>
+      <button type="button" class="nav-link" data-day="1" onclick="switchDay(1)">Day 1</button><button type="button" class="nav-link" data-day="2" onclick="switchDay(2)">Day 2</button><button type="button" class="nav-link" data-day="3" onclick="switchDay(3)">Day 3</button><button type="button" class="nav-link" data-day="4" onclick="switchDay(4)">Day 4</button><button type="button" class="nav-link" data-day="5" onclick="switchDay(5)">Day 5</button>
+    </nav>
+    
+    <div class="jump-chips no-print">
+      
+        <a class="jump-chip" href="#d1-sannai-maruyama" data-day="1">📍 特別史跡 三内丸山遺</a>
+      
+        <a class="jump-chip" href="#d1-senjojiki-fukaura" data-day="1">🍜 津軽西海岸ドライブ </a>
+      
+        <a class="jump-chip" href="#d1-juniko-aoike" data-day="1">📍 白神山地・十二湖（神</a>
+      
+        <a class="jump-chip" href="#d1-furofushi-onsen" data-day="1">📍 黄金崎不老ふ死温泉（</a>
+      
+        <a class="jump-chip" href="#d2-takayama-inari" data-day="2">📍 髙山稲荷神社（日本庭</a>
+      
+        <a class="jump-chip" href="#d2-nakadomari-mebaru" data-day="2">🍜 中泊町「おさかな海岸</a>
+      
+        <a class="jump-chip" href="#d2-seikan-tunnel" data-day="2">📍 青函トンネル記念館 </a>
+      
+        <a class="jump-chip" href="#d2-tappizaki-kaidan" data-day="2">📍 龍飛崎灯台・津軽海峡</a>
+      
+        <a class="jump-chip" href="#d2-kanita-sasaki" data-day="2">🍜 蟹田「佐々木旅館」チ</a>
+      
+        <a class="jump-chip" href="#d3-hotokegaura" data-day="3">📍 国名勝・天然記念物「</a>
+      
+        <a class="jump-chip" href="#d3-omazaki-maguro" data-day="3">🍜 本州最北端・大間崎モ</a>
+      
+        <a class="jump-chip" href="#d3-osorezan-kichijokaku" data-day="3">📍 日本三大霊場・恐山 </a>
+      
+        <a class="jump-chip" href="#d4-osorezan-morning" data-day="4">📍 恐山・朝の勤行（大般</a>
+      
+        <a class="jump-chip" href="#d4-michinoeki-yokohama" data-day="4">🍜 下北縦断ドライブ ＆</a>
+      
+        <a class="jump-chip" href="#d4-asamushi-aquarium" data-day="4">📍 浅虫温泉ランチ ＆ </a>
+      
+        <a class="jump-chip" href="#d4-honcho-izakaya" data-day="4">🍜 青森市・本町繁華街 </a>
+      
+        <a class="jump-chip" href="#d5-warasse-nebuta" data-day="5">📍 コインランドリー投入</a>
+      
+        <a class="jump-chip" href="#d5-hakkodamaru-afactory" data-day="5">🍜 青函連絡船 八甲田丸</a>
+      
+        <a class="jump-chip" href="#d5-miso-curry-milk" data-day="5">🍜 「味の札幌 浅利」元</a>
+      
+        <a class="jump-chip" href="#d5-aomori-museum" data-day="5">📍 青森県立美術館（奈良</a>
+      
+    </div>
+    
+      <section class="day-block" id="day-sec-1" data-day="1">
+        <h2 class="day-header">Day 1: 2026年9月11日 (金)</h2>
+        
+        <div class="macro-route-box">
+          <div class="macro-route-head">
+            <span class="macro-route-title">🗺️ 【全体ルート立ち回り】マクロ動線シークエンス</span>
+            <a class="macro-map-link" href="https://www.google.com/maps/dir/%E3%83%8B%E3%83%83%E3%83%9D%E3%83%B3%E3%83%AC%E3%83%B3%E3%82%BF%E3%82%AB%E3%83%BC+%E9%9D%92%E6%A3%AE%E7%A9%BA%E6%B8%AF%E5%96%B6%E6%A5%AD%E6%89%80/%E7%89%B9%E5%88%A5%E5%8F%B2%E8%B7%A1+%E4%B8%89%E5%86%85%E4%B8%B8%E5%B1%B1%E9%81%BA%E8%B7%A1/%E5%8D%83%E7%95%B3%E6%95%B7%E6%B5%B7%E5%B2%B8/%E6%A3%AE%E3%81%AE%E7%89%A9%E7%94%A3%E9%A4%A8%E3%82%AD%E3%83%A7%E3%83%AD%E3%83%AD/%E9%BB%84%E9%87%91%E5%B4%8E%E4%B8%8D%E8%80%81%E3%81%B5%E6%AD%BB%E6%B8%A9%E6%B3%89" target="_blank" rel="noopener">📍 広域Google Maps</a>
+          </div>
+          <div class="macro-route-body">羽田空港（06:40発 JAL141便） ➔ 青森空港（08:00着・ニッポンレンタカー） ➔ 特別史跡 三内丸山遺跡 ➔ 千畳敷海岸・深浦昼食 ➔ 白神山地・十二湖（青池・沸壺の池・キョロロ） ➔ 黄金崎不老ふ死温泉（日没海辺露天風呂・宿泊）</div>
+        </div>
+        <div class="slot-list">
+          
+    <article class="slot-card " id="d1-flight-rentacar" data-slot-id="d1-flight-rentacar">
+      <div class="slot-meta">
+        <span class="slot-time">⏱️ 06:40 - 08:30</span>
+        <span class="slot-badge badge-transit">JAL141便＆車起動</span>
+      </div>
+      <div class="slot-title-row">
+        <input type="checkbox" class="slot-checkbox no-print" onchange="toggleSlot('d1-flight-rentacar', this.checked)" title="完了・スキップを消し込み">
+        <h3 class="slot-title">羽田空港 ➔ 青森空港（JAL141便） ➔ ニッポンレンタカー受取</h3>
+      </div>
+      <p class="slot-desc">羽田空港第1ターミナル06:40発のJAL141便で08:00に青森空港へ到着。T・厳の3名で合流し、ニッポンレンタカー青森空港営業所にて車両を受け取り津軽・下北縦断ドライブを開始。</p>
+      
+      <div class="swap-box">
+        <div class="swap-title">🔀 スワップ・代替ルート候補</div>
+        <div><strong>初日十和田湖直行案:</strong> 初日に十和田湖・奥入瀬方面へ寄り道ランチ（3,100円）を組み込み、午後に日本海側・深浦へ抜ける広域ドライブに変更可能</div>
+      </div>
+      
+      <div class="tactics-box">
+        <div class="tactics-header">
+          <span>🎯</span>
+          <span class="tactics-tag">個別立ち回り</span>
+          <span>【構内順路】攻略戦術</span>
+        </div>
+        <div class="tactics-list">
+          
+            <div class="tactics-step-row">
+              <span class="tactics-num">1</span>
+              <span class="tactics-text">06:20までに羽田空港第1ターミナル保安検査場を通過し、06:40発JAL141便に搭乗。</span>
+            </div>
+          
+            <div class="tactics-step-row">
+              <span class="tactics-num">2</span>
+              <span class="tactics-text">08:00青森空港到着後、到着ロビーレンタカーカウンターから送迎車でニッポンレンタカー営業所へ移動。</span>
+            </div>
+          
+            <div class="tactics-step-row">
+              <span class="tactics-num">3</span>
+              <span class="tactics-text">運転者全員の免許証を提示し、9/13むつ湾フェリー乗船手続き用の「車検証コピー」の搭載位置を確認して08:30出発。</span>
+            </div>
+          
+        </div>
+      </div>
+      
+      <div class="checkpoint-list">
+        
+          <div class="checkpoint-row">
+            <span class="cp-badge">必須</span>
+            <div>
+              <div class="cp-title">06:40 羽田空港発 JAL141便 搭乗</div>
+              <div class="cp-desc">約1時間20分のフライトで一気に北東北・青森空港へワープ。</div>
+            </div>
+          </div>
+        
+          <div class="checkpoint-row">
+            <span class="cp-badge">必須</span>
+            <div>
+              <div class="cp-title">08:15 ニッポンレンタカー青森空港営業所 手続き＆車検証確認</div>
+              <div class="cp-desc">5日間走行用の車両を受取。むつ湾フェリー予約確認用の車検証コピーを確認しWalicaにレンタカー代（総額41,030円）を登録。</div>
+            </div>
+          </div>
+        
+      </div>
+      
+      <div class="practical-footer">
+        <div class="pf-row"><span class="pf-tag">🚗 移動・駐車:</span><span class="pf-val">青森空港から三内丸山遺跡までは県道27号経由で車約20分（約12km）。</span></div>
+        <div class="pf-row"><span class="pf-tag">💡 現地Tips:</span><span class="pf-val">3名分の荷物をトランクへ効率よく配置し、車内に飲み物・充電ケーブルをセット。</span></div>
+        <div class="pf-row"><span class="pf-tag">⏱️ 撤収基準:</span><span class="pf-val">08:40までに営業所を出発できれば午前の三内丸山遺跡から西海岸への動線が完全定刻となる。</span></div>
+      </div>
+      <div class="slot-foot">
+        <a class="map-pill" href="https://www.google.com/maps/search/?api=1&amp;query=ニッポンレンタカー+青森空港営業所" target="_blank" rel="noopener">📍 Google Maps</a>
+        
+      </div>
+    </article>
+    <article class="slot-card is-must" id="d1-sannai-maruyama" data-slot-id="d1-sannai-maruyama">
+      <div class="slot-meta">
+        <span class="slot-time">⏱️ 08:50 - 10:30</span>
+        <span class="slot-badge badge-sightseeing">【必見】世界遺産縄文</span>
+      </div>
+      <div class="slot-title-row">
+        <input type="checkbox" class="slot-checkbox no-print" onchange="toggleSlot('d1-sannai-maruyama', this.checked)" title="完了・スキップを消し込み">
+        <h3 class="slot-title"><span style="color:var(--accent);">【必見】</span> 特別史跡 三内丸山遺跡（世界遺産・大型掘立柱建物）</h3>
+      </div>
+      <p class="slot-desc">「北海道・北東北の縄文遺跡群」の中核をなす世界文化遺産。約5,900年〜4,200年前の巨大縄文集落跡であり、高さ約15mの大型掘立柱建物（六本柱）や大型竪穴建物、縄文時遊館の重要文化財出土品群を見学。</p>
+      
+      <div class="swap-box">
+        <div class="swap-title">🔀 スワップ・代替ルート候補</div>
+        <div><strong>プランA:</strong> 初日朝に三内丸山遺跡を攻略</div><div><strong>プランB:</strong> Day5午後に県立美術館とセットで攻略</div><div><strong>Day 1午前攻略:</strong> 空港から直行して初日朝イチに三内丸山遺跡を制覇し、そのまま西海岸へ抜ける王道ルート</div><div><strong>Day 5午後統合:</strong> 初日はドライブ・十和田/西海岸を優先し、Day 5午後に隣の青森県立美術館とセットで一括攻略</div>
+      </div>
+      
+      <div class="tactics-box">
+        <div class="tactics-header">
+          <span>🎯</span>
+          <span class="tactics-tag">個別立ち回り</span>
+          <span>【構内順路】攻略戦術</span>
+        </div>
+        <div class="tactics-list">
+          
+            <div class="tactics-step-row">
+              <span class="tactics-num">1</span>
+              <span class="tactics-text">09:00開館と同時に「縄文時遊館」へ入場（一般410円）。時遊トンネルを抜けて縄文のムラ（屋外遺跡エリア）へ出る。</span>
+            </div>
+          
+            <div class="tactics-step-row">
+              <span class="tactics-num">2</span>
+              <span class="tactics-text">シンボルの「大型掘立柱建物（高さ約15m・クリの巨木柱）」と「大型竪穴建物（長さ32m）」の圧倒的スケールを撮影。</span>
+            </div>
+          
+            <div class="tactics-step-row">
+              <span class="tactics-num">3</span>
+              <span class="tactics-text">盛土・環状配石墓を見学後、さんまるミュージアムで重要文化財の大型板状土偶や翡翠製大珠を鑑賞。</span>
+            </div>
+          
+        </div>
+      </div>
+      
+      <div class="checkpoint-list">
+        
+          <div class="checkpoint-row">
+            <span class="cp-badge">必須</span>
+            <div>
+              <div class="cp-title">大型掘立柱建物（六本柱）＆ 大型竪穴建物</div>
+              <div class="cp-desc">直径約1mのクリの柱6本を用いた三内丸山遺跡最大のランドマーク。縄文時代の高度な建築技術を体感。</div>
+            </div>
+          </div>
+        
+          <div class="checkpoint-row">
+            <span class="cp-badge">必須</span>
+            <div>
+              <div class="cp-title">さんまるミュージアム（重要文化財・大型板状土偶）</div>
+              <div class="cp-desc">約1,700点の出土品を展示。縄文ポシェットや糸魚川産ヒスイの勾玉など交易の証拠を確認。</div>
+            </div>
+          </div>
+        
+      </div>
+      
+      <div class="practical-footer">
+        <div class="pf-row"><span class="pf-tag">🚗 移動・駐車:</span><span class="pf-val">無料大型駐車場完備（普通車500台）。隣接する青森県立美術館とも徒歩圏内。</span></div>
+        <div class="pf-row"><span class="pf-tag">💡 現地Tips:</span><span class="pf-val">屋外の芝生広場は広いため、日差し・風対策の上着があると快適。</span></div>
+        <div class="pf-row"><span class="pf-tag">⏱️ 撤収基準:</span><span class="pf-val">10:30に出発し、国道101号経由で日本海・鰺ヶ沢方面へ向かう（Day 5午後に回すことも可能）。</span></div>
+      </div>
+      <div class="slot-foot">
+        <a class="map-pill" href="https://www.google.com/maps/search/?api=1&amp;query=特別史跡+三内丸山遺跡" target="_blank" rel="noopener">📍 Google Maps</a>
+        <span style="font-size:12px;font-weight:700;color:var(--accent);">⭐ 必達スポット</span>
+      </div>
+    </article>
+    <article class="slot-card " id="d1-senjojiki-fukaura" data-slot-id="d1-senjojiki-fukaura">
+      <div class="slot-meta">
+        <span class="slot-time">⏱️ 10:30 - 13:30</span>
+        <span class="slot-badge badge-food">奇岩海岸＆海鮮昼食</span>
+      </div>
+      <div class="slot-title-row">
+        <input type="checkbox" class="slot-checkbox no-print" onchange="toggleSlot('d1-senjojiki-fukaura', this.checked)" title="完了・スキップを消し込み">
+        <h3 class="slot-title">津軽西海岸ドライブ ➔ 千畳敷海岸 ＆ 深浦海鮮ランチ</h3>
+      </div>
+      <p class="slot-desc">国道101号（大釈迦〜鰺ヶ沢〜深浦）を日本海沿いに快走。寛政4年（1792年）の地震で隆起してできた岩棚が続く「千畳敷海岸」を散策し、深浦・岩崎エリアで日本海の海鮮ランチを堪能。</p>
+      
+      <div class="swap-box">
+        <div class="swap-title">🔀 スワップ・代替ルート候補</div>
+        <div><strong>深浦マグロステーキ丼:</strong> 深浦町役場周辺の「食事処 広〆」または「ふかうら開発」で名物マグロステーキ丼を実食</div><div><strong>千畳敷センター海鮮丼:</strong> 移動ロスゼロの千畳敷海岸目の前で海鮮丼・いか焼きをサクッと実食</div>
+      </div>
+      
+      <div class="tactics-box">
+        <div class="tactics-header">
+          <span>🎯</span>
+          <span class="tactics-tag">個別立ち回り</span>
+          <span>【構内順路】攻略戦術</span>
+        </div>
+        <div class="tactics-list">
+          
+            <div class="tactics-step-row">
+              <span class="tactics-num">1</span>
+              <span class="tactics-text">鰺ヶ沢から国道101号の海沿い絶景ルートへ入り、12:00頃に「千畳敷海岸（JR千畳敷駅前）」へ停車。</span>
+            </div>
+          
+            <div class="tactics-step-row">
+              <span class="tactics-num">2</span>
+              <span class="tactics-text">殿様が千畳の畳を敷いて酒宴を開いたと伝わる緑白色の隆起岩棚を海辺まで歩いて撮影（約25分）。</span>
+            </div>
+          
+            <div class="tactics-step-row">
+              <span class="tactics-num">3</span>
+              <span class="tactics-text">千畳敷センターまたは深浦町内の食事処（広〆・セイリング等）で「深浦マグロステーキ丼」や海鮮定食を実食。</span>
+            </div>
+          
+        </div>
+      </div>
+      
+      <div class="checkpoint-list">
+        
+          <div class="checkpoint-row">
+            <span class="cp-badge">必須</span>
+            <div>
+              <div class="cp-title">千畳敷海岸（隆起岩棚・かぶと岩・ライオン岩）</div>
+              <div class="cp-desc">日本海の荒波と緑白色の凝灰岩が織りなす奇岩海岸。波打ち際まで歩いて磯の風を体感。</div>
+            </div>
+          </div>
+        
+          <div class="checkpoint-row">
+            <span class="cp-badge">必須</span>
+            <div>
+              <div class="cp-title">深浦・西海岸 ご当地海鮮ランチ</div>
+              <div class="cp-desc">深浦産本マグロを使った「深浦マグロステーキ丼」や焼きイカ・ホタテを堪能。</div>
+            </div>
+          </div>
+        
+      </div>
+      
+      <div class="practical-footer">
+        <div class="pf-row"><span class="pf-tag">🚗 移動・駐車:</span><span class="pf-val">千畳敷海岸沿いに無料駐車スペース多数あり。五能線千畳敷駅のすぐ目の前。</span></div>
+        <div class="pf-row"><span class="pf-tag">💡 現地Tips:</span><span class="pf-val">鰺ヶ沢〜深浦間の海沿いには焼きイカ通り（きくや商店等）もあり、ドライブ中の軽食に最適。</span></div>
+        <div class="pf-row"><span class="pf-tag">⏱️ 撤収基準:</span><span class="pf-val">13:30までに昼食を終え、14:15までに白神山地・十二湖の奥地駐車場（キョロロ）へ到着する。</span></div>
+      </div>
+      <div class="slot-foot">
+        <a class="map-pill" href="https://www.google.com/maps/search/?api=1&amp;query=千畳敷海岸+深浦町" target="_blank" rel="noopener">📍 Google Maps</a>
+        
+      </div>
+    </article>
+    <article class="slot-card is-must" id="d1-juniko-aoike" data-slot-id="d1-juniko-aoike">
+      <div class="slot-meta">
+        <span class="slot-time">⏱️ 14:15 - 16:15</span>
+        <span class="slot-badge badge-sightseeing">【必見】コバルトブルー青池</span>
+      </div>
+      <div class="slot-title-row">
+        <input type="checkbox" class="slot-checkbox no-print" onchange="toggleSlot('d1-juniko-aoike', this.checked)" title="完了・スキップを消し込み">
+        <h3 class="slot-title"><span style="color:var(--accent);">【必見】</span> 白神山地・十二湖（神秘の「青池」＆ 沸壺の池散策）</h3>
+      </div>
+      <p class="slot-desc">世界自然遺産・白神山地の西麓に点在する33の湖沼群「十二湖」。手前の駐車場ではなく最奥の「森の物産館キョロロ」有料駐車場まで車で直行し、青いインクを流し込んだような透明度9mの「青池」と、名水百選「沸壺の池」のブナ原生林を周回散策。</p>
+      
+      <div class="swap-box">
+        <div class="swap-title">🔀 スワップ・代替ルート候補</div>
+        <div><strong>フル周回コース（60分）:</strong> キョロロ ➔ 鶏頭場の池 ➔ 青池 ➔ ブナ自然林 ➔ 沸壺の池 ➔ 十二湖庵 ➔ キョロロの王道1周ルート</div><div><strong>青池ピンポイント往復（25分）:</strong> 雨天時や日没迫る場合はキョロロ ⇄ 青池のみをピストン往復して不老ふ死温泉へ急行</div>
+      </div>
+      
+      <div class="tactics-box">
+        <div class="tactics-header">
+          <span>🎯</span>
+          <span class="tactics-tag">個別立ち回り</span>
+          <span>【構内順路】攻略戦術</span>
+        </div>
+        <div class="tactics-list">
+          
+            <div class="tactics-step-row">
+              <span class="tactics-num">1</span>
+              <span class="tactics-text">国道101号から県道280号（十二湖公園線）へ入り、途中の池をスルーして最奥の「森の物産館キョロロ駐車場（普通車500円）」へ入庫。</span>
+            </div>
+          
+            <div class="tactics-step-row">
+              <span class="tactics-num">2</span>
+              <span class="tactics-text">キョロロ横の遊歩道から徒歩10分で最大目標の「青池（あおいけ）」へ直行。水中に沈むブナの倒木と神秘のコバルトブルーを撮影。</span>
+            </div>
+          
+            <div class="tactics-step-row">
+              <span class="tactics-num">3</span>
+              <span class="tactics-text">ブナ自然林の癒やし空間を抜けて「がま池」➔「沸壺（わきつぼ）の池」へ進み、エメラルドブルーの湧水池を鑑賞。</span>
+            </div>
+          
+            <div class="tactics-step-row">
+              <span class="tactics-num">4</span>
+              <span class="tactics-text">県道側の「十二湖庵」で平成の名水百選「沸壺池の清水」で淹れた抹茶・茶菓子を一服し、キョロロへ戻る時計回り45〜60分ループを完遂。</span>
+            </div>
+          
+        </div>
+      </div>
+      
+      <div class="checkpoint-list">
+        
+          <div class="checkpoint-row">
+            <span class="cp-badge">必須</span>
+            <div>
+              <div class="cp-title">神秘の湖「青池（Aoike）」鑑賞</div>
+              <div class="cp-desc">太陽光の角度で濃紺から鮮烈なコバルトブルーに変化する十二湖のハイライト。水深9mの底に横たわるブナの大木まで透けて見える絶景。</div>
+            </div>
+          </div>
+        
+          <div class="checkpoint-row">
+            <span class="cp-badge">必須</span>
+            <div>
+              <div class="cp-title">ブナ自然林 ＆ 名水百選「沸壺の池」</div>
+              <div class="cp-desc">青池に匹敵する透明度と青緑色の輝きを放つ隠れた名池。静寂のブナ原生林で森林浴を満喫。</div>
+            </div>
+          </div>
+        
+          <div class="checkpoint-row">
+            
+            <div>
+              <div class="cp-title">森の物産館キョロロ ＆ 十二湖庵（名水湧水）</div>
+              <div class="cp-desc">キョロロで白神山地の土産・ソフトクリームをチェックし、16:15に黄金崎不老ふ死温泉へ出発。</div>
+            </div>
+          </div>
+        
+      </div>
+      
+      <div class="practical-footer">
+        <div class="pf-row"><span class="pf-tag">🚗 移動・駐車:</span><span class="pf-val">森の物産館キョロロ駐車場（普通車1回500円）。ここから青池まで徒歩わずか10分。</span></div>
+        <div class="pf-row"><span class="pf-tag">💡 現地Tips:</span><span class="pf-val">未舗装の土道や木道階段があるため、アディダステレックス等の歩きやすいスニーカーで散策。</span></div>
+        <div class="pf-row"><span class="pf-tag">⏱️ 撤収基準:</span><span class="pf-val">黄金崎不老ふ死温泉の海辺露天風呂は日没までのため、16:15には必ずキョロロを出発（温泉まで車約25分）。</span></div>
+      </div>
+      <div class="slot-foot">
+        <a class="map-pill" href="https://www.google.com/maps/search/?api=1&amp;query=十二湖+青池" target="_blank" rel="noopener">📍 Google Maps</a>
+        <span style="font-size:12px;font-weight:700;color:var(--accent);">⭐ 必達スポット</span>
+      </div>
+    </article>
+    <article class="slot-card is-must" id="d1-furofushi-onsen" data-slot-id="d1-furofushi-onsen">
+      <div class="slot-meta">
+        <span class="slot-time">⏱️ 17:00 - 21:00</span>
+        <span class="slot-badge badge-sightseeing">【必見】日本海夕日露天</span>
+      </div>
+      <div class="slot-title-row">
+        <input type="checkbox" class="slot-checkbox no-print" onchange="toggleSlot('d1-furofushi-onsen', this.checked)" title="完了・スキップを消し込み">
+        <h3 class="slot-title"><span style="color:var(--accent);">【必見】</span> 黄金崎不老ふ死温泉（日本海サンセット海辺露天風呂 ＆ 宿泊）</h3>
+      </div>
+      <p class="slot-desc">日本海の波打ち際わずか1mの岩場に湧く全国屈指の絶景秘湯「黄金崎不老ふ死温泉」（予約番号: `yoyaku035673`）。日没時刻（17:55頃）に合わせて赤褐色の強塩泉「海辺の露天風呂」に浸かり、水平線に沈む夕日を全身で浴びる至高の体験。夜は津軽ふかうらバイキングと本館展望風呂を満喫。</p>
+      
+      <div class="swap-box">
+        <div class="swap-title">🔀 スワップ・代替ルート候補</div>
+        <div><strong>翌朝日の出露天風呂:</strong> 万一初日夕方が曇天でも、翌朝05:30からの海辺露天風呂で爽快な朝の日本海入浴を回収可能</div><div><strong>民宿汐ケ島プラン:</strong> 不老ふ死温泉が満室の場合のバックアップだった深浦・民宿汐ケ島（本隊は不老ふ死温泉確保に成功！）</div>
+      </div>
+      
+      <div class="tactics-box">
+        <div class="tactics-header">
+          <span>🎯</span>
+          <span class="tactics-tag">個別立ち回り</span>
+          <span>【構内順路】攻略戦術</span>
+        </div>
+        <div class="tactics-list">
+          
+            <div class="tactics-step-row">
+              <span class="tactics-num">1</span>
+              <span class="tactics-text">16:45〜17:00に不老ふ死温泉本館へ到着しチェックイン（1人17,200円・海側和室）。</span>
+            </div>
+          
+            <div class="tactics-step-row">
+              <span class="tactics-num">2</span>
+              <span class="tactics-text">部屋に荷物を置いたら1秒も迷わず浴衣・湯かごを持って海岸へ降り、日没（17:55頃）前の「海辺の露天風呂（混浴および女性専用）」へ突入。</span>
+            </div>
+          
+            <div class="tactics-step-row">
+              <span class="tactics-num">3</span>
+              <span class="tactics-text">鉄分豊富な黄金色の湯に浸かりながら、遮るもののない日本海のパノラマサンセットを鑑賞（照明がないため日没後は閉鎖）。</span>
+            </div>
+          
+            <div class="tactics-step-row">
+              <span class="tactics-num">4</span>
+              <span class="tactics-text">18:30からレストランにて「津軽ふかうらバイキング」（深浦マグロ・アワビ・つるつるわかめ・地酒）を90分間堪能し、夜は本館内湯「不老ふ死の湯」とパノラマ展望風呂「黄金の湯」を巡湯。</span>
+            </div>
+          
+        </div>
+      </div>
+      
+      <div class="checkpoint-list">
+        
+          <div class="checkpoint-row">
+            <span class="cp-badge">必須</span>
+            <div>
+              <div class="cp-title">17:15〜18:05 海辺の露天風呂（波打ち際1mの日本海サンセット入浴）</div>
+              <div class="cp-desc">日帰り客が16:00で完全撤収した後の「宿泊者限定ゴールデンタイム」。波音と夕焼けに染まる空・海と一体化するSランク体験。</div>
+            </div>
+          </div>
+        
+          <div class="checkpoint-row">
+            <span class="cp-badge">必須</span>
+            <div>
+              <div class="cp-title">18:30 津軽ふかうらバイキング夕食 ＆ 展望露天「黄金の湯」</div>
+              <div class="cp-desc">深浦の新鮮な海の幸・郷土料理バイキングを満喫後、夜間も入れる本館の温泉で初日（10,450歩 / 6.57km）の疲れを癒やす。</div>
+            </div>
+          </div>
+        
+      </div>
+      
+      <div class="practical-footer">
+        <div class="pf-row"><span class="pf-tag">🚗 移動・駐車:</span><span class="pf-val">十二湖（キョロロ）から国道101号を北へ車で約25分（約15km）。宿泊者専用無料駐車場完備。</span></div>
+        <div class="pf-row"><span class="pf-tag">💡 現地Tips:</span><span class="pf-val">海辺の露天風呂は洗い場・石鹸利用不可（浸かるだけ）のため、体洗いは本館大浴場で行う。湯船の鉄分でタオルが茶色く染まるため備え付けタオルを活用。</span></div>
+        <div class="pf-row"><span class="pf-tag">⏱️ 撤収基準:</span><span class="pf-val">海辺の露天風呂は「日の出〜日没」限定。17:15までの入湯が絶対条件。</span></div>
+      </div>
+      <div class="slot-foot">
+        <a class="map-pill" href="https://www.google.com/maps/search/?api=1&amp;query=黄金崎不老ふ死温泉" target="_blank" rel="noopener">📍 Google Maps</a>
+        <span style="font-size:12px;font-weight:700;color:var(--accent);">⭐ 必達スポット</span>
+      </div>
+    </article>
+        </div>
+      </section>
+      <section class="day-block" id="day-sec-2" data-day="2">
+        <h2 class="day-header">Day 2: 2026年9月12日 (土)</h2>
+        
+        <div class="macro-route-box">
+          <div class="macro-route-head">
+            <span class="macro-route-title">🗺️ 【全体ルート立ち回り】マクロ動線シークエンス</span>
+            <a class="macro-map-link" href="https://www.google.com/maps/dir/%E9%BB%84%E9%87%91%E5%B4%8E%E4%B8%8D%E8%80%81%E3%81%B5%E6%AD%BB%E6%B8%A9%E6%B3%89/%E9%AB%98%E5%B1%B1%E7%A8%B2%E8%8D%B7%E7%A5%9E%E7%A4%BE/%E3%81%8A%E3%81%95%E3%81%8B%E3%81%AA%E6%B5%B7%E5%B2%B8/%E9%9D%92%E5%87%BD%E3%83%88%E3%83%B3%E3%83%8D%E3%83%AB%E8%A8%98%E5%BF%B5%E9%A4%A8/%E9%BE%8D%E9%A3%9B%E5%B4%8E/%E4%BD%90%E3%80%85%E6%9C%A8%E6%97%85%E9%A4%A8+%E8%9F%B9%E7%94%B0" target="_blank" rel="noopener">📍 広域Google Maps</a>
+          </div>
+          <div class="macro-route-body">黄金崎不老ふ死温泉（08:00発） ➔ 髙山稲荷神社（千本鳥居・日本庭園） ➔ おさかな海岸（中泊メバル膳ランチ） ➔ 竜泊ライン（眺瞰台） ➔ 青函トンネル記念館（体験坑道もぐら号） ➔ 龍飛崎・階段国道339号線 ➔ 蟹田「佐々木旅館」（ホタテ会席・宿泊）</div>
+        </div>
+        <div class="slot-list">
+          
+    <article class="slot-card " id="d2-drive-tsugaru" data-slot-id="d2-drive-tsugaru">
+      <div class="slot-meta">
+        <span class="slot-time">⏱️ 08:00 - 09:30</span>
+        <span class="slot-badge badge-transit">西海岸90分北上</span>
+      </div>
+      <div class="slot-title-row">
+        <input type="checkbox" class="slot-checkbox no-print" onchange="toggleSlot('d2-drive-tsugaru', this.checked)" title="完了・スキップを消し込み">
+        <h3 class="slot-title">黄金崎不老ふ死温泉 ➔ 津軽西海岸・七里長浜北上ドライブ</h3>
+      </div>
+      <p class="slot-desc">不老ふ死温泉で朝食バイキングを済ませ、08:00にチェックアウト。深浦から鰺ヶ沢・つがる市（屏風山広域農道/メロンロード）を経由して津軽半島西岸の髙山稲荷神社へ一気に北上。</p>
+      
+      
+      <div class="tactics-box">
+        <div class="tactics-header">
+          <span>🎯</span>
+          <span class="tactics-tag">個別立ち回り</span>
+          <span>【構内順路】攻略戦術</span>
+        </div>
+        <div class="tactics-list">
+          
+            <div class="tactics-step-row">
+              <span class="tactics-num">1</span>
+              <span class="tactics-text">07:00から朝食バイキングを摂取し、08:00ジャストに不老ふ死温泉を出発。</span>
+            </div>
+          
+            <div class="tactics-step-row">
+              <span class="tactics-num">2</span>
+              <span class="tactics-text">国道101号を北上し、鰺ヶ沢から県道12号・屏風山メロンロードへ入って信号の少ない直線快走路を走る。</span>
+            </div>
+          
+            <div class="tactics-step-row">
+              <span class="tactics-num">3</span>
+              <span class="tactics-text">09:30に髙山稲荷神社の無料大駐車場へ到着（約75km）。</span>
+            </div>
+          
+        </div>
+      </div>
+      
+      <div class="checkpoint-list">
+        
+          <div class="checkpoint-row">
+            <span class="cp-badge">必須</span>
+            <div>
+              <div class="cp-title">08:00 不老ふ死温泉 チェックアウト ➔ 国道101号北上</div>
+              <div class="cp-desc">日本海と岩木山を望みながらの爽快なモーニングドライブ。</div>
+            </div>
+          </div>
+        
+          <div class="checkpoint-row">
+            <span class="cp-badge">必須</span>
+            <div>
+              <div class="cp-title">09:30 髙山稲荷神社 駐車場到着</div>
+              <div class="cp-desc">団体客が増える10時前に到着し、千本鳥居の無人ショットを狙う。</div>
+            </div>
+          </div>
+        
+      </div>
+      
+      <div class="practical-footer">
+        <div class="pf-row"><span class="pf-tag">🚗 移動・駐車:</span><span class="pf-val">約75km、所要約1時間30分。信号が少なく流れは非常にスムーズ。</span></div>
+        <div class="pf-row"><span class="pf-tag">💡 現地Tips:</span><span class="pf-val">途中のローソンや道の駅もりた等で車内用ドリンクを補給。</span></div>
+        <div class="pf-row"><span class="pf-tag">⏱️ 撤収基準:</span><span class="pf-val">08:15までに出発できれば午後の青函トンネル記念館「もぐら号」の乗車枠に余裕で間に合う。</span></div>
+      </div>
+      <div class="slot-foot">
+        <a class="map-pill" href="https://www.google.com/maps/dir/?api=1&amp;origin=黄金崎不老ふ死温泉&amp;destination=高山稲荷神社" target="_blank" rel="noopener">📍 Google Maps</a>
+        
+      </div>
+    </article>
+    <article class="slot-card is-must" id="d2-takayama-inari" data-slot-id="d2-takayama-inari">
+      <div class="slot-meta">
+        <span class="slot-time">⏱️ 09:30 - 10:50</span>
+        <span class="slot-badge badge-temple">【必見】圧巻の千本鳥居</span>
+      </div>
+      <div class="slot-title-row">
+        <input type="checkbox" class="slot-checkbox no-print" onchange="toggleSlot('d2-takayama-inari', this.checked)" title="完了・スキップを消し込み">
+        <h3 class="slot-title"><span style="color:var(--accent);">【必見】</span> 髙山稲荷神社（日本庭園にうねる朱色の千本鳥居 ＆ キツネ像群）</h3>
+      </div>
+      <p class="slot-desc">五穀豊穣・海上安全・商売繁盛の霊験あらたかな津軽随一の稲荷神社。高台の拝殿を参拝したのち階段を下ると、太鼓橋と池を配した美しい日本庭園の中に、龍がうねるように朱色の「千本鳥居」が連なる異界の絶景が広がる。</p>
+      
+      
+      <div class="tactics-box">
+        <div class="tactics-header">
+          <span>🎯</span>
+          <span class="tactics-tag">個別立ち回り</span>
+          <span>【構内順路】攻略戦術</span>
+        </div>
+        <div class="tactics-list">
+          
+            <div class="tactics-step-row">
+              <span class="tactics-num">1</span>
+              <span class="tactics-text">駐車場から大鳥居をくぐり、まず急な石段を登って高台の「拝殿（本殿）」へ正式参拝。</span>
+            </div>
+          
+            <div class="tactics-step-row">
+              <span class="tactics-num">2</span>
+              <span class="tactics-text">拝殿奥の坂・階段を下り、池泉回遊式の日本庭園へ降り立つ。朱色の太鼓橋と水面に映る鳥居を撮影。</span>
+            </div>
+          
+            <div class="tactics-step-row">
+              <span class="tactics-num">3</span>
+              <span class="tactics-text">龍のごとくS字に蛇行する「千本鳥居（200基超）」をくぐり抜けながら最奥の高台展望所へ登り、上から鳥居のうねり全景を見下ろすベストアングルを撮影。</span>
+            </div>
+          
+            <div class="tactics-step-row">
+              <span class="tactics-num">4</span>
+              <span class="tactics-text">最奥の「狐の霊場（役目を終えた無数の白狐・石狐像が並ぶ神秘空間）」を見学し、10:50に駐車場へ戻る。</span>
+            </div>
+          
+        </div>
+      </div>
+      
+      <div class="checkpoint-list">
+        
+          <div class="checkpoint-row">
+            <span class="cp-badge">必須</span>
+            <div>
+              <div class="cp-title">日本庭園 × 朱色の千本鳥居（龍のうねり全景）</div>
+              <div class="cp-desc">京都・伏見稲荷とは異なり「日本庭園の池と緑の中をS字にうねりながら登る」唯一無二の立体構図。終点の高台からの俯瞰ショットが最高峰。</div>
+            </div>
+          </div>
+        
+          <div class="checkpoint-row">
+            <span class="cp-badge">必須</span>
+            <div>
+              <div class="cp-title">奥の院・狐の祠（無数の奉納狐像群）</div>
+              <div class="cp-desc">千本鳥居を抜けた先に広がる、全国から奉納された石狐・陶狐がずらりと並ぶ圧巻のスピリチュアルゾーン。</div>
+            </div>
+          </div>
+        
+      </div>
+      
+      <div class="practical-footer">
+        <div class="pf-row"><span class="pf-tag">🚗 移動・駐車:</span><span class="pf-val">無料大型駐車場完備。拝殿への登り階段と庭園への下り・登り返しがあるためアップダウンが多い（この日の176階相当上昇の一翼！）。</span></div>
+        <div class="pf-row"><span class="pf-tag">💡 現地Tips:</span><span class="pf-val">参拝無料。授与所で千本鳥居デザインの御朱印も頒布。</span></div>
+        <div class="pf-row"><span class="pf-tag">⏱️ 撤収基準:</span><span class="pf-val">10:50に出発し、中泊町・小泊の「おさかな海岸」へ11:30頃に到着してランチ行列を回避する。</span></div>
+      </div>
+      <div class="slot-foot">
+        <a class="map-pill" href="https://www.google.com/maps/search/?api=1&amp;query=高山稲荷神社+つがる市" target="_blank" rel="noopener">📍 Google Maps</a>
+        <span style="font-size:12px;font-weight:700;color:var(--accent);">⭐ 必達スポット</span>
+      </div>
+    </article>
+    <article class="slot-card is-must" id="d2-nakadomari-mebaru" data-slot-id="d2-nakadomari-mebaru">
+      <div class="slot-meta">
+        <span class="slot-time">⏱️ 11:30 - 12:40</span>
+        <span class="slot-badge badge-food">【必食】中泊メバル膳</span>
+      </div>
+      <div class="slot-title-row">
+        <input type="checkbox" class="slot-checkbox no-print" onchange="toggleSlot('d2-nakadomari-mebaru', this.checked)" title="完了・スキップを消し込み">
+        <h3 class="slot-title"><span style="color:var(--accent);">【必見】</span> 中泊町「おさかな海岸」名物『津軽海峡メバル膳』昼食</h3>
+      </div>
+      <p class="slot-desc">津軽半島・中泊町が誇るご当地グルメの最高峰「中泊メバルの刺身と煮付け膳」。津軽海峡の荒波で育った高級白身魚「津軽海峡メバル（ウスメバル）」を、サクサク・プリプリの活造り刺身、特製ダレのまるごと姿煮付け、イカ刺し、メバル潮汁のフルコースで堪能。</p>
+      
+      <div class="swap-box">
+        <div class="swap-title">🔀 スワップ・代替ルート候補</div>
+        <div><strong>プランA:</strong> おさかな海岸で中泊メバル膳</div><div><strong>プランB:</strong> 道の駅こどまりポントマリでメバル膳＆イカ焼き</div><div><strong>おさかな海岸（本命）:</strong> 折腰内海岸の目の前で味わう元祖・中泊メバル膳の人気店</div><div><strong>道の駅こどまり ポントマリ:</strong> おさかな海岸から車3分。2階レストラン「竜泊」でも公式の中泊メバル膳を提供</div>
+      </div>
+      
+      <div class="tactics-box">
+        <div class="tactics-header">
+          <span>🎯</span>
+          <span class="tactics-tag">個別立ち回り</span>
+          <span>【構内順路】攻略戦術</span>
+        </div>
+        <div class="tactics-list">
+          
+            <div class="tactics-step-row">
+              <span class="tactics-num">1</span>
+              <span class="tactics-text">髙山稲荷神社から十三湖（しじみ亭奈良屋前）を経由し、国道339号で小泊の海沿い「おさかな海岸」へ11:30に到着。</span>
+            </div>
+          
+            <div class="tactics-step-row">
+              <span class="tactics-num">2</span>
+              <span class="tactics-text">看板メニューの「中泊メバルの刺身と煮付け膳（約2,300円）」をオーダー。</span>
+            </div>
+          
+            <div class="tactics-step-row">
+              <span class="tactics-num">3</span>
+              <span class="tactics-text">銅製の特製鍋で熱々に炊かれた丸ごと1尾の姿煮付けと、氷の上に盛り付けられた透明感のあるメバルの薄造り刺身を味わう（歯切れの良い白身魚食感の真髄！）。</span>
+            </div>
+          
+        </div>
+      </div>
+      
+      <div class="checkpoint-list">
+        
+          <div class="checkpoint-row">
+            <span class="cp-badge">必須</span>
+            <div>
+              <div class="cp-title">中泊メバルの刺身と煮付け膳（ウスメバル1.5尾使用）</div>
+              <div class="cp-desc">1人前に高級魚ウスメバルを贅沢に1尾半使用。コリコリ・サクサクした白身刺身の歯ごたえと、ふっくら甘辛い煮付けの二刀流。</div>
+            </div>
+          </div>
+        
+          <div class="checkpoint-row">
+            
+            <div>
+              <div class="cp-title">十三湖畔ドライブ通過（十三湖大橋）</div>
+              <div class="cp-desc">道中でシジミ漁で有名な十三湖の広大な汽水湖と日本海の境界を眺めながら通過。</div>
+            </div>
+          </div>
+        
+      </div>
+      
+      <div class="practical-footer">
+        <div class="pf-row"><span class="pf-tag">🚗 移動・駐車:</span><span class="pf-val">髙山稲荷神社から車で約40分（約28km）。店舗前に無料駐車場あり。</span></div>
+        <div class="pf-row"><span class="pf-tag">💡 現地Tips:</span><span class="pf-val">1日限定食数があるため11時台〜12時前の入店が確実。現金・PayPay等対応。</span></div>
+        <div class="pf-row"><span class="pf-tag">⏱️ 撤収基準:</span><span class="pf-val">12:40に出発し、竜泊ライン経由で青函トンネル記念館へ向かう。</span></div>
+      </div>
+      <div class="slot-foot">
+        <a class="map-pill" href="https://www.google.com/maps/search/?api=1&amp;query=おさかな海岸+中泊町" target="_blank" rel="noopener">📍 Google Maps</a>
+        <span style="font-size:12px;font-weight:700;color:var(--accent);">⭐ 必達スポット</span>
+      </div>
+    </article>
+    <article class="slot-card " id="d2-tatsudomari-line" data-slot-id="d2-tatsudomari-line">
+      <div class="slot-meta">
+        <span class="slot-time">⏱️ 12:45 - 13:40</span>
+        <span class="slot-badge badge-transit">絶景山岳海洋道路</span>
+      </div>
+      <div class="slot-title-row">
+        <input type="checkbox" class="slot-checkbox no-print" onchange="toggleSlot('d2-tatsudomari-line', this.checked)" title="完了・スキップを消し込み">
+        <h3 class="slot-title">国道339号「竜泊（たつどまり）ライン」絶景ワインディング ＆ 眺瞰台</h3>
+      </div>
+      <p class="slot-desc">小泊（道の駅こどまり）から龍飛崎までの約20kmを結ぶ国道339号のハイライト区間「竜泊ライン」。海抜0mの海岸線から急勾配のヘアピンカーブで標高475mの「眺瞰台（ちょうかんだい）」まで一気に駆け上がり、日本海・権現崎・北海道松前半島を一望。</p>
+      
+      
+      <div class="tactics-box">
+        <div class="tactics-header">
+          <span>🎯</span>
+          <span class="tactics-tag">個別立ち回り</span>
+          <span>【構内順路】攻略戦術</span>
+        </div>
+        <div class="tactics-list">
+          
+            <div class="tactics-step-row">
+              <span class="tactics-num">1</span>
+              <span class="tactics-text">道の駅こどまり（ポントマリ）を過ぎ、海岸線から山岳ワインディングへ突入。</span>
+            </div>
+          
+            <div class="tactics-step-row">
+              <span class="tactics-num">2</span>
+              <span class="tactics-text">連続するつづら折りを登り切った頂上付近の「眺瞰台（ちょうかんだい）」駐車場に10分立ち寄り。</span>
+            </div>
+          
+            <div class="tactics-step-row">
+              <span class="tactics-num">3</span>
+              <span class="tactics-text">展望台から、今登ってきた竜泊ラインのダイナミックな蛇行道路と日本海の断崖、北の津軽海峡・北海道のシルエットをパノラマ撮影。</span>
+            </div>
+          
+        </div>
+      </div>
+      
+      <div class="checkpoint-list">
+        
+          <div class="checkpoint-row">
+            <span class="cp-badge">必須</span>
+            <div>
+              <div class="cp-title">竜泊ライン 眺瞰台（標高475m・360度パノラマ展望台）</div>
+              <div class="cp-desc">眼下にうねる竜泊ラインのワインディングと権現崎、晴天時は北海道・松前半島まで見渡せる津軽随一のドライブ展望所。</div>
+            </div>
+          </div>
+        
+      </div>
+      
+      <div class="practical-footer">
+        <div class="pf-row"><span class="pf-tag">🚗 移動・駐車:</span><span class="pf-val">おさかな海岸から青函トンネル記念館まで約22km（所要約45〜50分）。眺瞰台に無料駐車場・トイレあり。</span></div>
+        <div class="pf-row"><span class="pf-tag">💡 現地Tips:</span><span class="pf-val">カーブと高低差が連続するため、同乗者は酔い止め対策をして車窓を楽しむ。</span></div>
+        <div class="pf-row"><span class="pf-tag">⏱️ 撤収基準:</span><span class="pf-val">青函トンネル記念館のケーブルカー「もぐら号」の発車時刻（毎時40分発など）の15分前までに記念館へ到着する。</span></div>
+      </div>
+      <div class="slot-foot">
+        <a class="map-pill" href="https://www.google.com/maps/search/?api=1&amp;query=竜泊ライン+眺瞰台" target="_blank" rel="noopener">📍 Google Maps</a>
+        
+      </div>
+    </article>
+    <article class="slot-card is-must" id="d2-seikan-tunnel" data-slot-id="d2-seikan-tunnel">
+      <div class="slot-meta">
+        <span class="slot-time">⏱️ 13:45 - 15:15</span>
+        <span class="slot-badge badge-sightseeing">【必見】海面下140m潜入</span>
+      </div>
+      <div class="slot-title-row">
+        <input type="checkbox" class="slot-checkbox no-print" onchange="toggleSlot('d2-seikan-tunnel', this.checked)" title="完了・スキップを消し込み">
+        <h3 class="slot-title"><span style="color:var(--accent);">【必見】</span> 青函トンネル記念館 ＆ 海面下140m体験坑道「もぐら号」</h3>
+      </div>
+      <p class="slot-desc">24年の歳月をかけて世紀の難工事を完遂した青函トンネルの記念館。日本一短い私鉄ケーブルカー「青函トンネル竜飛斜坑線 もぐら号」に乗車し、斜度14度・全長778mの斜坑を約7分かけて海面下140mの「体験坑道」へ潜入する大迫力インフラツアー。</p>
+      
+      
+      <div class="tactics-box">
+        <div class="tactics-header">
+          <span>🎯</span>
+          <span class="tactics-tag">個別立ち回り</span>
+          <span>【構内順路】攻略戦術</span>
+        </div>
+        <div class="tactics-list">
+          
+            <div class="tactics-step-row">
+              <span class="tactics-num">1</span>
+              <span class="tactics-text">記念館到着後、まず券売窓口で「体験坑道乗車券＋展示ホールセット券（大人1,500円・現金）」を購入し、直近の「もぐら号」便を確保。</span>
+            </div>
+          
+            <div class="tactics-step-row">
+              <span class="tactics-num">2</span>
+              <span class="tactics-text">オレンジ色の斜坑ケーブルカー「もぐら号」に乗車し、一気に海面下140mの海底作業坑へ降下（所要約7分）。</span>
+            </div>
+          
+            <div class="tactics-step-row">
+              <span class="tactics-num">3</span>
+              <span class="tactics-text">風門（気圧調整扉）を抜けて体験坑道内を見学。当時の掘削重機（ジャンボ・吹き付け機）、異常出水との闘いの記録、すぐ隣を北海道新幹線が駆け抜ける海底の空気と冷気（通年約14〜15℃）を肌で体感（約40分ツアー）。</span>
+            </div>
+          
+            <div class="tactics-step-row">
+              <span class="tactics-num">4</span>
+              <span class="tactics-text">地上に戻った後、展示ホールで青函トンネルの立体構造模型や音響映像を鑑賞。</span>
+            </div>
+          
+        </div>
+      </div>
+      
+      <div class="checkpoint-list">
+        
+          <div class="checkpoint-row">
+            <span class="cp-badge">必須</span>
+            <div>
+              <div class="cp-title">斜坑ケーブルカー「もぐら号」で海面下140mへ降下</div>
+              <div class="cp-desc">鉄道事業法に基づく正式なケーブルカー路線としては日本最短。海底へ向かう急勾配のワクワク感が抜群。</div>
+            </div>
+          </div>
+        
+          <div class="checkpoint-row">
+            <span class="cp-badge">必須</span>
+            <div>
+              <div class="cp-title">海面下140m「体験坑道」ツアー（約40分）</div>
+              <div class="cp-desc">実際に工事で使われた作業坑を歩き、湧き出る海底水や当時の掘削マシンを間近で見学。</div>
+            </div>
+          </div>
+        
+      </div>
+      
+      <div class="practical-footer">
+        <div class="pf-row"><span class="pf-tag">🚗 移動・駐車:</span><span class="pf-val">記念館前に無料大型駐車場完備。龍飛崎までは車でわずか3分。</span></div>
+        <div class="pf-row"><span class="pf-tag">💡 現地Tips:</span><span class="pf-val">海底坑道内は湿度が高く気温15℃前後と肌寒いため、薄手の防風パーカを羽織って乗車する。チケットは現金決済（Walica 1,500円/人登録）。</span></div>
+        <div class="pf-row"><span class="pf-tag">⏱️ 撤収基準:</span><span class="pf-val">15:15に記念館を出発し、すぐ上の龍飛崎灯台・階段国道へ移動する。</span></div>
+      </div>
+      <div class="slot-foot">
+        <a class="map-pill" href="https://www.google.com/maps/search/?api=1&amp;query=青函トンネル記念館" target="_blank" rel="noopener">📍 Google Maps</a>
+        <span style="font-size:12px;font-weight:700;color:var(--accent);">⭐ 必達スポット</span>
+      </div>
+    </article>
+    <article class="slot-card is-must" id="d2-tappizaki-kaidan" data-slot-id="d2-tappizaki-kaidan">
+      <div class="slot-meta">
+        <span class="slot-time">⏱️ 15:20 - 16:40</span>
+        <span class="slot-badge badge-sightseeing">【必見】階段国道＆歌碑</span>
+      </div>
+      <div class="slot-title-row">
+        <input type="checkbox" class="slot-checkbox no-print" onchange="toggleSlot('d2-tappizaki-kaidan', this.checked)" title="完了・スキップを消し込み">
+        <h3 class="slot-title"><span style="color:var(--accent);">【必見】</span> 龍飛崎灯台・津軽海峡冬景色歌碑 ＆ 階段国道339号線踏破</h3>
+      </div>
+      <p class="slot-desc">津軽半島最北端の断崖岬「龍飛崎（竜飛崎）」。強風が吹き抜ける龍飛埼灯台と津軽海峡・北海道の絶景を拝み、赤いボタンを押すと石川さゆりの名曲が爆音で響き渡る「津軽海峡・冬景色歌謡碑」を体験。さらに日本で唯一の歩行者専用階段国道「国道339号」全362段を帯島・漁港まで完全往復踏破！</p>
+      
+      
+      <div class="tactics-box">
+        <div class="tactics-header">
+          <span>🎯</span>
+          <span class="tactics-tag">個別立ち回り</span>
+          <span>【構内順路】攻略戦術</span>
+        </div>
+        <div class="tactics-list">
+          
+            <div class="tactics-step-row">
+              <span class="tactics-num">1</span>
+              <span class="tactics-text">龍飛崎駐車場に車を停め、白亜の「龍飛埼灯台（日本の灯台50選）」と展望台へ登り、眼下の帯島と対岸約20km先の北海道（白神岬）を一望。</span>
+            </div>
+          
+            <div class="tactics-step-row">
+              <span class="tactics-num">2</span>
+              <span class="tactics-text">灯台下の「津軽海峡・冬景色歌謡碑」へ移動し、赤いボタンを押して『ご覧あれが竜飛岬 北のはずれと〜♪』の2番フルコーラスを海峡の風の中で聴く。</span>
+            </div>
+          
+            <div class="tactics-step-row">
+              <span class="tactics-num">3</span>
+              <span class="tactics-text">歌碑のすぐ横にある「階段国道339号線（上り口）」から、全362段・高低差約70mの階段国道を下まで降り、漁港側の「階段国道入口」標識と帯島を撮影して再び登り返す（この日のApple Health 36,397歩・176階上昇の最大要因！）。</span>
+            </div>
+          
+        </div>
+      </div>
+      
+      <div class="checkpoint-list">
+        
+          <div class="checkpoint-row">
+            <span class="cp-badge">必須</span>
+            <div>
+              <div class="cp-title">津軽海峡・冬景色 歌謡碑（爆音再生ボタン）</div>
+              <div class="cp-desc">赤いボタンを押すと周囲一帯に石川さゆりの歌声が響き渡る名物スポット。記念撮影必須。</div>
+            </div>
+          </div>
+        
+          <div class="checkpoint-row">
+            <span class="cp-badge">必須</span>
+            <div>
+              <div class="cp-title">日本唯一！階段国道339号線（全362段・延長388.2m）往復踏破</div>
+              <div class="cp-desc">車両通行不能、人間しか通れないのに歴とした「一般国道339号」のおにぎり標識が立つ珍百景インフラ。下から上までの完全踏破で脚力を試す。</div>
+            </div>
+          </div>
+        
+          <div class="checkpoint-row">
+            <span class="cp-badge">必須</span>
+            <div>
+              <div class="cp-title">龍飛埼灯台 ＆ 北海道遠望展望所</div>
+              <div class="cp-desc">津軽海峡の潮目と北海道松前半島を望む北の果ての絶景。</div>
+            </div>
+          </div>
+        
+      </div>
+      
+      <div class="practical-footer">
+        <div class="pf-row"><span class="pf-tag">🚗 移動・駐車:</span><span class="pf-val">龍飛崎灯台・歌碑前に無料駐車場完備。</span></div>
+        <div class="pf-row"><span class="pf-tag">💡 現地Tips:</span><span class="pf-val">年間平均風速10m「風の岬」と呼ばれるほど強風が吹くため、帽子飛びやドアパンチ（車のドア開閉時の強風煽り）に厳重注意。</span></div>
+        <div class="pf-row"><span class="pf-tag">⏱️ 撤収基準:</span><span class="pf-val">16:40に龍飛崎を出発し、国道280号（津軽海峡・平舘海峡沿い）を南下して17:30に蟹田「佐々木旅館」へチェックインする。</span></div>
+      </div>
+      <div class="slot-foot">
+        <a class="map-pill" href="https://www.google.com/maps/search/?api=1&amp;query=龍飛崎" target="_blank" rel="noopener">📍 Google Maps</a>
+        <span style="font-size:12px;font-weight:700;color:var(--accent);">⭐ 必達スポット</span>
+      </div>
+    </article>
+    <article class="slot-card " id="d2-kanita-sasaki" data-slot-id="d2-kanita-sasaki">
+      <div class="slot-meta">
+        <span class="slot-time">⏱️ 17:30 - 21:00</span>
+        <span class="slot-badge badge-food">蟹田港至近・ホタテ会席</span>
+      </div>
+      <div class="slot-title-row">
+        <input type="checkbox" class="slot-checkbox no-print" onchange="toggleSlot('d2-kanita-sasaki', this.checked)" title="完了・スキップを消し込み">
+        <h3 class="slot-title">蟹田「佐々木旅館」チェックイン ＆ 陸奥湾ホタテ・地魚会席</h3>
+      </div>
+      <p class="slot-desc">翌朝09:20発のむつ湾フェリー（蟹田港）まで車でわずか3分の東津軽郡外ヶ浜町・蟹田にある家庭的な名宿「佐々木旅館」（1泊2食付・実費9,150円/人）。陸奥湾で水揚げされたばかりの肉厚ホタテや新鮮地魚が並ぶボリューム満点の夕食会席を味わい、翌朝の海峡横断に備える。</p>
+      
+      
+      <div class="tactics-box">
+        <div class="tactics-header">
+          <span>🎯</span>
+          <span class="tactics-tag">個別立ち回り</span>
+          <span>【構内順路】攻略戦術</span>
+        </div>
+        <div class="tactics-list">
+          
+            <div class="tactics-step-row">
+              <span class="tactics-num">1</span>
+              <span class="tactics-text">龍飛崎から三厩・今別・平舘を経由する国道280号を約50分ドライブし、17:30に蟹田の「佐々木旅館」へチェックイン。</span>
+            </div>
+          
+            <div class="tactics-step-row">
+              <span class="tactics-num">2</span>
+              <span class="tactics-text">入浴で階段国道踏破の汗を流し、18:30から陸奥湾名産のホタテ料理・刺身・焼き魚・小鉢がずらりと並ぶ海鮮夕食を堪能。</span>
+            </div>
+          
+            <div class="tactics-step-row">
+              <span class="tactics-num">3</span>
+              <span class="tactics-text">翌朝のむつ湾フェリー（08:50蟹田港窓口集合）に向け、車検証の用意を再確認して早めに就寝。</span>
+            </div>
+          
+        </div>
+      </div>
+      
+      <div class="checkpoint-list">
+        
+          <div class="checkpoint-row">
+            <span class="cp-badge">必須</span>
+            <div>
+              <div class="cp-title">17:30 蟹田「佐々木旅館」チェックイン</div>
+              <div class="cp-desc">むつ湾フェリー蟹田港ターミナルまで車3分の戦略的拠点宿。</div>
+            </div>
+          </div>
+        
+          <div class="checkpoint-row">
+            <span class="cp-badge">必須</span>
+            <div>
+              <div class="cp-title">18:30 陸奥湾ホタテ・地魚夕食会席</div>
+              <div class="cp-desc">甘み抜群の陸奥湾ホタテと旬の地魚料理でお腹いっぱいに。</div>
+            </div>
+          </div>
+        
+      </div>
+      
+      <div class="practical-footer">
+        <div class="pf-row"><span class="pf-tag">🚗 移動・駐車:</span><span class="pf-val">龍飛崎から国道280号経由で約38km（車約50分）。旅館前に無料駐車場あり。</span></div>
+        <div class="pf-row"><span class="pf-tag">💡 現地Tips:</span><span class="pf-val">近くにコンビニ（ファミリーマート等）もあるため、翌朝のフェリー船内用の飲み物・酔い止めを調達可能。</span></div>
+        <div class="pf-row"><span class="pf-tag">⏱️ 撤収基準:</span><span class="pf-val">翌朝08:40には宿を出発できるよう、07:30朝食・08:30パッキング完了を徹底。</span></div>
+      </div>
+      <div class="slot-foot">
+        <a class="map-pill" href="https://www.google.com/maps/search/?api=1&amp;query=佐々木旅館+外ヶ浜町蟹田" target="_blank" rel="noopener">📍 Google Maps</a>
+        
+      </div>
+    </article>
+        </div>
+      </section>
+      <section class="day-block" id="day-sec-3" data-day="3">
+        <h2 class="day-header">Day 3: 2026年9月13日 (日)</h2>
+        
+        <div class="macro-route-box">
+          <div class="macro-route-head">
+            <span class="macro-route-title">🗺️ 【全体ルート立ち回り】マクロ動線シークエンス</span>
+            <a class="macro-map-link" href="https://www.google.com/maps/dir/%E4%BD%90%E3%80%85%E6%9C%A8%E6%97%85%E9%A4%A8+%E8%9F%B9%E7%94%B0/%E8%9F%99%E7%94%B0%E6%B8%AF/%E8%84%87%E9%87%8E%E6%B2%A2%E6%B8%AF/%E4%BB%8F%E3%83%B6%E6%B5%A6%E9%A7%90%E8%BB%8A%E5%A0%B4/%E6%B0%91%E5%AE%BF+%E6%B5%B7%E5%B3%A1%E8%8D%98+%E5%A4%A7%E9%96%93/%E6%81%90%E5%B1%B1%E6%B8%A9%E6%B3%89+%E5%AE%BF%E5%9D%8A%E5%90%89%E7%A5%A5%E9%96%A3" target="_blank" rel="noopener">📍 広域Google Maps</a>
+          </div>
+          <div class="macro-route-body">佐々木旅館（08:40発） ➔ 蟹田港（09:20発 むつ湾フェリー「かもしか」） ➔ 脇野沢港（10:20着） ➔ 国道338号海峡ライン ➔ 仏ヶ浦（展望台＆階段歩道踏破） ➔ 本州最北端・大間崎（民宿 海峡荘 生本マグロ丼） ➔ 霊場恐山 宿坊「吉祥閣」（16:00チェックイン・地獄巡り・精進料理・夜間探検インシデント）</div>
+        </div>
+        <div class="slot-list">
+          
+    <article class="slot-card is-must" id="d3-mutsuwan-ferry" data-slot-id="d3-mutsuwan-ferry">
+      <div class="slot-meta">
+        <span class="slot-time">⏱️ 08:40 - 10:20</span>
+        <span class="slot-badge badge-transit">【必見】陸奥湾60分横断</span>
+      </div>
+      <div class="slot-title-row">
+        <input type="checkbox" class="slot-checkbox no-print" onchange="toggleSlot('d3-mutsuwan-ferry', this.checked)" title="完了・スキップを消し込み">
+        <h3 class="slot-title"><span style="color:var(--accent);">【必見】</span> むつ湾フェリー「かもしか」第1便（蟹田 09:20 ➔ 脇野沢 10:20）</h3>
+      </div>
+      <p class="slot-desc">津軽半島（蟹田港）から下北半島（脇野沢港）へ、平舘海峡をレンタカーごと横断する「むつ湾フェリー（かもしか）」。青森・野辺地経由の陸路なら約3時間半〜4時間かかるところをわずか60分の船旅で劇的にショートカットし、下北半島の秘境・仏ヶ浦へ直結させる最強の戦略航路。</p>
+      
+      
+      <div class="tactics-box">
+        <div class="tactics-header">
+          <span>🎯</span>
+          <span class="tactics-tag">個別立ち回り</span>
+          <span>【構内順路】攻略戦術</span>
+        </div>
+        <div class="tactics-list">
+          
+            <div class="tactics-step-row">
+              <span class="tactics-num">1</span>
+              <span class="tactics-text">08:40に佐々木旅館を出発し、車で3分の「蟹田港フェリーターミナル」へ08:45に到着。</span>
+            </div>
+          
+            <div class="tactics-step-row">
+              <span class="tactics-num">2</span>
+              <span class="tactics-text">窓口にレンタカーの車検証を提示して乗船手続き・決済を完了（車両航送＋同乗者運賃 折半7,650円/人）。</span>
+            </div>
+          
+            <div class="tactics-step-row">
+              <span class="tactics-num">3</span>
+              <span class="tactics-text">係員の誘導に従い車を船底車両甲板へ積み込み、09:20出航。デッキから津軽半島と下北半島の海峡パノラマ（運が良ければカマイルカ群遊）を楽しみ、10:20に脇野沢港へ上陸。</span>
+            </div>
+          
+        </div>
+      </div>
+      
+      <div class="checkpoint-list">
+        
+          <div class="checkpoint-row">
+            <span class="cp-badge">必須</span>
+            <div>
+              <div class="cp-title">08:50 蟹田港窓口にて車検証提示・車両航送手続き</div>
+              <div class="cp-desc">出航30分前までの手続き完了が必須。予約確認と車両長（4m未満/5m未満）の精算を実施。</div>
+            </div>
+          </div>
+        
+          <div class="checkpoint-row">
+            <span class="cp-badge">必須</span>
+            <div>
+              <div class="cp-title">09:20〜10:20 むつ湾フェリー「かもしか」海上クルーズ</div>
+              <div class="cp-desc">60分間で津軽から下北へワープ。10:20脇野沢港下船後、即座に国道338号（海峡ライン）へ出発。</div>
+            </div>
+          </div>
+        
+      </div>
+      
+      <div class="practical-footer">
+        <div class="pf-row"><span class="pf-tag">🚗 移動・駐車:</span><span class="pf-val">佐々木旅館から蟹田港まで約1.5km（車3分）。</span></div>
+        <div class="pf-row"><span class="pf-tag">💡 現地Tips:</span><span class="pf-val">船内には売店・自販機・展望客室あり。揺れが心配な場合は乗船30分前に酔い止めを服用。</span></div>
+        <div class="pf-row"><span class="pf-tag">⏱️ 撤収基準:</span><span class="pf-val">10:20脇野沢港着後、トイレを済ませて10:25には国道338号で仏ヶ浦へ向けて出発する。</span></div>
+      </div>
+      <div class="slot-foot">
+        <a class="map-pill" href="https://www.google.com/maps/search/?api=1&amp;query=むつ湾フェリー+蟹田港" target="_blank" rel="noopener">📍 Google Maps</a>
+        <span style="font-size:12px;font-weight:700;color:var(--accent);">⭐ 必達スポット</span>
+      </div>
+    </article>
+    <article class="slot-card is-must" id="d3-hotokegaura" data-slot-id="d3-hotokegaura">
+      <div class="slot-meta">
+        <span class="slot-time">⏱️ 10:25 - 12:45</span>
+        <span class="slot-badge badge-sightseeing">【必見】白緑奇岩と碧海</span>
+      </div>
+      <div class="slot-title-row">
+        <input type="checkbox" class="slot-checkbox no-print" onchange="toggleSlot('d3-hotokegaura', this.checked)" title="完了・スキップを消し込み">
+        <h3 class="slot-title"><span style="color:var(--accent);">【必見】</span> 国名勝・天然記念物「仏ヶ浦」（展望台 ＆ 海岸急階段ルート踏破）</h3>
+      </div>
+      <p class="slot-desc">津軽海峡の荒波と風雪が数百万年かけて削り出した、高さ100m超の白緑色（グリーンタフ）奇岩断崖が2kmにわたって連なる国の名勝・天然記念物「仏ヶ浦」。如来の首・五百羅漢・極楽浜など極楽浄土さながらの造形美とエメラルドグリーンの海を堪能。遊覧船欠航時も、国道338号の仏ヶ浦展望台および森の急階段遊歩道（往復約40〜50分）を歩いて海岸へ直接上陸！</p>
+      
+      <div class="swap-box">
+        <div class="swap-title">🔀 スワップ・代替ルート候補</div>
+        <div><strong>プランA:</strong> 佐井港アルサスから仏ヶ浦定期観光船</div><div><strong>プランB:</strong> 波浪欠航時は国道338号仏ヶ浦展望台＆階段歩道で直接海岸へ降下</div><div><strong>定期観光船ルート:</strong> 佐井港アルサスから観光船（往復3,000円）で海上アプローチ＆上陸30分</div><div><strong>展望台＆階段歩道ルート（実走採用）:</strong> 波浪による遊覧船欠航時も、仏ヶ浦展望台＆駐車場からの階段歩道で0円・自由時間で海岸を完全攻略</div>
+      </div>
+      
+      <div class="tactics-box">
+        <div class="tactics-header">
+          <span>🎯</span>
+          <span class="tactics-tag">個別立ち回り</span>
+          <span>【構内順路】攻略戦術</span>
+        </div>
+        <div class="tactics-list">
+          
+            <div class="tactics-step-row">
+              <span class="tactics-num">1</span>
+              <span class="tactics-text">脇野沢港から国道338号（海峡ライン）を北上し、まず高台の「仏ヶ浦展望台」から白緑色の断崖とエメラルドの海の全景を俯瞰撮影。</span>
+            </div>
+          
+            <div class="tactics-step-row">
+              <span class="tactics-num">2</span>
+              <span class="tactics-text">【海況良好時】佐井港アルサス（または牛滝港）から仏ヶ浦定期観光船に乗船し、海上から奇岩群を眺めつつ仏ヶ浦桟橋へ上陸（30分散策）。</span>
+            </div>
+          
+            <div class="tactics-step-row">
+              <span class="tactics-num">3</span>
+              <span class="tactics-text">【遊覧船欠航・陸路直撃時】国道338号の「仏ヶ浦駐車場」に車を停め、ヒバ林の急勾配歩道・階段（高低差約100m・徒歩約15〜20分）を一気に降りて仏ヶ浦の海岸（極楽浜・如来の首・蓬莱山）へ直接降り立ち、奇岩の足元を踏破！</span>
+            </div>
+          
+        </div>
+      </div>
+      
+      <div class="checkpoint-list">
+        
+          <div class="checkpoint-row">
+            <span class="cp-badge">必須</span>
+            <div>
+              <div class="cp-title">仏ヶ浦展望台（国道338号高台からの俯瞰パノラマ）</div>
+              <div class="cp-desc">海の色が南国のように透き通るエメラルドグリーンと白緑色の凝灰岩のコントラストを一望。</div>
+            </div>
+          </div>
+        
+          <div class="checkpoint-row">
+            <span class="cp-badge">必須</span>
+            <div>
+              <div class="cp-title">仏ヶ浦 奇岩群（如来の首・五百羅漢・一ツ仏・極楽浜）上陸散策</div>
+              <div class="cp-desc">近くで見上げると圧倒される巨大岩柱群と、透き通った波打ち際を散策。帰りの登り階段も一気に走破！</div>
+            </div>
+          </div>
+        
+      </div>
+      
+      <div class="practical-footer">
+        <div class="pf-row"><span class="pf-tag">🚗 移動・駐車:</span><span class="pf-val">脇野沢港から仏ヶ浦駐車場まで国道338号（海峡ライン）で約40km（山道ワインディング約60分）。無料駐車場・トイレあり。</span></div>
+        <div class="pf-row"><span class="pf-tag">💡 現地Tips:</span><span class="pf-val">陸路駐車場から海岸へ降りる遊歩道は後半が急な階段（高低差約100m）となるため、飲み物を持参しスニーカーで挑む。</span></div>
+        <div class="pf-row"><span class="pf-tag">⏱️ 撤収基準:</span><span class="pf-val">16:00恐山チェックイン厳守から逆算し、12:45には仏ヶ浦（または佐井港）を出発して大間崎へ向かう。</span></div>
+      </div>
+      <div class="slot-foot">
+        <a class="map-pill" href="https://www.google.com/maps/search/?api=1&amp;query=仏ヶ浦" target="_blank" rel="noopener">📍 Google Maps</a>
+        <span style="font-size:12px;font-weight:700;color:var(--accent);">⭐ 必達スポット</span>
+      </div>
+    </article>
+    <article class="slot-card is-must" id="d3-omazaki-maguro" data-slot-id="d3-omazaki-maguro">
+      <div class="slot-meta">
+        <span class="slot-time">⏱️ 13:15 - 14:30</span>
+        <span class="slot-badge badge-food">【必食】本州最北端マグロ</span>
+      </div>
+      <div class="slot-title-row">
+        <input type="checkbox" class="slot-checkbox no-print" onchange="toggleSlot('d3-omazaki-maguro', this.checked)" title="完了・スキップを消し込み">
+        <h3 class="slot-title"><span style="color:var(--accent);">【必見】</span> 本州最北端・大間崎モニュメント ＆「民宿 海峡荘」極上大間本マグロ丼</h3>
+      </div>
+      <p class="slot-desc">北緯41度33分・本州最北端の地「大間崎」。巨大なマグロ一本釣りモニュメントと「こごが本州最北端の地」碑で到達記念撮影を行い、徒歩1分の人気店「民宿 海峡荘」にて、とろける脂の旨味と赤身のコクが凝縮された本場・大間の生本マグロ丼（3,500円）を実食！</p>
+      
+      
+      <div class="tactics-box">
+        <div class="tactics-header">
+          <span>🎯</span>
+          <span class="tactics-tag">個別立ち回り</span>
+          <span>【構内順路】攻略戦術</span>
+        </div>
+        <div class="tactics-list">
+          
+            <div class="tactics-step-row">
+              <span class="tactics-num">1</span>
+              <span class="tactics-text">佐井村から国道338号を海沿いに約30分走り、13:15に「大間崎無料駐車場」へ入庫。</span>
+            </div>
+          
+            <div class="tactics-step-row">
+              <span class="tactics-num">2</span>
+              <span class="tactics-text">まず混雑前に「民宿 海峡荘（食堂）」へ入店し、名物の「大間マグロ丼（大トロ・中トロ・赤身の贅沢盛り 3,500円）」または「マグロだけ丼」を注文・実食。</span>
+            </div>
+          
+            <div class="tactics-step-row">
+              <span class="tactics-num">3</span>
+              <span class="tactics-text">食後、目の前の大間崎広場へ出て「本州最北端の碑」と「マグロ一本釣りモニュメント」で3名揃って記念撮影。対岸わずか17.5km先の函館山・汐首岬を肉眼で確認。</span>
+            </div>
+          
+        </div>
+      </div>
+      
+      <div class="checkpoint-list">
+        
+          <div class="checkpoint-row">
+            <span class="cp-badge">必須</span>
+            <div>
+              <div class="cp-title">民宿 海峡荘「大間産 生本マグロ丼（3,500円）」実食</div>
+              <div class="cp-desc">9月はまさに津軽海峡の大間マグロ漁の本格シーズン！口の中でとろける大トロ・中トロの脂の甘みは別次元。</div>
+            </div>
+          </div>
+        
+          <div class="checkpoint-row">
+            <span class="cp-badge">必須</span>
+            <div>
+              <div class="cp-title">本州最北端の碑 ＆ マグロ一本釣りモニュメント撮影</div>
+              <div class="cp-desc">青森ドライブ北端の到達証明スポット。大間崎テントサイト横の無料駐車場から徒歩2分。</div>
+            </div>
+          </div>
+        
+      </div>
+      
+      <div class="practical-footer">
+        <div class="pf-row"><span class="pf-tag">🚗 移動・駐車:</span><span class="pf-val">仏ヶ浦から約30km（車約40分）、佐井港から約18km（車約25分）。大間崎無料大駐車場完備。</span></div>
+        <div class="pf-row"><span class="pf-tag">💡 現地Tips:</span><span class="pf-val">海峡荘の食事は現金決済（Walica 3,500円/人登録）。店先のタコ串やホタテ焼きも絶品。</span></div>
+        <div class="pf-row"><span class="pf-tag">⏱️ 撤収基準:</span><span class="pf-val">恐山宿坊「吉祥閣」の16:00チェックイン厳守のため、**14:30〜14:40には必ず大間崎を出発**する（恐山まで約50km・車約60〜70分）。</span></div>
+      </div>
+      <div class="slot-foot">
+        <a class="map-pill" href="https://www.google.com/maps/search/?api=1&amp;query=民宿+海峡荘+大間崎" target="_blank" rel="noopener">📍 Google Maps</a>
+        <span style="font-size:12px;font-weight:700;color:var(--accent);">⭐ 必達スポット</span>
+      </div>
+    </article>
+    <article class="slot-card " id="d3-drive-osorezan" data-slot-id="d3-drive-osorezan">
+      <div class="slot-meta">
+        <span class="slot-time">⏱️ 14:30 - 15:50</span>
+        <span class="slot-badge badge-transit">16:00宿坊厳守移動</span>
+      </div>
+      <div class="slot-title-row">
+        <input type="checkbox" class="slot-checkbox no-print" onchange="toggleSlot('d3-drive-osorezan', this.checked)" title="完了・スキップを消し込み">
+        <h3 class="slot-title">大間崎 ➔ むつ・恐山街道（県道4号）霊場アプローチ</h3>
+      </div>
+      <p class="slot-desc">大間崎から国道279号（はまなすライン）で風間浦・大畑を通り、途中のガソリンスタンドで給油を実施。むつ市から県道4号（恐山街道）の山道へ入り、不老水「冷水（ひやみず）」と三途の川（太鼓橋）を越えて標高240mのカルデラ霊場・恐山へアプローチ。</p>
+      
+      
+      <div class="tactics-box">
+        <div class="tactics-header">
+          <span>🎯</span>
+          <span class="tactics-tag">個別立ち回り</span>
+          <span>【構内順路】攻略戦術</span>
+        </div>
+        <div class="tactics-list">
+          
+            <div class="tactics-step-row">
+              <span class="tactics-num">1</span>
+              <span class="tactics-text">14:30に大間崎を出発し、国道279号を東進。途中の大畑エリアでレンタカーの中間給油を実施（恐山山上にはGSなし）。</span>
+            </div>
+          
+            <div class="tactics-step-row">
+              <span class="tactics-num">2</span>
+              <span class="tactics-text">むつ市田名部から県道4号（恐山街道）へ右折し、鬱蒼としたヒバ林を抜けて山を登る。</span>
+            </div>
+          
+            <div class="tactics-step-row">
+              <span class="tactics-num">3</span>
+              <span class="tactics-text">宇曽利山湖のほとりに湧く硫黄臭と赤い「三途川（さんずのかわ）太鼓橋」を通過し、15:50に恐山総門前駐車場へ到着。</span>
+            </div>
+          
+        </div>
+      </div>
+      
+      <div class="checkpoint-list">
+        
+          <div class="checkpoint-row">
+            <span class="cp-badge">必須</span>
+            <div>
+              <div class="cp-title">大畑周辺での事前給油 ＆ 三途の川（太鼓橋）通過</div>
+              <div class="cp-desc">恐山周辺にはガソリンスタンドもコンビニもないため、下山前・入山前の燃料確認が必須。</div>
+            </div>
+          </div>
+        
+      </div>
+      
+      <div class="practical-footer">
+        <div class="pf-row"><span class="pf-tag">🚗 移動・駐車:</span><span class="pf-val">大間崎から恐山まで約50km（所要約60〜70分）。</span></div>
+        <div class="pf-row"><span class="pf-tag">💡 現地Tips:</span><span class="pf-val">恐山へ近づくにつれ車内まで硫黄（硫化水素）の匂いが漂い始め、現世からあの世（霊場）へ入る独特の空気感が高まる。</span></div>
+        <div class="pf-row"><span class="pf-tag">⏱️ 撤収基準:</span><span class="pf-val">16:00の宿坊受付リミットに遅れそうな場合は、15:00時点で宿坊（0175-22-3825）へ一報を入れる。</span></div>
+      </div>
+      <div class="slot-foot">
+        <a class="map-pill" href="https://www.google.com/maps/dir/?api=1&amp;origin=大間崎&amp;destination=恐山菩提寺" target="_blank" rel="noopener">📍 Google Maps</a>
+        
+      </div>
+    </article>
+    <article class="slot-card is-must" id="d3-osorezan-kichijokaku" data-slot-id="d3-osorezan-kichijokaku">
+      <div class="slot-meta">
+        <span class="slot-time">⏱️ 15:50 - 21:00</span>
+        <span class="slot-badge badge-temple">【必見】日本三大霊場・宿坊</span>
+      </div>
+      <div class="slot-title-row">
+        <input type="checkbox" class="slot-checkbox no-print" onchange="toggleSlot('d3-osorezan-kichijokaku', this.checked)" title="完了・スキップを消し込み">
+        <h3 class="slot-title"><span style="color:var(--accent);">【必見】</span> 日本三大霊場・恐山 菩提寺 ＆ 宿坊「吉祥閣」宿泊（16:00厳守）</h3>
+      </div>
+      <p class="slot-desc">比叡山・高野山と並ぶ日本三大霊場「恐山（おそれざん）」。荒涼とした火山岩から噴気が立ち上る「地獄（無限地獄・重罪地獄・賽の河原）」と、エメラルドグリーンの宇曽利山湖に白砂が広がる「極楽浜」が同居する唯一無二の聖地。総門内の宿坊「吉祥閣」（1泊2食17,000円・現金のみ）に宿泊し、閉門後の静まり返った境内散策、白濁硫黄泉「御所の湯」、豪華精進料理、そして夜間噴気地帯の硫化水素リスクを身をもって体感。</p>
+      
+      
+      <div class="tactics-box">
+        <div class="tactics-header">
+          <span>🎯</span>
+          <span class="tactics-tag">個別立ち回り</span>
+          <span>【構内順路】攻略戦術</span>
+        </div>
+        <div class="tactics-list">
+          
+            <div class="tactics-step-row">
+              <span class="tactics-num">1</span>
+              <span class="tactics-text">15:50に恐山到着。総門横の受付を経て、荘厳かつ清潔な近代和風宿坊「吉祥閣」へ16:00までにチェックイン（1人17,000円現金精算）。</span>
+            </div>
+          
+            <div class="tactics-step-row">
+              <span class="tactics-num">2</span>
+              <span class="tactics-text">16:10〜17:30の夕暮れ時、日帰り参拝客がいなくなった貸切状態の境内「地獄めぐり（1周約3km・45〜60分）」へ出発。地蔵殿 ➔ 無限地獄・血の池地獄 ➔ 賽の河原 ➔ エメラルドグリーンの宇曽利山湖「極楽浜」 ➔ 五智如来・東日本大震災供養塔を巡拝。</span>
+            </div>
+          
+            <div class="tactics-step-row">
+              <span class="tactics-num">3</span>
+              <span class="tactics-text">17:30から宿坊内の天然硫黄温泉大浴場「御所の湯」（または境内の木造湯小屋「古滝の湯」「冷抜の湯」）で源泉かけ流しの白濁名湯を堪能。</span>
+            </div>
+          
+            <div class="tactics-step-row">
+              <span class="tactics-num">4</span>
+              <span class="tactics-text">18:00から大広間にて、従来の質素なイメージを覆す超豪華な「本格精進料理」の夕食を味わう。</span>
+            </div>
+          
+            <div class="tactics-step-row">
+              <span class="tactics-num">5</span>
+              <span class="tactics-text">【⚠️重大安全ルール】夜間は風向きにより高濃度の硫化水素ガス（酸性噴気）が滞留し、生命危険およびスマートフォン・ライト等の基板腐食故障を引き起こすため、**夜間の噴気地帯探検は絶対禁止**とし、精密機器は密閉防護する。</span>
+            </div>
+          
+        </div>
+      </div>
+      
+      <div class="checkpoint-list">
+        
+          <div class="checkpoint-row">
+            <span class="cp-badge">必須</span>
+            <div>
+              <div class="cp-title">16:00 恐山宿坊「吉祥閣」チェックイン ＆ 夕暮れの地獄めぐり・極楽浜散策</div>
+              <div class="cp-desc">ホテル顔負けの美しく清潔な宿坊。まるで広大な霊場庭園そのものに泊まっているかのような圧倒的開放感と静寂。</div>
+            </div>
+          </div>
+        
+          <div class="checkpoint-row">
+            <span class="cp-badge">必須</span>
+            <div>
+              <div class="cp-title">17:30 源泉かけ流し硫黄泉「御所の湯」＆ 18:00 豪華精進料理</div>
+              <div class="cp-desc">湯の花が舞う極上の白濁硫黄泉と、品数豊富で滋味深い精進料理会席に感動。</div>
+            </div>
+          </div>
+        
+          <div class="checkpoint-row">
+            <span class="cp-badge">必須</span>
+            <div>
+              <div class="cp-title">【危機管理教訓】硫化水素ガスによる電子機器腐食防止（夜間噴気地帯立入厳禁）</div>
+              <div class="cp-desc">実際に夜間探検で同行者のスマホがガス腐食故障＆ライト点滅異常を発生させた現場教訓。噴気孔周辺ではスマホ露出を最小化し、夜間の無風時は館内で静かに過ごす。</div>
+            </div>
+          </div>
+        
+      </div>
+      
+      <div class="practical-footer">
+        <div class="pf-row"><span class="pf-tag">🚗 移動・駐車:</span><span class="pf-val">総門前の宿泊者専用駐車エリアに無料駐車。</span></div>
+        <div class="pf-row"><span class="pf-tag">💡 現地Tips:</span><span class="pf-val">硫黄成分で銀製品や金属アクセサリーは一瞬で黒変するため、入浴・散策時は必ず外す。館内にテレビはなく、デジタルデトックスと内省に最適。</span></div>
+        <div class="pf-row"><span class="pf-tag">⏱️ 撤収基準:</span><span class="pf-val">翌朝06:30からの本堂「朝の勤行（大般若祈祷）」に参加するため、22:00までに就寝。</span></div>
+      </div>
+      <div class="slot-foot">
+        <a class="map-pill" href="https://www.google.com/maps/search/?api=1&amp;query=恐山+宿坊+吉祥閣" target="_blank" rel="noopener">📍 Google Maps</a>
+        <span style="font-size:12px;font-weight:700;color:var(--accent);">⭐ 必達スポット</span>
+      </div>
+    </article>
+        </div>
+      </section>
+      <section class="day-block" id="day-sec-4" data-day="4">
+        <h2 class="day-header">Day 4: 2026年9月14日 (月)</h2>
+        
+        <div class="macro-route-box">
+          <div class="macro-route-head">
+            <span class="macro-route-title">🗺️ 【全体ルート立ち回り】マクロ動線シークエンス</span>
+            <a class="macro-map-link" href="https://www.google.com/maps/dir/%E6%81%90%E5%B1%B1%E6%B8%A9%E6%B3%89+%E5%AE%BF%E5%9D%8A%E5%90%89%E7%A5%A5%E9%96%A3/%E9%81%93%E3%81%AE%E9%A7%85%E3%82%88%E3%81%93%E3%81%AF%E3%81%BE/%E9%9D%92%E6%A3%AE%E7%9C%8C%E5%96%B6+%E6%B5%85%E8%99%AB%E6%B0%B4%E6%97%8F%E9%A4%A8/%E3%83%9B%E3%83%86%E3%83%AB%E9%9D%92%E6%A3%AE" target="_blank" rel="noopener">📍 広域Google Maps</a>
+          </div>
+          <div class="macro-route-body">恐山 宿坊吉祥閣（06:30朝勤行・07:30朝食・08:45発） ➔ むつ市街 ➔ 道の駅よこはま「菜の花プラザ」 ➔ 浅虫温泉（昼食） ➔ 青森県営 浅虫水族館 ➔ ホテル青森（チェックイン） ➔ 青森市本町繁華街（4日目打ち上げ居酒屋）</div>
+        </div>
+        <div class="slot-list">
+          
+    <article class="slot-card is-must" id="d4-osorezan-morning" data-slot-id="d4-osorezan-morning">
+      <div class="slot-meta">
+        <span class="slot-time">⏱️ 06:30 - 08:45</span>
+        <span class="slot-badge badge-temple">【必見】宿泊者限定朝勤行</span>
+      </div>
+      <div class="slot-title-row">
+        <input type="checkbox" class="slot-checkbox no-print" onchange="toggleSlot('d4-osorezan-morning', this.checked)" title="完了・スキップを消し込み">
+        <h3 class="slot-title"><span style="color:var(--accent);">【必見】</span> 恐山・朝の勤行（大般若祈祷） ＆ 精進朝食 ➔ 下山</h3>
+      </div>
+      <p class="slot-desc">宿坊「吉祥閣」宿泊者だけが参列できる早朝06:30からの「朝の勤行」。宿坊から長い回廊を渡って本堂（本尊・勝軍地蔵菩薩）へ進み、僧侶たちが経本を蛇腹状に激しく打ち鳴らす迫力の「転読大般若祈祷」と心に響く法話を拝聴。先祖供養・道中安全の焼香を行い、清々しい精進朝食をいただいて下山する。</p>
+      
+      
+      <div class="tactics-box">
+        <div class="tactics-header">
+          <span>🎯</span>
+          <span class="tactics-tag">個別立ち回り</span>
+          <span>【構内順路】攻略戦術</span>
+        </div>
+        <div class="tactics-list">
+          
+            <div class="tactics-step-row">
+              <span class="tactics-num">1</span>
+              <span class="tactics-text">06:15に起床・身支度を整え、06:30までに館内放送の案内に従って本堂へ集合。</span>
+            </div>
+          
+            <div class="tactics-step-row">
+              <span class="tactics-num">2</span>
+              <span class="tactics-text">06:30〜07:20の朝勤行・法話・本堂奥の内陣参拝（お地蔵様のお厨子前）を厳粛に体験。</span>
+            </div>
+          
+            <div class="tactics-step-row">
+              <span class="tactics-num">3</span>
+              <span class="tactics-text">07:30から食堂で温かい精進料理の朝食をいただき、08:45に吉祥閣をチェックアウトしてむつ市街へ下山。</span>
+            </div>
+          
+        </div>
+      </div>
+      
+      <div class="checkpoint-list">
+        
+          <div class="checkpoint-row">
+            <span class="cp-badge">必須</span>
+            <div>
+              <div class="cp-title">06:30 本堂「朝の勤行（転読大般若祈祷）」＆ 内陣参拝</div>
+              <div class="cp-desc">複数の僧侶による読経と経本が風を切る音、胸に刺さる法話は宿坊宿泊の最大価値。</div>
+            </div>
+          </div>
+        
+          <div class="checkpoint-row">
+            <span class="cp-badge">必須</span>
+            <div>
+              <div class="cp-title">07:30 精進朝食 ➔ 08:45 下北半島南下スタート</div>
+              <div class="cp-desc">朝の澄んだ空気の恐山を後にし、県道4号から国道279号へ出る。</div>
+            </div>
+          </div>
+        
+      </div>
+      
+      <div class="practical-footer">
+        <div class="pf-row"><span class="pf-tag">🚗 移動・駐車:</span><span class="pf-val">恐山から道の駅よこはま（横浜町）まで約42km（車約55分）。</span></div>
+        <div class="pf-row"><span class="pf-tag">💡 現地Tips:</span><span class="pf-val">早朝の本堂は標高が高く冷え込むため、上着または羽織を着用して参列する。</span></div>
+        <div class="pf-row"><span class="pf-tag">⏱️ 撤収基準:</span><span class="pf-val">08:50までに出発すれば12時台に浅虫温泉へ余裕で到着できる。</span></div>
+      </div>
+      <div class="slot-foot">
+        <a class="map-pill" href="https://www.google.com/maps/search/?api=1&amp;query=恐山菩提寺" target="_blank" rel="noopener">📍 Google Maps</a>
+        <span style="font-size:12px;font-weight:700;color:var(--accent);">⭐ 必達スポット</span>
+      </div>
+    </article>
+    <article class="slot-card " id="d4-michinoeki-yokohama" data-slot-id="d4-michinoeki-yokohama">
+      <div class="slot-meta">
+        <span class="slot-time">⏱️ 10:00 - 10:45</span>
+        <span class="slot-badge badge-food">菜の花ドーナツ休憩</span>
+      </div>
+      <div class="slot-title-row">
+        <input type="checkbox" class="slot-checkbox no-print" onchange="toggleSlot('d4-michinoeki-yokohama', this.checked)" title="完了・スキップを消し込み">
+        <h3 class="slot-title">下北縦断ドライブ ＆ 道の駅よこはま「菜の花プラザ」</h3>
+      </div>
+      <p class="slot-desc">下北半島の首根っこ（斧の柄の部分）にあたる国道279号（むつ〜横浜町〜野辺地）を陸奥湾沿いに南下。日本一の菜の花作付面積を誇る横浜町の「道の駅よこはま（菜の花プラザ）」に立ち寄り、しっとり優しい甘さの名物「菜の花ドーナツ」や菜の花はちみつソフトでドライブ休憩。</p>
+      
+      
+      <div class="tactics-box">
+        <div class="tactics-header">
+          <span>🎯</span>
+          <span class="tactics-tag">個別立ち回り</span>
+          <span>【構内順路】攻略戦術</span>
+        </div>
+        <div class="tactics-list">
+          
+            <div class="tactics-step-row">
+              <span class="tactics-num">1</span>
+              <span class="tactics-text">恐山からむつ市を経由して国道279号（または下北半島縦貫道路・無料区間）を南下し、10:00に道の駅よこはまへ到着。</span>
+            </div>
+          
+            <div class="tactics-step-row">
+              <span class="tactics-num">2</span>
+              <span class="tactics-text">物産館で焼きたて・揚げたての「菜の花ドーナツ」と横浜町産ホタテ加工品・お土産をチェック。</span>
+            </div>
+          
+            <div class="tactics-step-row">
+              <span class="tactics-num">3</span>
+              <span class="tactics-text">トイレ休憩を済ませ、野辺地・平内（ほたて広場）を経由して浅虫温泉へドライブを継続。</span>
+            </div>
+          
+        </div>
+      </div>
+      
+      <div class="checkpoint-list">
+        
+          <div class="checkpoint-row">
+            <span class="cp-badge">必須</span>
+            <div>
+              <div class="cp-title">道の駅よこはま 名物「菜の花ドーナツ」実食</div>
+              <div class="cp-desc">菜の花のほのかな風味としっとり食感が人気のドライブスイーツ。</div>
+            </div>
+          </div>
+        
+      </div>
+      
+      <div class="practical-footer">
+        <div class="pf-row"><span class="pf-tag">🚗 移動・駐車:</span><span class="pf-val">道の駅よこはまから浅虫水族館までは国道279号〜国道4号経由で約58km（車約1時間10分）。</span></div>
+        <div class="pf-row"><span class="pf-tag">💡 現地Tips:</span><span class="pf-val">下北半島縦貫道路（むつ南バイパス〜横浜吹越IC〜六ヶ所IC〜野辺地北IC）の無料高規格道路を使うと大幅に時間短縮可能。</span></div>
+        <div class="pf-row"><span class="pf-tag">⏱️ 撤収基準:</span><span class="pf-val">10:45に出発し、12:00頃に浅虫温泉エリアへ到着する。</span></div>
+      </div>
+      <div class="slot-foot">
+        <a class="map-pill" href="https://www.google.com/maps/search/?api=1&amp;query=道の駅よこはま+菜の花プラザ" target="_blank" rel="noopener">📍 Google Maps</a>
+        
+      </div>
+    </article>
+    <article class="slot-card is-must" id="d4-asamushi-aquarium" data-slot-id="d4-asamushi-aquarium">
+      <div class="slot-meta">
+        <span class="slot-time">⏱️ 12:00 - 15:15</span>
+        <span class="slot-badge badge-sightseeing">【必見】本州最北端水族館</span>
+      </div>
+      <div class="slot-title-row">
+        <input type="checkbox" class="slot-checkbox no-print" onchange="toggleSlot('d4-asamushi-aquarium', this.checked)" title="完了・スキップを消し込み">
+        <h3 class="slot-title"><span style="color:var(--accent);">【必見】</span> 浅虫温泉ランチ ＆ 青森県営 浅虫水族館（本州最北端水族館）</h3>
+      </div>
+      <p class="slot-desc">東北の熱海と呼ばれる「浅虫温泉」エリアで昼食（ホタテ貝焼き味噌や海鮮丼）をとった後、本州最北端の水族館「青森県営 浅虫水族館」（入館料1,600円/人折半）へ。むつ湾の豊かな海とホタテ養殖風景を再現した長さ15m×幅10mの巨大「むつ湾の海トンネル水槽」や、津軽三味線の音色に合わせて跳躍するイルカパフォーマンスを満喫。</p>
+      
+      
+      <div class="tactics-box">
+        <div class="tactics-header">
+          <span>🎯</span>
+          <span class="tactics-tag">個別立ち回り</span>
+          <span>【構内順路】攻略戦術</span>
+        </div>
+        <div class="tactics-list">
+          
+            <div class="tactics-step-row">
+              <span class="tactics-num">1</span>
+              <span class="tactics-text">12:00に浅虫温泉（道の駅ゆ〜さ浅虫周辺または正立食堂・鶴亀屋食堂）で昼食を摂取。</span>
+            </div>
+          
+            <div class="tactics-step-row">
+              <span class="tactics-num">2</span>
+              <span class="tactics-text">13:00に「青森県営 浅虫水族館」へ入館。まず名物の「むつ湾の海（トンネル水槽）」をくぐり、頭上を泳ぐマダイ・スズキ・ホタテ養殖かごの海中景観を撮影。</span>
+            </div>
+          
+            <div class="tactics-step-row">
+              <span class="tactics-num">3</span>
+              <span class="tactics-text">屋内イルカプールで開催される「イルカパフォーマンス（津軽三味線やねぶた囃子と融合した青森独自演出）」を観覧。</span>
+            </div>
+          
+            <div class="tactics-step-row">
+              <span class="tactics-num">4</span>
+              <span class="tactics-text">アザラシ・ペンギン・ウミガメの「海獣館」やタッチコーナーを見学し、浅虫温泉街・海浜公園を散策して15:15に出発（この日17,912歩 / 11.09kmを計上）。</span>
+            </div>
+          
+        </div>
+      </div>
+      
+      <div class="checkpoint-list">
+        
+          <div class="checkpoint-row">
+            <span class="cp-badge">必須</span>
+            <div>
+              <div class="cp-title">長さ15m「むつ湾の海」巨大トンネル水槽</div>
+              <div class="cp-desc">陸奥湾のホタテ養殖の仕組みと多様な魚群を下から見上げる迫力のメイン水槽。</div>
+            </div>
+          </div>
+        
+          <div class="checkpoint-row">
+            <span class="cp-badge">必須</span>
+            <div>
+              <div class="cp-title">青森限定演出！津軽三味線・ねぶた囃子イルカパフォーマンス</div>
+              <div class="cp-desc">天候に左右されない屋内プールで、ダイナミックなハイジャンプを間近で観賞。</div>
+            </div>
+          </div>
+        
+      </div>
+      
+      <div class="practical-footer">
+        <div class="pf-row"><span class="pf-tag">🚗 移動・駐車:</span><span class="pf-val">無料大型駐車場完備（普通車540台）。青森市街（ホテル青森）までは国道4号で約15km（車約25分）。</span></div>
+        <div class="pf-row"><span class="pf-tag">💡 現地Tips:</span><span class="pf-val">イルカショーの開演時間を入口で確認し、15分前にはプール観覧席を確保すると水しぶきも迫力満点。</span></div>
+        <div class="pf-row"><span class="pf-tag">⏱️ 撤収基準:</span><span class="pf-val">15:15に浅虫水族館を出発し、15:45にホテル青森へチェックインする。</span></div>
+      </div>
+      <div class="slot-foot">
+        <a class="map-pill" href="https://www.google.com/maps/search/?api=1&amp;query=青森県営+浅虫水族館" target="_blank" rel="noopener">📍 Google Maps</a>
+        <span style="font-size:12px;font-weight:700;color:var(--accent);">⭐ 必達スポット</span>
+      </div>
+    </article>
+    <article class="slot-card " id="d4-hotel-aomori" data-slot-id="d4-hotel-aomori">
+      <div class="slot-meta">
+        <span class="slot-time">⏱️ 15:45 - 17:45</span>
+        <span class="slot-badge badge-transit">青森市内名門ホテル</span>
+      </div>
+      <div class="slot-title-row">
+        <input type="checkbox" class="slot-checkbox no-print" onchange="toggleSlot('d4-hotel-aomori', this.checked)" title="完了・スキップを消し込み">
+        <h3 class="slot-title">ホテル青森 チェックイン ＆ 休息（ツイン素泊まり）</h3>
+      </div>
+      <p class="slot-desc">青森市堤町に位置する青森屈指の格式あるシティホテル「ホテル青森」（1人5,624円・ツイン素泊まり）へチェックイン。3日間続いた長距離ドライブと霊場・階段踏破の疲れを広い客室で癒やし、青森市街・善知鳥神社周辺を軽く散歩して夜の打ち上げに備える。</p>
+      
+      
+      <div class="tactics-box">
+        <div class="tactics-header">
+          <span>🎯</span>
+          <span class="tactics-tag">個別立ち回り</span>
+          <span>【構内順路】攻略戦術</span>
+        </div>
+        <div class="tactics-list">
+          
+            <div class="tactics-step-row">
+              <span class="tactics-num">1</span>
+              <span class="tactics-text">15:45にホテル青森の立体駐車場へ入庫し、フロントでチェックイン。</span>
+            </div>
+          
+            <div class="tactics-step-row">
+              <span class="tactics-num">2</span>
+              <span class="tactics-text">荷物を整理し、翌朝のコインランドリー洗濯物やフェリー携行荷物の仕分けを実施。</span>
+            </div>
+          
+            <div class="tactics-step-row">
+              <span class="tactics-num">3</span>
+              <span class="tactics-text">18:00の夕食までベッドで休憩、または青森駅方面へ徒歩散策。</span>
+            </div>
+          
+        </div>
+      </div>
+      
+      <div class="checkpoint-list">
+        
+          <div class="checkpoint-row">
+            <span class="cp-badge">必須</span>
+            <div>
+              <div class="cp-title">15:45 ホテル青森 チェックイン（堤町1-1-23）</div>
+              <div class="cp-desc">平面・立体駐車場完備で車旅に最適。本町繁華街へも徒歩3〜5分の好立地。</div>
+            </div>
+          </div>
+        
+      </div>
+      
+      <div class="practical-footer">
+        <div class="pf-row"><span class="pf-tag">🚗 移動・駐車:</span><span class="pf-val">宿泊者駐車場完備。翌朝ワ・ラッセへ向かう際も国道4号からすぐ。</span></div>
+        <div class="pf-row"><span class="pf-tag">💡 現地Tips:</span><span class="pf-val">洗濯物が溜まっている場合は翌朝ワ・ラッセ観光前に市内の24h大型コインランドリー（せん太くん古川店等）へ投入すると時間を1秒も無駄にしない。</span></div>
+        <div class="pf-row"><span class="pf-tag">⏱️ 撤収基準:</span><span class="pf-val">18:00にロビー集合し、徒歩で本町の居酒屋街へ繰り出す。</span></div>
+      </div>
+      <div class="slot-foot">
+        <a class="map-pill" href="https://www.google.com/maps/search/?api=1&amp;query=ホテル青森" target="_blank" rel="noopener">📍 Google Maps</a>
+        
+      </div>
+    </article>
+    <article class="slot-card " id="d4-honcho-izakaya" data-slot-id="d4-honcho-izakaya">
+      <div class="slot-meta">
+        <span class="slot-time">⏱️ 18:00 - 21:00</span>
+        <span class="slot-badge badge-food">青森編3名打ち上げ</span>
+      </div>
+      <div class="slot-title-row">
+        <input type="checkbox" class="slot-checkbox no-print" onchange="toggleSlot('d4-honcho-izakaya', this.checked)" title="完了・スキップを消し込み">
+        <h3 class="slot-title">青森市・本町繁華街 郷土料理居酒屋で青森編打ち上げ</h3>
+      </div>
+      <p class="slot-desc">ホテル青森から徒歩3〜6分の「本町（ほんちょう）繁華街」にて、T・厳・iの3名で巡った青森レンタカー旅4日間の打ち上げディナー。青森の地酒（田酒・豊盃・八仙）、ホタテ貝焼き味噌、いがめんち、旬の刺身盛り合わせで乾杯。</p>
+      
+      <div class="swap-box">
+        <div class="swap-title">🔀 スワップ・代替ルート候補</div>
+        <div><strong>プランA:</strong> すし居酒屋 樽（本町3丁目）</div><div><strong>プランB:</strong> 津軽じょっぱり漁屋酒場 本町店</div><div><strong>プランC:</strong> 七兵衛や（七輪炭火焼）</div><div><strong>すし居酒屋 樽（本町3丁目）:</strong> ホテルから徒歩3分。新鮮な刺身盛り・握り寿司と地酒が揃う月曜営業の優良店</div><div><strong>津軽じょっぱり漁屋酒場 本町店:</strong> ホテルから徒歩5分。19時から津軽三味線生演奏あり・青森全蔵の地酒と郷土料理が揃う大箱名店</div><div><strong>七兵衛や（本町2丁目）:</strong> ホテルから徒歩5分。七輪炭火で活ホタテや一夜干しを炙る炉端居酒屋</div>
+      </div>
+      
+      <div class="tactics-box">
+        <div class="tactics-header">
+          <span>🎯</span>
+          <span class="tactics-tag">個別立ち回り</span>
+          <span>【構内順路】攻略戦術</span>
+        </div>
+        <div class="tactics-list">
+          
+            <div class="tactics-step-row">
+              <span class="tactics-num">1</span>
+              <span class="tactics-text">18:00にホテル青森から本町2〜3丁目エリアへ徒歩移動（約5分）。</span>
+            </div>
+          
+            <div class="tactics-step-row">
+              <span class="tactics-num">2</span>
+              <span class="tactics-text">月曜夜でも営業している有力店（「すし居酒屋 樽」「津軽じょっぱり漁屋酒場」「七兵衛や」等）へ入店。</span>
+            </div>
+          
+            <div class="tactics-step-row">
+              <span class="tactics-num">3</span>
+              <span class="tactics-text">青森郷土料理と地酒でこれまでの道中（不老ふ死温泉・階段国道・仏ヶ浦・恐山）を振り返り、Walicaで個別精算（1,800円〜）を記録してホテルへ帰還。</span>
+            </div>
+          
+        </div>
+      </div>
+      
+      <div class="checkpoint-list">
+        
+          <div class="checkpoint-row">
+            <span class="cp-badge">必須</span>
+            <div>
+              <div class="cp-title">青森郷土料理（貝焼き味噌・いがめんち・刺身）＆ 地酒「田酒」で乾杯</div>
+              <div class="cp-desc">4日間の青森周遊の無事完走を祝うクライマックスの宴。</div>
+            </div>
+          </div>
+        
+      </div>
+      
+      <div class="practical-footer">
+        <div class="pf-row"><span class="pf-tag">🚗 移動・駐車:</span><span class="pf-val">ホテル青森から徒歩約3〜6分（車はホテル駐車場に置いたまま飲酒OK）。</span></div>
+        <div class="pf-row"><span class="pf-tag">💡 現地Tips:</span><span class="pf-val">月曜定休の個人店があるため、無休・月曜営業の3候補から空席状況を見て即決。</span></div>
+        <div class="pf-row"><span class="pf-tag">⏱️ 撤収基準:</span><span class="pf-val">翌朝08:45チェックアウトに向け、21:30頃までにホテルへ戻る。</span></div>
+      </div>
+      <div class="slot-foot">
+        <a class="map-pill" href="https://www.google.com/maps/search/?api=1&amp;query=青森市+本町+居酒屋" target="_blank" rel="noopener">📍 Google Maps</a>
+        
+      </div>
+    </article>
+        </div>
+      </section>
+      <section class="day-block" id="day-sec-5" data-day="5">
+        <h2 class="day-header">Day 5: 2026年9月15日 (火)</h2>
+        
+        <div class="macro-route-box">
+          <div class="macro-route-head">
+            <span class="macro-route-title">🗺️ 【全体ルート立ち回り】マクロ動線シークエンス</span>
+            <a class="macro-map-link" href="https://www.google.co.jp/maps/dir/%E3%83%9B%E3%83%86%E3%83%AB%E9%9D%92%E6%A3%AE/%E3%81%AD%E3%81%B6%E3%81%9F%E3%81%AE%E5%AE%B6+%E3%83%AF%E3%83%BB%E3%83%A9%E3%83%83%E3%82%BB/%E5%85%AB%E7%94%B2%E7%94%B0%E4%B8%B8/A-FACTORY/%E5%91%B3%E3%81%AE%E6%9C%AD%E5%B9%8C+%E6%B5%85%E5%88%A9/%E9%9D%92%E6%A3%AE%E7%9C%8C%E7%AB%8B%E7%BE%8E%E8%A1%93%E9%A4%A8/%E6%B4%A5%E8%BB%BD%E6%B5%B7%E5%B3%A1%E3%83%95%E3%82%A7%E3%83%AA%E3%83%BC+%E9%9D%92%E6%A3%AE%E3%83%95%E3%82%A7%E3%83%AA%E3%83%BC%E3%82%BF%E3%83%BC%E3%83%9F%E3%83%8A%E3%83%AB" target="_blank" rel="noopener">📍 広域Google Maps</a>
+          </div>
+          <div class="macro-route-body">ホテル青森（08:45発） ➔ コインランドリー投入 ➔ ねぶたの家 ワ・ラッセ ➔ 八甲田丸 ＆ A-FACTORY（アップルパイ） ➔ 味の札幌 浅利（元祖味噌カレー牛乳ラーメン） ➔ 青森県立美術館（あおもり犬・アレコホール） ➔ 津軽海峡フェリー青森ターミナル（16:35 iドロップオフ・17:05出航） ➔ 青森空港（T・厳 レンタカー返却・帰京）</div>
+        </div>
+        <div class="slot-list">
+          
+    <article class="slot-card is-must" id="d5-warasse-nebuta" data-slot-id="d5-warasse-nebuta">
+      <div class="slot-meta">
+        <span class="slot-time">⏱️ 08:45 - 10:00</span>
+        <span class="slot-badge badge-sightseeing">【必見】本物大型ねぶた</span>
+      </div>
+      <div class="slot-title-row">
+        <input type="checkbox" class="slot-checkbox no-print" onchange="toggleSlot('d5-warasse-nebuta', this.checked)" title="完了・スキップを消し込み">
+        <h3 class="slot-title"><span style="color:var(--accent);">【必見】</span> コインランドリー投入 ➔ ねぶたの家 ワ・ラッセ（09:00開館突入）</h3>
+      </div>
+      <p class="slot-desc">08:45にホテル青森をチェックアウト後、まず市内の大型コインランドリー（せん太くん古川店 / ピア青柳店）に洗濯乾燥機（60分全自動）をセットして北海道後半戦に向けた衣類を完全リセット。その待ち時間を100%活用し、09:00開館と同時に「ねぶたの家 ワ・ラッセ」へ突入！今年の祭りで実際に運行された受賞大型ねぶた4台が暗闇に浮かび上がるド迫力の展示を独占鑑賞。</p>
+      
+      
+      <div class="tactics-box">
+        <div class="tactics-header">
+          <span>🎯</span>
+          <span class="tactics-tag">個別立ち回り</span>
+          <span>【構内順路】攻略戦術</span>
+        </div>
+        <div class="tactics-list">
+          
+            <div class="tactics-step-row">
+              <span class="tactics-num">1</span>
+              <span class="tactics-text">08:50にコインランドリーで全自動洗濯乾燥機に衣類を投入（観光中に自動で乾燥まで完了させる時短ハック）。</span>
+            </div>
+          
+            <div class="tactics-step-row">
+              <span class="tactics-num">2</span>
+              <span class="tactics-text">09:00に青森駅横「ねぶたの家 ワ・ラッセ」駐車場へ入庫し、2Fエントランスからねぶたミュージアムへ入場（大人620円）。</span>
+            </div>
+          
+            <div class="tactics-step-row">
+              <span class="tactics-num">3</span>
+              <span class="tactics-text">スロープを下りながら1F「ねぶたホール」へ。幅9m・高さ5mの超巨大大型ねぶた（知事賞・ねぶた大賞等）の精緻な紙貼り・墨書き・迫力の睨みとねぶた囃子音響を全方位から撮影。</span>
+            </div>
+          
+        </div>
+      </div>
+      
+      <div class="checkpoint-list">
+        
+          <div class="checkpoint-row">
+            <span class="cp-badge">必須</span>
+            <div>
+              <div class="cp-title">08:50 コインランドリー全自動洗濯乾燥投入（時間並列化ハック）</div>
+              <div class="cp-desc">長期9泊10日旅の中間地点（Day 5朝）で衣類を完全リフレッシュし、観光時間との並列処理で待ち時間ゼロを実現。</div>
+            </div>
+          </div>
+        
+          <div class="checkpoint-row">
+            <span class="cp-badge">必須</span>
+            <div>
+              <div class="cp-title">09:00 ねぶたの家 ワ・ラッセ 1F「ねぶたホール」大型ねぶた4台鑑賞</div>
+              <div class="cp-desc">朝一番のため団体客が少なく、巨大ねぶたの正面から迫力満点の写真を撮り放題。</div>
+            </div>
+          </div>
+        
+      </div>
+      
+      <div class="practical-footer">
+        <div class="pf-row"><span class="pf-tag">🚗 移動・駐車:</span><span class="pf-val">ワ・ラッセ有料駐車場（最初の1時間220円、以降30分110円）。</span></div>
+        <div class="pf-row"><span class="pf-tag">💡 現地Tips:</span><span class="pf-val">ねぶたの「送り（背面）」の繊細な表現や、制作者（ねぶた師）ごとの筆致の違いを見比べるとさらに面白い。</span></div>
+        <div class="pf-row"><span class="pf-tag">⏱️ 撤収基準:</span><span class="pf-val">10:00にワ・ラッセを出て、すぐ裏手の八甲田丸・A-FACTORYへ徒歩で向かう。</span></div>
+      </div>
+      <div class="slot-foot">
+        <a class="map-pill" href="https://www.google.com/maps/search/?api=1&amp;query=ねぶたの家+ワ・ラッセ" target="_blank" rel="noopener">📍 Google Maps</a>
+        <span style="font-size:12px;font-weight:700;color:var(--accent);">⭐ 必達スポット</span>
+      </div>
+    </article>
+    <article class="slot-card " id="d5-hakkodamaru-afactory" data-slot-id="d5-hakkodamaru-afactory">
+      <div class="slot-meta">
+        <span class="slot-time">⏱️ 10:00 - 11:00</span>
+        <span class="slot-badge badge-food">連絡船＆アップルパイ</span>
+      </div>
+      <div class="slot-title-row">
+        <input type="checkbox" class="slot-checkbox no-print" onchange="toggleSlot('d5-hakkodamaru-afactory', this.checked)" title="完了・スキップを消し込み">
+        <h3 class="slot-title">青函連絡船 八甲田丸 ＆ A-FACTORY（焼きたてアップルパイ・シードル工房）</h3>
+      </div>
+      <p class="slot-desc">ワ・ラッセから海辺のプロムナードへ出て、かつて青森と函館を4時間で結んだ黄色い船体の「青函連絡船メモリアルシップ 八甲田丸」と青森ベイブリッジ、赤い「AOMORI」モニュメントを散策。隣接のおしゃれな白い三角屋根マルシェ「A-FACTORY」で焼きたてアップルパイや青森県産りんごジュース・シードルを堪能。</p>
+      
+      
+      <div class="tactics-box">
+        <div class="tactics-header">
+          <span>🎯</span>
+          <span class="tactics-tag">個別立ち回り</span>
+          <span>【構内順路】攻略戦術</span>
+        </div>
+        <div class="tactics-list">
+          
+            <div class="tactics-step-row">
+              <span class="tactics-num">1</span>
+              <span class="tactics-text">ワ・ラッセ北側の海浜公園へ出て、「AOMORI」ロゴモニュメントと黄色い「八甲田丸」をバックに記念撮影。</span>
+            </div>
+          
+            <div class="tactics-step-row">
+              <span class="tactics-num">2</span>
+              <span class="tactics-text">徒歩1分の「A-FACTORY」へ入館。ガラス張りのシードル醸造タンクを見学しながら、館内ベーカリー・カフェでアップルパイやジェラートを味わう。</span>
+            </div>
+          
+            <div class="tactics-step-row">
+              <span class="tactics-num">3</span>
+              <span class="tactics-text">T・厳の東京持ち帰り用のお土産（ラグノオささき・りんご菓子等）を確保し、コインランドリーで乾燥完了した衣類を回収。</span>
+            </div>
+          
+        </div>
+      </div>
+      
+      <div class="checkpoint-list">
+        
+          <div class="checkpoint-row">
+            <span class="cp-badge">必須</span>
+            <div>
+              <div class="cp-title">青函連絡船メモリアルシップ 八甲田丸 ＆ 青森ラブリッジ散策</div>
+              <div class="cp-desc">夕方これから実際に渡る津軽海峡の港の風情と、青函連絡船の歴史を感じるウォーターフロント。</div>
+            </div>
+          </div>
+        
+          <div class="checkpoint-row">
+            <span class="cp-badge">必須</span>
+            <div>
+              <div class="cp-title">A-FACTORY（シードル工房 ＆ 青森りんごスイーツ）</div>
+              <div class="cp-desc">洗練されたベイエリア複合施設でアップルパイと厳選お土産をチェック。</div>
+            </div>
+          </div>
+        
+      </div>
+      
+      <div class="practical-footer">
+        <div class="pf-row"><span class="pf-tag">🚗 移動・駐車:</span><span class="pf-val">ワ・ラッセ駐車場に車を置いたまま全て徒歩1〜3分圏内で回遊可能。</span></div>
+        <div class="pf-row"><span class="pf-tag">💡 現地Tips:</span><span class="pf-val">これから北海道へ渡りLCC 7kg制限が待つiは、ここでは持ち帰り箱菓子を買わずその場で食べるスイーツに絞る。</span></div>
+        <div class="pf-row"><span class="pf-tag">⏱️ 撤収基準:</span><span class="pf-val">11:00過ぎにランドリー回収を終え、11:30〜12:00に「味の札幌 浅利」へ移動する。</span></div>
+      </div>
+      <div class="slot-foot">
+        <a class="map-pill" href="https://www.google.com/maps/search/?api=1&amp;query=A-FACTORY+青森" target="_blank" rel="noopener">📍 Google Maps</a>
+        
+      </div>
+    </article>
+    <article class="slot-card is-must" id="d5-miso-curry-milk" data-slot-id="d5-miso-curry-milk">
+      <div class="slot-meta">
+        <span class="slot-time">⏱️ 11:30 - 12:45</span>
+        <span class="slot-badge badge-food">【必食】青森ソウルフード</span>
+      </div>
+      <div class="slot-title-row">
+        <input type="checkbox" class="slot-checkbox no-print" onchange="toggleSlot('d5-miso-curry-milk', this.checked)" title="完了・スキップを消し込み">
+        <h3 class="slot-title"><span style="color:var(--accent);">【必見】</span> 「味の札幌 浅利」元祖・味噌カレー牛乳ラーメン（バター入り）</h3>
+      </div>
+      <p class="slot-desc">同行メンバー（厳）が熱望した青森市民の絶対的ソウルフード「味噌カレー牛乳ラーメン（バター入り）」。中高生の「いろんな味を混ぜてみよう」という遊び心から誕生し、今や青森のご当地ラーメン頂点に君臨する一杯を、元祖の系譜を受け継ぐ名店「味の札幌 浅利」（または「味の札幌 大西」）にて実食！</p>
+      
+      <div class="swap-box">
+        <div class="swap-title">🔀 スワップ・代替ルート候補</div>
+        <div><strong>プランA:</strong> 味の札幌 浅利（青森駅東側・元祖発祥系譜）</div><div><strong>プランB:</strong> 味の札幌 大西（古川・王道人気店）</div><div><strong>味の札幌 浅利（実走採用）:</strong> 青森駅東側・新町。元祖・佐藤清氏の直弟子が営む、地元民にも熱烈に支持される名店</div><div><strong>味の札幌 大西:</strong> 古川1丁目。観光客にも知名度抜群の大型人気店（混雑状況を見て浅利と使い分け）</div>
+      </div>
+      
+      <div class="tactics-box">
+        <div class="tactics-header">
+          <span>🎯</span>
+          <span class="tactics-tag">個別立ち回り</span>
+          <span>【構内順路】攻略戦術</span>
+        </div>
+        <div class="tactics-list">
+          
+            <div class="tactics-step-row">
+              <span class="tactics-num">1</span>
+              <span class="tactics-text">11:30〜12:00に青森駅東側の「味の札幌 浅利」（新町1-11-23）へ到着し列に接続（回転は早く10〜15分待ちで入店可能）。</span>
+            </div>
+          
+            <div class="tactics-step-row">
+              <span class="tactics-num">2</span>
+              <span class="tactics-text">全員迷わず看板の「味噌カレー牛乳ラーメン（バター入り・約950〜1,000円）」をオーダー。</span>
+            </div>
+          
+            <div class="tactics-step-row">
+              <span class="tactics-num">3</span>
+              <span class="tactics-text">まずスープを一口。味噌のコク、スパイシーなカレーの香り、牛乳のクリーミーなまろやかさ、そして溶け出すバターとシャキシャキもやし・わかめ・黄色い中太縮れ麺が驚くほど高次元で調和する奇跡のバランスを堪能。</span>
+            </div>
+          
+        </div>
+      </div>
+      
+      <div class="checkpoint-list">
+        
+          <div class="checkpoint-row">
+            <span class="cp-badge">必須</span>
+            <div>
+              <div class="cp-title">「味の札幌 浅利」味噌カレー牛乳ラーメン（バター入り）実食</div>
+              <div class="cp-desc">名前からは想像つかないほど完成された中毒性抜群の黄金スープ。一滴残らず完飲したくなる青森B級グルメの王様。</div>
+            </div>
+          </div>
+        
+      </div>
+      
+      <div class="practical-footer">
+        <div class="pf-row"><span class="pf-tag">🚗 移動・駐車:</span><span class="pf-val">青森駅から徒歩約4〜5分。近隣コインパーキングまたはワ・ラッセ/アスパム周辺から徒歩でアクセス。</span></div>
+        <div class="pf-row"><span class="pf-tag">💡 現地Tips:</span><span class="pf-val">おろしニンニクを少し溶かすとさらにパンチが増して絶品。</span></div>
+        <div class="pf-row"><span class="pf-tag">⏱️ 撤収基準:</span><span class="pf-val">12:45〜13:00に退店し、午後の青森県立美術館へ向けて出発する。</span></div>
+      </div>
+      <div class="slot-foot">
+        <a class="map-pill" href="https://www.google.com/maps/search/?api=1&amp;query=味の札幌+浅利" target="_blank" rel="noopener">📍 Google Maps</a>
+        <span style="font-size:12px;font-weight:700;color:var(--accent);">⭐ 必達スポット</span>
+      </div>
+    </article>
+    <article class="slot-card is-must" id="d5-aomori-museum" data-slot-id="d5-aomori-museum">
+      <div class="slot-meta">
+        <span class="slot-time">⏱️ 13:30 - 15:30</span>
+        <span class="slot-badge badge-sightseeing">【必見】あおもり犬＆アレコ</span>
+      </div>
+      <div class="slot-title-row">
+        <input type="checkbox" class="slot-checkbox no-print" onchange="toggleSlot('d5-aomori-museum', this.checked)" title="完了・スキップを消し込み">
+        <h3 class="slot-title"><span style="color:var(--accent);">【必見】</span> 青森県立美術館（奈良美智「あおもり犬」＆ シャガール「アレコ」）</h3>
+      </div>
+      <p class="slot-desc">建築家・青木淳氏が隣接する三内丸山遺跡の「発掘現場のトレンチ（壕）」から着想を得て設計した、白い煉瓦と土の壁が織りなす世界屈指の美術館建築。4層吹き抜けの巨大空間にマルク・シャガールのバレエ背景画『アレコ』全4作品が揃う圧巻のホールと、弘前出身の現代アーティスト・奈良美智氏による高さ8.5mの巨大立体作品『あおもり犬』を鑑賞。</p>
+      
+      
+      <div class="tactics-box">
+        <div class="tactics-header">
+          <span>🎯</span>
+          <span class="tactics-tag">個別立ち回り</span>
+          <span>【構内順路】攻略戦術</span>
+        </div>
+        <div class="tactics-list">
+          
+            <div class="tactics-step-row">
+              <span class="tactics-num">1</span>
+              <span class="tactics-text">青森市街から車で約20分、13:30に「青森県立美術館」無料駐車場へ到着。白亜の外観と青い木々のシンボルマークを撮影。</span>
+            </div>
+          
+            <div class="tactics-step-row">
+              <span class="tactics-num">2</span>
+              <span class="tactics-text">エレベーターで地下2階へ降り、縦横約21m×高さ19mの巨大吹き抜け「アレコホール」へ。シャガールが描いた縦9m×横15mの超大作背景画4点に四方を囲まれる贅沢な空間に浸る。</span>
+            </div>
+          
+            <div class="tactics-step-row">
+              <span class="tactics-num">3</span>
+              <span class="tactics-text">屋外トレンチ（連絡通路）を抜けて、半屋外空間に佇む高さ8.5mの『あおもり犬』と対面！ガラス越しではなく直接外に出て足元から見上げるルートで記念撮影。</span>
+            </div>
+          
+            <div class="tactics-step-row">
+              <span class="tactics-num">4</span>
+              <span class="tactics-text">八角堂に鎮座する奈良美智作品『森の子（Miss Forest）』や棟方志功展示室を巡り、ミュージアムショップを散策して15:30に出発。</span>
+            </div>
+          
+        </div>
+      </div>
+      
+      <div class="checkpoint-list">
+        
+          <div class="checkpoint-row">
+            <span class="cp-badge">必須</span>
+            <div>
+              <div class="cp-title">奈良美智『あおもり犬』（高さ8.5mの白亜の巨大モニュメント）</div>
+              <div class="cp-desc">トレンチの底でうつむき加減に微笑む青森県立美術館の絶対的アイコン。屋外へ出て間近で撮影。</div>
+            </div>
+          </div>
+        
+          <div class="checkpoint-row">
+            <span class="cp-badge">必須</span>
+            <div>
+              <div class="cp-title">アレコホール（シャガール『アレコ』全4幕背景画完全展示）</div>
+              <div class="cp-desc">世界でここだけで見られるシャガール舞台背景画全4作の常設ホール。圧倒的なスケール感。</div>
+            </div>
+          </div>
+        
+          <div class="checkpoint-row">
+            <span class="cp-badge">必須</span>
+            <div>
+              <div class="cp-title">八角堂『森の子』＆ 棟方志功コレクション</div>
+              <div class="cp-desc">青森が生んだ世界的版画家・棟方志功の力強い板画と、静謐な八角堂のブロンズ像を鑑賞。</div>
+            </div>
+          </div>
+        
+      </div>
+      
+      <div class="practical-footer">
+        <div class="pf-row"><span class="pf-tag">🚗 移動・駐車:</span><span class="pf-val">無料大型駐車場完備。津軽海峡フェリーターミナルまでは車で約15〜20分（約8km）。</span></div>
+        <div class="pf-row"><span class="pf-tag">💡 現地Tips:</span><span class="pf-val">館内は白い迷路のような構造になっているため、フロアマップで「あおもり犬」への屋外出口を確認して回る（この日23,599歩 / 14.66kmを記録）。</span></div>
+        <div class="pf-row"><span class="pf-tag">⏱️ 撤収基準:</span><span class="pf-val">16:45のフェリー乗船手続き締切に絶対遅れないよう、**15:45〜16:00には必ず美術館を出発**する。</span></div>
+      </div>
+      <div class="slot-foot">
+        <a class="map-pill" href="https://www.google.com/maps/search/?api=1&amp;query=青森県立美術館" target="_blank" rel="noopener">📍 Google Maps</a>
+        <span style="font-size:12px;font-weight:700;color:var(--accent);">⭐ 必達スポット</span>
+      </div>
+    </article>
+    <article class="slot-card is-must" id="d5-tsugaru-kaikyo-ferry" data-slot-id="d5-tsugaru-kaikyo-ferry">
+      <div class="slot-meta">
+        <span class="slot-time">⏱️ 16:15 - 20:45</span>
+        <span class="slot-badge badge-transit">【必見】海峡夕日クルーズ</span>
+      </div>
+      <div class="slot-title-row">
+        <input type="checkbox" class="slot-checkbox no-print" onchange="toggleSlot('d5-tsugaru-kaikyo-ferry', this.checked)" title="完了・スキップを消し込み">
+        <h3 class="slot-title"><span style="color:var(--accent);">【必見】</span> 津軽海峡フェリー青森ターミナル（3名解散・17:05発 函館サンセット航路）</h3>
+      </div>
+      <p class="slot-desc">4泊5日にわたって津軽・下北・恐山を駆け抜けたT・厳・iの3名レンタカー旅のフィナーレ。16:15に「津軽海峡フェリー 青森フェリーターミナル」へ到着し、iをドロップオフして固い握手で解散（T・厳はニッポンレンタカー青森空港営業所へ返却し羽田へ帰還）。iは単独ソロ旅モードへ切り替わり、17:05発の津軽海峡フェリー17便（ブルードルフィン・海割ウォーク×ビューシート 2,830円）に乗船し、津軽海峡に沈む夕日を眺めながら20:45に北海道・函館港へ上陸！</p>
+      
+      
+      <div class="tactics-box">
+        <div class="tactics-header">
+          <span>🎯</span>
+          <span class="tactics-tag">個別立ち回り</span>
+          <span>【構内順路】攻略戦術</span>
+        </div>
+        <div class="tactics-list">
+          
+            <div class="tactics-step-row">
+              <span class="tactics-num">1</span>
+              <span class="tactics-text">16:15〜16:30に青森フェリーターミナル（沖館2-12-1）へ到着。レンタカーからiの荷物を降ろし、ガソリン代精算（折半3,292円/人）を確認してT・厳と解散。</span>
+            </div>
+          
+            <div class="tactics-step-row">
+              <span class="tactics-num">2</span>
+              <span class="tactics-text">16:40までに1階スマートチェックイン機（または窓口）で予約済の「海割ウォーク × ビューシート（2,830円）」乗船券を発券。</span>
+            </div>
+          
+            <div class="tactics-step-row">
+              <span class="tactics-num">3</span>
+              <span class="tactics-text">17:05（または17:15）出航。船体最前方の指定席「ビューシート（左側・西側席）」または外部デッキから、17:47頃の津軽海峡サンセットと遠ざかる八甲田山・津軽半島、近づく函館山のシルエットを鑑賞。</span>
+            </div>
+          
+            <div class="tactics-step-row">
+              <span class="tactics-num">4</span>
+              <span class="tactics-text">船内コンセントでスマホ・バッテリーを満充電にしつつ北海道パートの作戦会議を行い、20:45に函館フェリーターミナルへ下船！</span>
+            </div>
+          
+        </div>
+      </div>
+      
+      <div class="checkpoint-list">
+        
+          <div class="checkpoint-row">
+            <span class="cp-badge">必須</span>
+            <div>
+              <div class="cp-title">16:30 青森フェリーターミナル到着・3名レンタカー隊解散</div>
+              <div class="cp-desc">5日間ノントラブルで青森全域を走破したT・厳に感謝を伝えて見送り。ここから後半5泊6日の北海道ソロ遠征が開幕！</div>
+            </div>
+          </div>
+        
+          <div class="checkpoint-row">
+            <span class="cp-badge">必須</span>
+            <div>
+              <div class="cp-title">17:05〜20:45 津軽海峡フェリー 17便「ビューシート」サンセット航海</div>
+              <div class="cp-desc">スタンダードとわずか450円差でリクライニング・全席電源・前面展望が手に入る神コスパ席。夕暮れの海峡クルーズを満喫。</div>
+            </div>
+          </div>
+        
+      </div>
+      
+      <div class="practical-footer">
+        <div class="pf-row"><span class="pf-tag">🚗 移動・駐車:</span><span class="pf-val">青森県立美術館からフェリーターミナルまで車約15〜20分。T・厳はターミナルから青森空港まで環状7号線経由で車約30分。</span></div>
+        <div class="pf-row"><span class="pf-tag">💡 現地Tips:</span><span class="pf-val">複数人旅から一人旅へ切り替わる瞬間の少しの寂しさは、船が出航した瞬間に「これから6日間、自分の判断だけで北海道を駆け抜ける純粋な冒険感」へと一気に昇華する。</span></div>
+        <div class="pf-row"><span class="pf-tag">⏱️ 撤収基準:</span><span class="pf-val">20:45函館港下船後、正面ロータリー20:55発の「函館帝産バス（函館駅前行・320円）」へスムーズに乗車し、21:30にA-GATE HOTEL函館駅前へチェックインする。</span></div>
+      </div>
+      <div class="slot-foot">
+        <a class="map-pill" href="https://www.google.com/maps/search/?api=1&amp;query=津軽海峡フェリー+青森フェリーターミナル" target="_blank" rel="noopener">📍 Google Maps</a>
+        <span style="font-size:12px;font-weight:700;color:var(--accent);">⭐ 必達スポット</span>
+      </div>
+    </article>
+        </div>
+      </section>
+    
+    <nav class="nav-bar no-print" style="margin-top: 24px;">
+      <button type="button" class="nav-link active" data-day="all" onclick="switchDay('all'); window.scrollTo({top:0, behavior:'smooth'});">📑 全日程</button>
+      <button type="button" class="nav-link" data-day="1" onclick="switchDay(1); window.scrollTo({top:0, behavior:'smooth'});">Day 1</button><button type="button" class="nav-link" data-day="2" onclick="switchDay(2); window.scrollTo({top:0, behavior:'smooth'});">Day 2</button><button type="button" class="nav-link" data-day="3" onclick="switchDay(3); window.scrollTo({top:0, behavior:'smooth'});">Day 3</button><button type="button" class="nav-link" data-day="4" onclick="switchDay(4); window.scrollTo({top:0, behavior:'smooth'});">Day 4</button><button type="button" class="nav-link" data-day="5" onclick="switchDay(5); window.scrollTo({top:0, behavior:'smooth'});">Day 5</button>
+    </nav>
+  </main>
+
+  <script>
+    const STORAGE_KEY = 'aomori_completed_slots';
+
+    function toggleTheme() {
+      const cur = document.documentElement.getAttribute('data-theme') || 'light';
+      const nxt = cur === 'dark' ? 'light' : 'dark';
+      document.documentElement.setAttribute('data-theme', nxt);
+      localStorage.setItem('trip_nav_theme', nxt);
+    }
+
+    function getCompletedSlots() {
+      try {
+        return JSON.parse(localStorage.getItem(STORAGE_KEY) || '[]');
+      } catch (e) {
+        return [];
+      }
+    }
+
+    function toggleSlot(slotId, isDone) {
+      const card = document.getElementById(slotId);
+      let list = getCompletedSlots();
+      if (isDone) {
+        if (!list.includes(slotId)) list.push(slotId);
+        if (card) card.classList.add('is-dimmed');
+      } else {
+        list = list.filter(id => id !== slotId);
+        if (card) card.classList.remove('is-dimmed');
+      }
+      localStorage.setItem(STORAGE_KEY, JSON.stringify(list));
+    }
+
+    // In-page Day Segment Switcher (Instant filter without HTTP reload)
+    function switchDay(targetDay) {
+      const dayBlocks = document.querySelectorAll('.day-block');
+      const jumpChips = document.querySelectorAll('.jump-chip');
+      const navLinks = document.querySelectorAll('.nav-link[data-day]');
+
+      // 1. Filter Day Sections
+      dayBlocks.forEach(sec => {
+        const secDay = sec.getAttribute('data-day');
+        if (targetDay === 'all' || secDay === String(targetDay)) {
+          sec.style.display = '';
+        } else {
+          sec.style.display = 'none';
+        }
+      });
+
+      // 2. Filter Jump Chips
+      jumpChips.forEach(chip => {
+        const chipDay = chip.getAttribute('data-day');
+        if (targetDay === 'all' || chipDay === String(targetDay)) {
+          chip.style.display = '';
+        } else {
+          chip.style.display = 'none';
+        }
+      });
+
+      // 3. Update Nav Active State
+      navLinks.forEach(link => {
+        if (link.getAttribute('data-day') === String(targetDay)) {
+          link.classList.add('active');
+        } else {
+          link.classList.remove('active');
+        }
+      });
+
+      // 4. Sync Hash (optional bookmarking)
+      if (history.replaceState) {
+        const newHash = targetDay === 'all' ? '' : `#day${targetDay}`;
+        history.replaceState(null, '', newHash || window.location.pathname);
+      }
+    }
+
+    // Initialize state on load
+    document.addEventListener('DOMContentLoaded', () => {
+      // Restore checked slots
+      const list = getCompletedSlots();
+      list.forEach(slotId => {
+        const card = document.getElementById(slotId);
+        if (card) {
+          card.classList.add('is-dimmed');
+          const cb = card.querySelector('.slot-checkbox');
+          if (cb) cb.checked = true;
+        }
+      });
+
+      // Initial day selection from URL hash: e.g. #day1, #day2
+      const hash = window.location.hash.toLowerCase();
+      const match = hash.match(/^#day(\d+)$/);
+      if (match) {
+        switchDay(match[1]);
+      } else {
+        switchDay('all');
+      }
+    });
+  </script>
+</body>
+</html>

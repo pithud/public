@@ -1,0 +1,4101 @@
+<!DOCTYPE html>
+<html lang="ja" data-theme="light">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <title>東北 ｜ 仙台・松島・平泉・秋田・山形・会津 一人旅の原点 縦走しおり</title>
+  <script>
+    // Anti-FOUC immediate theme application
+    (function() {
+      var t = localStorage.getItem('trip_nav_theme') || 'light';
+      document.documentElement.setAttribute('data-theme', t);
+    })();
+  </script>
+  <style>
+:root {
+  --bg: #f8fafc;
+  --surface: #ffffff;
+  --surface-subtle: #f1f5f9;
+  --text: #0f172a;
+  --text-muted: #64748b;
+  --border: #e2e8f0;
+  --primary: #0284c7;
+  --primary-hover: #0369a1;
+  --accent: #d97706;
+  --card-shadow: 0 1px 3px rgba(0,0,0,0.06), 0 1px 2px rgba(0,0,0,0.04);
+  --font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+}
+[data-theme="dark"] {
+  --bg: #090d16;
+  --surface: #131b2e;
+  --surface-subtle: #1e293b;
+  --text: #f8fafc;
+  --text-muted: #94a3b8;
+  --border: #1e293b;
+  --card-shadow: 0 4px 6px -1px rgba(0,0,0,0.3);
+}
+* { box-sizing: border-box; margin: 0; padding: 0; -webkit-tap-highlight-color: transparent; }
+body {
+  font-family: var(--font-family);
+  background-color: var(--bg);
+  color: var(--text);
+  line-height: 1.5;
+  font-size: 15px;
+  padding-bottom: 80px;
+}
+.header-bar {
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  background: rgba(255, 255, 255, 0.92);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border-bottom: 1px solid var(--border);
+  padding: 12px 16px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+[data-theme="dark"] .header-bar { background: rgba(19, 27, 46, 0.92); }
+.brand-title { font-size: 1.05rem; font-weight: 700; display: flex; align-items: center; gap: 8px; }
+.header-actions { display: flex; gap: 8px; align-items: center; }
+.btn-action {
+  background: var(--surface-subtle);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: 6px 12px;
+  font-size: 13px;
+  color: var(--text);
+  cursor: pointer;
+  text-decoration: none;
+}
+.container { max-width: 680px; margin: 0 auto; padding: 16px; }
+
+/* Day Navigation Bar */
+.nav-bar {
+  display: flex;
+  background: var(--surface-subtle);
+  padding: 6px;
+  border-radius: 10px;
+  margin-bottom: 16px;
+  gap: 6px;
+  align-items: center;
+  justify-content: space-between;
+}
+.nav-link {
+  flex: 1;
+  text-align: center;
+  padding: 7px 10px;
+  border-radius: 7px;
+  font-size: 13px;
+  font-weight: 600;
+  text-decoration: none;
+  color: var(--text-muted);
+  background: transparent;
+  border: none;
+  cursor: pointer;
+}
+.nav-link.active {
+  background: var(--surface);
+  color: var(--primary);
+  box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+}
+
+/* Quick Jump Chips */
+.jump-chips {
+  display: flex;
+  gap: 6px;
+  overflow-x: auto;
+  padding-bottom: 10px;
+  margin-bottom: 16px;
+  white-space: nowrap;
+  scrollbar-width: none;
+}
+.jump-chips::-webkit-scrollbar { display: none; }
+.jump-chip {
+  display: inline-block;
+  font-size: 12px;
+  font-weight: 600;
+  padding: 5px 10px;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 16px;
+  color: var(--text);
+  text-decoration: none;
+}
+
+/* Slot Cards */
+.day-block { margin-bottom: 32px; }
+.day-header {
+  font-size: 1.15rem;
+  font-weight: 700;
+  margin-bottom: 12px;
+  padding-bottom: 6px;
+  border-bottom: 2px solid var(--primary);
+  color: var(--primary);
+}
+
+/* Macro Route Box (Day全体ルート立ち回り) */
+.macro-route-box {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-left: 4px solid var(--primary);
+  border-radius: 10px;
+  padding: 12px 14px;
+  margin-bottom: 16px;
+  box-shadow: var(--card-shadow);
+}
+.macro-route-head {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 6px;
+}
+.macro-route-title {
+  font-size: 13px;
+  font-weight: 800;
+  color: var(--primary);
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+[data-theme="dark"] .macro-route-title { color: #38bdf8; }
+.macro-route-body {
+  font-size: 13px;
+  line-height: 1.55;
+  color: var(--text);
+  margin-bottom: 8px;
+}
+.macro-map-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  font-size: 12px;
+  font-weight: 700;
+  color: var(--primary);
+  text-decoration: none;
+  background: rgba(2, 132, 199, 0.08);
+  padding: 4px 10px;
+  border-radius: 6px;
+  border: 1px solid rgba(2, 132, 199, 0.2);
+}
+[data-theme="dark"] .macro-map-link {
+  color: #38bdf8;
+  background: rgba(56, 189, 248, 0.1);
+  border-color: rgba(56, 189, 248, 0.3);
+}
+.slot-card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  margin-bottom: 12px;
+  padding: 14px 16px;
+  box-shadow: var(--card-shadow);
+  transition: opacity 0.2s, background-color 0.2s;
+}
+.slot-card.is-dimmed { opacity: 0.45; filter: grayscale(40%); }
+.slot-card.is-must { border-left: 4px solid var(--accent); }
+.slot-meta { display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px; }
+.slot-time { font-size: 13px; font-weight: 700; font-variant-numeric: tabular-nums; }
+.slot-badge {
+  font-size: 11px;
+  font-weight: 700;
+  padding: 2px 8px;
+  border-radius: 4px;
+  text-transform: uppercase;
+}
+.badge-sightseeing { background: #d1fae5; color: #065f46; }
+.badge-food { background: #ffedd5; color: #9a3412; }
+.badge-transit { background: #e0e7ff; color: #3730a3; }
+[data-theme="dark"] .badge-sightseeing { background: #064e3b; color: #6ee7b7; }
+[data-theme="dark"] .badge-food { background: #7c2d12; color: #fdba74; }
+[data-theme="dark"] .badge-transit { background: #312e81; color: #a5b4fc; }
+
+.slot-title-row { display: flex; align-items: flex-start; gap: 8px; margin-bottom: 6px; }
+.slot-checkbox { margin-top: 3px; cursor: pointer; width: 18px; height: 18px; accent-color: var(--primary); }
+.slot-title { font-size: 1rem; font-weight: 700; line-height: 1.4; flex: 1; }
+.slot-desc { font-size: 13.5px; color: var(--text-muted); margin-bottom: 10px; line-height: 1.5; padding-left: 26px; }
+
+/* Swap Guide Box */
+.swap-box {
+  margin: 10px 0 10px 26px;
+  padding: 10px 12px;
+  border-radius: 8px;
+  background: rgba(217, 119, 6, 0.08);
+  border: 1px dashed var(--accent);
+  font-size: 12.5px;
+}
+.swap-title { font-weight: 700; color: var(--accent); margin-bottom: 4px; display: flex; align-items: center; gap: 4px; }
+
+.slot-foot { display: flex; justify-content: space-between; align-items: center; padding-top: 8px; border-top: 1px solid var(--border); margin-left: 26px; }
+.map-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  font-size: 12px;
+  font-weight: 600;
+  color: #1a73e8;
+  text-decoration: none;
+  background: rgba(26, 115, 232, 0.08);
+  padding: 4px 10px;
+  border-radius: 20px;
+}
+[data-theme="dark"] .map-pill { color: #8ab4f8; background: rgba(138, 180, 248, 0.12); }
+
+/* Tactics Step Box (立ち回り・攻略手順) */
+.tactics-box {
+  margin: 12px 0 12px 26px;
+  padding: 10px 14px;
+  background: rgba(2, 132, 199, 0.06);
+  border: 1px solid rgba(2, 132, 199, 0.25);
+  border-left: 3.5px solid var(--primary);
+  border-radius: 8px;
+}
+[data-theme="dark"] .tactics-box {
+  background: rgba(56, 189, 248, 0.08);
+  border-color: rgba(56, 189, 248, 0.3);
+  border-left-color: #38bdf8;
+}
+.tactics-header {
+  font-size: 13px;
+  font-weight: 700;
+  color: var(--primary);
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  margin-bottom: 8px;
+}
+.tactics-tag {
+  font-size: 10px;
+  font-weight: 800;
+  background: var(--primary);
+  color: #fff;
+  padding: 1px 6px;
+  border-radius: 4px;
+  letter-spacing: 0.05em;
+}
+[data-theme="dark"] .tactics-header { color: #38bdf8; }
+[data-theme="dark"] .tactics-tag { background: #0284c7; }
+.tactics-list { display: flex; flex-direction: column; gap: 6px; }
+.tactics-step-row { display: flex; align-items: flex-start; gap: 8px; font-size: 12.5px; line-height: 1.5; }
+.tactics-num {
+  flex-shrink: 0;
+  width: 18px;
+  height: 18px;
+  border-radius: 4px;
+  background: rgba(2, 132, 199, 0.18);
+  color: var(--primary);
+  font-size: 11px;
+  font-weight: 800;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-top: 1px;
+}
+[data-theme="dark"] .tactics-num { background: rgba(56, 189, 248, 0.25); color: #38bdf8; }
+
+/* Checkpoints List */
+.checkpoint-list {
+  margin: 10px 0 10px 26px;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+.checkpoint-row {
+  display: flex;
+  align-items: flex-start;
+  gap: 8px;
+  font-size: 12px;
+  background: var(--surface-subtle);
+  padding: 8px 10px;
+  border-radius: 6px;
+  border: 1px solid var(--border);
+}
+.cp-badge {
+  font-size: 10px;
+  font-weight: 700;
+  padding: 1px 5px;
+  border-radius: 3px;
+  background: #0284c7;
+  color: #fff;
+  flex-shrink: 0;
+}
+.cp-title { font-weight: 600; color: var(--text); }
+.cp-desc { font-size: 11.5px; color: var(--text-muted); margin-top: 2px; }
+
+/* Practical Footer */
+.practical-footer {
+  margin: 10px 0 10px 26px;
+  padding: 8px 10px;
+  background: var(--surface-subtle);
+  border-left: 3px solid var(--accent);
+  border-radius: 4px;
+  font-size: 12px;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+.pf-row { display: flex; gap: 6px; }
+.pf-tag { font-weight: 700; color: var(--accent); flex-shrink: 0; min-width: 65px; }
+.pf-val { color: var(--text); }
+
+/* Print & Paged Media */
+@media print {
+  @page { size: A4 portrait; margin: 12mm 15mm; }
+  body { background: #fff !important; color: #000 !important; font-size: 11pt; }
+  .header-bar, .nav-bar, .jump-chips, .no-print { display: none !important; }
+  .day-block { page-break-after: always; break-after: page; }
+  .slot-card { break-inside: avoid; page-break-inside: avoid; box-shadow: none !important; border: 1px solid #ccc !important; }
+  .slot-card.is-dimmed { opacity: 1 !important; filter: none !important; }
+  .slot-checkbox { display: none !important; }
+  .slot-desc, .swap-box, .slot-foot { margin-left: 0 !important; padding-left: 0 !important; }
+}
+
+  </style>
+</head>
+<body>
+  <header class="header-bar">
+    <div class="brand-title">
+      <span>🌲</span>
+      <span>東北 ｜ 仙台・松島・平泉・秋田・山形・会津 一人旅の原点 縦走しおり</span>
+    </div>
+    <div class="header-actions no-print">
+      <button class="btn-action" onclick="toggleTheme()">🌓 テーマ</button>
+      <button class="btn-action" onclick="window.print()">🖨️ 製本印刷</button>
+    </div>
+  </header>
+
+  <main class="container">
+    
+    <nav class="nav-bar no-print">
+      <button type="button" class="nav-link active" data-day="all" onclick="switchDay('all')">📑 全日程</button>
+      <button type="button" class="nav-link" data-day="1" onclick="switchDay(1)">Day 1</button><button type="button" class="nav-link" data-day="2" onclick="switchDay(2)">Day 2</button><button type="button" class="nav-link" data-day="3" onclick="switchDay(3)">Day 3</button><button type="button" class="nav-link" data-day="4" onclick="switchDay(4)">Day 4</button><button type="button" class="nav-link" data-day="5" onclick="switchDay(5)">Day 5</button><button type="button" class="nav-link" data-day="6" onclick="switchDay(6)">Day 6</button><button type="button" class="nav-link" data-day="7" onclick="switchDay(7)">Day 7</button><button type="button" class="nav-link" data-day="8" onclick="switchDay(8)">Day 8</button><button type="button" class="nav-link" data-day="9" onclick="switchDay(9)">Day 9</button><button type="button" class="nav-link" data-day="10" onclick="switchDay(10)">Day 10</button><button type="button" class="nav-link" data-day="11" onclick="switchDay(11)">Day 11</button><button type="button" class="nav-link" data-day="12" onclick="switchDay(12)">Day 12</button>
+    </nav>
+    
+    <div class="jump-chips no-print">
+      
+        <a class="jump-chip" href="#d1-02" data-day="1">📍 仙台城跡（青葉城跡）</a>
+      
+        <a class="jump-chip" href="#d1-03" data-day="1">📍 熊本ラーメン おっぺ</a>
+      
+        <a class="jump-chip" href="#d1-04" data-day="1">📍 秋保温泉 ホテル華乃</a>
+      
+        <a class="jump-chip" href="#d1-05" data-day="1">📍 仙台大観音（大観密寺</a>
+      
+        <a class="jump-chip" href="#d1-06" data-day="1">📍 泉中央駅で解散 ➔ </a>
+      
+        <a class="jump-chip" href="#d1-07" data-day="1">📍 牛たん料理 一仙</a>
+      
+        <a class="jump-chip" href="#d2-01" data-day="2">📍 三瀧山不動院 ＆ た</a>
+      
+        <a class="jump-chip" href="#d2-02" data-day="2">📍 JR仙石線移動 ➔ </a>
+      
+        <a class="jump-chip" href="#d2-03" data-day="2">📍 福浦橋・五大堂・瑞巌</a>
+      
+        <a class="jump-chip" href="#d2-04" data-day="2">📍 仙石線（高城町乗り過</a>
+      
+        <a class="jump-chip" href="#d2-05" data-day="2">📍 すし哲 本店（塩竈）</a>
+      
+        <a class="jump-chip" href="#d3-01" data-day="3">📍 厳美渓 ＆ かっこう</a>
+      
+        <a class="jump-chip" href="#d3-02" data-day="3">📍 平泉移動 ➔ 中尊寺</a>
+      
+        <a class="jump-chip" href="#d3-03" data-day="3">📍 毛越寺（浄土庭園）</a>
+      
+        <a class="jump-chip" href="#d3-04" data-day="3">📍 直通バス移動 ➔ 名</a>
+      
+        <a class="jump-chip" href="#d3-06" data-day="3">📍 白龍（パイロン）本店</a>
+      
+        <a class="jump-chip" href="#d4-01" data-day="4">📍 盛岡都心循環バス「で</a>
+      
+        <a class="jump-chip" href="#d4-02" data-day="4">📍 岩手銀行赤レンガ館 </a>
+      
+        <a class="jump-chip" href="#d4-03" data-day="4">📍 報恩寺（五百羅漢） </a>
+      
+        <a class="jump-chip" href="#d4-04" data-day="4">📍 盛楼閣（盛岡冷麺・ユ</a>
+      
+        <a class="jump-chip" href="#d5-01" data-day="5">📍 角館武家屋敷通り（青</a>
+      
+        <a class="jump-chip" href="#d5-02" data-day="5">📍 角館ランチ（稲庭うど</a>
+      
+        <a class="jump-chip" href="#d5-03" data-day="5">📍 田沢湖駅経由バス ➔</a>
+      
+        <a class="jump-chip" href="#d5-04" data-day="5">📍 田沢湖畔（たつこ像・</a>
+      
+        <a class="jump-chip" href="#d5-05" data-day="5">📍 大曲駅へ帰還・夕食＆</a>
+      
+        <a class="jump-chip" href="#d6-02" data-day="6">📍 佐藤養助 秋田店（西</a>
+      
+        <a class="jump-chip" href="#d6-03" data-day="6">📍 千秋公園（久保田城跡</a>
+      
+        <a class="jump-chip" href="#d6-04" data-day="6">📍 ねぶり流し館・旧金子</a>
+      
+        <a class="jump-chip" href="#d7-01" data-day="7">📍 男鹿駅前「オガーレ」</a>
+      
+        <a class="jump-chip" href="#d7-02" data-day="7">📍 入道崎（入道埼灯台・</a>
+      
+        <a class="jump-chip" href="#d7-03" data-day="7">📍 なまはげ館 ＆ 男鹿</a>
+      
+        <a class="jump-chip" href="#d7-04" data-day="7">📍 JR男鹿線で秋田駅へ</a>
+      
+        <a class="jump-chip" href="#d8-01" data-day="8">📍 秋田県立美術館（平野</a>
+      
+        <a class="jump-chip" href="#d8-03" data-day="8">📍 鶴岡市立加茂水族館（</a>
+      
+        <a class="jump-chip" href="#d8-04" data-day="8">📍 出羽三山神社（三神合</a>
+      
+        <a class="jump-chip" href="#d8-05" data-day="8">📍 酒田駅へ移動 ➔ 「</a>
+      
+        <a class="jump-chip" href="#d9-01" data-day="9">📍 山居倉庫（庄内米歴史</a>
+      
+        <a class="jump-chip" href="#d9-02" data-day="9">📍 JR陸羽西線 ➔ 最</a>
+      
+        <a class="jump-chip" href="#d9-04" data-day="9">📍 ホテルアーバングレイ</a>
+      
+        <a class="jump-chip" href="#d10-01" data-day="10">📍 霞城公園（山形城跡・</a>
+      
+        <a class="jump-chip" href="#d10-02" data-day="10">📍 JR奥羽本線で天童駅</a>
+      
+        <a class="jump-chip" href="#d10-03" data-day="10">📍 水車生そば（元祖鳥中</a>
+      
+        <a class="jump-chip" href="#d10-04" data-day="10">📍 天童 ➔ 大石田 ➔</a>
+      
+        <a class="jump-chip" href="#d11-01" data-day="11">📍 JR仙山線で山寺駅へ</a>
+      
+        <a class="jump-chip" href="#d11-02" data-day="11">📍 米沢駅へ移動 ➔ 上</a>
+      
+        <a class="jump-chip" href="#d11-03" data-day="11">📍 福島駅へ移動 ➔ ア</a>
+      
+        <a class="jump-chip" href="#d11-04" data-day="11">📍 坂内での後悔と「丸信</a>
+      
+        <a class="jump-chip" href="#d12-02" data-day="12">📍 鶴ヶ城（会津若松城・</a>
+      
+        <a class="jump-chip" href="#d12-03" data-day="12">📍 会津武家屋敷（会津藩</a>
+      
+        <a class="jump-chip" href="#d12-04" data-day="12">📍 飯盛山・会津さざえ堂</a>
+      
+        <a class="jump-chip" href="#d12-05" data-day="12">📍 会津松平氏庭園 御薬</a>
+      
+    </div>
+    
+      <section class="day-block" id="day-sec-1" data-day="1">
+        <h2 class="day-header">Day 1: 2026年4月29日 (水・祝)</h2>
+        
+        <div class="macro-route-box">
+          <div class="macro-route-head">
+            <span class="macro-route-title">🗺️ 【全体ルート立ち回り】マクロ動線シークエンス</span>
+            <a class="macro-map-link" href="https://www.google.com/maps/dir/?api=1&amp;origin=仙台駅&amp;destination=牛たん料理一仙&amp;waypoints=仙台城跡|秋保温泉ホテル華乃湯|仙台大観音|泉中央駅|仙台AER&amp;travelmode=driving" target="_blank" rel="noopener">📍 広域Google Maps</a>
+          </div>
+          <div class="macro-route-body">東京駅 ➔ 仙台駅 ➔ 仙台城跡 ➔ 熊本ラーメンおっぺしゃん ➔ 秋保温泉 ホテル華乃湯 ➔ 仙台大観音 ➔ 泉中央駅 ➔ 勾当台公園・AER展望テラス ➔ 牛たん料理 一仙</div>
+        </div>
+        <div class="slot-list">
+          
+    <article class="slot-card " id="d1-01" data-slot-id="d1-01">
+      <div class="slot-meta">
+        <span class="slot-time">⏱️ 08:00 - 10:00</span>
+        <span class="slot-badge badge-transit">移動</span>
+      </div>
+      <div class="slot-title-row">
+        <input type="checkbox" class="slot-checkbox no-print" onchange="toggleSlot('d1-01', this.checked)" title="完了・スキップを消し込み">
+        <h3 class="slot-title">東北新幹線（東京 ➔ 仙台）＆ 友人合流</h3>
+      </div>
+      <p class="slot-desc">4月28日深夜0時に急遽決定したGW東北縦走のスタート。東京駅から東北新幹線で仙台駅へ北上し、現地で友人と合流して初日のドライブへ出発する。</p>
+      
+      <div class="swap-box">
+        <div class="swap-title">🔀 スワップ・代替ルート候補</div>
+        <div><strong>代替プラン:</strong> 新幹線指定席が満席の場合はやまびこ自由席（東京駅始発）を20分前に並んで確保する。</div>
+      </div>
+      
+      <div class="tactics-box">
+        <div class="tactics-header">
+          <span>🎯</span>
+          <span class="tactics-tag">個別立ち回り</span>
+          <span>【構内順路】攻略戦術</span>
+        </div>
+        <div class="tactics-list">
+          
+            <div class="tactics-step-row">
+              <span class="tactics-num">1</span>
+              <span class="tactics-text">GW初日の混雑ピークを抜け、仙台駅到着後すぐに西口ロータリーまたは駐車場で友人車と合流する。</span>
+            </div>
+          
+        </div>
+      </div>
+      
+      <div class="checkpoint-list">
+        
+          <div class="checkpoint-row">
+            <span class="cp-badge">必須</span>
+            <div>
+              <div class="cp-title">現地確認・必達ポイント</div>
+              <div class="cp-desc">翌日以降のソロ移動を見据え、仙台駅構内のコインロッカー位置と牛たん通り・ずんだ小径の配置を把握しておく。</div>
+            </div>
+          </div>
+        
+      </div>
+      
+      <div class="practical-footer">
+        
+        <div class="pf-row"><span class="pf-tag">💡 現地Tips:</span><span class="pf-val">4月末〜5月初旬の東北は夜間・山間部で冷え込むため、防寒レイヤーを手元に確保する。</span></div>
+        
+      </div>
+      <div class="slot-foot">
+        <a class="map-pill" href="https://www.google.com/maps/search/?api=1&amp;query=仙台駅" target="_blank" rel="noopener">📍 Google Maps</a>
+        
+      </div>
+    </article>
+    <article class="slot-card " id="d1-02" data-slot-id="d1-02">
+      <div class="slot-meta">
+        <span class="slot-time">⏱️ 10:15 - 11:45</span>
+        <span class="slot-badge badge-sightseeing">観光</span>
+      </div>
+      <div class="slot-title-row">
+        <input type="checkbox" class="slot-checkbox no-print" onchange="toggleSlot('d1-02', this.checked)" title="完了・スキップを消し込み">
+        <h3 class="slot-title">仙台城跡（青葉城跡）</h3>
+      </div>
+      <p class="slot-desc">伊達62万石の居城跡。標高約130mの青葉山から仙台市街と太平洋を一望し、象徴である伊達政宗公騎馬像と対峙する。</p>
+      
+      <div class="swap-box">
+        <div class="swap-title">🔀 スワップ・代替ルート候補</div>
+        <div><strong>代替プラン:</strong> 渋滞が激しい場合は麓の瑞鳳殿（伊達政宗公霊屋）または仙台市博物館へ切り替える。</div>
+      </div>
+      
+      <div class="tactics-box">
+        <div class="tactics-header">
+          <span>🎯</span>
+          <span class="tactics-tag">個別立ち回り</span>
+          <span>【構内順路】攻略戦術</span>
+        </div>
+        <div class="tactics-list">
+          
+            <div class="tactics-step-row">
+              <span class="tactics-num">1</span>
+              <span class="tactics-text">午後の観光バス集中前に本丸跡へ上がり、政宗公騎馬像と市街地パノラマ、石垣の遺構を効率よく巡る。</span>
+            </div>
+          
+        </div>
+      </div>
+      
+      <div class="checkpoint-list">
+        
+          <div class="checkpoint-row">
+            <span class="cp-badge">必須</span>
+            <div>
+              <div class="cp-title">現地確認・必達ポイント</div>
+              <div class="cp-desc">本丸北壁石垣のスケールと、青葉城資料展示館のCG復元による城郭構造を確認する。</div>
+            </div>
+          </div>
+        
+      </div>
+      
+      <div class="practical-footer">
+        
+        <div class="pf-row"><span class="pf-tag">💡 現地Tips:</span><span class="pf-val">高台で風が通りやすいため体温調整に注意。</span></div>
+        
+      </div>
+      <div class="slot-foot">
+        <a class="map-pill" href="https://www.google.com/maps/search/?api=1&amp;query=仙台城跡" target="_blank" rel="noopener">📍 Google Maps</a>
+        
+      </div>
+    </article>
+    <article class="slot-card " id="d1-03" data-slot-id="d1-03">
+      <div class="slot-meta">
+        <span class="slot-time">⏱️ 12:00 - 13:00</span>
+        <span class="slot-badge badge-sightseeing">観光</span>
+      </div>
+      <div class="slot-title-row">
+        <input type="checkbox" class="slot-checkbox no-print" onchange="toggleSlot('d1-03', this.checked)" title="完了・スキップを消し込み">
+        <h3 class="slot-title">熊本ラーメン おっぺしゃん</h3>
+      </div>
+      <p class="slot-desc">仙台在住・縁のある友人が強く推す本格熊本ラーメン店。自家製黒マー油と濃厚豚骨スープ、トロトロのバラ先チャーシューが特徴。</p>
+      
+      <div class="swap-box">
+        <div class="swap-title">🔀 スワップ・代替ルート候補</div>
+        <div><strong>代替プラン:</strong> 秋保方面へ直行する場合は秋保ヴィレッジまたは「主婦の店 さいち」のおはぎ・惣菜ランチへ変更。</div>
+      </div>
+      
+      <div class="tactics-box">
+        <div class="tactics-header">
+          <span>🎯</span>
+          <span class="tactics-tag">個別立ち回り</span>
+          <span>【構内順路】攻略戦術</span>
+        </div>
+        <div class="tactics-list">
+          
+            <div class="tactics-step-row">
+              <span class="tactics-num">1</span>
+              <span class="tactics-text">初日昼はあえて定番の牛たんではなく、友人おすすめのローカル人気ラーメンで腹ごしらえし、夜の牛たん本命店へコントラストをつける。</span>
+            </div>
+          
+        </div>
+      </div>
+      
+      <div class="checkpoint-list">
+        
+          <div class="checkpoint-row">
+            <span class="cp-badge">必須</span>
+            <div>
+              <div class="cp-title">現地確認・必達ポイント</div>
+              <div class="cp-desc">麺の硬さ・脂の量を選び、香ばしい焦がしニンニク油（黒マー油）のパンチを味わう。</div>
+            </div>
+          </div>
+        
+      </div>
+      
+      <div class="practical-footer">
+        
+        <div class="pf-row"><span class="pf-tag">💡 現地Tips:</span><span class="pf-val">濃厚スープのため、午後の温泉入浴前にしっかり水分補給しておく。</span></div>
+        
+      </div>
+      <div class="slot-foot">
+        <a class="map-pill" href="https://www.google.com/maps/search/?api=1&amp;query=熊本ラーメンおっぺしゃん仙台" target="_blank" rel="noopener">📍 Google Maps</a>
+        
+      </div>
+    </article>
+    <article class="slot-card " id="d1-04" data-slot-id="d1-04">
+      <div class="slot-meta">
+        <span class="slot-time">⏱️ 13:30 - 15:45</span>
+        <span class="slot-badge badge-sightseeing">観光</span>
+      </div>
+      <div class="slot-title-row">
+        <input type="checkbox" class="slot-checkbox no-print" onchange="toggleSlot('d1-04', this.checked)" title="完了・スキップを消し込み">
+        <h3 class="slot-title">秋保温泉 ホテル華乃湯（日帰り入浴）</h3>
+      </div>
+      <p class="slot-desc">「仙台の奥座敷」秋保温泉の中でも湯めぐり感の高い宿。名取川沿いの渓流露天風呂や山沿いの展望風呂で日帰り入浴を楽しむ。</p>
+      
+      <div class="swap-box">
+        <div class="swap-title">🔀 スワップ・代替ルート候補</div>
+        <div><strong>代替プラン:</strong> 入浴前後に余裕があれば「磊々峡（らいらいきょう）」「秋保大滝」または「定義如来 西方寺（定義とうふ店の三角定義あぶらあげ）」を組み込む。</div>
+      </div>
+      
+      <div class="tactics-box">
+        <div class="tactics-header">
+          <span>🎯</span>
+          <span class="tactics-tag">個別立ち回り</span>
+          <span>【構内順路】攻略戦術</span>
+        </div>
+        <div class="tactics-list">
+          
+            <div class="tactics-step-row">
+              <span class="tactics-num">1</span>
+              <span class="tactics-text">日帰り入浴の受付時間内に到着し、川沿い露天風呂で旅初日の緊張を解きほぐす。</span>
+            </div>
+          
+        </div>
+      </div>
+      
+      <div class="checkpoint-list">
+        
+          <div class="checkpoint-row">
+            <span class="cp-badge">必須</span>
+            <div>
+              <div class="cp-title">現地確認・必達ポイント</div>
+              <div class="cp-desc">湯上がり処での休憩と、秋保温泉郷の渓谷美を確認する。</div>
+            </div>
+          </div>
+        
+      </div>
+      
+      <div class="practical-footer">
+        
+        <div class="pf-row"><span class="pf-tag">💡 現地Tips:</span><span class="pf-val">タオル貸出の有無を受付で確認する。</span></div>
+        
+      </div>
+      <div class="slot-foot">
+        <a class="map-pill" href="https://www.google.com/maps/search/?api=1&amp;query=秋保温泉+ホテル華乃湯" target="_blank" rel="noopener">📍 Google Maps</a>
+        
+      </div>
+    </article>
+    <article class="slot-card " id="d1-05" data-slot-id="d1-05">
+      <div class="slot-meta">
+        <span class="slot-time">⏱️ 16:15 - 17:15</span>
+        <span class="slot-badge badge-sightseeing">観光</span>
+      </div>
+      <div class="slot-title-row">
+        <input type="checkbox" class="slot-checkbox no-print" onchange="toggleSlot('d1-05', this.checked)" title="完了・スキップを消し込み">
+        <h3 class="slot-title">仙台大観音（大観密寺）</h3>
+      </div>
+      <p class="slot-desc">仙台市泉区にそびえ立つ地上100mの巨大白衣観音像。住宅街の背後に突如現れる圧倒的スケール感と、12層に分かれた胎内仏巡りが異彩を放つ。</p>
+      
+      <div class="swap-box">
+        <div class="swap-title">🔀 スワップ・代替ルート候補</div>
+        <div><strong>代替プラン:</strong> 閉館後の場合は外観と参道からの撮影に絞り、泉中央駅周辺カフェで小休止する。</div>
+      </div>
+      
+      <div class="tactics-box">
+        <div class="tactics-header">
+          <span>🎯</span>
+          <span class="tactics-tag">個別立ち回り</span>
+          <span>【構内順路】攻略戦術</span>
+        </div>
+        <div class="tactics-list">
+          
+            <div class="tactics-step-row">
+              <span class="tactics-num">1</span>
+              <span class="tactics-text">秋保から泉中央方面へ抜けるルート上で立ち寄り、外観の巨大撮影ポイントと胎内エレベーターからの吹き抜け構造を体感する。</span>
+            </div>
+          
+        </div>
+      </div>
+      
+      <div class="checkpoint-list">
+        
+          <div class="checkpoint-row">
+            <span class="cp-badge">必須</span>
+            <div>
+              <div class="cp-title">現地確認・必達ポイント</div>
+              <div class="cp-desc">108体の胎内仏と十二神将、最上部展望窓からの仙台市街眺望。</div>
+            </div>
+          </div>
+        
+      </div>
+      
+      <div class="practical-footer">
+        
+        <div class="pf-row"><span class="pf-tag">💡 現地Tips:</span><span class="pf-val">閉館時刻が夕方に設定されているため、16時台前半の入場を厳守する。</span></div>
+        
+      </div>
+      <div class="slot-foot">
+        <a class="map-pill" href="https://www.google.com/maps/search/?api=1&amp;query=仙台大観音" target="_blank" rel="noopener">📍 Google Maps</a>
+        
+      </div>
+    </article>
+    <article class="slot-card " id="d1-06" data-slot-id="d1-06">
+      <div class="slot-meta">
+        <span class="slot-time">⏱️ 17:45 - 20:00</span>
+        <span class="slot-badge badge-sightseeing">観光</span>
+      </div>
+      <div class="slot-title-row">
+        <input type="checkbox" class="slot-checkbox no-print" onchange="toggleSlot('d1-06', this.checked)" title="完了・スキップを消し込み">
+        <h3 class="slot-title">泉中央駅で解散 ➔ 勾当台公園チェックイン・AER展望テラス</h3>
+      </div>
+      <p class="slot-desc">17:45に泉中央駅で友人と別れ、ここから完全ソロ旅モードへ突入。地下鉄南北線で勾当台公園駅近くのホテルへチェックイン後、仙台駅近くの「AER（アエル）展望テラス（31階）」とクリスロード・三瀧山不動院を散策する。</p>
+      
+      <div class="swap-box">
+        <div class="swap-title">🔀 スワップ・代替ルート候補</div>
+        <div><strong>代替プラン:</strong> 雨天・強風時は一番町〜国分町アーケードの屋根下ルートのみで一仙へ向かう。</div>
+      </div>
+      
+      <div class="tactics-box">
+        <div class="tactics-header">
+          <span>🎯</span>
+          <span class="tactics-tag">個別立ち回り</span>
+          <span>【構内順路】攻略戦術</span>
+        </div>
+        <div class="tactics-list">
+          
+            <div class="tactics-step-row">
+              <span class="tactics-num">1</span>
+              <span class="tactics-text">ホテルに荷物を置いて身軽になり、ユニクロで靴下等を調達しつつ、AER 31階の無料展望テラスから先ほど訪れた仙台大観音方面の夜景を確認する。</span>
+            </div>
+          
+        </div>
+      </div>
+      
+      <div class="checkpoint-list">
+        
+          <div class="checkpoint-row">
+            <span class="cp-badge">必須</span>
+            <div>
+              <div class="cp-title">現地確認・必達ポイント</div>
+              <div class="cp-desc">アーケード街（クリスロード）内に鎮座する「三瀧山不動院（仙台四郎）」の場所もあわせて把握する。</div>
+            </div>
+          </div>
+        
+      </div>
+      
+      <div class="practical-footer">
+        
+        <div class="pf-row"><span class="pf-tag">💡 現地Tips:</span><span class="pf-val">AER展望テラスは20:00閉場のため、夕食前に立ち寄るのが鉄則。</span></div>
+        
+      </div>
+      <div class="slot-foot">
+        <a class="map-pill" href="https://www.google.com/maps/search/?api=1&amp;query=仙台AER展望テラス" target="_blank" rel="noopener">📍 Google Maps</a>
+        
+      </div>
+    </article>
+    <article class="slot-card " id="d1-07" data-slot-id="d1-07">
+      <div class="slot-meta">
+        <span class="slot-time">⏱️ 20:30 - 22:00</span>
+        <span class="slot-badge badge-sightseeing">観光</span>
+      </div>
+      <div class="slot-title-row">
+        <input type="checkbox" class="slot-checkbox no-print" onchange="toggleSlot('d1-07', this.checked)" title="完了・スキップを消し込み">
+        <h3 class="slot-title">牛たん料理 一仙</h3>
+      </div>
+      <p class="slot-desc">広瀬通・国分町入口の地下に構える牛たんの名店。約6,000円の「真芯とろたん定食」とアサヒ熟撰瓶ビールが、既存の牛たん観を根底から覆す衝撃を与える。</p>
+      
+      <div class="swap-box">
+        <div class="swap-title">🔀 スワップ・代替ルート候補</div>
+        <div><strong>代替プラン:</strong> 満席時は「旨味太助」「味太助」または「閣 電力ビル店／ブランドーム本店」へスワップする。</div>
+      </div>
+      
+      <div class="tactics-box">
+        <div class="tactics-header">
+          <span>🎯</span>
+          <span class="tactics-tag">個別立ち回り</span>
+          <span>【構内順路】攻略戦術</span>
+        </div>
+        <div class="tactics-list">
+          
+            <div class="tactics-step-row">
+              <span class="tactics-num">1</span>
+              <span class="tactics-text">20時台のディナータイム後半に訪問し、迷わず最上位の「真芯とろたん」と瓶ビール（アサヒ熟撰）をオーダーする。</span>
+            </div>
+          
+        </div>
+      </div>
+      
+      <div class="checkpoint-list">
+        
+          <div class="checkpoint-row">
+            <span class="cp-badge">必須</span>
+            <div>
+              <div class="cp-title">現地確認・必達ポイント</div>
+              <div class="cp-desc">表面の香ばしい炭火焼き目と、中心部の驚くほど柔らかくジューシーな肉質、テールスープ・麦飯との完璧な調和。</div>
+            </div>
+          </div>
+        
+      </div>
+      
+      <div class="practical-footer">
+        
+        <div class="pf-row"><span class="pf-tag">💡 現地Tips:</span><span class="pf-val">翌朝の別店舗（善治郎）との比較ベンチマークとなるため、肉厚・噛み切りやすさ・旨味の余韻を記憶に刻む。</span></div>
+        
+      </div>
+      <div class="slot-foot">
+        <a class="map-pill" href="https://www.google.com/maps/search/?api=1&amp;query=牛たん料理+一仙" target="_blank" rel="noopener">📍 Google Maps</a>
+        
+      </div>
+    </article>
+        </div>
+      </section>
+      <section class="day-block" id="day-sec-2" data-day="2">
+        <h2 class="day-header">Day 2: 2026年4月30日 (木)</h2>
+        
+        <div class="macro-route-box">
+          <div class="macro-route-head">
+            <span class="macro-route-title">🗺️ 【全体ルート立ち回り】マクロ動線シークエンス</span>
+            <a class="macro-map-link" href="https://www.google.com/maps/dir/?api=1&amp;origin=仙台駅&amp;destination=一ノ関駅&amp;waypoints=松島海岸駅|瑞巌寺|鹽竈神社|すし哲&amp;travelmode=transit" target="_blank" rel="noopener">📍 広域Google Maps</a>
+          </div>
+          <div class="macro-route-body">仙台アーケード・三瀧山不動院 ➔ たんや善治郎 仙台駅牛たん通り店 ➔ 松島海岸（阿部かま・仁王丸クルーズ・福浦橋・五大堂・瑞巌寺・円通院・天麟院） ➔ 本塩釜（鹽竈神社・すし哲） ➔ 仙台駅荷物回収 ➔ 一ノ関駅</div>
+        </div>
+        <div class="slot-list">
+          
+    <article class="slot-card " id="d2-01" data-slot-id="d2-01">
+      <div class="slot-meta">
+        <span class="slot-time">⏱️ 09:30 - 11:30</span>
+        <span class="slot-badge badge-sightseeing">観光</span>
+      </div>
+      <div class="slot-title-row">
+        <input type="checkbox" class="slot-checkbox no-print" onchange="toggleSlot('d2-01', this.checked)" title="完了・スキップを消し込み">
+        <h3 class="slot-title">三瀧山不動院 ＆ たんや善治郎 仙台駅牛たん通り店</h3>
+      </div>
+      <p class="slot-desc">朝一番でクリスロードの三瀧山不動院に参拝した後、仙台駅3階「牛たん通り」の行列店・たんや善治郎へ。「真中たん（しんちゅうたん）」を注文し、前夜の「一仙」とガチンコ比較を行う。</p>
+      
+      <div class="swap-box">
+        <div class="swap-title">🔀 スワップ・代替ルート候補</div>
+        <div><strong>代替プラン:</strong> 牛たん通りが大行列の場合は、駅外の「たんや善治郎 本店（駅前本店）」または「喜助」へ分散する。</div>
+      </div>
+      
+      <div class="tactics-box">
+        <div class="tactics-header">
+          <span>🎯</span>
+          <span class="tactics-tag">個別立ち回り</span>
+          <span>【構内順路】攻略戦術</span>
+        </div>
+        <div class="tactics-list">
+          
+            <div class="tactics-step-row">
+              <span class="tactics-num">1</span>
+              <span class="tactics-text">10時台の早い時間帯に入店してGWの長蛇の列を回避し、荷物を仙台駅のコインロッカーへ預けてから仙石線ホームへ向かう。</span>
+            </div>
+          
+        </div>
+      </div>
+      
+      <div class="checkpoint-list">
+        
+          <div class="checkpoint-row">
+            <span class="cp-badge">必須</span>
+            <div>
+              <div class="cp-title">現地確認・必達ポイント</div>
+              <div class="cp-desc">善治郎の「真中たん」のサクッとした歯切れと、一仙の「真芯とろたん」の圧倒的なとろける脂の質の違いを言語化する。</div>
+            </div>
+          </div>
+        
+      </div>
+      
+      <div class="practical-footer">
+        
+        <div class="pf-row"><span class="pf-tag">💡 現地Tips:</span><span class="pf-val">夕方塩竈から仙台へ戻って荷物を回収するため、ロッカーの場所はJR改札近くに固定する。</span></div>
+        
+      </div>
+      <div class="slot-foot">
+        <a class="map-pill" href="https://www.google.com/maps/search/?api=1&amp;query=たんや善治郎+仙台駅牛たん通り店" target="_blank" rel="noopener">📍 Google Maps</a>
+        
+      </div>
+    </article>
+    <article class="slot-card " id="d2-02" data-slot-id="d2-02">
+      <div class="slot-meta">
+        <span class="slot-time">⏱️ 11:45 - 13:50</span>
+        <span class="slot-badge badge-sightseeing">観光</span>
+      </div>
+      <div class="slot-title-row">
+        <input type="checkbox" class="slot-checkbox no-print" onchange="toggleSlot('d2-02', this.checked)" title="完了・スキップを消し込み">
+        <h3 class="slot-title">JR仙石線移動 ➔ 阿部かま ＆ 松島島巡り観光船（仁王丸）</h3>
+      </div>
+      <p class="slot-desc">JR仙石線で松島海岸駅へ（12:29着）。駅前の「阿部かまぼこ店」で手焼き笹かまを味わった後、13:00発の松島島巡り観光船「仁王丸コース」に乗船。船内で追加料金を払い2階グリーンデッキへ上がり、潮風を浴びながら大小260余島を巡る。</p>
+      
+      <div class="swap-box">
+        <div class="swap-title">🔀 スワップ・代替ルート候補</div>
+        <div><strong>代替プラン:</strong> 塩釜行きの片道芭蕉コースにする手もあるが、瑞巌寺・円通院・福浦橋を歩くため松島発着の仁王丸周遊コースを採る。</div>
+      </div>
+      
+      <div class="tactics-box">
+        <div class="tactics-header">
+          <span>🎯</span>
+          <span class="tactics-tag">個別立ち回り</span>
+          <span>【構内順路】攻略戦術</span>
+        </div>
+        <div class="tactics-list">
+          
+            <div class="tactics-step-row">
+              <span class="tactics-num">1</span>
+              <span class="tactics-text">1階一般席の窓越しではなく、迷わず2階グリーン（展望デッキ）へ課金し、仁王島・鐘島・桂島の造形をオープンエアで撮影する。</span>
+            </div>
+          
+        </div>
+      </div>
+      
+      <div class="checkpoint-list">
+        
+          <div class="checkpoint-row">
+            <span class="cp-badge">必須</span>
+            <div>
+              <div class="cp-title">現地確認・必達ポイント</div>
+              <div class="cp-desc">13:00便の乗船券確保と、下船後の徒歩動線（福浦橋〜五大堂〜瑞巌寺）の時計回り／反時計回り設計。</div>
+            </div>
+          </div>
+        
+      </div>
+      
+      <div class="practical-footer">
+        
+        <div class="pf-row"><span class="pf-tag">💡 現地Tips:</span><span class="pf-val">海上は風が強く体感温度が下がるため、ジャケットの防風対策を万全にする。</span></div>
+        
+      </div>
+      <div class="slot-foot">
+        <a class="map-pill" href="https://www.google.com/maps/search/?api=1&amp;query=松島島巡り観光船企業組合" target="_blank" rel="noopener">📍 Google Maps</a>
+        
+      </div>
+    </article>
+    <article class="slot-card " id="d2-03" data-slot-id="d2-03">
+      <div class="slot-meta">
+        <span class="slot-time">⏱️ 13:55 - 15:30</span>
+        <span class="slot-badge badge-sightseeing">観光</span>
+      </div>
+      <div class="slot-title-row">
+        <input type="checkbox" class="slot-checkbox no-print" onchange="toggleSlot('d2-03', this.checked)" title="完了・スキップを消し込み">
+        <h3 class="slot-title">福浦橋・五大堂・瑞巌寺・円通院・天麟院</h3>
+      </div>
+      <p class="slot-desc">朱塗りの「福浦橋（出会い橋）」と松島のシンボル「五大堂」を押さえた後、伊達政宗公の菩提寺である国宝「瑞巌寺」、美しい苔庭の「円通院」、さらに政宗公長女・五郎八姫（いろはひめ）の菩提寺「天麟院」まで一気に駆け抜ける。</p>
+      
+      <div class="swap-box">
+        <div class="swap-title">🔀 スワップ・代替ルート候補</div>
+        <div><strong>代替プラン:</strong> 時間不足の場合は福浦島内部の奥散策をカットし、瑞巌寺・円通院の2大寺院に集中する。</div>
+      </div>
+      
+      <div class="tactics-box">
+        <div class="tactics-header">
+          <span>🎯</span>
+          <span class="tactics-tag">個別立ち回り</span>
+          <span>【構内順路】攻略戦術</span>
+        </div>
+        <div class="tactics-list">
+          
+            <div class="tactics-step-row">
+              <span class="tactics-num">1</span>
+              <span class="tactics-text">15:30の仙石線乗車を見据え、瑞巌寺本堂の絢爛な障壁画と円通院の静寂な庭園、隣接する天麟院までを約95分で高密度に巡回する。</span>
+            </div>
+          
+        </div>
+      </div>
+      
+      <div class="checkpoint-list">
+        
+          <div class="checkpoint-row">
+            <span class="cp-badge">必須</span>
+            <div>
+              <div class="cp-title">現地確認・必達ポイント</div>
+              <div class="cp-desc">瑞巌寺の洞窟遺跡群・法身窟と、円通院の三慧殿（国指定重要文化財）の意匠。</div>
+            </div>
+          </div>
+        
+      </div>
+      
+      <div class="practical-footer">
+        
+        <div class="pf-row"><span class="pf-tag">💡 現地Tips:</span><span class="pf-val">瑞巌寺・円通院は16時台に拝観受付終了となるため、クルーズ下船後すぐに向かう順序が最適。</span></div>
+        
+      </div>
+      <div class="slot-foot">
+        <a class="map-pill" href="https://www.google.com/maps/search/?api=1&amp;query=瑞巌寺" target="_blank" rel="noopener">📍 Google Maps</a>
+        
+      </div>
+    </article>
+    <article class="slot-card " id="d2-04" data-slot-id="d2-04">
+      <div class="slot-meta">
+        <span class="slot-time">⏱️ 15:30 - 16:45</span>
+        <span class="slot-badge badge-sightseeing">観光</span>
+      </div>
+      <div class="slot-title-row">
+        <input type="checkbox" class="slot-checkbox no-print" onchange="toggleSlot('d2-04', this.checked)" title="完了・スキップを消し込み">
+        <h3 class="slot-title">仙石線（高城町乗り過ごしリカバリ）➔ 志波彦神社・鹽竈神社</h3>
+      </div>
+      <p class="slot-desc">松島海岸駅から仙石線に乗る際、誤って逆方向（高城町駅方面）へ1駅乗ってしまうハプニングを即座に折り返しリカバリ。本塩釜駅で下車し、1,200年以上の歴史を誇る陸奥国一之宮「志波彦神社・鹽竈神社」へ登拝する。</p>
+      
+      <div class="swap-box">
+        <div class="swap-title">🔀 スワップ・代替ルート候補</div>
+        <div><strong>代替プラン:</strong> 足腰の疲労が強い場合は東参道（裏坂）または表参道（男坂202段）の下りやすいルートを選択する。</div>
+      </div>
+      
+      <div class="tactics-box">
+        <div class="tactics-header">
+          <span>🎯</span>
+          <span class="tactics-tag">個別立ち回り</span>
+          <span>【構内順路】攻略戦術</span>
+        </div>
+        <div class="tactics-list">
+          
+            <div class="tactics-step-row">
+              <span class="tactics-num">1</span>
+              <span class="tactics-text">夕刻の静まり返った境内を参拝し、帰路は古道「七曲坂」を下って門前町の風情を感じながら「すし哲」へ向かう。</span>
+            </div>
+          
+        </div>
+      </div>
+      
+      <div class="checkpoint-list">
+        
+          <div class="checkpoint-row">
+            <span class="cp-badge">必須</span>
+            <div>
+              <div class="cp-title">現地確認・必達ポイント</div>
+              <div class="cp-desc">鹽竈神社の別宮・本宮の社殿配置と、境内から見下ろす塩釜港の景色。</div>
+            </div>
+          </div>
+        
+      </div>
+      
+      <div class="practical-footer">
+        
+        <div class="pf-row"><span class="pf-tag">💡 現地Tips:</span><span class="pf-val">七曲坂は石段と未舗装の坂道が続くため、足元に注意して下山する。</span></div>
+        
+      </div>
+      <div class="slot-foot">
+        <a class="map-pill" href="https://www.google.com/maps/search/?api=1&amp;query=鹽竈神社" target="_blank" rel="noopener">📍 Google Maps</a>
+        
+      </div>
+    </article>
+    <article class="slot-card " id="d2-05" data-slot-id="d2-05">
+      <div class="slot-meta">
+        <span class="slot-time">⏱️ 16:50 - 18:20</span>
+        <span class="slot-badge badge-sightseeing">観光</span>
+      </div>
+      <div class="slot-title-row">
+        <input type="checkbox" class="slot-checkbox no-print" onchange="toggleSlot('d2-05', this.checked)" title="完了・スキップを消し込み">
+        <h3 class="slot-title">すし哲 本店（塩竈）</h3>
+      </div>
+      <p class="slot-desc">日本有数の生マグロ水揚げ港・塩竈を代表する名店。1階カウンター席に通され、職人の郷古さんや隣り合った常連客と会話を弾ませながら、三陸の旬ネタを握ってもらう至福の90分。</p>
+      
+      <div class="swap-box">
+        <div class="swap-title">🔀 スワップ・代替ルート候補</div>
+        <div><strong>代替プラン:</strong> すし哲が満席・定休日の場合は、同じく塩竈の名店「亀喜寿司」または「鮨 しらはた」へ切り替える。</div>
+      </div>
+      
+      <div class="tactics-box">
+        <div class="tactics-header">
+          <span>🎯</span>
+          <span class="tactics-tag">個別立ち回り</span>
+          <span>【構内順路】攻略戦術</span>
+        </div>
+        <div class="tactics-list">
+          
+            <div class="tactics-step-row">
+              <span class="tactics-num">1</span>
+              <span class="tactics-text">夜のピーク直前（16:50）に飛び込むことで待ち時間ゼロで1階カウンター席を確保。看板の「すし哲物語」や親方おまかせ握り、ふわっと溶ける穴子・生マグロを堪能する。</span>
+            </div>
+          
+        </div>
+      </div>
+      
+      <div class="checkpoint-list">
+        
+          <div class="checkpoint-row">
+            <span class="cp-badge">必須</span>
+            <div>
+              <div class="cp-title">現地確認・必達ポイント</div>
+              <div class="cp-desc">ソロ旅だからこそ生まれるカウンター越しの対話と、食後のデザート（自家製シャーベット）までの完璧なホスピタリティ。</div>
+            </div>
+          </div>
+        
+      </div>
+      
+      <div class="practical-footer">
+        
+        <div class="pf-row"><span class="pf-tag">💡 現地Tips:</span><span class="pf-val">スマホのバッテリー残量が減っていたため、近くのChargeSPOTでモバイルバッテリーをレンタルして夜移動に備える。</span></div>
+        
+      </div>
+      <div class="slot-foot">
+        <a class="map-pill" href="https://www.google.com/maps/search/?api=1&amp;query=すし哲+本店" target="_blank" rel="noopener">📍 Google Maps</a>
+        
+      </div>
+    </article>
+    <article class="slot-card " id="d2-06" data-slot-id="d2-06">
+      <div class="slot-meta">
+        <span class="slot-time">⏱️ 18:30 - 21:15</span>
+        <span class="slot-badge badge-transit">移動</span>
+      </div>
+      <div class="slot-title-row">
+        <input type="checkbox" class="slot-checkbox no-print" onchange="toggleSlot('d2-06', this.checked)" title="完了・スキップを消し込み">
+        <h3 class="slot-title">仙台駅ロッカー回収 ➔ JR東北本線で一ノ関駅へ移動</h3>
+      </div>
+      <p class="slot-desc">本塩釜から仙石線で仙台駅へ戻りロッカーの荷物を回収。当初は「高速バスで一ノ関へ行こう」と試みるも広瀬通の31番バス停が見つからず（「バスという選択肢で遊ぼうとしたら遊ばれた」）、19:18発のJR東北本線（小牛田乗り換え）で一ノ関駅へ向かう。</p>
+      
+      <div class="swap-box">
+        <div class="swap-title">🔀 スワップ・代替ルート候補</div>
+        <div><strong>代替プラン:</strong> 体力温存・時短を最優先する場合は仙台駅から東北新幹線（やまびこ）で一ノ関駅へ約32分でワープする。</div>
+      </div>
+      
+      <div class="tactics-box">
+        <div class="tactics-header">
+          <span>🎯</span>
+          <span class="tactics-tag">個別立ち回り</span>
+          <span>【構内順路】攻略戦術</span>
+        </div>
+        <div class="tactics-list">
+          
+            <div class="tactics-step-row">
+              <span class="tactics-num">1</span>
+              <span class="tactics-text">高速バス乗り場探索の深追いをやめて即座にJR在来線へ切り替え、小牛田駅での接続を経て一ノ関駅前のホテルへチェックインする。</span>
+            </div>
+          
+        </div>
+      </div>
+      
+      <div class="checkpoint-list">
+        
+          <div class="checkpoint-row">
+            <span class="cp-badge">必須</span>
+            <div>
+              <div class="cp-title">現地確認・必達ポイント</div>
+              <div class="cp-desc">新田駅を過ぎたあたりからの真っ暗な車窓、手動のドア開閉ボタン、ワンマン列車の整理券システムなど、地方ローカル線のリアルな仕組みを体感する。</div>
+            </div>
+          </div>
+        
+      </div>
+      
+      <div class="practical-footer">
+        
+        <div class="pf-row"><span class="pf-tag">💡 現地Tips:</span><span class="pf-val">夜の東北本線はドアが開くたびに冷気が吹き込むため、上着を着込んで乗車する。</span></div>
+        
+      </div>
+      <div class="slot-foot">
+        <a class="map-pill" href="https://www.google.com/maps/search/?api=1&amp;query=一ノ関駅" target="_blank" rel="noopener">📍 Google Maps</a>
+        
+      </div>
+    </article>
+        </div>
+      </section>
+      <section class="day-block" id="day-sec-3" data-day="3">
+        <h2 class="day-header">Day 3: 2026年5月1日 (金)</h2>
+        
+        <div class="macro-route-box">
+          <div class="macro-route-head">
+            <span class="macro-route-title">🗺️ 【全体ルート立ち回り】マクロ動線シークエンス</span>
+            <a class="macro-map-link" href="https://www.google.com/maps/dir/?api=1&amp;origin=一ノ関駅&amp;destination=白龍本店&amp;waypoints=厳美渓|中尊寺金色堂|毛越寺|猊鼻渓|盛岡駅&amp;travelmode=transit" target="_blank" rel="noopener">📍 広域Google Maps</a>
+          </div>
+          <div class="macro-route-body">一ノ関駅 ➔ 厳美渓（郭公だんご） ➔ 一ノ関駅 ➔ 平泉駅 ➔ 中尊寺（金色堂） ➔ 毛越寺 ➔ 猊鼻渓（舟下り） ➔ 一ノ関駅（新幹線ダッシュ） ➔ 盛岡駅 ➔ 白龍（パイロン）本店</div>
+        </div>
+        <div class="slot-list">
+          
+    <article class="slot-card " id="d3-01" data-slot-id="d3-01">
+      <div class="slot-meta">
+        <span class="slot-time">⏱️ 09:00 - 11:00</span>
+        <span class="slot-badge badge-sightseeing">観光</span>
+      </div>
+      <div class="slot-title-row">
+        <input type="checkbox" class="slot-checkbox no-print" onchange="toggleSlot('d3-01', this.checked)" title="完了・スキップを消し込み">
+        <h3 class="slot-title">厳美渓 ＆ かっこう屋（空飛ぶ郭公だんご）</h3>
+      </div>
+      <p class="slot-desc">一ノ関駅09:00発の岩手県交通バスで名勝・厳美渓へ。エメラルドグリーンの水流と奇岩が連なる渓谷で、対岸の店からロープと籠で団子とお茶が滑空してくる名物「空飛ぶ郭公だんご」を体験する。</p>
+      
+      <div class="swap-box">
+        <div class="swap-title">🔀 スワップ・代替ルート候補</div>
+        <div><strong>代替プラン:</strong> 強風・増水で郭公だんごが休止の場合は、渓谷沿いのガラス工房（サハラガラスパーク）や吊り橋散策に切り替える。</div>
+      </div>
+      
+      <div class="tactics-box">
+        <div class="tactics-header">
+          <span>🎯</span>
+          <span class="tactics-tag">個別立ち回り</span>
+          <span>【構内順路】攻略戦術</span>
+        </div>
+        <div class="tactics-list">
+          
+            <div class="tactics-step-row">
+              <span class="tactics-num">1</span>
+              <span class="tactics-text">朝一番のバスで向かい、籠にお金を入れて木槌をコンコンと叩き、対岸から団子が飛んでくるギミックを動画・写真に収める。</span>
+            </div>
+          
+        </div>
+      </div>
+      
+      <div class="checkpoint-list">
+        
+          <div class="checkpoint-row">
+            <span class="cp-badge">必須</span>
+            <div>
+              <div class="cp-title">現地確認・必達ポイント</div>
+              <div class="cp-desc">あん・ごま・みたらしの3色だんごの柔らかさと、雨に濡れて一層色鮮やかさを増す渓谷の岩肌。</div>
+            </div>
+          </div>
+        
+      </div>
+      
+      <div class="practical-footer">
+        
+        <div class="pf-row"><span class="pf-tag">💡 現地Tips:</span><span class="pf-val">10:30頃の折り返しバスで一ノ関駅へ戻ることで、11時台の平泉移動へシームレスに接続できる。</span></div>
+        
+      </div>
+      <div class="slot-foot">
+        <a class="map-pill" href="https://www.google.com/maps/search/?api=1&amp;query=厳美渓+郭公だんご" target="_blank" rel="noopener">📍 Google Maps</a>
+        
+      </div>
+    </article>
+    <article class="slot-card " id="d3-02" data-slot-id="d3-02">
+      <div class="slot-meta">
+        <span class="slot-time">⏱️ 11:15 - 12:45</span>
+        <span class="slot-badge badge-sightseeing">観光</span>
+      </div>
+      <div class="slot-title-row">
+        <input type="checkbox" class="slot-checkbox no-print" onchange="toggleSlot('d3-02', this.checked)" title="完了・スキップを消し込み">
+        <h3 class="slot-title">平泉移動 ➔ 中尊寺（金色堂・讃衡蔵・月見坂）</h3>
+      </div>
+      <p class="slot-desc">一ノ関駅からJR東北本線で平泉駅へ移動。駅からタクシーで中尊寺の奥（金色堂近く）まで一気に上がり、国宝「金色堂」と宝物館「讃衡蔵」を拝観した後、杉並木の表参道「月見坂」を下りながら本堂等を巡る。</p>
+      
+      <div class="swap-box">
+        <div class="swap-title">🔀 スワップ・代替ルート候補</div>
+        <div><strong>代替プラン:</strong> 健脚で時間に余裕がある場合は平泉駅からレンタサイクルで中尊寺〜毛越寺〜高館義経堂を周遊する。</div>
+      </div>
+      
+      <div class="tactics-box">
+        <div class="tactics-header">
+          <span>🎯</span>
+          <span class="tactics-tag">個別立ち回り</span>
+          <span>【構内順路】攻略戦術</span>
+        </div>
+        <div class="tactics-list">
+          
+            <div class="tactics-step-row">
+              <span class="tactics-num">1</span>
+              <span class="tactics-text">限られた滞在時間で体力と時間を温存するため、上りはタクシーでショートカットし、下りで月見坂を歩く「逆打ち動線」を採用する。</span>
+            </div>
+          
+        </div>
+      </div>
+      
+      <div class="checkpoint-list">
+        
+          <div class="checkpoint-row">
+            <span class="cp-badge">必須</span>
+            <div>
+              <div class="cp-title">現地確認・必達ポイント</div>
+              <div class="cp-desc">奥州藤原氏三代の栄華を伝える金色堂の螺鈿細工・蒔絵と、樹齢300〜400年の杉並木。</div>
+            </div>
+          </div>
+        
+      </div>
+      
+      <div class="practical-footer">
+        
+        <div class="pf-row"><span class="pf-tag">💡 現地Tips:</span><span class="pf-val">雨天時の月見坂は砂利と石段が滑りやすいため歩幅を狭めて下る。</span></div>
+        
+      </div>
+      <div class="slot-foot">
+        <a class="map-pill" href="https://www.google.com/maps/search/?api=1&amp;query=中尊寺金色堂" target="_blank" rel="noopener">📍 Google Maps</a>
+        
+      </div>
+    </article>
+    <article class="slot-card " id="d3-03" data-slot-id="d3-03">
+      <div class="slot-meta">
+        <span class="slot-time">⏱️ 12:55 - 13:45</span>
+        <span class="slot-badge badge-sightseeing">観光</span>
+      </div>
+      <div class="slot-title-row">
+        <input type="checkbox" class="slot-checkbox no-print" onchange="toggleSlot('d3-03', this.checked)" title="完了・スキップを消し込み">
+        <h3 class="slot-title">毛越寺（浄土庭園）</h3>
+      </div>
+      <p class="slot-desc">中尊寺からバスまたはタクシーで毛越寺へ移動。藤原基衡・秀衡が造営した伽藍遺構と、平安時代の作庭書『作庭記』の思想を今に伝える特別名勝・特別史跡「大泉が池（浄土庭園）」を巡る。</p>
+      
+      <div class="swap-box">
+        <div class="swap-title">🔀 スワップ・代替ルート候補</div>
+        <div><strong>代替プラン:</strong> バス時刻が迫っている場合は「達谷窟毘沙門堂」は欲張らず、毛越寺と猊鼻渓の2点に絞る。</div>
+      </div>
+      
+      <div class="tactics-box">
+        <div class="tactics-header">
+          <span>🎯</span>
+          <span class="tactics-tag">個別立ち回り</span>
+          <span>【構内順路】攻略戦術</span>
+        </div>
+        <div class="tactics-list">
+          
+            <div class="tactics-step-row">
+              <span class="tactics-num">1</span>
+              <span class="tactics-text">13:45発の猊鼻渓行き直通バスに合わせるため、大泉が池の洲浜・出島石組・遣水（やりみず）を約45分で一周する。</span>
+            </div>
+          
+        </div>
+      </div>
+      
+      <div class="checkpoint-list">
+        
+          <div class="checkpoint-row">
+            <span class="cp-badge">必須</span>
+            <div>
+              <div class="cp-title">現地確認・必達ポイント</div>
+              <div class="cp-desc">建物の礎石だけが残る空間と広大な水面が作り出す、引き算の極楽浄土空間。</div>
+            </div>
+          </div>
+        
+      </div>
+      
+      <div class="practical-footer">
+        
+        <div class="pf-row"><span class="pf-tag">💡 現地Tips:</span><span class="pf-val">バス停（毛越寺前）の発車時刻を事前に確認してから庭園一周に入る。</span></div>
+        
+      </div>
+      <div class="slot-foot">
+        <a class="map-pill" href="https://www.google.com/maps/search/?api=1&amp;query=毛越寺" target="_blank" rel="noopener">📍 Google Maps</a>
+        
+      </div>
+    </article>
+    <article class="slot-card " id="d3-04" data-slot-id="d3-04">
+      <div class="slot-meta">
+        <span class="slot-time">⏱️ 13:45 - 16:45</span>
+        <span class="slot-badge badge-sightseeing">観光</span>
+      </div>
+      <div class="slot-title-row">
+        <input type="checkbox" class="slot-checkbox no-print" onchange="toggleSlot('d3-04', this.checked)" title="完了・スキップを消し込み">
+        <h3 class="slot-title">直通バス移動 ➔ 名勝 猊鼻渓（舟下り）</h3>
+      </div>
+      <p class="slot-desc">毛越寺から直通バスで砂鉄川が石灰岩を侵食してできた大渓谷「猊鼻渓」へ。高さ50〜100mの断崖がそそり立つ川面を、船頭さんが棹一本で操る木舟で約90分往復する舟下り。</p>
+      
+      <div class="swap-box">
+        <div class="swap-title">🔀 スワップ・代替ルート候補</div>
+        <div><strong>代替プラン:</strong> 荒天で舟下り欠航時は、一ノ関へ早めに引き上げて「世嬉の一酒造（酒の民俗文化博物館・クラフトビール）」を訪問する。</div>
+      </div>
+      
+      <div class="tactics-box">
+        <div class="tactics-header">
+          <span>🎯</span>
+          <span class="tactics-tag">個別立ち回り</span>
+          <span>【構内順路】攻略戦術</span>
+        </div>
+        <div class="tactics-list">
+          
+            <div class="tactics-step-row">
+              <span class="tactics-num">1</span>
+              <span class="tactics-text">午後の便に乗船し、折り返し地点の「三好ヶ丘」で舟を降りて大猊鼻岩の対岸にある穴へ運玉（うんたま）投げに挑戦する。</span>
+            </div>
+          
+        </div>
+      </div>
+      
+      <div class="checkpoint-list">
+        
+          <div class="checkpoint-row">
+            <span class="cp-badge">必須</span>
+            <div>
+              <div class="cp-title">現地確認・必達ポイント</div>
+              <div class="cp-desc">帰路の舟中で船頭さんが歌い上げる民謡「げいび追分」が断崖に反響する瞬間。</div>
+            </div>
+          </div>
+        
+      </div>
+      
+      <div class="practical-footer">
+        
+        <div class="pf-row"><span class="pf-tag">💡 現地Tips:</span><span class="pf-val">舟下り終了後、帰りのJR大船渡線（猊鼻渓駅）の列車本数が極めて少ないため、駅までの徒歩ルート（約5〜8分）を把握しておく。</span></div>
+        
+      </div>
+      <div class="slot-foot">
+        <a class="map-pill" href="https://www.google.com/maps/search/?api=1&amp;query=猊鼻渓舟下り" target="_blank" rel="noopener">📍 Google Maps</a>
+        
+      </div>
+    </article>
+    <article class="slot-card " id="d3-05" data-slot-id="d3-05">
+      <div class="slot-meta">
+        <span class="slot-time">⏱️ 17:15 - 19:32</span>
+        <span class="slot-badge badge-transit">移動</span>
+      </div>
+      <div class="slot-title-row">
+        <input type="checkbox" class="slot-checkbox no-print" onchange="toggleSlot('d3-05', this.checked)" title="完了・スキップを消し込み">
+        <h3 class="slot-title">JR大船渡線（10分遅延）➔ 一ノ関駅ロッカー回収 ➔ 東北新幹線で盛岡駅へ</h3>
+      </div>
+      <p class="slot-desc">猊鼻渓駅からJR大船渡線で一ノ関駅へ戻る際、列車が約10分遅延して18:26着に。18:49発の東北新幹線に乗るため、一ノ関駅のコインロッカーから荷物を全力回収して新幹線ホームへ駆け込み、19:32に盛岡駅へ到達する。</p>
+      
+      <div class="swap-box">
+        <div class="swap-title">🔀 スワップ・代替ルート候補</div>
+        <div><strong>代替プラン:</strong> 18:49の新幹線を逃した場合は後続のやまびこ・はやぶさに乗変更し、盛岡での夕食を駅前の盛楼閣またはぴょんぴょん舎へ切り替える。</div>
+      </div>
+      
+      <div class="tactics-box">
+        <div class="tactics-header">
+          <span>🎯</span>
+          <span class="tactics-tag">個別立ち回り</span>
+          <span>【構内順路】攻略戦術</span>
+        </div>
+        <div class="tactics-list">
+          
+            <div class="tactics-step-row">
+              <span class="tactics-num">1</span>
+              <span class="tactics-text">車内で一ノ関駅の構内図とロッカー位置を再確認し、下車後迷いなくロッカー開錠➔新幹線改札通過を完了させる。</span>
+            </div>
+          
+        </div>
+      </div>
+      
+      <div class="checkpoint-list">
+        
+          <div class="checkpoint-row">
+            <span class="cp-badge">必須</span>
+            <div>
+              <div class="cp-title">現地確認・必達ポイント</div>
+              <div class="cp-desc">ローカル線の遅延リスクを吸収できるかがソロ縦走の分水嶺。</div>
+            </div>
+          </div>
+        
+      </div>
+      
+      <div class="practical-footer">
+        
+        <div class="pf-row"><span class="pf-tag">💡 現地Tips:</span><span class="pf-val">盛岡到着後、ローソン受取に指定していたAmazon注文のコンタクトレンズ（-5.5）を忘れずにピックアップする。</span></div>
+        
+      </div>
+      <div class="slot-foot">
+        <a class="map-pill" href="https://www.google.com/maps/search/?api=1&amp;query=盛岡駅" target="_blank" rel="noopener">📍 Google Maps</a>
+        
+      </div>
+    </article>
+    <article class="slot-card " id="d3-06" data-slot-id="d3-06">
+      <div class="slot-meta">
+        <span class="slot-time">⏱️ 19:40 - 21:00</span>
+        <span class="slot-badge badge-sightseeing">観光</span>
+      </div>
+      <div class="slot-title-row">
+        <input type="checkbox" class="slot-checkbox no-print" onchange="toggleSlot('d3-06', this.checked)" title="完了・スキップを消し込み">
+        <h3 class="slot-title">白龍（パイロン）本店 ＆ 盛岡チェックイン</h3>
+      </div>
+      <p class="slot-desc">盛岡城跡公園（櫻山神社参道）に店を構える「盛岡じゃじゃ麺」の元祖・白龍本店へ。19:40過ぎの訪問で奇跡的に待ち時間ゼロで入店し、平打ちうどんと特製肉味噌を徹底的に混ぜて食す。</p>
+      
+      <div class="swap-box">
+        <div class="swap-title">🔀 スワップ・代替ルート候補</div>
+        <div><strong>代替プラン:</strong> 本店が閉店・行列の場合は、盛岡駅ビル「フェザン」内の白龍分店を利用する。</div>
+      </div>
+      
+      <div class="tactics-box">
+        <div class="tactics-header">
+          <span>🎯</span>
+          <span class="tactics-tag">個別立ち回り</span>
+          <span>【構内順路】攻略戦術</span>
+        </div>
+        <div class="tactics-list">
+          
+            <div class="tactics-step-row">
+              <span class="tactics-num">1</span>
+              <span class="tactics-text">まずはそのまま、途中でおろし生姜・ニンニク・酢・ラー油で自分好みに味変し、麺を少し残した皿に生卵を割り入れて茹で汁と肉味噌を注いでもらう「ちーたんたん（鶏蛋湯）」まで完遂する。</span>
+            </div>
+          
+        </div>
+      </div>
+      
+      <div class="checkpoint-list">
+        
+          <div class="checkpoint-row">
+            <span class="cp-badge">必須</span>
+            <div>
+              <div class="cp-title">現地確認・必達ポイント</div>
+              <div class="cp-desc">香ばしい黒胡麻ベースの肉味噌のコクと、締めのちーたんたんの滋味深い温かさ。</div>
+            </div>
+          </div>
+        
+      </div>
+      
+      <div class="practical-footer">
+        
+        <div class="pf-row"><span class="pf-tag">💡 現地Tips:</span><span class="pf-val">夜の櫻山神社参道は昭和レトロな飲み屋街の雰囲気が濃く、食後の散歩にも最適。</span></div>
+        
+      </div>
+      <div class="slot-foot">
+        <a class="map-pill" href="https://www.google.com/maps/search/?api=1&amp;query=白龍+本店+盛岡" target="_blank" rel="noopener">📍 Google Maps</a>
+        
+      </div>
+    </article>
+        </div>
+      </section>
+      <section class="day-block" id="day-sec-4" data-day="4">
+        <h2 class="day-header">Day 4: 2026年5月2日 (土)</h2>
+        
+        <div class="macro-route-box">
+          <div class="macro-route-head">
+            <span class="macro-route-title">🗺️ 【全体ルート立ち回り】マクロ動線シークエンス</span>
+            <a class="macro-map-link" href="https://www.google.com/maps/dir/?api=1&amp;origin=盛岡駅&amp;destination=大曲駅&amp;waypoints=盛岡城跡公園|岩手銀行赤レンガ館|報恩寺+盛岡|材木町よ市|盛楼閣&amp;travelmode=transit" target="_blank" rel="noopener">📍 広域Google Maps</a>
+          </div>
+          <div class="macro-route-body">盛岡駅（でんでんむしバス） ➔ 盛岡城跡公園 ➔ 岩手銀行赤レンガ館・紺屋町 ➔ 報恩寺（五百羅漢） ➔ 材木町「よ市」 ➔ 盛楼閣（盛岡冷麺） ➔ 盛岡駅（秋田新幹線こまち） ➔ 大曲駅・大曲シティホテル</div>
+        </div>
+        <div class="slot-list">
+          
+    <article class="slot-card " id="d4-01" data-slot-id="d4-01">
+      <div class="slot-meta">
+        <span class="slot-time">⏱️ 10:15 - 12:00</span>
+        <span class="slot-badge badge-sightseeing">観光</span>
+      </div>
+      <div class="slot-title-row">
+        <input type="checkbox" class="slot-checkbox no-print" onchange="toggleSlot('d4-01', this.checked)" title="完了・スキップを消し込み">
+        <h3 class="slot-title">盛岡都心循環バス「でんでんむし」➔ 盛岡城跡公園（不来方城）</h3>
+      </div>
+      <p class="slot-desc">盛岡駅前から都心循環バス「でんでんむし（左回り）」に乗車し、南部藩20万石の居城・盛岡城跡公園（岩手公園）へ。花崗岩を精緻に積み上げた美しい石垣群と、新緑の本丸・二ノ丸を巡る。</p>
+      
+      <div class="swap-box">
+        <div class="swap-title">🔀 スワップ・代替ルート候補</div>
+        <div><strong>代替プラン:</strong> 朝早く動ける場合は「福田パン 長田町本店」でできたてコッペパンを調達して公園ベンチで朝食をとる。</div>
+      </div>
+      
+      <div class="tactics-box">
+        <div class="tactics-header">
+          <span>🎯</span>
+          <span class="tactics-tag">個別立ち回り</span>
+          <span>【構内順路】攻略戦術</span>
+        </div>
+        <div class="tactics-list">
+          
+            <div class="tactics-step-row">
+              <span class="tactics-num">1</span>
+              <span class="tactics-text">1回定額のでんでんむしバスを活用してアプローチし、本丸跡の石川啄木歌碑（「不来方のお城の草に寝ころびて…」）と高石垣の曲線を堪能する。</span>
+            </div>
+          
+        </div>
+      </div>
+      
+      <div class="checkpoint-list">
+        
+          <div class="checkpoint-row">
+            <span class="cp-badge">必須</span>
+            <div>
+              <div class="cp-title">現地確認・必達ポイント</div>
+              <div class="cp-desc">建物が現存しないからこそ際立つ、東北屈指の石垣造形美。</div>
+            </div>
+          </div>
+        
+      </div>
+      
+      <div class="practical-footer">
+        
+        <div class="pf-row"><span class="pf-tag">💡 現地Tips:</span><span class="pf-val">園内は高低差があるため、中津川側へ抜けるルートを意識して歩く。</span></div>
+        
+      </div>
+      <div class="slot-foot">
+        <a class="map-pill" href="https://www.google.com/maps/search/?api=1&amp;query=盛岡城跡公園" target="_blank" rel="noopener">📍 Google Maps</a>
+        
+      </div>
+    </article>
+    <article class="slot-card " id="d4-02" data-slot-id="d4-02">
+      <div class="slot-meta">
+        <span class="slot-time">⏱️ 12:15 - 14:00</span>
+        <span class="slot-badge badge-sightseeing">観光</span>
+      </div>
+      <div class="slot-title-row">
+        <input type="checkbox" class="slot-checkbox no-print" onchange="toggleSlot('d4-02', this.checked)" title="完了・スキップを消し込み">
+        <h3 class="slot-title">岩手銀行赤レンガ館 ＆ 中津川・紺屋町散策</h3>
+      </div>
+      <p class="slot-desc">盛岡城跡から中津川を渡り、東京駅と同じ辰野金吾・葛西萬司が設計した明治44年竣工の「岩手銀行赤レンガ館」を見学。内部の吹き抜け営業室や金庫室を巡り、紺屋町番屋周辺の城下町を歩く。</p>
+      
+      <div class="swap-box">
+        <div class="swap-title">🔀 スワップ・代替ルート候補</div>
+        <div><strong>代替プラン:</strong> わんこそばに挑戦したい場合は近くの「東家 本店」へ立ち寄る（今回は夕方の盛楼閣冷麺に胃袋を全振り）。</div>
+      </div>
+      
+      <div class="tactics-box">
+        <div class="tactics-header">
+          <span>🎯</span>
+          <span class="tactics-tag">個別立ち回り</span>
+          <span>【構内順路】攻略戦術</span>
+        </div>
+        <div class="tactics-list">
+          
+            <div class="tactics-step-row">
+              <span class="tactics-num">1</span>
+              <span class="tactics-text">無料の「盛岡銀行ゾーン」だけでなく有料の「岩手銀行ゾーン」まで入り、重厚な木製カウンターやステンドグラス、当時の金庫室を観察する。</span>
+            </div>
+          
+        </div>
+      </div>
+      
+      <div class="checkpoint-list">
+        
+          <div class="checkpoint-row">
+            <span class="cp-badge">必須</span>
+            <div>
+              <div class="cp-title">現地確認・必達ポイント</div>
+              <div class="cp-desc">東北で唯一の辰野金吾設計による現存銀行建築のディテール。</div>
+            </div>
+          </div>
+        
+      </div>
+      
+      <div class="practical-footer">
+        
+        <div class="pf-row"><span class="pf-tag">💡 現地Tips:</span><span class="pf-val">中津川沿いの遊歩道は盛岡らしい穏やかな都市景観が味わえるベストルート。</span></div>
+        
+      </div>
+      <div class="slot-foot">
+        <a class="map-pill" href="https://www.google.com/maps/search/?api=1&amp;query=岩手銀行赤レンガ館" target="_blank" rel="noopener">📍 Google Maps</a>
+        
+      </div>
+    </article>
+    <article class="slot-card " id="d4-03" data-slot-id="d4-03">
+      <div class="slot-meta">
+        <span class="slot-time">⏱️ 14:15 - 15:50</span>
+        <span class="slot-badge badge-sightseeing">観光</span>
+      </div>
+      <div class="slot-title-row">
+        <input type="checkbox" class="slot-checkbox no-print" onchange="toggleSlot('d4-03', this.checked)" title="完了・スキップを消し込み">
+        <h3 class="slot-title">報恩寺（五百羅漢） ➔ 材木町「よ市」</h3>
+      </div>
+      <p class="slot-desc">曹洞宗の名刹・報恩寺を訪れ、羅漢堂にずらりと並ぶ499体の木造「五百羅漢像」（京都の仏師・駒野定純らによる制作、マルコ・ポーロやフビライ・ハンと伝わる像も存在）に圧倒された後、15:00から始まる材木町の週末市「よ市」をそぞろ歩きする。</p>
+      
+      <div class="swap-box">
+        <div class="swap-title">🔀 スワップ・代替ルート候補</div>
+        <div><strong>代替プラン:</strong> 土曜以外で「よ市」が開催されていない日は、宮沢賢治ゆかりの「光原社（可否館）」へ立ち寄る。</div>
+      </div>
+      
+      <div class="tactics-box">
+        <div class="tactics-header">
+          <span>🎯</span>
+          <span class="tactics-tag">個別立ち回り</span>
+          <span>【構内順路】攻略戦術</span>
+        </div>
+        <div class="tactics-list">
+          
+            <div class="tactics-step-row">
+              <span class="tactics-num">1</span>
+              <span class="tactics-text">静寂の羅漢堂で一体ごとに異なる喜怒哀楽の表情を観察した後、活気あふれる材木町「よ市」のストリートマーケットへ移動して盛岡の日常文化に触れる。</span>
+            </div>
+          
+        </div>
+      </div>
+      
+      <div class="checkpoint-list">
+        
+          <div class="checkpoint-row">
+            <span class="cp-badge">必須</span>
+            <div>
+              <div class="cp-title">現地確認・必達ポイント</div>
+              <div class="cp-desc">報恩寺五百羅漢の圧倒的な空間密度と、材木町よ市の地ビール・特産品屋台の賑わい。</div>
+            </div>
+          </div>
+        
+      </div>
+      
+      <div class="practical-footer">
+        
+        <div class="pf-row"><span class="pf-tag">💡 現地Tips:</span><span class="pf-val">16時の盛楼閣での冷麺に備え、よ市では食べ歩きを控えめにして盛岡駅方面へ戻る。</span></div>
+        
+      </div>
+      <div class="slot-foot">
+        <a class="map-pill" href="https://www.google.com/maps/search/?api=1&amp;query=報恩寺+五百羅漢+盛岡" target="_blank" rel="noopener">📍 Google Maps</a>
+        
+      </div>
+    </article>
+    <article class="slot-card " id="d4-04" data-slot-id="d4-04">
+      <div class="slot-meta">
+        <span class="slot-time">⏱️ 16:05 - 17:00</span>
+        <span class="slot-badge badge-sightseeing">観光</span>
+      </div>
+      <div class="slot-title-row">
+        <input type="checkbox" class="slot-checkbox no-print" onchange="toggleSlot('d4-04', this.checked)" title="完了・スキップを消し込み">
+        <h3 class="slot-title">盛楼閣（盛岡冷麺・ユッケ）</h3>
+      </div>
+      <p class="slot-desc">盛岡駅前のワールドインGENプラザ2階にある盛岡冷麺の最高峰。16:05のアイドルタイム終盤に入店し、黄金色の牛骨スープと圧倒的コシの手練り麺が織りなす「盛岡冷麺」と「ユッケ」を堪能する。</p>
+      
+      <div class="swap-box">
+        <div class="swap-title">🔀 スワップ・代替ルート候補</div>
+        <div><strong>代替プラン:</strong> 盛楼閣が長蛇の列の場合は、向かい側の「ぴょんぴょん舎 盛岡駅前店」へ切り替える。</div>
+      </div>
+      
+      <div class="tactics-box">
+        <div class="tactics-header">
+          <span>🎯</span>
+          <span class="tactics-tag">個別立ち回り</span>
+          <span>【構内順路】攻略戦術</span>
+        </div>
+        <div class="tactics-list">
+          
+            <div class="tactics-step-row">
+              <span class="tactics-num">1</span>
+              <span class="tactics-text">17時以降のディナー大行列を避けるため16時台に入店。辛さは「別辛（またはちょい辛）」で注文し、まずは牛骨スープ本来の甘みと旨味をストレートに味わう。</span>
+            </div>
+          
+        </div>
+      </div>
+      
+      <div class="checkpoint-list">
+        
+          <div class="checkpoint-row">
+            <span class="cp-badge">必須</span>
+            <div>
+              <div class="cp-title">現地確認・必達ポイント</div>
+              <div class="cp-desc">ゴムのように強い弾力と滑らかな喉越しの麺、季節の果物（スイカや梨）の甘み、カクテキの酸味の三位一体。</div>
+            </div>
+          </div>
+        
+      </div>
+      
+      <div class="practical-footer">
+        
+        <div class="pf-row"><span class="pf-tag">💡 現地Tips:</span><span class="pf-val">盛岡駅の新幹線改札まで徒歩3分のため、17時発のこまち乗車直前まで滞在可能。</span></div>
+        
+      </div>
+      <div class="slot-foot">
+        <a class="map-pill" href="https://www.google.com/maps/search/?api=1&amp;query=盛楼閣" target="_blank" rel="noopener">📍 Google Maps</a>
+        
+      </div>
+    </article>
+    <article class="slot-card " id="d4-05" data-slot-id="d4-05">
+      <div class="slot-meta">
+        <span class="slot-time">⏱️ 17:03 - 19:30</span>
+        <span class="slot-badge badge-transit">移動</span>
+      </div>
+      <div class="slot-title-row">
+        <input type="checkbox" class="slot-checkbox no-print" onchange="toggleSlot('d4-05', this.checked)" title="完了・スキップを消し込み">
+        <h3 class="slot-title">秋田新幹線こまち（連結乗り遅れリカバリ）➔ 大曲シティホテル</h3>
+      </div>
+      <p class="slot-desc">17:03、盛岡駅新幹線ホームで「はやぶさ」の車両の後ろ（または前）に連結されている「こまち」の位置を見誤り、目の前で発車される痛恨のミス。しかしすぐ15分後の後続こまちに飛び乗り、秋田県・大曲駅へ移動して「大曲シティホテル（旧ARAYASHIKI HOTEL）」にチェックインする（2連泊）。</p>
+      
+      <div class="swap-box">
+        <div class="swap-title">🔀 スワップ・代替ルート候補</div>
+        <div><strong>代替プラン:</strong> 宿の設備快適性を重視する場合は大曲駅前の「ルートイン大曲駅前」または角館・秋田駅前の新設ホテルを選択する。</div>
+      </div>
+      
+      <div class="tactics-box">
+        <div class="tactics-header">
+          <span>🎯</span>
+          <span class="tactics-tag">個別立ち回り</span>
+          <span>【構内順路】攻略戦術</span>
+        </div>
+        <div class="tactics-list">
+          
+            <div class="tactics-step-row">
+              <span class="tactics-num">1</span>
+              <span class="tactics-text">盛岡駅では1〜10号車（はやぶさ・新青森方面）と11〜17号車（こまち・秋田方面）が切り離されるため、乗車号車の位置をホーム案内板で必ず確認する。</span>
+            </div>
+          
+        </div>
+      </div>
+      
+      <div class="checkpoint-list">
+        
+          <div class="checkpoint-row">
+            <span class="cp-badge">必須</span>
+            <div>
+              <div class="cp-title">現地確認・必達ポイント</div>
+              <div class="cp-desc">地方都市の老舗ビジネスホテル（大曲シティホテル）の年季の入った設備（配管の鉄錆の匂い等）に直面しつつ、地元スーパー「グランマート大曲」で半額惣菜とシャンプーを調達して適応するリアルな旅の経験値。</div>
+            </div>
+          </div>
+        
+      </div>
+      
+      <div class="practical-footer">
+        
+        <div class="pf-row"><span class="pf-tag">💡 現地Tips:</span><span class="pf-val">大曲駅は新幹線のスイッチバック駅であり、角館・田沢湖方面と秋田市方面の双方へ出やすいハブ拠点となる。</span></div>
+        
+      </div>
+      <div class="slot-foot">
+        <a class="map-pill" href="https://www.google.com/maps/search/?api=1&amp;query=大曲駅" target="_blank" rel="noopener">📍 Google Maps</a>
+        
+      </div>
+    </article>
+        </div>
+      </section>
+      <section class="day-block" id="day-sec-5" data-day="5">
+        <h2 class="day-header">Day 5: 2026年5月3日 (日・祝)</h2>
+        
+        <div class="macro-route-box">
+          <div class="macro-route-head">
+            <span class="macro-route-title">🗺️ 【全体ルート立ち回り】マクロ動線シークエンス</span>
+            <a class="macro-map-link" href="https://www.google.com/maps/dir/?api=1&amp;origin=大曲駅&amp;destination=大曲駅&amp;waypoints=角館武家屋敷通り|蟹場温泉|休暇村乳頭温泉郷|田沢湖たつこ像&amp;travelmode=transit" target="_blank" rel="noopener">📍 広域Google Maps</a>
+          </div>
+          <div class="macro-route-body">大曲駅 ➔ 角館駅 ➔ 角館武家屋敷通り（青柳家・樺細工伝承館・稲庭うどん＆比内地鶏親子丼） ➔ 田沢湖駅 ➔ 乳頭温泉郷（蟹場温泉・休暇村） ➔ 田沢湖（たつこ像・ババヘラアイス） ➔ 大曲駅</div>
+        </div>
+        <div class="slot-list">
+          
+    <article class="slot-card " id="d5-01" data-slot-id="d5-01">
+      <div class="slot-meta">
+        <span class="slot-time">⏱️ 10:00 - 11:30</span>
+        <span class="slot-badge badge-sightseeing">観光</span>
+      </div>
+      <div class="slot-title-row">
+        <input type="checkbox" class="slot-checkbox no-print" onchange="toggleSlot('d5-01', this.checked)" title="完了・スキップを消し込み">
+        <h3 class="slot-title">角館武家屋敷通り（青柳家・角館樺細工伝承館）</h3>
+      </div>
+      <p class="slot-desc">大曲駅からJR田沢湖線（またはこまち）で角館へ。江戸時代初期の城下町割りがそのまま残る「角館武家屋敷通り」を歩き、3,000坪の敷地を誇る上級武家屋敷「青柳家」と「角館樺細工伝承館」を見学する。</p>
+      
+      <div class="swap-box">
+        <div class="swap-title">🔀 スワップ・代替ルート候補</div>
+        <div><strong>代替プラン:</strong> 青柳家が混雑している場合は、現存最古の武家屋敷「石黒家」をじっくり見学する。</div>
+      </div>
+      
+      <div class="tactics-box">
+        <div class="tactics-header">
+          <span>🎯</span>
+          <span class="tactics-tag">個別立ち回り</span>
+          <span>【構内順路】攻略戦術</span>
+        </div>
+        <div class="tactics-list">
+          
+            <div class="tactics-step-row">
+              <span class="tactics-num">1</span>
+              <span class="tactics-text">駅から外町（商人町）を抜けて内町（武家町）へ入り、黒板塀と新緑・枝垂れ桜の並木、青柳家の武器蔵・解体新書記念館を重点的に回る。</span>
+            </div>
+          
+        </div>
+      </div>
+      
+      <div class="checkpoint-list">
+        
+          <div class="checkpoint-row">
+            <span class="cp-badge">必須</span>
+            <div>
+              <div class="cp-title">現地確認・必達ポイント</div>
+              <div class="cp-desc">山桜の樹皮を用いた伝統工芸「樺細工（かばざいく）」の緻密な光沢と、武家屋敷の薬医門の格式。</div>
+            </div>
+          </div>
+        
+      </div>
+      
+      <div class="practical-footer">
+        
+        <div class="pf-row"><span class="pf-tag">💡 現地Tips:</span><span class="pf-val">11:30のランチ混雑前に武家屋敷通りのメイン見学を終えるペース配分にする。</span></div>
+        
+      </div>
+      <div class="slot-foot">
+        <a class="map-pill" href="https://www.google.com/maps/search/?api=1&amp;query=角館武家屋敷+青柳家" target="_blank" rel="noopener">📍 Google Maps</a>
+        
+      </div>
+    </article>
+    <article class="slot-card " id="d5-02" data-slot-id="d5-02">
+      <div class="slot-meta">
+        <span class="slot-time">⏱️ 11:30 - 12:30</span>
+        <span class="slot-badge badge-sightseeing">観光</span>
+      </div>
+      <div class="slot-title-row">
+        <input type="checkbox" class="slot-checkbox no-print" onchange="toggleSlot('d5-02', this.checked)" title="完了・スキップを消し込み">
+        <h3 class="slot-title">角館ランチ（稲庭うどん・比内地鶏親子丼）</h3>
+      </div>
+      <p class="slot-desc">角館の武家屋敷通り周辺にて、秋田を代表する「比内地鶏の親子丼」と「稲庭うどん」を味わうランチタイム。</p>
+      
+      <div class="swap-box">
+        <div class="swap-title">🔀 スワップ・代替ルート候補</div>
+        <div><strong>代替プラン:</strong> 行列が長い場合は角館駅前の食事処、または田沢湖駅前の「そば五郎」へ移動して昼食をとる。</div>
+      </div>
+      
+      <div class="tactics-box">
+        <div class="tactics-header">
+          <span>🎯</span>
+          <span class="tactics-tag">個別立ち回り</span>
+          <span>【構内順路】攻略戦術</span>
+        </div>
+        <div class="tactics-list">
+          
+            <div class="tactics-step-row">
+              <span class="tactics-num">1</span>
+              <span class="tactics-text">11:30の開店・昼ピーク直前に入店し、午後の田沢湖駅移動と乳頭温泉行き路線バスに確実に間に合わせる。</span>
+            </div>
+          
+        </div>
+      </div>
+      
+      <div class="checkpoint-list">
+        
+          <div class="checkpoint-row">
+            <span class="cp-badge">必須</span>
+            <div>
+              <div class="cp-title">現地確認・必達ポイント</div>
+              <div class="cp-desc">炭火の香りと弾力がある比内地鶏肉、濃厚なとろとろ卵、そして滑らかな稲庭うどんの喉越し。</div>
+            </div>
+          </div>
+        
+      </div>
+      
+      <div class="practical-footer">
+        
+        <div class="pf-row"><span class="pf-tag">💡 現地Tips:</span><span class="pf-val">翌日秋田市内の「佐藤養助 秋田店」でも本場の稲庭うどんを食べるため、ここでの体験が比較の基準になる。</span></div>
+        
+      </div>
+      <div class="slot-foot">
+        <a class="map-pill" href="https://www.google.com/maps/search/?api=1&amp;query=角館+比内地鶏親子丼+稲庭うどん" target="_blank" rel="noopener">📍 Google Maps</a>
+        
+      </div>
+    </article>
+    <article class="slot-card " id="d5-03" data-slot-id="d5-03">
+      <div class="slot-meta">
+        <span class="slot-time">⏱️ 12:45 - 16:00</span>
+        <span class="slot-badge badge-sightseeing">観光</span>
+      </div>
+      <div class="slot-title-row">
+        <input type="checkbox" class="slot-checkbox no-print" onchange="toggleSlot('d5-03', this.checked)" title="完了・スキップを消し込み">
+        <h3 class="slot-title">田沢湖駅経由バス ➔ 乳頭温泉郷（蟹場温泉・休暇村）</h3>
+      </div>
+      <p class="slot-desc">田沢湖駅から羽後交通バス「乳頭線」に揺られ、十和田・八幡平国立公園の乳頭山麓に点在する秘湯「乳頭温泉郷」へ。最も奥に位置する「蟹場（がにば）温泉」で宿から50m離れたブナ原生林の中の露天風呂「木漏れ日の湯」に浸かり、さらに「休暇村 乳頭温泉郷」で2種類の異なる源泉（単純硫黄泉・ナトリウム炭酸水素塩泉）をハシゴする。</p>
+      
+      <div class="swap-box">
+        <div class="swap-title">🔀 スワップ・代替ルート候補</div>
+        <div><strong>代替プラン:</strong> 午前中から乳頭温泉へ直行できる場合は「鶴の湯温泉」または「妙乃湯」「黒湯温泉」を組み込む。</div>
+      </div>
+      
+      <div class="tactics-box">
+        <div class="tactics-header">
+          <span>🎯</span>
+          <span class="tactics-tag">個別立ち回り</span>
+          <span>【構内順路】攻略戦術</span>
+        </div>
+        <div class="tactics-list">
+          
+            <div class="tactics-step-row">
+              <span class="tactics-num">1</span>
+              <span class="tactics-text">日帰り入浴の受付時間（特に鶴の湯や黒湯は15時終了が多い）と路線バスの折り返し時刻を計算し、終点の蟹場温泉とバス停目の前の休暇村を組み合わせた「秘湯2湯ハシゴ戦術」を実行する。</span>
+            </div>
+          
+        </div>
+      </div>
+      
+      <div class="checkpoint-list">
+        
+          <div class="checkpoint-row">
+            <span class="cp-badge">必須</span>
+            <div>
+              <div class="cp-title">現地確認・必達ポイント</div>
+              <div class="cp-desc">蟹場温泉の原生林に囲まれた開放感と、休暇村の白濁硫黄泉・茶褐色泉の泉質の違い。</div>
+            </div>
+          </div>
+        
+      </div>
+      
+      <div class="practical-footer">
+        
+        <div class="pf-row"><span class="pf-tag">💡 現地Tips:</span><span class="pf-val">原生林露天風呂は脱衣所が簡易的なため、着脱しやすい服装で向かう。</span></div>
+        
+      </div>
+      <div class="slot-foot">
+        <a class="map-pill" href="https://www.google.com/maps/search/?api=1&amp;query=乳頭温泉郷+蟹場温泉" target="_blank" rel="noopener">📍 Google Maps</a>
+        
+      </div>
+    </article>
+    <article class="slot-card " id="d5-04" data-slot-id="d5-04">
+      <div class="slot-meta">
+        <span class="slot-time">⏱️ 16:15 - 17:30</span>
+        <span class="slot-badge badge-sightseeing">観光</span>
+      </div>
+      <div class="slot-title-row">
+        <input type="checkbox" class="slot-checkbox no-print" onchange="toggleSlot('d5-04', this.checked)" title="完了・スキップを消し込み">
+        <h3 class="slot-title">田沢湖畔（たつこ像・ババヘラアイス観察）</h3>
+      </div>
+      <p class="slot-desc">乳頭温泉郷からの帰りバスを「田沢湖畔」または途中の立ち寄りポイントで下車し、水深423.4m（日本一）を誇るカルデラ湖・田沢湖を散策。黄金の「たつこ像」や、湖畔でパラソルを広げる秋田名物「ババヘラアイス」の風景を楽しむ。</p>
+      
+      <div class="swap-box">
+        <div class="swap-title">🔀 スワップ・代替ルート候補</div>
+        <div><strong>代替プラン:</strong> 湖畔周遊バス（たつこ号）の一周乗車券を使って御座石神社とたつこ像をバス停車時間内で巡る。</div>
+      </div>
+      
+      <div class="tactics-box">
+        <div class="tactics-header">
+          <span>🎯</span>
+          <span class="tactics-tag">個別立ち回り</span>
+          <span>【構内順路】攻略戦術</span>
+        </div>
+        <div class="tactics-list">
+          
+            <div class="tactics-step-row">
+              <span class="tactics-num">1</span>
+              <span class="tactics-text">夕方の柔らかな光が差し込むコバルトブルーの湖面を確認し、田沢湖駅行きのバス時刻に合わせて湖畔を散策する。</span>
+            </div>
+          
+        </div>
+      </div>
+      
+      <div class="checkpoint-list">
+        
+          <div class="checkpoint-row">
+            <span class="cp-badge">必須</span>
+            <div>
+              <div class="cp-title">現地確認・必達ポイント</div>
+              <div class="cp-desc">永遠の若さと美貌を願って龍と化した伝説の「たつこ像」と、底知れぬ深さを感じさせる瑠璃色の水色。</div>
+            </div>
+          </div>
+        
+      </div>
+      
+      <div class="practical-footer">
+        
+        <div class="pf-row"><span class="pf-tag">💡 現地Tips:</span><span class="pf-val">田沢湖畔〜田沢湖駅の最終バス時刻を逃さないよう17時台の便で駅へ戻る。</span></div>
+        
+      </div>
+      <div class="slot-foot">
+        <a class="map-pill" href="https://www.google.com/maps/search/?api=1&amp;query=田沢湖+たつこ像" target="_blank" rel="noopener">📍 Google Maps</a>
+        
+      </div>
+    </article>
+    <article class="slot-card " id="d5-05" data-slot-id="d5-05">
+      <div class="slot-meta">
+        <span class="slot-time">⏱️ 18:00 - 21:00</span>
+        <span class="slot-badge badge-sightseeing">観光</span>
+      </div>
+      <div class="slot-title-row">
+        <input type="checkbox" class="slot-checkbox no-print" onchange="toggleSlot('d5-05', this.checked)" title="完了・スキップを消し込み">
+        <h3 class="slot-title">大曲駅へ帰還・夕食＆コインランドリー洗濯</h3>
+      </div>
+      <p class="slot-desc">田沢湖駅から大曲駅へ戻り、夕食をとった後、コインランドリーでこれまでの5日間の衣類を一気に洗濯・乾燥。旅の後半戦に向けた装備リセットを行う。</p>
+      
+      <div class="swap-box">
+        <div class="swap-title">🔀 スワップ・代替ルート候補</div>
+        <div><strong>代替プラン:</strong> 大曲名物「大曲納豆汁」や「神代カレー」を提供する駅前飲食店で夕食をとる。</div>
+      </div>
+      
+      <div class="tactics-box">
+        <div class="tactics-header">
+          <span>🎯</span>
+          <span class="tactics-tag">個別立ち回り</span>
+          <span>【構内順路】攻略戦術</span>
+        </div>
+        <div class="tactics-list">
+          
+            <div class="tactics-step-row">
+              <span class="tactics-num">1</span>
+              <span class="tactics-text">12日間の長期縦走では3〜4日に1回のランドリー運用が荷物を最小化する鍵。乾燥待ちの時間に翌日以降の秋田・男鹿・庄内ルートを精査する。</span>
+            </div>
+          
+        </div>
+      </div>
+      
+      <div class="checkpoint-list">
+        
+          <div class="checkpoint-row">
+            <span class="cp-badge">必須</span>
+            <div>
+              <div class="cp-title">現地確認・必達ポイント</div>
+              <div class="cp-desc">翌朝のJR奥羽本線（大曲➔秋田）の発車時刻と、男鹿での宿泊先の確保。</div>
+            </div>
+          </div>
+        
+      </div>
+      
+      <div class="practical-footer">
+        
+        <div class="pf-row"><span class="pf-tag">💡 現地Tips:</span><span class="pf-val">足りない生活用品や衣類はAmazonのコンビニ受取や地元スーパーで柔軟に補充する。</span></div>
+        
+      </div>
+      <div class="slot-foot">
+        <a class="map-pill" href="https://www.google.com/maps/search/?api=1&amp;query=大曲シティホテル" target="_blank" rel="noopener">📍 Google Maps</a>
+        
+      </div>
+    </article>
+        </div>
+      </section>
+      <section class="day-block" id="day-sec-6" data-day="6">
+        <h2 class="day-header">Day 6: 2026年5月4日 (月・祝)</h2>
+        
+        <div class="macro-route-box">
+          <div class="macro-route-head">
+            <span class="macro-route-title">🗺️ 【全体ルート立ち回り】マクロ動線シークエンス</span>
+            <a class="macro-map-link" href="https://www.google.com/maps/dir/?api=1&amp;origin=秋田駅&amp;destination=男鹿駅&amp;waypoints=佐藤養助秋田店|千秋公園|秋田市民俗芸能伝承館|秋田市立赤れんが郷土館&amp;travelmode=transit" target="_blank" rel="noopener">📍 広域Google Maps</a>
+          </div>
+          <div class="macro-route-body">大曲駅 ➔ 秋田駅 ➔ 佐藤養助 秋田店 ➔ 千秋公園（久保田城跡） ➔ 秋田市民俗芸能伝承館（ねぶり流し館）・旧金子家住宅 ➔ 赤れんが郷土館 ➔ 秋田駅（JR男鹿線） ➔ 男鹿駅（ゲストハウス泊）</div>
+        </div>
+        <div class="slot-list">
+          
+    <article class="slot-card " id="d6-01" data-slot-id="d6-01">
+      <div class="slot-meta">
+        <span class="slot-time">⏱️ 09:30 - 11:00</span>
+        <span class="slot-badge badge-transit">移動</span>
+      </div>
+      <div class="slot-title-row">
+        <input type="checkbox" class="slot-checkbox no-print" onchange="toggleSlot('d6-01', this.checked)" title="完了・スキップを消し込み">
+        <h3 class="slot-title">JR奥羽本線（大曲 ➔ 秋田）＆ 荷物預け</h3>
+      </div>
+      <p class="slot-desc">大曲シティホテルをチェックアウトし、JR奥羽本線で秋田駅へ北上。駅のコインロッカーに荷物を預け、秋田市中心部の徒歩散策を開始する。</p>
+      
+      <div class="swap-box">
+        <div class="swap-title">🔀 スワップ・代替ルート候補</div>
+        <div><strong>代替プラン:</strong> ロッカーが満杯の場合は秋田駅構内の観光案内所または宿泊予定ホテルの荷物預かりを利用する。</div>
+      </div>
+      
+      <div class="tactics-box">
+        <div class="tactics-header">
+          <span>🎯</span>
+          <span class="tactics-tag">個別立ち回り</span>
+          <span>【構内順路】攻略戦術</span>
+        </div>
+        <div class="tactics-list">
+          
+            <div class="tactics-step-row">
+              <span class="tactics-num">1</span>
+              <span class="tactics-text">11時の百貨店オープンと同時に「佐藤養助 秋田店」へ入れるよう、10時台後半に秋田駅へ到着する。</span>
+            </div>
+          
+        </div>
+      </div>
+      
+      <div class="checkpoint-list">
+        
+          <div class="checkpoint-row">
+            <span class="cp-badge">必須</span>
+            <div>
+              <div class="cp-title">現地確認・必達ポイント</div>
+              <div class="cp-desc">夕方乗車するJR男鹿線のホーム位置と発車時刻、翌日の男鹿観光タクシープランを確認する。</div>
+            </div>
+          </div>
+        
+      </div>
+      
+      <div class="practical-footer">
+        
+        <div class="pf-row"><span class="pf-tag">💡 現地Tips:</span><span class="pf-val">秋田駅西口から千秋公園・大町エリアまでは全て徒歩圏内（片道5〜15分）で回れる。</span></div>
+        
+      </div>
+      <div class="slot-foot">
+        <a class="map-pill" href="https://www.google.com/maps/search/?api=1&amp;query=秋田駅" target="_blank" rel="noopener">📍 Google Maps</a>
+        
+      </div>
+    </article>
+    <article class="slot-card " id="d6-02" data-slot-id="d6-02">
+      <div class="slot-meta">
+        <span class="slot-time">⏱️ 11:05 - 12:00</span>
+        <span class="slot-badge badge-sightseeing">観光</span>
+      </div>
+      <div class="slot-title-row">
+        <input type="checkbox" class="slot-checkbox no-print" onchange="toggleSlot('d6-02', this.checked)" title="完了・スキップを消し込み">
+        <h3 class="slot-title">佐藤養助 秋田店（西武秋田店地下）</h3>
+      </div>
+      <p class="slot-desc">稲庭うどんの最高峰ブランド「八代 佐藤養助」の秋田店（西武秋田店B1F）。11:08に入店し、醤油つゆと胡麻味噌つゆの2種類で味わう「二味天せいろ（または二味せいろ）」を堪能する。</p>
+      
+      <div class="swap-box">
+        <div class="swap-title">🔀 スワップ・代替ルート候補</div>
+        <div><strong>代替プラン:</strong> 混雑時は近隣の「無限堂 秋田駅前店」へスワップする。</div>
+      </div>
+      
+      <div class="tactics-box">
+        <div class="tactics-header">
+          <span>🎯</span>
+          <span class="tactics-tag">個別立ち回り</span>
+          <span>【構内順路】攻略戦術</span>
+        </div>
+        <div class="tactics-list">
+          
+            <div class="tactics-step-row">
+              <span class="tactics-num">1</span>
+              <span class="tactics-text">開店直後の11時台前半に訪問することで、GWの昼待ち時間を最小化する。</span>
+            </div>
+          
+        </div>
+      </div>
+      
+      <div class="checkpoint-list">
+        
+          <div class="checkpoint-row">
+            <span class="cp-badge">必須</span>
+            <div>
+              <div class="cp-title">現地確認・必達ポイント</div>
+              <div class="cp-desc">手綯（てない）製法による半透明で艶やかな平細麺のコシと、濃厚な胡麻味噌つゆの相性。</div>
+            </div>
+          </div>
+        
+      </div>
+      
+      <div class="practical-footer">
+        
+        <div class="pf-row"><span class="pf-tag">💡 現地Tips:</span><span class="pf-val">店内のお土産コーナーで家庭用の切り落とし麺（徳用）の価格帯もチェックできる。</span></div>
+        
+      </div>
+      <div class="slot-foot">
+        <a class="map-pill" href="https://www.google.com/maps/search/?api=1&amp;query=佐藤養助+秋田店" target="_blank" rel="noopener">📍 Google Maps</a>
+        
+      </div>
+    </article>
+    <article class="slot-card " id="d6-03" data-slot-id="d6-03">
+      <div class="slot-meta">
+        <span class="slot-time">⏱️ 12:15 - 14:00</span>
+        <span class="slot-badge badge-sightseeing">観光</span>
+      </div>
+      <div class="slot-title-row">
+        <input type="checkbox" class="slot-checkbox no-print" onchange="toggleSlot('d6-03', this.checked)" title="完了・スキップを消し込み">
+        <h3 class="slot-title">千秋公園（久保田城跡）</h3>
+      </div>
+      <p class="slot-desc">関ヶ原の戦い後に常陸から国替えとなった佐竹義宣が築いた久保田城跡。石垣や天守をほとんど持たず、土塁と水堀を巧みに配した平山城の遺構と、復元された表門・御隅櫓（おすみやぐら）を巡る。</p>
+      
+      <div class="swap-box">
+        <div class="swap-title">🔀 スワップ・代替ルート候補</div>
+        <div><strong>代替プラン:</strong> 翌朝に回す予定の「秋田県立美術館（安藤忠雄建築）」をこの日に前倒しすることも可能。</div>
+      </div>
+      
+      <div class="tactics-box">
+        <div class="tactics-header">
+          <span>🎯</span>
+          <span class="tactics-tag">個別立ち回り</span>
+          <span>【構内順路】攻略戦術</span>
+        </div>
+        <div class="tactics-list">
+          
+            <div class="tactics-step-row">
+              <span class="tactics-num">1</span>
+              <span class="tactics-text">大手門堀遊歩道から入り、胡月池、表門、そして御隅櫓の展望台から秋田市街と日本海・太平山方面を眺望する。</span>
+            </div>
+          
+        </div>
+      </div>
+      
+      <div class="checkpoint-list">
+        
+          <div class="checkpoint-row">
+            <span class="cp-badge">必須</span>
+            <div>
+              <div class="cp-title">現地確認・必達ポイント</div>
+              <div class="cp-desc">盛岡城の豪壮な総石垣とは対照的な、佐竹氏の「土塁の城」の構造的特徴。</div>
+            </div>
+          </div>
+        
+      </div>
+      
+      <div class="practical-footer">
+        
+        <div class="pf-row"><span class="pf-tag">💡 現地Tips:</span><span class="pf-val">園内は緑が深く、食後のウォーキングコースとして最適。</span></div>
+        
+      </div>
+      <div class="slot-foot">
+        <a class="map-pill" href="https://www.google.com/maps/search/?api=1&amp;query=千秋公園+久保田城跡" target="_blank" rel="noopener">📍 Google Maps</a>
+        
+      </div>
+    </article>
+    <article class="slot-card " id="d6-04" data-slot-id="d6-04">
+      <div class="slot-meta">
+        <span class="slot-time">⏱️ 14:15 - 16:30</span>
+        <span class="slot-badge badge-sightseeing">観光</span>
+      </div>
+      <div class="slot-title-row">
+        <input type="checkbox" class="slot-checkbox no-print" onchange="toggleSlot('d6-04', this.checked)" title="完了・スキップを消し込み">
+        <h3 class="slot-title">ねぶり流し館・旧金子家住宅・赤れんが郷土館</h3>
+      </div>
+      <p class="slot-desc">秋田の伝統祭礼・竿燈（かんとう）まつりを体感できる「秋田市民俗芸能伝承館（ねぶり流し館）」と隣接する江戸後期の商家「旧金子家住宅」、さらに明治45年竣工の旧秋田銀行本店「秋田市立赤れんが郷土館」をセットで巡る。</p>
+      
+      <div class="swap-box">
+        <div class="swap-title">🔀 スワップ・代替ルート候補</div>
+        <div><strong>代替プラン:</strong> 地酒を試飲したい場合は、近くの「高清水（秋田酒類製造）」または秋田駅ビル内の立ち飲みバーへ立ち寄る。</div>
+      </div>
+      
+      <div class="tactics-box">
+        <div class="tactics-header">
+          <span>🎯</span>
+          <span class="tactics-tag">個別立ち回り</span>
+          <span>【構内順路】攻略戦術</span>
+        </div>
+        <div class="tactics-list">
+          
+            <div class="tactics-step-row">
+              <span class="tactics-num">1</span>
+              <span class="tactics-text">共通観覧券を活用し、ねぶり流し館で高さ12m・重さ50kgの大若竿燈を見上げ、赤れんが郷土館でルネサンス様式の洋風建築と勝平得之の木版画を鑑賞する。</span>
+            </div>
+          
+        </div>
+      </div>
+      
+      <div class="checkpoint-list">
+        
+          <div class="checkpoint-row">
+            <span class="cp-badge">必須</span>
+            <div>
+              <div class="cp-title">現地確認・必達ポイント</div>
+              <div class="cp-desc">盛岡の岩手銀行赤レンガ館（辰野金吾）と、秋田の赤れんが郷土館（山口直昭・星野男三郎）の建築意匠の比較。</div>
+            </div>
+          </div>
+        
+      </div>
+      
+      <div class="practical-footer">
+        
+        <div class="pf-row"><span class="pf-tag">💡 現地Tips:</span><span class="pf-val">3施設とも徒歩5分圏内に集積しているため、移動ロスなく回れる。</span></div>
+        
+      </div>
+      <div class="slot-foot">
+        <a class="map-pill" href="https://www.google.com/maps/search/?api=1&amp;query=秋田市立赤れんが郷土館" target="_blank" rel="noopener">📍 Google Maps</a>
+        
+      </div>
+    </article>
+    <article class="slot-card " id="d6-05" data-slot-id="d6-05">
+      <div class="slot-meta">
+        <span class="slot-time">⏱️ 17:00 - 19:00</span>
+        <span class="slot-badge badge-transit">移動</span>
+      </div>
+      <div class="slot-title-row">
+        <input type="checkbox" class="slot-checkbox no-print" onchange="toggleSlot('d6-05', this.checked)" title="完了・スキップを消し込み">
+        <h3 class="slot-title">JR男鹿線で男鹿駅へ移動・ドミトリー泊</h3>
+      </div>
+      <p class="slot-desc">秋田駅で荷物を回収し、JR男鹿線の蓄電池電車（EV-E801系「ACCUM」）に乗車して終点・男鹿駅へ。翌朝の男鹿半島周遊に備え、男鹿駅周辺のゲストハウス（ドミトリー）に宿泊する。</p>
+      
+      <div class="swap-box">
+        <div class="swap-title">🔀 スワップ・代替ルート候補</div>
+        <div><strong>代替プラン:</strong> ドミトリーが合わない場合は秋田駅前のホテルに連泊し、翌朝一番の男鹿線で男鹿駅へ向かう。</div>
+      </div>
+      
+      <div class="tactics-box">
+        <div class="tactics-header">
+          <span>🎯</span>
+          <span class="tactics-tag">個別立ち回り</span>
+          <span>【構内順路】攻略戦術</span>
+        </div>
+        <div class="tactics-list">
+          
+            <div class="tactics-step-row">
+              <span class="tactics-num">1</span>
+              <span class="tactics-text">翌朝10:30の「なまはげシャトル」に余裕を持って乗るため、前夜のうちに男鹿駅まで前線基地を進めておく。</span>
+            </div>
+          
+        </div>
+      </div>
+      
+      <div class="checkpoint-list">
+        
+          <div class="checkpoint-row">
+            <span class="cp-badge">必須</span>
+            <div>
+              <div class="cp-title">現地確認・必達ポイント</div>
+              <div class="cp-desc">2018年に新駅舎となった男鹿駅周辺の複合施設「オガーレ」と、静かな港町の夜の空気感。</div>
+            </div>
+          </div>
+        
+      </div>
+      
+      <div class="practical-footer">
+        
+        <div class="pf-row"><span class="pf-tag">💡 現地Tips:</span><span class="pf-val">男鹿駅周辺は夜間営業の飲食店やコンビニが限られるため、夕食場所や飲み物は早めに確保する。</span></div>
+        
+      </div>
+      <div class="slot-foot">
+        <a class="map-pill" href="https://www.google.com/maps/search/?api=1&amp;query=男鹿駅" target="_blank" rel="noopener">📍 Google Maps</a>
+        
+      </div>
+    </article>
+        </div>
+      </section>
+      <section class="day-block" id="day-sec-7" data-day="7">
+        <h2 class="day-header">Day 7: 2026年5月5日 (火・祝)</h2>
+        
+        <div class="macro-route-box">
+          <div class="macro-route-head">
+            <span class="macro-route-title">🗺️ 【全体ルート立ち回り】マクロ動線シークエンス</span>
+            <a class="macro-map-link" href="https://www.google.com/maps/dir/?api=1&amp;origin=男鹿駅&amp;destination=秋田キャッスルホテル&amp;waypoints=入道崎|なまはげ館|秋田駅&amp;travelmode=driving" target="_blank" rel="noopener">📍 広域Google Maps</a>
+          </div>
+          <div class="macro-route-body">男鹿駅・オガーレ ➔ なまはげシャトル（ぐるっと便） ➔ 入道崎（入道埼灯台） ➔ なまはげ館・男鹿真山伝承館 ➔ 男鹿駅 ➔ 秋田駅（Amazon荷物受取） ➔ 秋田キャッスルホテル</div>
+        </div>
+        <div class="slot-list">
+          
+    <article class="slot-card " id="d7-01" data-slot-id="d7-01">
+      <div class="slot-meta">
+        <span class="slot-time">⏱️ 09:30 - 10:30</span>
+        <span class="slot-badge badge-sightseeing">観光</span>
+      </div>
+      <div class="slot-title-row">
+        <input type="checkbox" class="slot-checkbox no-print" onchange="toggleSlot('d7-01', this.checked)" title="完了・スキップを消し込み">
+        <h3 class="slot-title">男鹿駅前「オガーレ」散策 ＆ なまはげシャトル乗車準備</h3>
+      </div>
+      <p class="slot-desc">男鹿駅前の道の駅「おが なまはげの里 オガーレ」で男鹿産の魚介や特産品を見学した後、10:30発の観光乗合タクシー「なまはげシャトル（ぐるっと便）」に乗車する。</p>
+      
+      <div class="swap-box">
+        <div class="swap-title">🔀 スワップ・代替ルート候補</div>
+        <div><strong>代替プラン:</strong> シャトル予約が取れない場合は男鹿駅から「なまはげ館」方面への路線バスとタクシーを併用する。</div>
+      </div>
+      
+      <div class="tactics-box">
+        <div class="tactics-header">
+          <span>🎯</span>
+          <span class="tactics-tag">個別立ち回り</span>
+          <span>【構内順路】攻略戦術</span>
+        </div>
+        <div class="tactics-list">
+          
+            <div class="tactics-step-row">
+              <span class="tactics-num">1</span>
+              <span class="tactics-text">路線バスだけでは接続が難しい男鹿半島先端（入道崎）と内陸（真山・なまはげ館）を、予約制乗合シャトル「なまはげシャトル」で一筆書き攻略する。</span>
+            </div>
+          
+        </div>
+      </div>
+      
+      <div class="checkpoint-list">
+        
+          <div class="checkpoint-row">
+            <span class="cp-badge">必須</span>
+            <div>
+              <div class="cp-title">現地確認・必達ポイント</div>
+              <div class="cp-desc">駅前広場の巨大なまはげモニュメントと、シャトル運転手さんによるローカルガイド。</div>
+            </div>
+          </div>
+        
+      </div>
+      
+      <div class="practical-footer">
+        
+        <div class="pf-row"><span class="pf-tag">💡 現地Tips:</span><span class="pf-val">レンタカーなしのソロ旅行者にとって、男鹿半島の二次交通は「なまはげシャトル」が唯一の最適解となる。</span></div>
+        
+      </div>
+      <div class="slot-foot">
+        <a class="map-pill" href="https://www.google.com/maps/search/?api=1&amp;query=道の駅おが+オガーレ" target="_blank" rel="noopener">📍 Google Maps</a>
+        
+      </div>
+    </article>
+    <article class="slot-card " id="d7-02" data-slot-id="d7-02">
+      <div class="slot-meta">
+        <span class="slot-time">⏱️ 10:30 - 12:30</span>
+        <span class="slot-badge badge-sightseeing">観光</span>
+      </div>
+      <div class="slot-title-row">
+        <input type="checkbox" class="slot-checkbox no-print" onchange="toggleSlot('d7-02', this.checked)" title="完了・スキップを消し込み">
+        <h3 class="slot-title">入道崎（入道埼灯台・北緯40度モニュメント・海鮮昼食）</h3>
+      </div>
+      <p class="slot-desc">男鹿半島の最北端・北緯40度線上に位置する「入道崎」へ。緑の芝生と青い日本海、そして白と黒のツートンカラーが鮮やかな「入道埼灯台（日本の灯台50選）」を巡り、岬の食事処で海鮮を味わう。</p>
+      
+      <div class="swap-box">
+        <div class="swap-title">🔀 スワップ・代替ルート候補</div>
+        <div><strong>代替プラン:</strong> 荒天時は灯台参観を見送り、海底透視船または周辺ドライブインでの食事・休憩を長めにとる。</div>
+      </div>
+      
+      <div class="tactics-box">
+        <div class="tactics-header">
+          <span>🎯</span>
+          <span class="tactics-tag">個別立ち回り</span>
+          <span>【構内順路】攻略戦術</span>
+        </div>
+        <div class="tactics-list">
+          
+            <div class="tactics-step-row">
+              <span class="tactics-num">1</span>
+              <span class="tactics-text">灯台の上まで登って日本海と鹿落としの断崖を360度見渡し、北緯40度モニュメント（安山岩の列石）を踏破する。</span>
+            </div>
+          
+        </div>
+      </div>
+      
+      <div class="checkpoint-list">
+        
+          <div class="checkpoint-row">
+            <span class="cp-badge">必須</span>
+            <div>
+              <div class="cp-title">現地確認・必達ポイント</div>
+              <div class="cp-desc">男鹿名物の海鮮丼や石焼料理（真っ赤に焼いた男鹿石を木の桶に投入する漁師料理）。</div>
+            </div>
+          </div>
+        
+      </div>
+      
+      <div class="practical-footer">
+        
+        <div class="pf-row"><span class="pf-tag">💡 現地Tips:</span><span class="pf-val">岬の先端は遮るものがなく強風が吹くため、帽子や荷物の飛散に注意。</span></div>
+        
+      </div>
+      <div class="slot-foot">
+        <a class="map-pill" href="https://www.google.com/maps/search/?api=1&amp;query=入道崎" target="_blank" rel="noopener">📍 Google Maps</a>
+        
+      </div>
+    </article>
+    <article class="slot-card " id="d7-03" data-slot-id="d7-03">
+      <div class="slot-meta">
+        <span class="slot-time">⏱️ 13:00 - 15:00</span>
+        <span class="slot-badge badge-sightseeing">観光</span>
+      </div>
+      <div class="slot-title-row">
+        <input type="checkbox" class="slot-checkbox no-print" onchange="toggleSlot('d7-03', this.checked)" title="完了・スキップを消し込み">
+        <h3 class="slot-title">なまはげ館 ＆ 男鹿真山伝承館</h3>
+      </div>
+      <p class="slot-desc">ユネスコ無形文化遺産「男鹿のナマハゲ」の聖地・真山（しんざん）地区へ。「なまはげ館」で男鹿市内各地で実際に使われていた150枚以上の多様ななまはげ面を見比べ、隣接する曲家民家「男鹿真山伝承館」で大晦日のなまはげ習俗の実演を体感する。</p>
+      
+      <div class="swap-box">
+        <div class="swap-title">🔀 スワップ・代替ルート候補</div>
+        <div><strong>代替プラン:</strong> 時間が余った場合は館内の「なまはげ変身コーナー」や面彫り実演工房を見学する。</div>
+      </div>
+      
+      <div class="tactics-box">
+        <div class="tactics-header">
+          <span>🎯</span>
+          <span class="tactics-tag">個別立ち回り</span>
+          <span>【構内順路】攻略戦術</span>
+        </div>
+        <div class="tactics-list">
+          
+            <div class="tactics-step-row">
+              <span class="tactics-num">1</span>
+              <span class="tactics-text">なまはげ館の展示を先に見学してから真山伝承館の実演回（30分間隔）へ入ることで、主人の「作柄・家内安全の問答」とナマハゲの荒々しい所作の意味が深く理解できる。</span>
+            </div>
+          
+        </div>
+      </div>
+      
+      <div class="checkpoint-list">
+        
+          <div class="checkpoint-row">
+            <span class="cp-badge">必須</span>
+            <div>
+              <div class="cp-title">現地確認・必達ポイント</div>
+              <div class="cp-desc">集落ごとに全く異なる面の造形（韓風・笑み・角の形）と、伝承館に響き渡る咆哮・足踏みの迫力。</div>
+            </div>
+          </div>
+        
+      </div>
+      
+      <div class="practical-footer">
+        
+        <div class="pf-row"><span class="pf-tag">💡 現地Tips:</span><span class="pf-val">徒歩5分の場所にある「真山神社」の杉並木と歓喜天王もあわせて参拝すると、ナマハゲ信仰のルーツが一本の線で繋がる。</span></div>
+        
+      </div>
+      <div class="slot-foot">
+        <a class="map-pill" href="https://www.google.com/maps/search/?api=1&amp;query=なまはげ館" target="_blank" rel="noopener">📍 Google Maps</a>
+        
+      </div>
+    </article>
+    <article class="slot-card " id="d7-04" data-slot-id="d7-04">
+      <div class="slot-meta">
+        <span class="slot-time">⏱️ 15:30 - 18:30</span>
+        <span class="slot-badge badge-sightseeing">観光</span>
+      </div>
+      <div class="slot-title-row">
+        <input type="checkbox" class="slot-checkbox no-print" onchange="toggleSlot('d7-04', this.checked)" title="完了・スキップを消し込み">
+        <h3 class="slot-title">JR男鹿線で秋田駅へ帰還・Amazon受取 ➔ 秋田キャッスルホテル</h3>
+      </div>
+      <p class="slot-desc">男鹿駅からJR男鹿線で秋田駅へ戻り、コンビニ受取に指定していたAmazon注文品（WEGOの衣類や折りたたみ傘ポーチ）を回収。千秋公園のお堀端に建つ名門「秋田キャッスルホテル」へチェックインする。</p>
+      
+      <div class="swap-box">
+        <div class="swap-title">🔀 スワップ・代替ルート候補</div>
+        <div><strong>代替プラン:</strong> 体調が万全な場合は川反（かわばた）の飲食街へ繰り出し、きりたんぽ鍋やハタハタ寿司を味わう。</div>
+      </div>
+      
+      <div class="tactics-box">
+        <div class="tactics-header">
+          <span>🎯</span>
+          <span class="tactics-tag">個別立ち回り</span>
+          <span>【構内順路】攻略戦術</span>
+        </div>
+        <div class="tactics-list">
+          
+            <div class="tactics-step-row">
+              <span class="tactics-num">1</span>
+              <span class="tactics-text">7日間の連続移動と前夜のドミトリー泊で少し風邪気味の兆候が出たため、この日は夜の外出を控え、格式高いシティホテルのベッドとバスルームで徹底的に体を休める「戦略的休養日」とする。</span>
+            </div>
+          
+        </div>
+      </div>
+      
+      <div class="checkpoint-list">
+        
+          <div class="checkpoint-row">
+            <span class="cp-badge">必須</span>
+            <div>
+              <div class="cp-title">現地確認・必達ポイント</div>
+              <div class="cp-desc">翌朝のホテル朝食ビュッフェと、すぐ向かいにある「秋田県立美術館」への朝一番アクセス動線。</div>
+            </div>
+          </div>
+        
+      </div>
+      
+      <div class="practical-footer">
+        
+        <div class="pf-row"><span class="pf-tag">💡 現地Tips:</span><span class="pf-val">長期の一人旅では「1日だけハイクラスなホテルを入れて睡眠負債を一掃する」ことが後半失速を防ぐ最大の秘訣。</span></div>
+        
+      </div>
+      <div class="slot-foot">
+        <a class="map-pill" href="https://www.google.com/maps/search/?api=1&amp;query=秋田キャッスルホテル" target="_blank" rel="noopener">📍 Google Maps</a>
+        
+      </div>
+    </article>
+        </div>
+      </section>
+      <section class="day-block" id="day-sec-8" data-day="8">
+        <h2 class="day-header">Day 8: 2026年5月6日 (水・振休)</h2>
+        
+        <div class="macro-route-box">
+          <div class="macro-route-head">
+            <span class="macro-route-title">🗺️ 【全体ルート立ち回り】マクロ動線シークエンス</span>
+            <a class="macro-map-link" href="https://www.google.com/maps/dir/?api=1&amp;origin=秋田県立美術館&amp;destination=月のホテル+酒田&amp;waypoints=鶴岡駅|鶴岡市立加茂水族館|出羽三山神社|羽黒山五重塔&amp;travelmode=transit" target="_blank" rel="noopener">📍 広域Google Maps</a>
+          </div>
+          <div class="macro-route-body">秋田キャッスルホテル ➔ 秋田県立美術館 ➔ 秋田駅（特急いなほ） ➔ 鶴岡駅 ➔ 鶴岡市立加茂水族館（クラゲドリーム館） ➔ 出羽三山神社（羽黒山山頂・五重塔） ➔ 酒田駅・月のホテル</div>
+        </div>
+        <div class="slot-list">
+          
+    <article class="slot-card " id="d8-01" data-slot-id="d8-01">
+      <div class="slot-meta">
+        <span class="slot-time">⏱️ 09:00 - 10:15</span>
+        <span class="slot-badge badge-sightseeing">観光</span>
+      </div>
+      <div class="slot-title-row">
+        <input type="checkbox" class="slot-checkbox no-print" onchange="toggleSlot('d8-01', this.checked)" title="完了・スキップを消し込み">
+        <h3 class="slot-title">秋田県立美術館（平野政吉コレクション・水庭）</h3>
+      </div>
+      <p class="slot-desc">秋田キャッスルホテルで朝食をとった後、目の前のエリアなかいちに建つ「秋田県立美術館」へ。安藤忠雄設計による三角形を基調としたコンクリート空間と、藤田嗣治の大壁画『秋田の行事』、そして千秋公園の緑を借景にした2階カフェの「水庭」を鑑賞する。</p>
+      
+      <div class="swap-box">
+        <div class="swap-title">🔀 スワップ・代替ルート候補</div>
+        <div><strong>代替プラン:</strong> 開館前の時間帯しか取れない場合はエリアなかいちの外観と千秋公園のお堀散策に集中する。</div>
+      </div>
+      
+      <div class="tactics-box">
+        <div class="tactics-header">
+          <span>🎯</span>
+          <span class="tactics-tag">個別立ち回り</span>
+          <span>【構内順路】攻略戦術</span>
+        </div>
+        <div class="tactics-list">
+          
+            <div class="tactics-step-row">
+              <span class="tactics-num">1</span>
+              <span class="tactics-text">10時台の特急「いなほ」発車前に開館直後の静かな美術館を訪れ、水庭越しの久保田城跡の眺めを独り占めする。</span>
+            </div>
+          
+        </div>
+      </div>
+      
+      <div class="checkpoint-list">
+        
+          <div class="checkpoint-row">
+            <span class="cp-badge">必須</span>
+            <div>
+              <div class="cp-title">現地確認・必達ポイント</div>
+              <div class="cp-desc">支柱のない螺旋階段の造形美と、幅20mを超える藤田嗣治『秋田の行事』（1937年）の圧倒的迫力。</div>
+            </div>
+          </div>
+        
+      </div>
+      
+      <div class="practical-footer">
+        
+        <div class="pf-row"><span class="pf-tag">💡 現地Tips:</span><span class="pf-val">美術館から秋田駅西口までは屋根付きデッキ経由で徒歩約10分。</span></div>
+        
+      </div>
+      <div class="slot-foot">
+        <a class="map-pill" href="https://www.google.com/maps/search/?api=1&amp;query=秋田県立美術館" target="_blank" rel="noopener">📍 Google Maps</a>
+        
+      </div>
+    </article>
+    <article class="slot-card " id="d8-02" data-slot-id="d8-02">
+      <div class="slot-meta">
+        <span class="slot-time">⏱️ 10:35 - 12:30</span>
+        <span class="slot-badge badge-transit">移動</span>
+      </div>
+      <div class="slot-title-row">
+        <input type="checkbox" class="slot-checkbox no-print" onchange="toggleSlot('d8-02', this.checked)" title="完了・スキップを消し込み">
+        <h3 class="slot-title">JR羽越本線 特急「いなほ」（秋田 ➔ 鶴岡）</h3>
+      </div>
+      <p class="slot-desc">秋田駅からJR羽越本線の特急「いなほ」に乗車し、山形県庄内地方の鶴岡駅へ南下。進行方向右側には日本海の海岸線、左側には標高2,236mの秀峰・鳥海山（出羽富士）の残雪が迫る屈指の車窓ルート。</p>
+      
+      <div class="swap-box">
+        <div class="swap-title">🔀 スワップ・代替ルート候補</div>
+        <div><strong>代替プラン:</strong> 羽越本線が強風遅延した場合は、酒田駅で途中下車して山居倉庫を先に回り、翌日に鶴岡・羽黒山を回す逆順スワップを発動する。</div>
+      </div>
+      
+      <div class="tactics-box">
+        <div class="tactics-header">
+          <span>🎯</span>
+          <span class="tactics-tag">個別立ち回り</span>
+          <span>【構内順路】攻略戦術</span>
+        </div>
+        <div class="tactics-list">
+          
+            <div class="tactics-step-row">
+              <span class="tactics-num">1</span>
+              <span class="tactics-text">日本海の奇岩（十六羅漢岩・笹川流れ方面）や鳥海山の眺望を楽しめる窓側席を確保し、車内で庄内エリアのバス時刻表（加茂水族館線・羽黒山線）を最終確認する。</span>
+            </div>
+          
+        </div>
+      </div>
+      
+      <div class="checkpoint-list">
+        
+          <div class="checkpoint-row">
+            <span class="cp-badge">必須</span>
+            <div>
+              <div class="cp-title">現地確認・必達ポイント</div>
+              <div class="cp-desc">秋田県（由利本荘・象潟）から山形県（遊佐・酒田・鶴岡）へと植生と田園風景が移り変わるグラデーション。</div>
+            </div>
+          </div>
+        
+      </div>
+      
+      <div class="practical-footer">
+        
+        <div class="pf-row"><span class="pf-tag">💡 現地Tips:</span><span class="pf-val">鶴岡駅到着後、コインロッカーに荷物を預けてから庄内交通バス乗り場へ向かう。</span></div>
+        
+      </div>
+      <div class="slot-foot">
+        <a class="map-pill" href="https://www.google.com/maps/search/?api=1&amp;query=鶴岡駅" target="_blank" rel="noopener">📍 Google Maps</a>
+        
+      </div>
+    </article>
+    <article class="slot-card " id="d8-03" data-slot-id="d8-03">
+      <div class="slot-meta">
+        <span class="slot-time">⏱️ 13:00 - 15:00</span>
+        <span class="slot-badge badge-sightseeing">観光</span>
+      </div>
+      <div class="slot-title-row">
+        <input type="checkbox" class="slot-checkbox no-print" onchange="toggleSlot('d8-03', this.checked)" title="完了・スキップを消し込み">
+        <h3 class="slot-title">鶴岡市立加茂水族館（クラゲドリーム館）</h3>
+      </div>
+      <p class="slot-desc">鶴岡駅からバスで日本海沿岸の「鶴岡市立加茂水族館」へ。常時60種以上のクラゲを展示する世界一のクラゲ水族館であり、直径5mの巨大円形水槽に約1万匹のミズクラゲが漂う「クラゲドリームシアター」は必見。</p>
+      
+      <div class="swap-box">
+        <div class="swap-title">🔀 スワップ・代替ルート候補</div>
+        <div><strong>代替プラン:</strong> バスの接続が合わない場合は鶴岡市内の致道博物館・庄内藩校致道館を見学してから羽黒山へ向かう。</div>
+      </div>
+      
+      <div class="tactics-box">
+        <div class="tactics-header">
+          <span>🎯</span>
+          <span class="tactics-tag">個別立ち回り</span>
+          <span>【構内順路】攻略戦術</span>
+        </div>
+        <div class="tactics-list">
+          
+            <div class="tactics-step-row">
+              <span class="tactics-num">1</span>
+              <span class="tactics-text">庄内浜の淡水魚・海水魚コーナーを抜けてクラネタリウムへ進み、バックライトに浮かび上がる多種多様なクラゲの拍動と、屋上・ウミネコ餌付けやアシカコーナーまで一巡する。</span>
+            </div>
+          
+        </div>
+      </div>
+      
+      <div class="checkpoint-list">
+        
+          <div class="checkpoint-row">
+            <span class="cp-badge">必須</span>
+            <div>
+              <div class="cp-title">現地確認・必達ポイント</div>
+              <div class="cp-desc">廃館危機から「クラゲ一点突破」の逆転劇で世界的水族館へと再生したストーリーと、クラゲソフトクリーム。</div>
+            </div>
+          </div>
+        
+      </div>
+      
+      <div class="practical-footer">
+        
+        <div class="pf-row"><span class="pf-tag">💡 現地Tips:</span><span class="pf-val">鶴岡駅へ戻るバスの時刻を厳守しないと、同日夕方の羽黒山バスに接続できなくなるため時計管理を徹底する。</span></div>
+        
+      </div>
+      <div class="slot-foot">
+        <a class="map-pill" href="https://www.google.com/maps/search/?api=1&amp;query=鶴岡市立加茂水族館" target="_blank" rel="noopener">📍 Google Maps</a>
+        
+      </div>
+    </article>
+    <article class="slot-card " id="d8-04" data-slot-id="d8-04">
+      <div class="slot-meta">
+        <span class="slot-time">⏱️ 15:30 - 17:15</span>
+        <span class="slot-badge badge-sightseeing">観光</span>
+      </div>
+      <div class="slot-title-row">
+        <input type="checkbox" class="slot-checkbox no-print" onchange="toggleSlot('d8-04', this.checked)" title="完了・スキップを消し込み">
+        <h3 class="slot-title">出羽三山神社（三神合祭殿）＆ 国宝 羽黒山五重塔</h3>
+      </div>
+      <p class="slot-desc">鶴岡駅から羽黒山頂行きバスに乗車し、16:12に羽黒山山頂へ到着。帰りの最終バス発車（16:45頃）までのわずか33分間で、茅葺き木造建築としては日本最大級の「三神合祭殿（月山・羽黒山・湯殿山を合祀）」参拝から杉並木の石段を下って「国宝 羽黒山五重塔」まで駆け抜ける伝説の33分RTA（リアルタイムアタック）を敢行。</p>
+      
+      <div class="swap-box">
+        <div class="swap-title">🔀 スワップ・代替ルート候補</div>
+        <div><strong>代替プラン:</strong> 時間・体力が厳しい場合は山頂の三神合祭殿のみ参拝して同じ山頂バス停から折り返すか、麓の随神門〜五重塔往復（徒歩約30分）に絞る。</div>
+      </div>
+      
+      <div class="tactics-box">
+        <div class="tactics-header">
+          <span>🎯</span>
+          <span class="tactics-tag">個別立ち回り</span>
+          <span>【構内順路】攻略戦術</span>
+        </div>
+        <div class="tactics-list">
+          
+            <div class="tactics-step-row">
+              <span class="tactics-num">1</span>
+              <span class="tactics-text">バスで山頂（標高414m）へ直行して三神合祭殿と鏡池を参拝した後、2,446段の石段と樹齢数百年の杉並木を一気に駆け下り、麓の随神門・五重塔エリアでバスを捕まえる高機動戦術。</span>
+            </div>
+          
+        </div>
+      </div>
+      
+      <div class="checkpoint-list">
+        
+          <div class="checkpoint-row">
+            <span class="cp-badge">必須</span>
+            <div>
+              <div class="cp-title">現地確認・必達ポイント</div>
+              <div class="cp-desc">厚さ2.1mの萱葺き屋根を誇る三神合祭殿の重厚感と、杉木立の中に凛と佇む素木造りの国宝五重塔（平将門創建伝承・南北朝時代再建）。</div>
+            </div>
+          </div>
+        
+      </div>
+      
+      <div class="practical-footer">
+        
+        <div class="pf-row"><span class="pf-tag">💡 現地Tips:</span><span class="pf-val">石段の下りは膝への負担が大きいため、靴紐を締め直してスリップに細心の注意を払う。</span></div>
+        
+      </div>
+      <div class="slot-foot">
+        <a class="map-pill" href="https://www.google.com/maps/search/?api=1&amp;query=出羽三山神社+三神合祭殿" target="_blank" rel="noopener">📍 Google Maps</a>
+        
+      </div>
+    </article>
+    <article class="slot-card " id="d8-05" data-slot-id="d8-05">
+      <div class="slot-meta">
+        <span class="slot-time">⏱️ 18:00 - 20:30</span>
+        <span class="slot-badge badge-sightseeing">観光</span>
+      </div>
+      <div class="slot-title-row">
+        <input type="checkbox" class="slot-checkbox no-print" onchange="toggleSlot('d8-05', this.checked)" title="完了・スキップを消し込み">
+        <h3 class="slot-title">酒田駅へ移動 ➔ 「月のホテル」チェックイン＆夕食</h3>
+      </div>
+      <p class="slot-desc">鶴岡駅からJR羽越本線で酒田駅へ移動し、駅前再開発エリア「光の湊」に建つデザイナーズホテル「月のホテル」にチェックイン。館内のライブラリー空間と快適な客室で羽黒山RTAの疲労を癒やす。</p>
+      
+      <div class="swap-box">
+        <div class="swap-title">🔀 スワップ・代替ルート候補</div>
+        <div><strong>代替プラン:</strong> 鶴岡駅前の「SHONAI HOTEL SUIDEN TERRASSE（スイデンテラス・坂茂設計）」に宿泊するプランも有力。</div>
+      </div>
+      
+      <div class="tactics-box">
+        <div class="tactics-header">
+          <span>🎯</span>
+          <span class="tactics-tag">個別立ち回り</span>
+          <span>【構内順路】攻略戦術</span>
+        </div>
+        <div class="tactics-list">
+          
+            <div class="tactics-step-row">
+              <span class="tactics-num">1</span>
+              <span class="tactics-text">酒田駅から徒歩1分の好立地を活かし、チェックイン後に駅周辺で庄内の地魚や酒田ラーメンを味わう。</span>
+            </div>
+          
+        </div>
+      </div>
+      
+      <div class="checkpoint-list">
+        
+          <div class="checkpoint-row">
+            <span class="cp-badge">必須</span>
+            <div>
+              <div class="cp-title">現地確認・必達ポイント</div>
+              <div class="cp-desc">1階併設の酒田市立図書館「ミライニ」と一体化した洗練された建築デザイン、および翌朝の地元食材豊富な朝食ビュッフェ。</div>
+            </div>
+          </div>
+        
+      </div>
+      
+      <div class="practical-footer">
+        
+        <div class="pf-row"><span class="pf-tag">💡 現地Tips:</span><span class="pf-val">翌日は朝に山居倉庫を歩いてから11:45発の陸羽西線に乗るため、午前中の動線を整理しておく。</span></div>
+        
+      </div>
+      <div class="slot-foot">
+        <a class="map-pill" href="https://www.google.com/maps/search/?api=1&amp;query=月のホテル+酒田" target="_blank" rel="noopener">📍 Google Maps</a>
+        
+      </div>
+    </article>
+        </div>
+      </section>
+      <section class="day-block" id="day-sec-9" data-day="9">
+        <h2 class="day-header">Day 9: 2026年5月7日 (木)</h2>
+        
+        <div class="macro-route-box">
+          <div class="macro-route-head">
+            <span class="macro-route-title">🗺️ 【全体ルート立ち回り】マクロ動線シークエンス</span>
+            <a class="macro-map-link" href="https://www.google.com/maps/dir/?api=1&amp;origin=酒田駅&amp;destination=山形駅&amp;waypoints=山居倉庫|最上峡芭蕉ライン観光古口港|新庄駅&amp;travelmode=transit" target="_blank" rel="noopener">📍 広域Google Maps</a>
+          </div>
+          <div class="macro-route-body">酒田駅・月のホテル ➔ 山居倉庫 ➔ 酒田駅（JR陸羽西線） ➔ 古口駅（最上川舟下り） ➔ 高屋駅・新庄駅（山形新幹線つばさ） ➔ 山形駅・ホテルアーバングレイスグラン</div>
+        </div>
+        <div class="slot-list">
+          
+    <article class="slot-card " id="d9-01" data-slot-id="d9-01">
+      <div class="slot-meta">
+        <span class="slot-time">⏱️ 09:30 - 11:15</span>
+        <span class="slot-badge badge-sightseeing">観光</span>
+      </div>
+      <div class="slot-title-row">
+        <input type="checkbox" class="slot-checkbox no-print" onchange="toggleSlot('d9-01', this.checked)" title="完了・スキップを消し込み">
+        <h3 class="slot-title">山居倉庫（庄内米歴史資料館・夢の倶楽）</h3>
+      </div>
+      <p class="slot-desc">酒田駅から徒歩で新井田川沿いの「山居倉庫」へ。明治26年（1893年）に旧庄内藩酒井家によって建てられた白壁・土蔵造りの12棟の米保管倉庫と、夏の西日と日本海の強風から米を守るために植えられた樹齢150年超のケヤキ並木を散策する。</p>
+      
+      <div class="swap-box">
+        <div class="swap-title">🔀 スワップ・代替ルート候補</div>
+        <div><strong>代替プラン:</strong> 時間があれば近隣の「旧鐙屋（あぶみや）」または「本間美術館・本間家旧本邸」を合わせて巡る。</div>
+      </div>
+      
+      <div class="tactics-box">
+        <div class="tactics-header">
+          <span>🎯</span>
+          <span class="tactics-tag">個別立ち回り</span>
+          <span>【構内順路】攻略戦術</span>
+        </div>
+        <div class="tactics-list">
+          
+            <div class="tactics-step-row">
+              <span class="tactics-num">1</span>
+              <span class="tactics-text">朝の澄んだ光の中で黒い板壁と新緑のケヤキ並木のコントラストを撮影し、観光物産館「酒田夢の倶楽」で庄内土産や地酒をチェックする。</span>
+            </div>
+          
+        </div>
+      </div>
+      
+      <div class="checkpoint-list">
+        
+          <div class="checkpoint-row">
+            <span class="cp-badge">必須</span>
+            <div>
+              <div class="cp-title">現地確認・必達ポイント</div>
+              <div class="cp-desc">二重屋根構造による自然の空調設計と、北前船交易で栄えた湊町・酒田の経済力。</div>
+            </div>
+          </div>
+        
+      </div>
+      
+      <div class="practical-footer">
+        
+        <div class="pf-row"><span class="pf-tag">💡 現地Tips:</span><span class="pf-val">11:45発のJR陸羽西線（または代行バス）に遅れないよう、11:15には酒田駅へ戻る。</span></div>
+        
+      </div>
+      <div class="slot-foot">
+        <a class="map-pill" href="https://www.google.com/maps/search/?api=1&amp;query=山居倉庫" target="_blank" rel="noopener">📍 Google Maps</a>
+        
+      </div>
+    </article>
+    <article class="slot-card " id="d9-02" data-slot-id="d9-02">
+      <div class="slot-meta">
+        <span class="slot-time">⏱️ 11:45 - 14:15</span>
+        <span class="slot-badge badge-sightseeing">観光</span>
+      </div>
+      <div class="slot-title-row">
+        <input type="checkbox" class="slot-checkbox no-print" onchange="toggleSlot('d9-02', this.checked)" title="完了・スキップを消し込み">
+        <h3 class="slot-title">JR陸羽西線 ➔ 最上川舟下り（古口 ➔ 草薙）</h3>
+      </div>
+      <p class="slot-desc">酒田駅11:45発のJR陸羽西線（奥の細道最上川ライン）で古口駅へ（12:30着）。徒歩すぐの戸沢藩船番所から12:50発の「最上峡芭蕉ライン舟下り」に乗船し、松尾芭蕉が『奥の細道』で「五月雨をあつめて早し最上川」と詠んだ最上峡を草薙港まで約1時間かけて下る。</p>
+      
+      <div class="swap-box">
+        <div class="swap-title">🔀 スワップ・代替ルート候補</div>
+        <div><strong>代替プラン:</strong> 増水による欠航時は新庄駅へ直行し、新庄ふるさと歴史センターと「とりもつラーメン」を楽しむ。</div>
+      </div>
+      
+      <div class="tactics-box">
+        <div class="tactics-header">
+          <span>🎯</span>
+          <span class="tactics-tag">個別立ち回り</span>
+          <span>【構内順路】攻略戦術</span>
+        </div>
+        <div class="tactics-list">
+          
+            <div class="tactics-step-row">
+              <span class="tactics-num">1</span>
+              <span class="tactics-text">3日目の猊鼻渓（手漕ぎ往復・断崖静寂型）との違いを楽しみに乗船し、船頭さんの軽妙なトークと「最上川舟唄」、白糸の滝などの景勝を満喫する。</span>
+            </div>
+          
+        </div>
+      </div>
+      
+      <div class="checkpoint-list">
+        
+          <div class="checkpoint-row">
+            <span class="cp-badge">必須</span>
+            <div>
+              <div class="cp-title">現地確認・必達ポイント</div>
+              <div class="cp-desc">下船場所（草薙温泉側）から高屋駅または古口駅へのバス・列車接続時刻の把握。</div>
+            </div>
+          </div>
+        
+      </div>
+      
+      <div class="practical-footer">
+        
+        <div class="pf-row"><span class="pf-tag">💡 現地Tips:</span><span class="pf-val">陸羽西線がトンネル工事等でバス代行運転となっている期間は、代行バスの発着場と所要時間を事前確認する。</span></div>
+        
+      </div>
+      <div class="slot-foot">
+        <a class="map-pill" href="https://www.google.com/maps/search/?api=1&amp;query=最上峡芭蕉ライン観光" target="_blank" rel="noopener">📍 Google Maps</a>
+        
+      </div>
+    </article>
+    <article class="slot-card " id="d9-03" data-slot-id="d9-03">
+      <div class="slot-meta">
+        <span class="slot-time">⏱️ 14:30 - 16:30</span>
+        <span class="slot-badge badge-transit">移動</span>
+      </div>
+      <div class="slot-title-row">
+        <input type="checkbox" class="slot-checkbox no-print" onchange="toggleSlot('d9-03', this.checked)" title="完了・スキップを消し込み">
+        <h3 class="slot-title">新庄駅（15:17発つばさ）➔ 大石田見送り判断 ➔ 山形駅</h3>
+      </div>
+      <p class="slot-desc">15:01に新庄駅へ到着し、15:17発の山形新幹線「つばさ」に乗車。車内で「今日このまま大石田駅で降りて銀山温泉へ行くか？」を検討するも、銀山温泉の共同浴場「しろがね湯」等の日帰り受付が15:30で終了している事実を即座に検索・確認。中途半端な夕方訪問をやめて翌日に回す決断を下し、大石田駅をあえてスルーして山形駅まで直行する。</p>
+      
+      <div class="swap-box">
+        <div class="swap-title">🔀 スワップ・代替ルート候補</div>
+        <div><strong>代替プラン:</strong> 山形駅到着後、まだ明るい時間帯であれば霞城公園の東大手門周辺を先行散歩する。</div>
+      </div>
+      
+      <div class="tactics-box">
+        <div class="tactics-header">
+          <span>🎯</span>
+          <span class="tactics-tag">個別立ち回り</span>
+          <span>【構内順路】攻略戦術</span>
+        </div>
+        <div class="tactics-list">
+          
+            <div class="tactics-step-row">
+              <span class="tactics-num">1</span>
+              <span class="tactics-text">「せっかく近くを通るから」というサンクコストに流されず、現地施設の営業時間と滞在バリューを車内で冷静に計算して日程を組み替える、ソロ旅ならではの戦術的撤退・再配置。</span>
+            </div>
+          
+        </div>
+      </div>
+      
+      <div class="checkpoint-list">
+        
+          <div class="checkpoint-row">
+            <span class="cp-badge">必須</span>
+            <div>
+              <div class="cp-title">現地確認・必達ポイント</div>
+              <div class="cp-desc">翌日（Day 10）の天童〜大石田〜銀山温泉のバス時刻表（16:10大石田発➔18:21銀山発最終バス）をこの時点で確定させる。</div>
+            </div>
+          </div>
+        
+      </div>
+      
+      <div class="practical-footer">
+        
+        <div class="pf-row"><span class="pf-tag">💡 現地Tips:</span><span class="pf-val">大石田〜銀山温泉の「はながさバス」は本数が極めて限られるため、新幹線の号車とバス乗り継ぎ時間の確認が必須。</span></div>
+        
+      </div>
+      <div class="slot-foot">
+        <a class="map-pill" href="https://www.google.com/maps/search/?api=1&amp;query=山形駅" target="_blank" rel="noopener">📍 Google Maps</a>
+        
+      </div>
+    </article>
+    <article class="slot-card " id="d9-04" data-slot-id="d9-04">
+      <div class="slot-meta">
+        <span class="slot-time">⏱️ 17:00 - 21:00</span>
+        <span class="slot-badge badge-sightseeing">観光</span>
+      </div>
+      <div class="slot-title-row">
+        <input type="checkbox" class="slot-checkbox no-print" onchange="toggleSlot('d9-04', this.checked)" title="完了・スキップを消し込み">
+        <h3 class="slot-title">ホテルアーバングレイスグラン山形駅前 チェックイン</h3>
+      </div>
+      <p class="slot-desc">山形駅西口・東口から至近の「ホテルアーバングレイスグラン山形駅前」にチェックイン（2連泊）。大浴場で足を伸ばして温まり、山形牛や冷たい肉そば・芋煮などの山形グルメで英気を養う。</p>
+      
+      <div class="swap-box">
+        <div class="swap-title">🔀 スワップ・代替ルート候補</div>
+        <div><strong>代替プラン:</strong> 夕食は駅前の「そば処 三津屋」や山形牛焼肉店、または居酒屋で山形の地酒（十四代・くどき上手・楯野川）を味わう。</div>
+      </div>
+      
+      <div class="tactics-box">
+        <div class="tactics-header">
+          <span>🎯</span>
+          <span class="tactics-tag">個別立ち回り</span>
+          <span>【構内順路】攻略戦術</span>
+        </div>
+        <div class="tactics-list">
+          
+            <div class="tactics-step-row">
+              <span class="tactics-num">1</span>
+              <span class="tactics-text">翌朝の「三つ星シェフ監修の山形郷土料理朝食」を楽しみにしつつ、山形駅をハブにして天童・銀山温泉・山寺を放射状に攻略する体制を整える。</span>
+            </div>
+          
+        </div>
+      </div>
+      
+      <div class="checkpoint-list">
+        
+          <div class="checkpoint-row">
+            <span class="cp-badge">必須</span>
+            <div>
+              <div class="cp-title">現地確認・必達ポイント</div>
+              <div class="cp-desc">客室の快適性と大浴場の湯加減、山形駅ビル「エスパル山形」の地酒・土産ラインナップ。</div>
+            </div>
+          </div>
+        
+      </div>
+      
+      <div class="practical-footer">
+        
+        <div class="pf-row"><span class="pf-tag">💡 現地Tips:</span><span class="pf-val">2連泊のため、翌日はメインの荷物をすべてホテル客室に置いたまま完全手ぶらで天童・銀山温泉へ出撃できる。</span></div>
+        
+      </div>
+      <div class="slot-foot">
+        <a class="map-pill" href="https://www.google.com/maps/search/?api=1&amp;query=ホテルアーバングレイスグラン山形駅前" target="_blank" rel="noopener">📍 Google Maps</a>
+        
+      </div>
+    </article>
+        </div>
+      </section>
+      <section class="day-block" id="day-sec-10" data-day="10">
+        <h2 class="day-header">Day 10: 2026年5月8日 (金)</h2>
+        
+        <div class="macro-route-box">
+          <div class="macro-route-head">
+            <span class="macro-route-title">🗺️ 【全体ルート立ち回り】マクロ動線シークエンス</span>
+            <a class="macro-map-link" href="https://www.google.com/maps/dir/?api=1&amp;origin=山形駅&amp;destination=銀山温泉&amp;waypoints=霞城公園|天童駅|水車生そば|大石田駅&amp;travelmode=transit" target="_blank" rel="noopener">📍 広域Google Maps</a>
+          </div>
+          <div class="macro-route-body">ホテルアーバングレイスグラン ➔ 霞城公園（山形城跡） ➔ 天童駅（天童市将棋資料館） ➔ 水車生そば（鳥中華・将棋そば） ➔ 大石田駅 ➔ 銀山温泉（白銀の滝・延沢銀山廃坑・足湯） ➔ 山形駅</div>
+        </div>
+        <div class="slot-list">
+          
+    <article class="slot-card " id="d10-01" data-slot-id="d10-01">
+      <div class="slot-meta">
+        <span class="slot-time">⏱️ 09:30 - 11:45</span>
+        <span class="slot-badge badge-sightseeing">観光</span>
+      </div>
+      <div class="slot-title-row">
+        <input type="checkbox" class="slot-checkbox no-print" onchange="toggleSlot('d10-01', this.checked)" title="完了・スキップを消し込み">
+        <h3 class="slot-title">霞城公園（山形城跡・二ノ丸東大手門・最上義光歴史館）</h3>
+      </div>
+      <p class="slot-desc">山形駅から徒歩10分の「霞城公園（山形城跡）」へ。出羽の驍将・最上義光が築いた日本屈指の広さを誇る輪郭式平城であり、見事に木造復元された「二ノ丸東大手門」や本丸一文字門、お堀の石垣を巡る。</p>
+      
+      <div class="swap-box">
+        <div class="swap-title">🔀 スワップ・代替ルート候補</div>
+        <div><strong>代替プラン:</strong> 公園内の「山形県郷土館（文翔館・大正初期の英国ルネサンス様式庁舎）」まで足を延ばす。</div>
+      </div>
+      
+      <div class="tactics-box">
+        <div class="tactics-header">
+          <span>🎯</span>
+          <span class="tactics-tag">個別立ち回り</span>
+          <span>【構内順路】攻略戦術</span>
+        </div>
+        <div class="tactics-list">
+          
+            <div class="tactics-step-row">
+              <span class="tactics-num">1</span>
+              <span class="tactics-text">朝の爽やかな時間帯にお堀の外周と内周を歩き、東大手門の櫓内部や隣接する「最上義光歴史館」（長谷堂合戦で銃弾を受けた三十八間金覆輪筋兜など）を見学する。</span>
+            </div>
+          
+        </div>
+      </div>
+      
+      <div class="checkpoint-list">
+        
+          <div class="checkpoint-row">
+            <span class="cp-badge">必須</span>
+            <div>
+              <div class="cp-title">現地確認・必達ポイント</div>
+              <div class="cp-desc">堀のすぐ脇をJR奥羽本線（山形新幹線）が走り抜ける独特のロケーション。</div>
+            </div>
+          </div>
+        
+      </div>
+      
+      <div class="practical-footer">
+        
+        <div class="pf-row"><span class="pf-tag">💡 現地Tips:</span><span class="pf-val">敷地が約35.9ヘクタールと非常に広大なため、午後の天童・銀山温泉に向けて歩きすぎないよう時計を見る。</span></div>
+        
+      </div>
+      <div class="slot-foot">
+        <a class="map-pill" href="https://www.google.com/maps/search/?api=1&amp;query=霞城公園" target="_blank" rel="noopener">📍 Google Maps</a>
+        
+      </div>
+    </article>
+    <article class="slot-card " id="d10-02" data-slot-id="d10-02">
+      <div class="slot-meta">
+        <span class="slot-time">⏱️ 12:15 - 13:30</span>
+        <span class="slot-badge badge-sightseeing">観光</span>
+      </div>
+      <div class="slot-title-row">
+        <input type="checkbox" class="slot-checkbox no-print" onchange="toggleSlot('d10-02', this.checked)" title="完了・スキップを消し込み">
+        <h3 class="slot-title">JR奥羽本線で天童駅へ ➔ 天童市将棋資料館</h3>
+      </div>
+      <p class="slot-desc">山形駅からJR奥羽本線で天童駅へ（12:37着）。駅舎1階に併設された「天童市将棋資料館」を訪れ、古代インドのチャトランガから日本の本将棋への変遷や、幕末の天童藩が藩士の困窮救済として奨励した「天童将棋駒」の製作工程を学ぶ。</p>
+      
+      <div class="swap-box">
+        <div class="swap-title">🔀 スワップ・代替ルート候補</div>
+        <div><strong>代替プラン:</strong> 将棋駒の実演をさらに見たい場合は天童タワーや栄春堂などの駒工房へ立ち寄る。</div>
+      </div>
+      
+      <div class="tactics-box">
+        <div class="tactics-header">
+          <span>🎯</span>
+          <span class="tactics-tag">個別立ち回り</span>
+          <span>【構内順路】攻略戦術</span>
+        </div>
+        <div class="tactics-list">
+          
+            <div class="tactics-step-row">
+              <span class="tactics-num">1</span>
+              <span class="tactics-text">駅直結の利便性を活かし、将棋資料館を見学した後に街中の将棋駒モニュメントや詰将棋歩道を通りながら「水車生そば」へ歩く。</span>
+            </div>
+          
+        </div>
+      </div>
+      
+      <div class="checkpoint-list">
+        
+          <div class="checkpoint-row">
+            <span class="cp-badge">必須</span>
+            <div>
+              <div class="cp-title">現地確認・必達ポイント</div>
+              <div class="cp-desc">書き駒・彫り駒・彫り埋め駒・盛り上げ駒の4グレードの違いと、名工による銘駒の迫力。</div>
+            </div>
+          </div>
+        
+      </div>
+      
+      <div class="practical-footer">
+        
+        <div class="pf-row"><span class="pf-tag">💡 現地Tips:</span><span class="pf-val">天童駅から温泉街（水車生そば周辺）までは徒歩約12〜15分。</span></div>
+        
+      </div>
+      <div class="slot-foot">
+        <a class="map-pill" href="https://www.google.com/maps/search/?api=1&amp;query=天童市将棋資料館" target="_blank" rel="noopener">📍 Google Maps</a>
+        
+      </div>
+    </article>
+    <article class="slot-card " id="d10-03" data-slot-id="d10-03">
+      <div class="slot-meta">
+        <span class="slot-time">⏱️ 13:40 - 14:50</span>
+        <span class="slot-badge badge-sightseeing">観光</span>
+      </div>
+      <div class="slot-title-row">
+        <input type="checkbox" class="slot-checkbox no-print" onchange="toggleSlot('d10-03', this.checked)" title="完了・スキップを消し込み">
+        <h3 class="slot-title">水車生そば（元祖鳥中華・将棋ざるそば）</h3>
+      </div>
+      <p class="slot-desc">文久元年（1861年）創業の老舗蕎麦店「水車生そば」。蕎麦屋の賄い食から裏メニューを経て全国区の大人気メニューとなった「元祖 鳥中華」と、将棋の駒型器に盛られた「将棋ざるそば」を味わう。</p>
+      
+      <div class="swap-box">
+        <div class="swap-title">🔀 スワップ・代替ルート候補</div>
+        <div><strong>代替プラン:</strong> 水車生そばが長蛇の列の場合は「手打水車生そば」の2階・3階大広間席へ案内してもらうか、市内の「腰掛庵（わらび餅）」へ立ち寄る。</div>
+      </div>
+      
+      <div class="tactics-box">
+        <div class="tactics-header">
+          <span>🎯</span>
+          <span class="tactics-tag">個別立ち回り</span>
+          <span>【構内順路】攻略戦術</span>
+        </div>
+        <div class="tactics-list">
+          
+            <div class="tactics-step-row">
+              <span class="tactics-num">1</span>
+              <span class="tactics-text">昼のピーク（12時台）を少し外した13時台後半に入店し、和風そばつゆベースに鶏の旨味とコショウ・天かすが効いた「鳥中華」と本格手打ち蕎麦の両方を堪能する。</span>
+            </div>
+          
+        </div>
+      </div>
+      
+      <div class="checkpoint-list">
+        
+          <div class="checkpoint-row">
+            <span class="cp-badge">必須</span>
+            <div>
+              <div class="cp-title">現地確認・必達ポイント</div>
+              <div class="cp-desc">ラーメンスープではなく純粋な和風出汁なのにしっかり中華麺と絡む「鳥中華」の中毒性。</div>
+            </div>
+          </div>
+        
+      </div>
+      
+      <div class="practical-footer">
+        
+        <div class="pf-row"><span class="pf-tag">💡 現地Tips:</span><span class="pf-val">15:12の天童駅発（大石田方面）の列車に乗るため、14:50には店を出て天童駅へ戻る。</span></div>
+        
+      </div>
+      <div class="slot-foot">
+        <a class="map-pill" href="https://www.google.com/maps/search/?api=1&amp;query=水車生そば" target="_blank" rel="noopener">📍 Google Maps</a>
+        
+      </div>
+    </article>
+    <article class="slot-card " id="d10-04" data-slot-id="d10-04">
+      <div class="slot-meta">
+        <span class="slot-time">⏱️ 15:12 - 18:21</span>
+        <span class="slot-badge badge-sightseeing">観光</span>
+      </div>
+      <div class="slot-title-row">
+        <input type="checkbox" class="slot-checkbox no-print" onchange="toggleSlot('d10-04', this.checked)" title="完了・スキップを消し込み">
+        <h3 class="slot-title">天童 ➔ 大石田 ➔ 銀山温泉（大正ロマン街並み・白銀の滝・延沢銀坑洞）</h3>
+      </div>
+      <p class="slot-desc">天童駅15:12発の列車で大石田駅へ移動し、16:10発の「はながさバス」で念願の銀山温泉へ（16:31着）。雨に濡れてガス灯が灯り始める大正ロマンの木造多層旅館群（能登屋旅館・藤屋など）を抜け、奥の「白銀の滝」と江戸時代の「延沢銀山廃坑洞（炭鉱）」まで踏破。さらに足湯「和楽足湯」で温まり、現地で意気投合した旅行者と語り合う。</p>
+      
+      <div class="swap-box">
+        <div class="swap-title">🔀 スワップ・代替ルート候補</div>
+        <div><strong>代替プラン:</strong> 雨脚が強まった場合は「伊豆の華」やカフェでカレーパン・蕎麦を食べながらガス灯の点灯を待つ。</div>
+      </div>
+      
+      <div class="tactics-box">
+        <div class="tactics-header">
+          <span>🎯</span>
+          <span class="tactics-tag">個別立ち回り</span>
+          <span>【構内順路】攻略戦術</span>
+        </div>
+        <div class="tactics-list">
+          
+            <div class="tactics-step-row">
+              <span class="tactics-num">1</span>
+              <span class="tactics-text">16:31到着から最終バス（18:21発）までの110分間で、温泉街の撮影だけでなく奥の渓谷・白銀の滝・延沢銀坑洞までしっかり歩き切り、薄暮から夕景へのマジックアワー（ガス灯点灯）を回収する。</span>
+            </div>
+          
+        </div>
+      </div>
+      
+      <div class="checkpoint-list">
+        
+          <div class="checkpoint-row">
+            <span class="cp-badge">必須</span>
+            <div>
+              <div class="cp-title">現地確認・必達ポイント</div>
+              <div class="cp-desc">鏝絵（こてえ）が施された木造三層・四層の旅館建築が銀山川の両岸にせり出す唯一無二の景観。</div>
+            </div>
+          </div>
+        
+      </div>
+      
+      <div class="practical-footer">
+        
+        <div class="pf-row"><span class="pf-tag">💡 現地Tips:</span><span class="pf-val">延沢銀坑洞の内部は冷え込み足元が濡れているため注意。18:21の最終バスを逃すとタクシーしかなくなるためバス停へは10分前に戻る。</span></div>
+        
+      </div>
+      <div class="slot-foot">
+        <a class="map-pill" href="https://www.google.com/maps/search/?api=1&amp;query=銀山温泉" target="_blank" rel="noopener">📍 Google Maps</a>
+        
+      </div>
+    </article>
+    <article class="slot-card " id="d10-05" data-slot-id="d10-05">
+      <div class="slot-meta">
+        <span class="slot-time">⏱️ 18:21 - 20:30</span>
+        <span class="slot-badge badge-transit">移動</span>
+      </div>
+      <div class="slot-title-row">
+        <input type="checkbox" class="slot-checkbox no-print" onchange="toggleSlot('d10-05', this.checked)" title="完了・スキップを消し込み">
+        <h3 class="slot-title">銀山温泉最終バス ➔ 大石田 ➔ 山形駅へ帰還</h3>
+      </div>
+      <p class="slot-desc">銀山温泉で意気投合した旅人と一緒に18:21発のバスで大石田駅へ戻り、JR奥羽本線で山形駅へ帰還。霞城公園・天童・銀山温泉を1日で巡り切り、Apple Healthで本旅最高となる「22,245歩（15.40km）」を記録する。</p>
+      
+      <div class="swap-box">
+        <div class="swap-title">🔀 スワップ・代替ルート候補</div>
+        <div><strong>代替プラン:</strong> 大石田駅で時間がある場合は駅前の「大石田そば」や名物「最上川千本だんご」をチェックする（夕方は閉店）。</div>
+      </div>
+      
+      <div class="tactics-box">
+        <div class="tactics-header">
+          <span>🎯</span>
+          <span class="tactics-tag">個別立ち回り</span>
+          <span>【構内順路】攻略戦術</span>
+        </div>
+        <div class="tactics-list">
+          
+            <div class="tactics-step-row">
+              <span class="tactics-num">1</span>
+              <span class="tactics-text">前日（Day 9）に大石田下車を見送って今日に集約した判断が完全に的中し、夕暮れのガス灯の時間帯を含めて銀山温泉を100%満喫する。</span>
+            </div>
+          
+        </div>
+      </div>
+      
+      <div class="checkpoint-list">
+        
+          <div class="checkpoint-row">
+            <span class="cp-badge">必須</span>
+            <div>
+              <div class="cp-title">現地確認・必達ポイント</div>
+              <div class="cp-desc">翌朝の山寺（立石寺）1,015段登拝に向け、ホテルの大浴場でふくらはぎと足裏を徹底的にケアする。</div>
+            </div>
+          </div>
+        
+      </div>
+      
+      <div class="practical-footer">
+        
+        <div class="pf-row"><span class="pf-tag">💡 現地Tips:</span><span class="pf-val">大石田駅での列車待ち時間に駅構内や待合室で暖をとる。</span></div>
+        
+      </div>
+      <div class="slot-foot">
+        <a class="map-pill" href="https://www.google.com/maps/search/?api=1&amp;query=大石田駅" target="_blank" rel="noopener">📍 Google Maps</a>
+        
+      </div>
+    </article>
+        </div>
+      </section>
+      <section class="day-block" id="day-sec-11" data-day="11">
+        <h2 class="day-header">Day 11: 2026年5月9日 (土)</h2>
+        
+        <div class="macro-route-box">
+          <div class="macro-route-head">
+            <span class="macro-route-title">🗺️ 【全体ルート立ち回り】マクロ動線シークエンス</span>
+            <a class="macro-map-link" href="https://www.google.com/maps/dir/?api=1&amp;origin=山形駅&amp;destination=アパホテル福島駅東&amp;waypoints=山寺駅|立石寺五大堂|米沢駅|上杉神社|丸信ラーメン駅前店&amp;travelmode=transit" target="_blank" rel="noopener">📍 広域Google Maps</a>
+          </div>
+          <div class="macro-route-body">山形駅（JR仙山線） ➔ 山寺（宝珠山 立石寺・五大堂） ➔ 山形駅 ➔ 米沢駅 ➔ 上杉神社（米沢城跡・稽照殿） ➔ 福島駅・アパホテル〈福島駅東〉 ➔ コラッセふくしま展望ラウンジ ➔ 喜多方ラーメン坂内 ➔ 丸信ラーメン 駅前店</div>
+        </div>
+        <div class="slot-list">
+          
+    <article class="slot-card " id="d11-01" data-slot-id="d11-01">
+      <div class="slot-meta">
+        <span class="slot-time">⏱️ 09:00 - 12:30</span>
+        <span class="slot-badge badge-sightseeing">観光</span>
+      </div>
+      <div class="slot-title-row">
+        <input type="checkbox" class="slot-checkbox no-print" onchange="toggleSlot('d11-01', this.checked)" title="完了・スキップを消し込み">
+        <h3 class="slot-title">JR仙山線で山寺駅へ ➔ 宝珠山 立石寺（山寺・1,015段登拝）</h3>
+      </div>
+      <p class="slot-desc">山形駅からJR仙山線で山寺駅へ。貞観2年（860年）に慈覚大師円仁が開山し、松尾芭蕉が「閑さや岩にしみ入蝉の声」と詠んだ名刹・宝珠山立石寺（山寺）の1,015段の石段を登拝する。道中、強風をやり過ごす中で素敵なご夫婦と仲良くなり、一緒に奥之院・五大堂まで登り切った後、麓で名物の「板そば」をご馳走になる温かい一期一会を経験。</p>
+      
+      <div class="swap-box">
+        <div class="swap-title">🔀 スワップ・代替ルート候補</div>
+        <div><strong>代替プラン:</strong> 晴天・微風で蔵王エコーラインが完全開通している場合は、山形駅から「蔵王温泉・蔵王のお釜」へスワップ可能。</div>
+      </div>
+      
+      <div class="tactics-box">
+        <div class="tactics-header">
+          <span>🎯</span>
+          <span class="tactics-tag">個別立ち回り</span>
+          <span>【構内順路】攻略戦術</span>
+        </div>
+        <div class="tactics-list">
+          
+            <div class="tactics-step-row">
+              <span class="tactics-num">1</span>
+              <span class="tactics-text">根本中堂（不滅の法灯）から山門をくぐり、せみ塚、仁王門、奥之院、そして断崖に突き出した展望閣「五大堂」まで一気に登り切る（この日は階段66階分相当を記録）。</span>
+            </div>
+          
+        </div>
+      </div>
+      
+      <div class="checkpoint-list">
+        
+          <div class="checkpoint-row">
+            <span class="cp-badge">必須</span>
+            <div>
+              <div class="cp-title">現地確認・必達ポイント</div>
+              <div class="cp-desc">五大堂から見下ろす門前町と仙山線のパノラマ、およびソロ旅だからこそ生まれる旅先での世代を超えた交流。</div>
+            </div>
+          </div>
+        
+      </div>
+      
+      <div class="practical-footer">
+        
+        <div class="pf-row"><span class="pf-tag">💡 現地Tips:</span><span class="pf-val">蔵王のお釜（刈田岳）へのバス案も比較検討したが、天候・風と山寺・米沢への縦走効率を優先して山寺を選択。</span></div>
+        
+      </div>
+      <div class="slot-foot">
+        <a class="map-pill" href="https://www.google.com/maps/search/?api=1&amp;query=宝珠山+立石寺" target="_blank" rel="noopener">📍 Google Maps</a>
+        
+      </div>
+    </article>
+    <article class="slot-card " id="d11-02" data-slot-id="d11-02">
+      <div class="slot-meta">
+        <span class="slot-time">⏱️ 13:00 - 16:45</span>
+        <span class="slot-badge badge-sightseeing">観光</span>
+      </div>
+      <div class="slot-title-row">
+        <input type="checkbox" class="slot-checkbox no-print" onchange="toggleSlot('d11-02', this.checked)" title="完了・スキップを消し込み">
+        <h3 class="slot-title">米沢駅へ移動 ➔ 上杉神社（米沢城跡）＆ 稽照殿</h3>
+      </div>
+      <p class="slot-desc">山寺から山形駅経由でJR奥羽本線（またはつばさ）に乗り、14:40に米沢駅へ到着。上杉謙信公を祀る「上杉神社（米沢城跡）」に参拝し、宝物殿「稽照殿（けいしょうでん）」で謙信公・景勝公・直江兼続（愛の前立兜）の遺品や、武田信玄と上杉謙信の川中島合戦屏風絵・錦絵を鑑賞して深く感動する。</p>
+      
+      <div class="swap-box">
+        <div class="swap-title">🔀 スワップ・代替ルート候補</div>
+        <div><strong>代替プラン:</strong> さらに時間がある場合は、歴代藩主の廟所「上杉家廟所」または「米沢市上杉博物館（伝国の杜）」を追加する。</div>
+      </div>
+      
+      <div class="tactics-box">
+        <div class="tactics-header">
+          <span>🎯</span>
+          <span class="tactics-tag">個別立ち回り</span>
+          <span>【構内順路】攻略戦術</span>
+        </div>
+        <div class="tactics-list">
+          
+            <div class="tactics-step-row">
+              <span class="tactics-num">1</span>
+              <span class="tactics-text">上杉神社の参道にある「なせば成る 為さねば成らぬ 何事も…」の上杉鷹山公像と、毗（び）・龍の旗印を確認し、稽照殿の甲冑・書状コレクションをじっくり時間をかけて拝観する。</span>
+            </div>
+          
+        </div>
+      </div>
+      
+      <div class="checkpoint-list">
+        
+          <div class="checkpoint-row">
+            <span class="cp-badge">必須</span>
+            <div>
+              <div class="cp-title">現地確認・必達ポイント</div>
+              <div class="cp-desc">戦国屈指の名将・上杉謙信公と名君・上杉鷹山公の精神が今も街全体に息づく米沢の歴史密度。</div>
+            </div>
+          </div>
+        
+      </div>
+      
+      <div class="practical-footer">
+        
+        <div class="pf-row"><span class="pf-tag">💡 現地Tips:</span><span class="pf-val">米沢駅から上杉神社までは距離があるため、市民バス（循環バス）またはタクシーを活用して時間を節約する。</span></div>
+        
+      </div>
+      <div class="slot-foot">
+        <a class="map-pill" href="https://www.google.com/maps/search/?api=1&amp;query=上杉神社" target="_blank" rel="noopener">📍 Google Maps</a>
+        
+      </div>
+    </article>
+    <article class="slot-card " id="d11-03" data-slot-id="d11-03">
+      <div class="slot-meta">
+        <span class="slot-time">⏱️ 17:30 - 20:00</span>
+        <span class="slot-badge badge-sightseeing">観光</span>
+      </div>
+      <div class="slot-title-row">
+        <input type="checkbox" class="slot-checkbox no-print" onchange="toggleSlot('d11-03', this.checked)" title="完了・スキップを消し込み">
+        <h3 class="slot-title">福島駅へ移動 ➔ アパホテル〈福島駅東〉＆ コラッセふくしま</h3>
+      </div>
+      <p class="slot-desc">米沢駅から板谷峠を越えて福島駅へ移動し、「アパホテル〈福島駅東〉」にチェックイン。夕食前に西口の複合ビル「コラッセふくしま」12階の無料展望ラウンジへ上がり、福島市街と吾妻連峰方面の夜景を眺める。</p>
+      
+      <div class="swap-box">
+        <div class="swap-title">🔀 スワップ・代替ルート候補</div>
+        <div><strong>代替プラン:</strong> 福島名物の「円盤餃子（照井・満腹など）」を夕食候補にする手もあるが、この日はラーメンへの渇望が勝る。</div>
+      </div>
+      
+      <div class="tactics-box">
+        <div class="tactics-header">
+          <span>🎯</span>
+          <span class="tactics-tag">個別立ち回り</span>
+          <span>【構内順路】攻略戦術</span>
+        </div>
+        <div class="tactics-list">
+          
+            <div class="tactics-step-row">
+              <span class="tactics-num">1</span>
+              <span class="tactics-text">翌朝は最終日（会津若松5箇所強行軍）となるため、重たいバックパックをアパホテルからヤマト宅急便で自宅へ発送する準備を整える。</span>
+            </div>
+          
+        </div>
+      </div>
+      
+      <div class="checkpoint-list">
+        
+          <div class="checkpoint-row">
+            <span class="cp-badge">必須</span>
+            <div>
+              <div class="cp-title">現地確認・必達ポイント</div>
+              <div class="cp-desc">仙台AER（Day 1）に続く駅前高層ビル無料展望ラウンジからの都市構造俯瞰。</div>
+            </div>
+          </div>
+        
+      </div>
+      
+      <div class="practical-footer">
+        
+        <div class="pf-row"><span class="pf-tag">💡 現地Tips:</span><span class="pf-val">福島駅東口〜西口は地下歩道または自由通路で行き来する。</span></div>
+        
+      </div>
+      <div class="slot-foot">
+        <a class="map-pill" href="https://www.google.com/maps/search/?api=1&amp;query=コラッセふくしま" target="_blank" rel="noopener">📍 Google Maps</a>
+        
+      </div>
+    </article>
+    <article class="slot-card " id="d11-04" data-slot-id="d11-04">
+      <div class="slot-meta">
+        <span class="slot-time">⏱️ 20:20 - 22:30</span>
+        <span class="slot-badge badge-sightseeing">観光</span>
+      </div>
+      <div class="slot-title-row">
+        <input type="checkbox" class="slot-checkbox no-print" onchange="toggleSlot('d11-04', this.checked)" title="完了・スキップを消し込み">
+        <h3 class="slot-title">坂内での後悔と「丸信ラーメン 駅前店」執念のやり直し ➔ 廊下締め出し事件</h3>
+      </div>
+      <p class="slot-desc">20:25、空腹のあまり「喜多方ラーメン坂内 福島駅前店」へ入店するも、「東京でもどこでも食えるチェーン店に入ってどうするんだ」と強烈な自己嫌悪と後悔に襲われる。さらに本命の地元老舗「丸信ラーメン 駅前店」が翌日曜定休であることを知り、意地で胃袋の7割を空けて21:00に「丸信ラーメン 駅前店」へ突撃。透き通った二層スープと平打ちちぢれ麺・絶品チャーシューでチェーン店の記憶を完全に上書きする。その後22:08、ホテルでパンツも履かずルームウェア1枚のまま廊下のウォーターサーバーへ水を汲みに出てオートロックで締め出される大ピンチに陥るも、生還を果たす。</p>
+      
+      <div class="swap-box">
+        <div class="swap-title">🔀 スワップ・代替ルート候補</div>
+        <div><strong>代替プラン:</strong> 最初から迷わず「丸信ラーメン 駅前店」または「伊達屋」「えなみ」などの福島実力派ローカル店へ直行する。</div>
+      </div>
+      
+      <div class="tactics-box">
+        <div class="tactics-header">
+          <span>🎯</span>
+          <span class="tactics-tag">個別立ち回り</span>
+          <span>【構内順路】攻略戦術</span>
+        </div>
+        <div class="tactics-list">
+          
+            <div class="tactics-step-row">
+              <span class="tactics-num">1</span>
+              <span class="tactics-text">「旅先での1食の妥協は一生の後悔になる」という哲学を体現した伝説のダブルヘッダー。丸信ラーメンではチャーシューメン（醤油）の澄んだ鶏ガラ・豚骨二層スープと自家製多加水麺の完成度を噛みしめる。</span>
+            </div>
+          
+        </div>
+      </div>
+      
+      <div class="checkpoint-list">
+        
+          <div class="checkpoint-row">
+            <span class="cp-badge">必須</span>
+            <div>
+              <div class="cp-title">現地確認・必達ポイント</div>
+              <div class="cp-desc">妥協を許さず丸信ラーメンへ入り直した執念と、その直後に起きた「ルームウェア1枚オートロック締め出し事件」の劇的な緩急。</div>
+            </div>
+          </div>
+        
+      </div>
+      
+      <div class="practical-footer">
+        
+        <div class="pf-row"><span class="pf-tag">💡 現地Tips:</span><span class="pf-val">ホテルの客室から廊下（製氷機・ウォーターサーバー）へ出る際は、どんなに一瞬でも必ずルームキーを携帯する（鉄の教訓）。</span></div>
+        
+      </div>
+      <div class="slot-foot">
+        <a class="map-pill" href="https://www.google.com/maps/search/?api=1&amp;query=丸信ラーメン+駅前店" target="_blank" rel="noopener">📍 Google Maps</a>
+        
+      </div>
+    </article>
+        </div>
+      </section>
+      <section class="day-block" id="day-sec-12" data-day="12">
+        <h2 class="day-header">Day 12: 2026年5月10日 (日)</h2>
+        
+        <div class="macro-route-box">
+          <div class="macro-route-head">
+            <span class="macro-route-title">🗺️ 【全体ルート立ち回り】マクロ動線シークエンス</span>
+            <a class="macro-map-link" href="https://www.google.com/maps/dir/?api=1&amp;origin=鶴ヶ城&amp;destination=会津若松駅&amp;waypoints=会津武家屋敷|会津さざえ堂|旧滝沢本陣|御薬園|七日町通り&amp;travelmode=driving" target="_blank" rel="noopener">📍 広域Google Maps</a>
+          </div>
+          <div class="macro-route-body">アパホテル〈福島駅東〉（荷物発送） ➔ 福島駅（高速バス） ➔ 鶴ヶ城（会津若松城） ➔ 会津武家屋敷 ➔ 飯盛山・会津さざえ堂 ➔ 旧滝沢本陣 ➔ 会津松平氏庭園 御薬園 ➔ 七日町通り（白木屋漆器店） ➔ 会津若松駅 ➔ 郡山駅（クリームボックス） ➔ 東京駅</div>
+        </div>
+        <div class="slot-list">
+          
+    <article class="slot-card " id="d12-01" data-slot-id="d12-01">
+      <div class="slot-meta">
+        <span class="slot-time">⏱️ 09:00 - 11:30</span>
+        <span class="slot-badge badge-transit">移動</span>
+      </div>
+      <div class="slot-title-row">
+        <input type="checkbox" class="slot-checkbox no-print" onchange="toggleSlot('d12-01', this.checked)" title="完了・スキップを消し込み">
+        <h3 class="slot-title">バックパック宅急便発送 ➔ 福島駅09:55発高速バスで会津若松へ</h3>
+      </div>
+      <p class="slot-desc">チェックアウト時に12日間背負い続けたバックパックをヤマト宅急便で自宅へ発送し、完全な手ぶら状態に。福島駅東口09:55発の高速バス（福島〜会津若松線）に乗車し、会津若松駅を通過して城郭至近の「鶴ヶ城・合同庁舎前」バス停へ直行する。</p>
+      
+      <div class="swap-box">
+        <div class="swap-title">🔀 スワップ・代替ルート候補</div>
+        <div><strong>代替プラン:</strong> 会津鉄道沿線を優先する場合は、会津若松から芦ノ牧温泉・塔のへつり・大内宿を回り、新白河駅または鬼怒川温泉経由で東京へ帰る。</div>
+      </div>
+      
+      <div class="tactics-box">
+        <div class="tactics-header">
+          <span>🎯</span>
+          <span class="tactics-tag">個別立ち回り</span>
+          <span>【構内順路】攻略戦術</span>
+        </div>
+        <div class="tactics-list">
+          
+            <div class="tactics-step-row">
+              <span class="tactics-num">1</span>
+              <span class="tactics-text">最終日に会津若松の主要スポットを5箇所以上回るため、「ホテルから荷物を宅急便発送してロッカー預け・回収の往復時間をゼロにする」かつ「会津若松駅ではなく鶴ヶ城前で高速バスを降りる」二段構えの時短戦術を実行。</span>
+            </div>
+          
+        </div>
+      </div>
+      
+      <div class="checkpoint-list">
+        
+          <div class="checkpoint-row">
+            <span class="cp-badge">必須</span>
+            <div>
+              <div class="cp-title">現地確認・必達ポイント</div>
+              <div class="cp-desc">会津若松市内の周遊バス「ハイカラさん」「あかべぇ」の1日乗車券と時刻表の連携。</div>
+            </div>
+          </div>
+        
+      </div>
+      
+      <div class="practical-footer">
+        
+        <div class="pf-row"><span class="pf-tag">💡 現地Tips:</span><span class="pf-val">大内宿や塔のへつり（南会津）、あるいは喜多方ラーメン本場訪問も比較検討したが、移動時間と歴史スポットの密度から会津若松市内一点集中を選択。</span></div>
+        
+      </div>
+      <div class="slot-foot">
+        <a class="map-pill" href="https://www.google.com/maps/search/?api=1&amp;query=鶴ヶ城合同庁舎前" target="_blank" rel="noopener">📍 Google Maps</a>
+        
+      </div>
+    </article>
+    <article class="slot-card " id="d12-02" data-slot-id="d12-02">
+      <div class="slot-meta">
+        <span class="slot-time">⏱️ 11:35 - 12:50</span>
+        <span class="slot-badge badge-sightseeing">観光</span>
+      </div>
+      <div class="slot-title-row">
+        <input type="checkbox" class="slot-checkbox no-print" onchange="toggleSlot('d12-02', this.checked)" title="完了・スキップを消し込み">
+        <h3 class="slot-title">鶴ヶ城（会津若松城・赤瓦天守閣・麟閣）</h3>
+      </div>
+      <p class="slot-desc">バス下車後すぐに難攻不落の名城「鶴ヶ城（会津若松城）」へ。明治初期の解体前の姿を再現した日本で唯一の「赤瓦」の天守閣に登り、幕末の会津藩・松平容保公の軌跡と、千利休の子・少庵が建てた茶室「麟閣」、高石垣（扇の勾配・武者走り）を巡る。</p>
+      
+      <div class="swap-box">
+        <div class="swap-title">🔀 スワップ・代替ルート候補</div>
+        <div><strong>代替プラン:</strong> 城内で昼食をとる場合は鶴ヶ城会館の「わっぱ飯」や「会津ソースカツ丼」を短時間で補給する。</div>
+      </div>
+      
+      <div class="tactics-box">
+        <div class="tactics-header">
+          <span>🎯</span>
+          <span class="tactics-tag">個別立ち回り</span>
+          <span>【構内順路】攻略戦術</span>
+        </div>
+        <div class="tactics-list">
+          
+            <div class="tactics-step-row">
+              <span class="tactics-num">1</span>
+              <span class="tactics-text">バス停から追手門（太鼓門）経由で本丸へ入り、リニューアルされた天守閣内部のデジタル展示・展望台から磐梯山と城下町を一望する。</span>
+            </div>
+          
+        </div>
+      </div>
+      
+      <div class="checkpoint-list">
+        
+          <div class="checkpoint-row">
+            <span class="cp-badge">必須</span>
+            <div>
+              <div class="cp-title">現地確認・必達ポイント</div>
+              <div class="cp-desc">厳冬の凍結に強い会津独自の「赤瓦（鉄分を含んだ釉薬）」の輝きと、戊辰戦争1ヶ月の籠城戦を戦い抜いた石垣の迫力。</div>
+            </div>
+          </div>
+        
+      </div>
+      
+      <div class="practical-footer">
+        
+        <div class="pf-row"><span class="pf-tag">💡 現地Tips:</span><span class="pf-val">次の「会津武家屋敷」行き周遊バス（ハイカラさん）の発車時刻に合わせて北出丸または東口バス停へ抜ける。</span></div>
+        
+      </div>
+      <div class="slot-foot">
+        <a class="map-pill" href="https://www.google.com/maps/search/?api=1&amp;query=鶴ヶ城" target="_blank" rel="noopener">📍 Google Maps</a>
+        
+      </div>
+    </article>
+    <article class="slot-card " id="d12-03" data-slot-id="d12-03">
+      <div class="slot-meta">
+        <span class="slot-time">⏱️ 13:05 - 14:10</span>
+        <span class="slot-badge badge-sightseeing">観光</span>
+      </div>
+      <div class="slot-title-row">
+        <input type="checkbox" class="slot-checkbox no-print" onchange="toggleSlot('d12-03', this.checked)" title="完了・スキップを消し込み">
+        <h3 class="slot-title">会津武家屋敷（会津藩家老・西郷頼母邸）</h3>
+      </div>
+      <p class="slot-desc">東山温泉入口にある「会津武家屋敷」へ。会津藩23万石の筆頭家老・西郷頼母（さいごうたのも）の屋敷を中心に、けやき造りの広大な家老屋敷（全38室・畳数328枚）や藩米精米所、旧中畑陣屋が精巧に復元された歴史テーマパーク。</p>
+      
+      <div class="swap-box">
+        <div class="swap-title">🔀 スワップ・代替ルート候補</div>
+        <div><strong>代替プラン:</strong> 時間を圧縮したい場合は、武家屋敷をパスして鶴ヶ城から直接「御薬園」➔「飯盛山」へ抜ける。</div>
+      </div>
+      
+      <div class="tactics-box">
+        <div class="tactics-header">
+          <span>🎯</span>
+          <span class="tactics-tag">個別立ち回り</span>
+          <span>【構内順路】攻略戦術</span>
+        </div>
+        <div class="tactics-list">
+          
+            <div class="tactics-step-row">
+              <span class="tactics-num">1</span>
+              <span class="tactics-text">表門から御成の間・茶室・洗面所・精米所まで順路通りにテンポよく回り、戊辰戦争時に西郷家一族二十一人が自刃した悲劇の展示と武家文化の格式を体感する。</span>
+            </div>
+          
+        </div>
+      </div>
+      
+      <div class="checkpoint-list">
+        
+          <div class="checkpoint-row">
+            <span class="cp-badge">必須</span>
+            <div>
+              <div class="cp-title">現地確認・必達ポイント</div>
+              <div class="cp-desc">5日目に訪れた「角館の武家屋敷（中級〜上級武士の街区保存）」と「会津の筆頭家老屋敷（御殿級の巨大建築復元）」のスケール比較。</div>
+            </div>
+          </div>
+        
+      </div>
+      
+      <div class="practical-footer">
+        
+        <div class="pf-row"><span class="pf-tag">💡 現地Tips:</span><span class="pf-val">順路が長いため、次の飯盛山への移動時間（バスまたは徒歩・タクシー）を計算して45〜55分で回り切る。</span></div>
+        
+      </div>
+      <div class="slot-foot">
+        <a class="map-pill" href="https://www.google.com/maps/search/?api=1&amp;query=会津武家屋敷" target="_blank" rel="noopener">📍 Google Maps</a>
+        
+      </div>
+    </article>
+    <article class="slot-card " id="d12-04" data-slot-id="d12-04">
+      <div class="slot-meta">
+        <span class="slot-time">⏱️ 14:25 - 15:40</span>
+        <span class="slot-badge badge-sightseeing">観光</span>
+      </div>
+      <div class="slot-title-row">
+        <input type="checkbox" class="slot-checkbox no-print" onchange="toggleSlot('d12-04', this.checked)" title="完了・スキップを消し込み">
+        <h3 class="slot-title">飯盛山・会津さざえ堂（円通三匝堂）＆ 旧滝沢本陣</h3>
+      </div>
+      <p class="slot-desc">白虎隊十九士の墓がある「飯盛山」へ上がり、寛政8年（1796年）建立の国指定重要文化財「会津さざえ堂（旧正宗寺三匝堂）」を体験。上りと下りの参拝者が一度もすれ違わずに三回巡って戻れる世界にも類を見ない木造二重螺旋スロープ構造に驚嘆した後、山を下りて戊辰戦争の弾痕や刀傷が生々しく残る「国指定史跡 旧滝沢本陣」を見学する。</p>
+      
+      <div class="swap-box">
+        <div class="swap-title">🔀 スワップ・代替ルート候補</div>
+        <div><strong>代替プラン:</strong> 体力温存時はスロープコンベア（250円）を迷わず利用して登頂時間を3分に短縮する。</div>
+      </div>
+      
+      <div class="tactics-box">
+        <div class="tactics-header">
+          <span>🎯</span>
+          <span class="tactics-tag">個別立ち回り</span>
+          <span>【構内順路】攻略戦術</span>
+        </div>
+        <div class="tactics-list">
+          
+            <div class="tactics-step-row">
+              <span class="tactics-num">1</span>
+              <span class="tactics-text">飯盛山の急な石段は「動く坂道（スロープコンベア・有料）」または脇道で一気に登り、白虎隊墓所・鶴ヶ城遠望ポイント・さざえ堂を押さえてから、徒歩数分の旧滝沢本陣（松平容保公が白虎隊に出陣を命じた本営）へ抜ける。</span>
+            </div>
+          
+        </div>
+      </div>
+      
+      <div class="checkpoint-list">
+        
+          <div class="checkpoint-row">
+            <span class="cp-badge">必須</span>
+            <div>
+              <div class="cp-title">現地確認・必達ポイント</div>
+              <div class="cp-desc">レオナルド・ダ・ヴィンチのシャンボール城の階段にも通じる「さざえ堂」の独創的な木造建築構造と、旧滝沢本陣の柱や戸板に残る実戦の銃弾跡。</div>
+            </div>
+          </div>
+        
+      </div>
+      
+      <div class="practical-footer">
+        
+        <div class="pf-row"><span class="pf-tag">💡 現地Tips:</span><span class="pf-val">旧滝沢本陣は飯盛山から徒歩すぐの場所にあるにもかかわらず素通りされがちな超一級史跡であり、必ずセットで訪問する。</span></div>
+        
+      </div>
+      <div class="slot-foot">
+        <a class="map-pill" href="https://www.google.com/maps/search/?api=1&amp;query=会津さざえ堂" target="_blank" rel="noopener">📍 Google Maps</a>
+        
+      </div>
+    </article>
+    <article class="slot-card " id="d12-05" data-slot-id="d12-05">
+      <div class="slot-meta">
+        <span class="slot-time">⏱️ 15:55 - 17:15</span>
+        <span class="slot-badge badge-sightseeing">観光</span>
+      </div>
+      <div class="slot-title-row">
+        <input type="checkbox" class="slot-checkbox no-print" onchange="toggleSlot('d12-05', this.checked)" title="完了・スキップを消し込み">
+        <h3 class="slot-title">会津松平氏庭園 御薬園 ➔ 七日町通り・会津若松駅</h3>
+      </div>
+      <p class="slot-desc">バスで「会津松平氏庭園 御薬園」へ移動し、二代藩主・保科正経や三代・正容が整備した薬草園および池泉回遊式大名庭園「心字の池」を散策。その後、バスで「七日町通り（白木屋漆器店など大正浪漫の蔵造り・洋館街）」へ出て、会津若松駅まで街並みを楽しみながら歩き切る。</p>
+      
+      <div class="swap-box">
+        <div class="swap-title">🔀 スワップ・代替ルート候補</div>
+        <div><strong>代替プラン:</strong> 七日町通りで時間があれば「末廣酒造 嘉永蔵」の酒蔵見学または「渋川問屋」で会津郷土料理を味わう。</div>
+      </div>
+      
+      <div class="tactics-box">
+        <div class="tactics-header">
+          <span>🎯</span>
+          <span class="tactics-tag">個別立ち回り</span>
+          <span>【構内順路】攻略戦術</span>
+        </div>
+        <div class="tactics-list">
+          
+            <div class="tactics-step-row">
+              <span class="tactics-num">1</span>
+              <span class="tactics-text">御薬園の拝観終了前に滑り込み、楽寿亭や御茶屋御殿から心字の池を眺めた後、七日町通りから会津若松駅までをラストウォーキングで締めくくる。</span>
+            </div>
+          
+        </div>
+      </div>
+      
+      <div class="checkpoint-list">
+        
+          <div class="checkpoint-row">
+            <span class="cp-badge">必須</span>
+            <div>
+              <div class="cp-title">現地確認・必達ポイント</div>
+              <div class="cp-desc">平泉の毛越寺（平安浄土庭園）や松島の円通院（江戸初期禅院庭園）とは異なる、会津藩主の保養所兼薬草研究施設としての「御薬園」の趣。</div>
+            </div>
+          </div>
+        
+      </div>
+      
+      <div class="practical-footer">
+        
+        <div class="pf-row"><span class="pf-tag">💡 現地Tips:</span><span class="pf-val">わずか半日で「鶴ヶ城・武家屋敷・さざえ堂・旧滝沢本陣・御薬園・七日町通り」の6箇所を完全制覇する圧倒的な機動力を発揮。</span></div>
+        
+      </div>
+      <div class="slot-foot">
+        <a class="map-pill" href="https://www.google.com/maps/search/?api=1&amp;query=会津松平氏庭園+御薬園" target="_blank" rel="noopener">📍 Google Maps</a>
+        
+      </div>
+    </article>
+    <article class="slot-card " id="d12-06" data-slot-id="d12-06">
+      <div class="slot-meta">
+        <span class="slot-time">⏱️ 17:30 - 21:30</span>
+        <span class="slot-badge badge-transit">移動</span>
+      </div>
+      <div class="slot-title-row">
+        <input type="checkbox" class="slot-checkbox no-print" onchange="toggleSlot('d12-06', this.checked)" title="完了・スキップを消し込み">
+        <h3 class="slot-title">郡山駅（クリームボックス・お土産）➔ 東北新幹線で東京帰還</h3>
+      </div>
+      <p class="slot-desc">会津若松駅からJR磐越西線（または高速バス）で郡山駅へ移動。郡山のご当地ソウルフードである厚切り食パンにミルク風味クリームを塗った「クリームボックス」や餃子・お土産を調達し、東北新幹線に乗車して東京へ帰還。4月28日深夜の衝動から始まった12日間・累計217,671歩（145.93km）の東北縦走がここに完結する。</p>
+      
+      <div class="swap-box">
+        <div class="swap-title">🔀 スワップ・代替ルート候補</div>
+        <div><strong>代替プラン:</strong> 郡山駅で夕食をとる場合は「郡山ブラック（ますや本店・正月屋など）」の濃口醤油ラーメンで旅のラストを飾る。</div>
+      </div>
+      
+      <div class="tactics-box">
+        <div class="tactics-header">
+          <span>🎯</span>
+          <span class="tactics-tag">個別立ち回り</span>
+          <span>【構内順路】攻略戦術</span>
+        </div>
+        <div class="tactics-list">
+          
+            <div class="tactics-step-row">
+              <span class="tactics-num">1</span>
+              <span class="tactics-text">郡山駅の新幹線乗り換え時間を活用し、駅ビル（エスパル郡山）のベーカリー「ロミオ」や土産売場でクリームボックス・ままどおる・薄皮饅頭を確保する。</span>
+            </div>
+          
+        </div>
+      </div>
+      
+      <div class="checkpoint-list">
+        
+          <div class="checkpoint-row">
+            <span class="cp-badge">必須</span>
+            <div>
+              <div class="cp-title">現地確認・必達ポイント</div>
+              <div class="cp-desc">4/29の仙台から始まり、宮城・岩手・秋田・山形・福島の東北5県（計46スポット超）を予約縛りなしで駆け抜けた達成感と、「2026年1人旅スタイル」の確立。</div>
+            </div>
+          </div>
+        
+      </div>
+      
+      <div class="practical-footer">
+        
+        <div class="pf-row"><span class="pf-tag">💡 現地Tips:</span><span class="pf-val">バックパックはすでに朝のうちに福島から自宅へ宅急便発送済みのため、帰りの新幹線も身軽に快適移動できる。</span></div>
+        
+      </div>
+      <div class="slot-foot">
+        <a class="map-pill" href="https://www.google.com/maps/search/?api=1&amp;query=郡山駅" target="_blank" rel="noopener">📍 Google Maps</a>
+        
+      </div>
+    </article>
+        </div>
+      </section>
+    
+    <nav class="nav-bar no-print" style="margin-top: 24px;">
+      <button type="button" class="nav-link active" data-day="all" onclick="switchDay('all'); window.scrollTo({top:0, behavior:'smooth'});">📑 全日程</button>
+      <button type="button" class="nav-link" data-day="1" onclick="switchDay(1); window.scrollTo({top:0, behavior:'smooth'});">Day 1</button><button type="button" class="nav-link" data-day="2" onclick="switchDay(2); window.scrollTo({top:0, behavior:'smooth'});">Day 2</button><button type="button" class="nav-link" data-day="3" onclick="switchDay(3); window.scrollTo({top:0, behavior:'smooth'});">Day 3</button><button type="button" class="nav-link" data-day="4" onclick="switchDay(4); window.scrollTo({top:0, behavior:'smooth'});">Day 4</button><button type="button" class="nav-link" data-day="5" onclick="switchDay(5); window.scrollTo({top:0, behavior:'smooth'});">Day 5</button><button type="button" class="nav-link" data-day="6" onclick="switchDay(6); window.scrollTo({top:0, behavior:'smooth'});">Day 6</button><button type="button" class="nav-link" data-day="7" onclick="switchDay(7); window.scrollTo({top:0, behavior:'smooth'});">Day 7</button><button type="button" class="nav-link" data-day="8" onclick="switchDay(8); window.scrollTo({top:0, behavior:'smooth'});">Day 8</button><button type="button" class="nav-link" data-day="9" onclick="switchDay(9); window.scrollTo({top:0, behavior:'smooth'});">Day 9</button><button type="button" class="nav-link" data-day="10" onclick="switchDay(10); window.scrollTo({top:0, behavior:'smooth'});">Day 10</button><button type="button" class="nav-link" data-day="11" onclick="switchDay(11); window.scrollTo({top:0, behavior:'smooth'});">Day 11</button><button type="button" class="nav-link" data-day="12" onclick="switchDay(12); window.scrollTo({top:0, behavior:'smooth'});">Day 12</button>
+    </nav>
+  </main>
+
+  <script>
+    const STORAGE_KEY = 'tohoku_completed_slots';
+
+    function toggleTheme() {
+      const cur = document.documentElement.getAttribute('data-theme') || 'light';
+      const nxt = cur === 'dark' ? 'light' : 'dark';
+      document.documentElement.setAttribute('data-theme', nxt);
+      localStorage.setItem('trip_nav_theme', nxt);
+    }
+
+    function getCompletedSlots() {
+      try {
+        return JSON.parse(localStorage.getItem(STORAGE_KEY) || '[]');
+      } catch (e) {
+        return [];
+      }
+    }
+
+    function toggleSlot(slotId, isDone) {
+      const card = document.getElementById(slotId);
+      let list = getCompletedSlots();
+      if (isDone) {
+        if (!list.includes(slotId)) list.push(slotId);
+        if (card) card.classList.add('is-dimmed');
+      } else {
+        list = list.filter(id => id !== slotId);
+        if (card) card.classList.remove('is-dimmed');
+      }
+      localStorage.setItem(STORAGE_KEY, JSON.stringify(list));
+    }
+
+    // In-page Day Segment Switcher (Instant filter without HTTP reload)
+    function switchDay(targetDay) {
+      const dayBlocks = document.querySelectorAll('.day-block');
+      const jumpChips = document.querySelectorAll('.jump-chip');
+      const navLinks = document.querySelectorAll('.nav-link[data-day]');
+
+      // 1. Filter Day Sections
+      dayBlocks.forEach(sec => {
+        const secDay = sec.getAttribute('data-day');
+        if (targetDay === 'all' || secDay === String(targetDay)) {
+          sec.style.display = '';
+        } else {
+          sec.style.display = 'none';
+        }
+      });
+
+      // 2. Filter Jump Chips
+      jumpChips.forEach(chip => {
+        const chipDay = chip.getAttribute('data-day');
+        if (targetDay === 'all' || chipDay === String(targetDay)) {
+          chip.style.display = '';
+        } else {
+          chip.style.display = 'none';
+        }
+      });
+
+      // 3. Update Nav Active State
+      navLinks.forEach(link => {
+        if (link.getAttribute('data-day') === String(targetDay)) {
+          link.classList.add('active');
+        } else {
+          link.classList.remove('active');
+        }
+      });
+
+      // 4. Sync Hash (optional bookmarking)
+      if (history.replaceState) {
+        const newHash = targetDay === 'all' ? '' : `#day${targetDay}`;
+        history.replaceState(null, '', newHash || window.location.pathname);
+      }
+    }
+
+    // Initialize state on load
+    document.addEventListener('DOMContentLoaded', () => {
+      // Restore checked slots
+      const list = getCompletedSlots();
+      list.forEach(slotId => {
+        const card = document.getElementById(slotId);
+        if (card) {
+          card.classList.add('is-dimmed');
+          const cb = card.querySelector('.slot-checkbox');
+          if (cb) cb.checked = true;
+        }
+      });
+
+      // Initial day selection from URL hash: e.g. #day1, #day2
+      const hash = window.location.hash.toLowerCase();
+      const match = hash.match(/^#day(\d+)$/);
+      if (match) {
+        switchDay(match[1]);
+      } else {
+        switchDay('all');
+      }
+    });
+  </script>
+</body>
+</html>

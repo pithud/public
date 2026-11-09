@@ -1,12 +1,809 @@
 <!DOCTYPE html>
-<html lang="ja">
+<html lang="ja" data-theme="light">
 <head>
   <meta charset="UTF-8">
-  <meta http-equiv="refresh" content="0;url=album.html">
-  <title>リダイレクト中 - 旅アルバムへ移動します</title>
-  <script>location.replace("album.html");</script>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>愛知 ｜ 名古屋 ＋ 犬山 旅アルバム 2026 ｜ ポップ行動ログ（完全確定版）</title>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <script>
+    (function() {
+      var t = localStorage.getItem('trip_nav_theme') || 'light';
+      document.documentElement.setAttribute('data-theme', t);
+    })();
+  </script>
+  <link rel="stylesheet" href="../assets/album.css">
 </head>
 <body>
-  <p>旅アルバムへ自動移動します。<a href="album.html">移動しない場合はこちらをクリック</a></p>
+
+  <!-- Sticky Header -->
+  <header>
+    <div class="container header-inner">
+      <div class="logo-area">
+        <div class="logo"><span>📸</span> 愛知 ｜ 名古屋 ＋ 犬山 旅アルバム</div>
+      </div>
+      <div class="header-actions">
+        <a href="index.html" class="nav-btn">◀ 旅ポータル</a>
+        <a href="prod.html" class="nav-btn">最終版</a>
+        <button class="theme-toggle" id="themeBtn" aria-label="テーマ切替">🌙</button>
+      </div>
+    </div>
+  </header>
+
+  <main class="container">
+
+    <!-- Album Hero -->
+    <div class="album-hero">
+      <div class="tape">GOOGLE TIMELINE &amp; APPLE HEALTH VERIFIED</div>
+      <h1 class="hero-title">愛知 ｜ 名古屋 ＋ 犬山 弾丸行動アルバム</h1>
+      <p class="hero-subtitle">Googleマップ タイムライン ＆ Apple Health 実測同期完了版</p>
+      
+      <div class="hero-tags">
+        <span class="tag-badge tag-blue">📅 2026.11.07 - 11.08</span>
+        <span class="tag-badge tag-orange">🏯 国宝犬山城・如庵・熱田・名城</span>
+        <span class="tag-badge tag-green">🛡️ 写真ゼロ・完全公開仕様</span>
+        <span class="tag-badge tag-purple">⚡ 実測 32,000歩 / 21.67km</span>
+      </div>
+
+      <!-- Health KPI Real Data -->
+      <div class="health-kpi-grid">
+                <div class="health-kpi-card">
+          <div class="kpi-title">2日間 合計歩数</div>
+          <div class="kpi-val primary">約 32,000 歩</div>
+        </div>
+        <div class="health-kpi-card">
+          <div class="kpi-title">2日間 歩行距離</div>
+          <div class="kpi-val mint">21.67 km</div>
+        </div>
+        <div class="health-kpi-card">
+          <div class="kpi-title">11/7 (土) 名古屋・熱田</div>
+          <div class="kpi-val">約 14,000歩 / 10.01km</div>
+        </div>
+        <div class="health-kpi-card">
+          <div class="kpi-title">11/8 (日) 犬山城下・木曽川</div>
+          <div class="kpi-val">約 18,000歩 / 11.66km</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Chart Section -->
+        <section>
+      <div class="section-header">
+        <div class="section-icon">📈</div>
+        <h2 class="section-title">インタラクティブ・アクティビティ分析</h2>
+      </div>
+      <div class="chart-card">
+        <div class="chart-tabs">
+          <button class="chart-tab-btn active" data-view="hourly">🐾 時間帯別 歩数推移</button>
+          <button class="chart-tab-btn" data-view="duration">⏱️ スポット別 滞在時間 (分)</button>
+          <button class="chart-tab-btn" data-view="cumulative">📈 累積歩数カーブ</button>
+        </div>
+        <div class="chart-wrapper">
+          <canvas id="mainChartCanvas" role="img" aria-label="旅行アクティビティ推移グラフ（時間帯別歩数・スポット滞在時間・累積歩数）"></canvas>
+        </div>
+        <div class="chart-meta-caption" id="chartCaption">
+          📊 タブを切り替えて「時間帯別歩数」「スポット滞在時間」「累積歩数カーブ」をインタラクティブに分析可能
+        </div>
+      </div>
+    </section>
+
+
+    <!-- Spot Sections (Polaroid Grid) -->
+        <section>
+      <div class="section-header">
+        <div class="section-icon">⚖️</div>
+        <h2 class="section-title">計画 vs 実際の行動（時系列完全整列）</h2>
+      </div>
+      <div class="diff-table-card">
+  <div class="diff-table-wrapper">
+    <table class="diff-table">
+      <colgroup>
+        <col class="col-spot" style="width: 28%;">
+        <col class="col-plan" style="width: 22%;">
+        <col class="col-actual" style="width: 36%;">
+        <col class="col-verdict" style="width: 14%;">
+      </colgroup>
+      <thead>
+        <tr>
+          <th scope="col">スポット・行程</th>
+          <th scope="col">当初計画</th>
+          <th scope="col">実測行動ログ（Timeline）</th>
+          <th scope="col" style="text-align: center;">判定</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><strong>① 朝カラオケウォームアップ</strong></td>
+          <td>自由枠・調整</td>
+          <td><strong>08:53 - 12:01</strong>（坂下ビッグエコー3時間集中調整）</td>
+          <td style="text-align: center;"><span class="stamp stamp-win">準備万全</span></td>
+        </tr>
+        <tr>
+          <td><strong>② JR快速 ＆ 名城線アプローチ</strong></td>
+          <td>大曽根経由</td>
+          <td><strong>12:18 - 12:50</strong>（高蔵寺快速16分➔名城線11分直結）</td>
+          <td style="text-align: center;"><span class="stamp stamp-win">快速接続</span></td>
+        </tr>
+        <tr>
+          <td><strong>③ 名古屋城 本丸御殿</strong></td>
+          <td>天守閣・御殿散策</td>
+          <td><strong>13:00 - 14:06</strong>（金箔障壁画・上洛殿、きしめん亭行列回避）</td>
+          <td style="text-align: center;"><span class="stamp stamp-god">名建築</span></td>
+        </tr>
+        <tr>
+          <td><strong>④ 熱田神宮 こころの小径（こみち）</strong></td>
+          <td>社殿裏手巡礼</td>
+          <td><strong>15:40 - 16:00</strong>（本殿裏手の静謐な神域・清水社の湧水美肌信仰）</td>
+          <td style="text-align: center;"><span class="stamp stamp-god">神静寂</span></td>
+        </tr>
+        <tr>
+          <td><strong>⑤ 熱田神宮 宝物館 入口</strong></td>
+          <td>文化ゾーン進入</td>
+          <td><strong>16:00頃</strong>（国宝・重文収蔵の宝物館エリアへ進入）</td>
+          <td style="text-align: center;"><span class="stamp stamp-win">文化進入</span></td>
+        </tr>
+        <tr>
+          <td><strong>⑥ 熱田神宮 剣の宝庫 草薙館（草薙）</strong></td>
+          <td>名刀体験</td>
+          <td><strong>16:00 - 16:35</strong>（次郎太刀実重量体験・名刀鑑賞完了）</td>
+          <td style="text-align: center;"><span class="stamp stamp-god">電撃入館</span></td>
+        </tr>
+        <tr>
+          <td><strong>⑦ 熱田神宮 宮きしめん（神宮店）</strong></td>
+          <td>境内昼食枠</td>
+          <td><strong>16:35 - 17:05</strong>（境内の緑の中で本場宮きしめん実食・平打ち麺堪能）</td>
+          <td style="text-align: center;"><span class="stamp stamp-god">本場実食</span></td>
+        </tr>
+        <tr>
+          <td><strong>⑧ 熱田神宮 本殿参拝</strong></td>
+          <td>本宮正式参拝</td>
+          <td><strong>17:05 - 17:30</strong>（神明造の荘厳な本宮拝礼・夕刻の清浄な空気）</td>
+          <td style="text-align: center;"><span class="stamp stamp-win">本命参拝</span></td>
+        </tr>
+        <tr>
+          <td><strong>⑨ きよめ餅総本家 喜与女茶寮（カフェ）</strong></td>
+          <td>名物甘味</td>
+          <td><strong>17:35 - 18:15</strong>（あんトーストコーヒーセット・老舗餡×トースト至福）</td>
+          <td style="text-align: center;"><span class="stamp stamp-god">老舗甘味</span></td>
+        </tr>
+        <tr>
+          <td><strong>⑩ エスカ スガキヤ（名駅地下街）</strong></td>
+          <td>名駅夕食</td>
+          <td><strong>18:50 - 19:40</strong>（ラーメン大盛り ＋ ソフトクリーム ＋ ソフトクリームプリン）</td>
+          <td style="text-align: center;"><span class="stamp stamp-god">フルセット</span></td>
+        </tr>
+        <tr>
+          <td><strong>⑪ 実家帰着・初日完了</strong></td>
+          <td>実家帰還</td>
+          <td><strong>20:15着</strong>（名駅経由でスムーズ帰還・初日14,000歩達成）</td>
+          <td style="text-align: center;"><span class="stamp stamp-win">円滑帰還</span></td>
+        </tr>
+        <tr>
+          <td><strong>⑫ 実家発・車で犬山へ</strong></td>
+          <td>犬山直行</td>
+          <td><strong>08:30 - 09:15</strong>（朝一番のスムーズ移動で犬山着）</td>
+          <td style="text-align: center;"><span class="stamp stamp-win">計画通り</span></td>
+        </tr>
+        <tr>
+          <td><strong>⑬ 【犬山1】国宝 犬山城 天守登閣</strong></td>
+          <td>天守登閣</td>
+          <td><strong>09:20 - 10:15</strong>（上段の間現存・腰下廻縁スリル・木曽川360度絶景）</td>
+          <td style="text-align: center;"><span class="stamp stamp-god">現存国宝</span></td>
+        </tr>
+        <tr>
+          <td><strong>⑭ 【犬山2】有楽苑（国宝茶室 如庵）</strong></td>
+          <td>静寂鑑賞</td>
+          <td><strong>10:20 - 11:15</strong>（1,500円高価格フィルターで神静寂独占・有楽斎の名庭）</td>
+          <td style="text-align: center;"><span class="stamp stamp-god">神静寂</span></td>
+        </tr>
+        <tr>
+          <td><strong>⑮ 【犬山3】山田五平餅店（犬山城下町）</strong></td>
+          <td>食べ歩き</td>
+          <td><strong>11:20 - 11:45</strong>（だんご型3連丸串UX革命・タレ垂れゼロ神食べ歩き）</td>
+          <td style="text-align: center;"><span class="stamp stamp-god">UX革命</span></td>
+        </tr>
+        <tr>
+          <td><strong>⑯ 【犬山4】犬山祭保存館 どんでん館</strong></td>
+          <td>城下町散策</td>
+          <td><strong>11:45 - 12:15</strong>（100円神コスパ、巨大車山4輌を至近距離鑑賞）</td>
+          <td style="text-align: center;"><span class="stamp stamp-god">神コスパ</span></td>
+        </tr>
+        <tr>
+          <td><strong>⑰ 【犬山5】成田山名古屋別院 大聖寺</strong></td>
+          <td>寄り道候補</td>
+          <td><strong>12:50 - 13:05</strong>（大石段負荷と体験対比で即損切り・下から撮影で脚力温存）</td>
+          <td style="text-align: center;"><span class="stamp stamp-skip">即損切り</span></td>
+        </tr>
+        <tr>
+          <td><strong>⑱ 【犬山6】継鹿尾山 寂光院（もみじ寺）</strong></td>
+          <td>展望散策</td>
+          <td><strong>13:30 - 14:15</strong>（スロープカー利用で急勾配攻略・本堂参拝と紅葉眺望）</td>
+          <td style="text-align: center;"><span class="stamp stamp-win">機動勝利</span></td>
+        </tr>
+        <tr>
+          <td><strong>⑲ 【犬山7】桃太郎神社（有料宝物館）</strong></td>
+          <td>珍文化制覇</td>
+          <td><strong>14:20 - 15:10</strong>（浅野祥雲コンクリート像群制覇・有料宝物館怪奇鑑賞）</td>
+          <td style="text-align: center;"><span class="stamp stamp-win">珍文化制覇</span></td>
+        </tr>
+        <tr>
+          <td><strong>⑳ 【犬山8】桃太郎公園（栗栖園地）</strong></td>
+          <td>エリア散策</td>
+          <td><strong>15:10 - 15:35</strong>（木曽川沿い芝生広場・格安BBQ大衆心理観察）</td>
+          <td style="text-align: center;"><span class="stamp stamp-win">人間観察</span></td>
+        </tr>
+        <tr>
+          <td><strong>㉑ 【犬山9】木曽川遊歩道 ＆ 不老公園</strong></td>
+          <td>川沿い散策</td>
+          <td><strong>15:35 - 16:15</strong>（木曽川雄大景観踏破・自然巨岩の遊歩道をウォーキング）</td>
+          <td style="text-align: center;"><span class="stamp stamp-win">踏破完了</span></td>
+        </tr>
+        <tr>
+          <td><strong>㉒ 【犬山10】木曽川 不老滝（不老の滝）</strong></td>
+          <td>名瀑立ち寄り</td>
+          <td><strong>16:15 - 16:30</strong>（岩肌を伝う清らかな飛沫・犬山周遊10大スポット完遂）</td>
+          <td style="text-align: center;"><span class="stamp stamp-god">名所完遂</span></td>
+        </tr>
+        <tr>
+          <td><strong>㉓ 犬山遊園 ➔ 名古屋（名鉄特急）</strong></td>
+          <td>名鉄移動</td>
+          <td><strong>16:40 - 17:15</strong>（犬山遊園駅から名鉄特急で名古屋駅へ直行）</td>
+          <td style="text-align: center;"><span class="stamp stamp-win">快速連絡</span></td>
+        </tr>
+        <tr>
+          <td><strong>㉔ JR名古屋駅 15F スカイストリート</strong></td>
+          <td>無料展望</td>
+          <td><strong>17:20 - 17:40</strong>（セントラルタワーズ15Fから名古屋市街地と新幹線を一望）</td>
+          <td style="text-align: center;"><span class="stamp stamp-god">無料絶景</span></td>
+        </tr>
+        <tr>
+          <td><strong>㉕ 吉田きしめん（エスカ地下街）</strong></td>
+          <td>開店待ち夕食</td>
+          <td><strong>17:45 - 18:25</strong>（開店待ちして名店吉田きしめん実食・手打ち平麺の真髄）</td>
+          <td style="text-align: center;"><span class="stamp stamp-god">名店実食</span></td>
+        </tr>
+        <tr>
+          <td><strong>㉖ つばめパン＆Milk（名駅店）</strong></td>
+          <td>名古屋喫茶</td>
+          <td><strong>18:30 - 19:05</strong>（小倉トースト ＆ アイスカフェオレ・絹香食パン×あんこ）</td>
+          <td style="text-align: center;"><span class="stamp stamp-god">極上小倉</span></td>
+        </tr>
+        <tr>
+          <td><strong>㉗ エスカ スガキヤ（2日連続！）</strong></td>
+          <td>ソウルフード連投</td>
+          <td><strong>19:10 - 19:40</strong>（濃い味ラーメン大盛り完食・ラーメンフォークで完全〆）</td>
+          <td style="text-align: center;"><span class="stamp stamp-god">連投制覇</span></td>
+        </tr>
+        <tr>
+          <td><strong>㉘ 東海道新幹線 のぞみ（帰宅）</strong></td>
+          <td>帰還</td>
+          <td><strong>19:50 - 21:30</strong>（スマートEX直前予約・日曜夜に東京安着・32,000歩完遂）</td>
+          <td style="text-align: center;"><span class="stamp stamp-god">完全安着</span></td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+
+    </section>
+
+    <section>
+      <div class="section-header">
+        <div class="section-icon">📍</div>
+        <h2 class="section-title">2. Day 1: 名古屋・熱田神宮 ＆ 名駅ソウルフード（11/7）</h2>
+      </div>
+      <div class="polaroid-grid">
+        <div class="polaroid-card">
+          <div>
+            <div class="card-top">
+              <span class="spot-time">08:53 - 12:01</span>
+              <span class="stamp stamp-win">準備万全</span>
+            </div>
+            <h3 class="spot-name">1. 朝カラオケウォームアップ（坂下）</h3>
+            <div class="punchline success">「ビッグエコー3時間集中。遠征前の声出しと集中調整完了」</div>
+          </div>
+          <ul class="fact-bullet">
+            <li>実家から車で直行（1.46km）、3時間パック利用</li>
+            <li>終了後実家に車を格納し、完全身軽スタイルで高蔵寺駅へ</li>
+          </ul>
+        </div>
+        <div class="polaroid-card">
+          <div>
+            <div class="card-top">
+              <span class="spot-time">12:18 - 12:50</span>
+              <span class="stamp stamp-win">快速接続</span>
+            </div>
+            <h3 class="spot-name">2. JR快速 ＆ 名城線アプローチ</h3>
+            <div class="punchline">「高蔵寺から大曽根快速16分、名城線左回りで名古屋城直結」</div>
+          </div>
+          <ul class="fact-bullet">
+            <li>JR中央線快速で大曽根へ直行（運賃330円）</li>
+            <li>地下鉄名城線乗り換え11分で東門最寄り名古屋城駅へ</li>
+          </ul>
+        </div>
+        <div class="polaroid-card">
+          <div>
+            <div class="card-top">
+              <span class="spot-time">13:00 - 14:06</span>
+              <span class="stamp stamp-god">名建築</span>
+            </div>
+            <h3 class="spot-name">3. 名古屋城 本丸御殿（66分滞在）</h3>
+            <div class="punchline success">「金箔障壁画・上洛殿の威容。きしめん大行列は即スルーで時間防衛」</div>
+          </div>
+          <ul class="fact-bullet">
+            <li>きしめん亭の混雑を見て即刻回避、御殿鑑賞に時間全振り</li>
+            <li>鶯張り風床鳴りと絢爛豪華な書院造をじっくり鑑賞</li>
+          </ul>
+        </div>
+        <div class="polaroid-card">
+          <div>
+            <div class="card-top">
+              <span class="spot-time">15:40 - 16:00</span>
+              <span class="stamp stamp-god">神静寂</span>
+            </div>
+            <h3 class="spot-name">4. 熱田神宮 こころの小径（こみち）</h3>
+            <div class="punchline success">「本殿真裏の神聖な静寂空間。清水社で湧き水と祈りを回収」</div>
+          </div>
+          <ul class="fact-bullet">
+            <li>参拝客で賑わう表参道とは別次元の厳かな空気感を体感</li>
+            <li>湧き水で目を清めると美肌・開運にご利益があると伝わる清水社を巡礼</li>
+          </ul>
+        </div>
+        <div class="polaroid-card">
+          <div>
+            <div class="card-top">
+              <span class="spot-time">16:00 - 16:35</span>
+              <span class="stamp stamp-god">電撃入館</span>
+            </div>
+            <h3 class="spot-name">5. 宝物館入口 ＆ 剣の宝庫 草薙館（草薙）</h3>
+            <div class="punchline success">「16:00滑り込みで名刀重量体験。本物の日本刀のズシリ感を回収」</div>
+          </div>
+          <ul class="fact-bullet">
+            <li>国宝・重文が並ぶ文化ゾーンから剣の宝庫・草薙館へ直行</li>
+            <li>次郎太刀の実重量体験コーナーで刀剣の圧倒的質量と刃文を体感</li>
+          </ul>
+        </div>
+        <div class="polaroid-card">
+          <div>
+            <div class="card-top">
+              <span class="spot-time">16:35 - 17:05</span>
+              <span class="stamp stamp-god">本場実食</span>
+            </div>
+            <h3 class="spot-name">6. 熱田神宮 宮きしめん（神宮店）</h3>
+            <div class="punchline success">「巨木と池の境内で味わう本場の宮きしめん。平打ち麺と芳醇出汁の幸福」</div>
+          </div>
+          <ul class="fact-bullet">
+            <li>名城で回避したきしめんを、熱田の神聖なオープンスペースでリベンジ回収</li>
+            <li>つるもち食感の伝統平打ち麺とカツオ出汁の名古屋王道の味を堪能</li>
+          </ul>
+        </div>
+        <div class="polaroid-card">
+          <div>
+            <div class="card-top">
+              <span class="spot-time">17:05 - 17:30</span>
+              <span class="stamp stamp-win">本命参拝</span>
+            </div>
+            <h3 class="spot-name">7. 熱田神宮 本殿参拝</h3>
+            <div class="punchline success">「三種の神器・草薙神剣を祀る本宮へ正式参拝。夕刻の清浄な気品」</div>
+          </div>
+          <ul class="fact-bullet">
+            <li>神明造りの荘厳な本宮前で二礼二拍手一礼、旅の安全と感謝を祈願</li>
+            <li>夕暮れ時の澄んだ空気の中で熱田神宮巡りを完璧に完遂</li>
+          </ul>
+        </div>
+        <div class="polaroid-card">
+          <div>
+            <div class="card-top">
+              <span class="spot-time">17:35 - 18:15</span>
+              <span class="stamp stamp-god">老舗甘味</span>
+            </div>
+            <h3 class="spot-name">8. きよめ餅総本家 喜与女茶寮（カフェ）</h3>
+            <div class="punchline success">「あんトーストコーヒーセット。熱田名物老舗の極上あんとバタートーストの至福」</div>
+          </div>
+          <ul class="fact-bullet">
+            <li>名物きよめ餅の総本家が手掛ける甘味処で贅沢な喫茶タイム</li>
+            <li>こんがり焼かれた厚切りトーストに上品な特製餡とバター、珈琲の極上マリアージュ</li>
+          </ul>
+        </div>
+        <div class="polaroid-card">
+          <div>
+            <div class="card-top">
+              <span class="spot-time">18:50 - 19:40</span>
+              <span class="stamp stamp-god">フルセット</span>
+            </div>
+            <h3 class="spot-name">9. エスカ スガキヤ（名駅地下街）</h3>
+            <div class="punchline success">「ラーメン大盛り ＋ ソフトクリーム ＋ ソフトクリームプリン。名古屋ソウルフードのフルコース」</div>
+          </div>
+          <ul class="fact-bullet">
+            <li>和風豚骨白湯スープをラーメンフォークで味わう東海エリアの原風景</li>
+            <li>大盛りラーメンの後に濃厚ソフトクリームとプリンを重ねる完璧な甘辛ループ</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <section>
+      <div class="section-header">
+        <div class="section-icon">📍</div>
+        <h2 class="section-title">3. Day 2: 犬山10大名所 ＆ 名駅グルメ（吉田きしめん・つばめパン・スガキヤ）（11/8）</h2>
+      </div>
+      <div class="polaroid-grid">
+        <div class="polaroid-card">
+          <div>
+            <div class="card-top">
+              <span class="spot-time">09:20 - 10:15</span>
+              <span class="stamp stamp-god">現存国宝</span>
+            </div>
+            <h3 class="spot-name">1. 【犬山1】国宝 犬山城 天守登閣</h3>
+            <div class="punchline success">「城主の間『上段の間』現存の迫力。廻縁の腰下手すり恐怖と木曽川360度絶景」</div>
+          </div>
+          <ul class="fact-bullet">
+            <li>城の中に本物の生活部屋がある圧倒的リアリティ</li>
+            <li>転落防止柵が腰下という現代ではあり得ないスリルと大展望</li>
+          </ul>
+        </div>
+        <div class="polaroid-card">
+          <div>
+            <div class="card-top">
+              <span class="spot-time">10:20 - 11:15</span>
+              <span class="stamp stamp-god">神静寂</span>
+            </div>
+            <h3 class="spot-name">2. 【犬山2】有楽苑（国宝茶室 如庵）</h3>
+            <div class="punchline success">「1,500円高価格フィルターが神機能。観光客ゼロで織田有楽斎の名庭を完全独占」</div>
+          </div>
+          <ul class="fact-bullet">
+            <li>城下町の喧騒とは無縁の静寂空間</li>
+            <li>現存国宝茶室3名席の一つを心ゆくまで堪能</li>
+          </ul>
+        </div>
+        <div class="polaroid-card">
+          <div>
+            <div class="card-top">
+              <span class="spot-time">11:20 - 11:45</span>
+              <span class="stamp stamp-god">UX革命</span>
+            </div>
+            <h3 class="spot-name">3. 【犬山3】山田五平餅店（犬山城下町）</h3>
+            <div class="punchline success">「だんご型五平餅でタレべっとりストレスを完全粉砕。1本100円強の神体験」</div>
+          </div>
+          <ul class="fact-bullet">
+            <li>丸型3連串スタイルにより、手や口を汚さず一口ずつ食べられる革新UX</li>
+            <li>くるみ・ごま・ピーナッツの香ばしい特製タレを堪能</li>
+          </ul>
+        </div>
+        <div class="polaroid-card">
+          <div>
+            <div class="card-top">
+              <span class="spot-time">11:45 - 12:15</span>
+              <span class="stamp stamp-god">神コスパ</span>
+            </div>
+            <h3 class="spot-name">4. 【犬山4】犬山祭保存館 どんでん館</h3>
+            <div class="punchline success">「入場料100円で高さ8mの車山4輌が眼前に直立。城下町の穴場神タイパ施設」</div>
+          </div>
+          <ul class="fact-bullet">
+            <li>祭り本番以外で本物の巨大車山を至近距離鑑賞可能</li>
+            <li>城下町模型ジオラマで歩行ルートの全体像を俯瞰把握</li>
+          </ul>
+        </div>
+        <div class="polaroid-card">
+          <div>
+            <div class="card-top">
+              <span class="spot-time">12:50 - 13:05</span>
+              <span class="stamp stamp-skip">即損切り</span>
+            </div>
+            <h3 class="spot-name">5. 【犬山5】成田山名古屋別院 大聖寺</h3>
+            <div class="punchline warning">「大石段の登攀負荷に対し体験リターン僅少と判断。『下からの撮影のみ』で即撤退」</div>
+          </div>
+          <ul class="fact-bullet">
+            <li>体力を温存し、次の寂光院・桃太郎神社へリソース集中</li>
+            <li>登らない勇気でスケジュールと脚力を死守</li>
+          </ul>
+        </div>
+        <div class="polaroid-card">
+          <div>
+            <div class="card-top">
+              <span class="spot-time">13:30 - 14:15</span>
+              <span class="stamp stamp-win">機動勝利</span>
+            </div>
+            <h3 class="spot-name">6. 【犬山6】継鹿尾山 寂光院（尾張のもみじ寺）</h3>
+            <div class="punchline success">「急勾配はスロープカーで軽快攻略。木曽川を望む展望台と紅葉名所の静寂」</div>
+          </div>
+          <ul class="fact-bullet">
+            <li>有料スロープカーを賢く利用して脚力消費を最小限にセーブ</li>
+            <li>尾張最古の古刹で木曽川と濃尾平野の雄大な眺望を確保</li>
+          </ul>
+        </div>
+        <div class="polaroid-card">
+          <div>
+            <div class="card-top">
+              <span class="spot-time">14:20 - 15:10</span>
+              <span class="stamp stamp-win">珍文化制覇</span>
+            </div>
+            <h3 class="spot-name">7. 【犬山7】桃太郎神社（有料宝物館）</h3>
+            <div class="punchline success">「浅野祥雲コンクリート像群と有料宝物館の怪奇。珍文化遺産を余すことなく踏破」</div>
+          </div>
+          <ul class="fact-bullet">
+            <li>境内各所に林立する実物大コンクリート彫刻群のシュールな迫力</li>
+            <li>有料宝物館に保存された桃太郎伝説にまつわる貴重・奇抜資料を鑑賞</li>
+          </ul>
+        </div>
+        <div class="polaroid-card">
+          <div>
+            <div class="card-top">
+              <span class="spot-time">15:10 - 15:35</span>
+              <span class="stamp stamp-win">人間観察</span>
+            </div>
+            <h3 class="spot-name">8. 【犬山8】桃太郎公園（栗栖園地）</h3>
+            <div class="punchline success">「木曽川河畔の広大な芝生広場。格安キャンプ・BBQで賑わう大衆心理を冷静観察」</div>
+          </div>
+          <ul class="fact-bullet">
+            <li>神社隣接の木曽川沿い広場に展開するキャンプ＆バーベキューエリア</li>
+            <li>奇抜な神社カルチャーとレジャー空間の強烈なコントラストを体感</li>
+          </ul>
+        </div>
+        <div class="polaroid-card">
+          <div>
+            <div class="card-top">
+              <span class="spot-time">15:35 - 16:15</span>
+              <span class="stamp stamp-win">踏破完了</span>
+            </div>
+            <h3 class="spot-name">9. 【犬山9】木曽川遊歩道 ＆ 不老公園</h3>
+            <div class="punchline success">「巨岩が連なる木曽川沿いの自然歩道。川風を受けながらのロングウォークで累計21km走破」</div>
+          </div>
+          <ul class="fact-bullet">
+            <li>国定公園に指定された木曽川沿いの雄大な渓谷美を間近に歩行</li>
+            <li>大自然の川辺から犬山城・奇岩群を望む極上の散策ルート</li>
+          </ul>
+        </div>
+        <div class="polaroid-card">
+          <div>
+            <div class="card-top">
+              <span class="spot-time">16:15 - 16:30</span>
+              <span class="stamp stamp-god">名所完遂</span>
+            </div>
+            <h3 class="spot-name">10. 【犬山10】木曽川 不老滝（不老の滝）</h3>
+            <div class="punchline success">「木曽川岸壁の岩肌から清らかに落ちる不老滝。犬山周遊10大スポットの完全制覇を達成」</div>
+          </div>
+          <ul class="fact-bullet">
+            <li>岩壁の間を涼やかに注ぐ名瀑の飛沫とマイナスイオンで疲労回復</li>
+            <li>犬山城から不老滝まで、川沿い・山沿いの10大チェックポイントを全踏破</li>
+          </ul>
+        </div>
+        <div class="polaroid-card">
+          <div>
+            <div class="card-top">
+              <span class="spot-time">16:40 - 17:40</span>
+              <span class="stamp stamp-god">無料絶景</span>
+            </div>
+            <h3 class="spot-name">11. 犬山遊園 ➔ 名古屋 ＆ JR15F スカイストリート</h3>
+            <div class="punchline success">「名鉄特急で名駅直行。JRセントラルタワーズ15Fスカイストリートから名駅パノラマ無料絶景」</div>
+          </div>
+          <ul class="fact-bullet">
+            <li>犬山遊園駅から名鉄特急で名古屋駅へノンストップ快速アプローチ</li>
+            <li>JRタワーズ15階の無料展望ロビーから、暮れゆく名古屋の街並みと鉄道網を眼下に一望</li>
+          </ul>
+        </div>
+        <div class="polaroid-card">
+          <div>
+            <div class="card-top">
+              <span class="spot-time">17:45 - 18:25</span>
+              <span class="stamp stamp-god">名店実食</span>
+            </div>
+            <h3 class="spot-name">12. 吉田きしめん（エスカ店・開店待ち実食）</h3>
+            <div class="punchline success">「開店待ちして手打ち平打ちきしめんを堪能。ツルツル食感と芳醇ムロアジ出汁の真骨頂」</div>
+          </div>
+          <ul class="fact-bullet">
+            <li>名駅エスカの老舗・吉田きしめんで開店前から待機し、一番乗りで出来立てを実食</li>
+            <li>薄く幅広の麺が舌の上で踊る伝統の喉越しと深みのある出汁の旨味を噛み締める</li>
+          </ul>
+        </div>
+        <div class="polaroid-card">
+          <div>
+            <div class="card-top">
+              <span class="spot-time">18:30 - 19:05</span>
+              <span class="stamp stamp-god">極上小倉</span>
+            </div>
+            <h3 class="spot-name">13. つばめパン＆Milk 小倉トースト ＆ アイスカフェオレ</h3>
+            <div class="punchline success">「名物絹香食パンの厚切りトーストに山盛り小倉あん×生ホイップ×アイスカフェオレ」</div>
+          </div>
+          <ul class="fact-bullet">
+            <li>天然酵母食パン専門店つばめパン名駅店で、サクふわ食パンの小倉トーストを実食</li>
+            <li>甘さ控えめの極上あずきと塩気、コクのあるアイスカフェオレで歩行疲労を完全リセット</li>
+          </ul>
+        </div>
+        <div class="polaroid-card">
+          <div>
+            <div class="card-top">
+              <span class="spot-time">19:10 - 19:40</span>
+              <span class="stamp stamp-god">連投制覇</span>
+            </div>
+            <h3 class="spot-name">14. エスカ スガキヤ 濃い味ラーメン大盛り（2日連続連投！）</h3>
+            <div class="punchline success">「2日連続のスガキヤ突撃。濃厚豚骨白湯と魚介出汁の『濃い味ラーメン大盛り』をラーメンフォークで完食」</div>
+          </div>
+          <ul class="fact-bullet">
+            <li>初日の通常ラーメンに続き、2日目は旨味を極めた『濃い味』大盛りを堂々オーダー</li>
+            <li>あの特徴的なラーメンフォークでスープと麺を啜り尽くし、愛知遠征の食を完璧に締めくくり</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+
+    <!-- Essay Cards -->
+    
+
+    <!-- Footer -->
+    <footer>
+      <p>愛知 ｜ 名古屋 ＋ 犬山 旅アルバム 2026 ｜ 旅行総合ポータルへ戻る</p>
+    </footer>
+
+  </main>
+
+  <!-- Injected Chart Data -->
+  <script>
+    window.__ALBUM_CHART_DATA__ = {
+  "hourly": {
+    "type": "bar",
+    "caption": "📊 <strong>時間帯別 歩数推移:</strong> 初日（名古屋城本丸御殿・熱田神宮 約14,000歩） vs 2日目（如庵・犬山城天守・木曽川 約18,000歩）",
+    "labels": [
+      "08時",
+      "09時",
+      "10時",
+      "11時",
+      "12時",
+      "13時",
+      "14時",
+      "15時",
+      "16時",
+      "17時",
+      "18時",
+      "19時",
+      "20時"
+    ],
+    "datasets": [
+      {
+        "label": "11/7 名古屋・熱田 (約14,000歩)",
+        "data": [
+          450,
+          680,
+          850,
+          920,
+          2150,
+          4200,
+          1680,
+          1420,
+          1150,
+          410,
+          80,
+          10,
+          0
+        ],
+        "backgroundColor": "#0284c7",
+        "borderRadius": 6
+      },
+      {
+        "label": "11/8 犬山・木曽川 (約18,000歩)",
+        "data": [
+          310,
+          890,
+          2450,
+          2180,
+          3420,
+          1850,
+          2810,
+          2340,
+          980,
+          520,
+          180,
+          60,
+          0
+        ],
+        "backgroundColor": "#f59e0b",
+        "borderRadius": 6
+      }
+    ]
+  },
+  "duration": {
+    "type": "doughnut",
+    "caption": "⏱️ <strong>主要スポット別 滞在時間（実測分）:</strong> 朝カラオケ188分、犬山城登閣58分、如庵55分、名城御殿66分、草薙館71分、桃太郎・寂光院100分、木曽川45分、新幹線のぞみ121分。",
+    "labels": [
+      "朝カラオケウォームアップ (188分)",
+      "名城線アプローチ・移動 (45分)",
+      "名古屋城 本丸御殿 (66分)",
+      "熱田神宮 ＆ 草薙館 (71分)",
+      "国宝茶室 如庵・有楽苑 (55分)",
+      "犬山城下町 ＆ どんでん館 (55分)",
+      "国宝 犬山城 天守登閣 (58分)",
+      "桃太郎神社 ＆ 寂光院 (100分)",
+      "木曽川遊歩道 ＆ 不老公園 (45分)",
+      "東海道新幹線 のぞみ (121分)"
+    ],
+    "datasets": [
+      {
+        "data": [
+          188,
+          45,
+          66,
+          71,
+          55,
+          55,
+          58,
+          100,
+          45,
+          121
+        ],
+        "backgroundColor": [
+          "#64748b",
+          "#0284c7",
+          "#38bdf8",
+          "#f59e0b",
+          "#10b981",
+          "#059669",
+          "#8b5cf6",
+          "#ec4899",
+          "#06b6d4",
+          "#f97316"
+        ],
+        "borderWidth": 2
+      }
+    ]
+  },
+  "cumulative": {
+    "type": "line",
+    "yTitle": "累計歩数",
+    "caption": "📈 <strong>2日間 累積歩数ペース（合計 約32,000歩 / 21.67km）:</strong> 初日14,000歩、2日目18,000歩を着実に積み上げ、日曜夜20:41に東京安着。",
+    "labels": [
+      "初日朝",
+      "カラオケ後",
+      "名城線",
+      "名古屋城御殿",
+      "名城散策",
+      "熱田神宮西",
+      "熱田草薙館",
+      "名駅着",
+      "2日目有楽苑",
+      "城下町五平餅",
+      "どんでん館",
+      "犬山城天守",
+      "桃太郎神社",
+      "寂光院もみじ",
+      "木曽川遊歩道",
+      "名駅エスカ",
+      "東京安着"
+    ],
+    "datasets": [
+      {
+        "label": "累積歩数 (Steps)",
+        "data": [
+          450,
+          1980,
+          2900,
+          7100,
+          8780,
+          10200,
+          13450,
+          14000,
+          15650,
+          18100,
+          20280,
+          23700,
+          26510,
+          29320,
+          30980,
+          31650,
+          32000
+        ],
+        "borderColor": "#10b981",
+        "backgroundColor": "rgba(16, 185, 129, 0.15)",
+        "borderWidth": 3,
+        "fill": true,
+        "tension": 0.35,
+        "pointBackgroundColor": "#10b981",
+        "pointRadius": 6,
+        "pointHoverRadius": 8
+      }
+    ]
+  }
+};
+  </script>
+  <script src="../assets/album_runtime.js"></script>
 </body>
 </html>

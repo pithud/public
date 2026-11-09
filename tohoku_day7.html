@@ -1,0 +1,721 @@
+<!DOCTYPE html>
+<html lang="ja" data-theme="light">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <title>東北 ｜ 仙台・松島・平泉・秋田・山形・会津 一人旅の原点 縦走しおり - Day 7</title>
+  <script>
+    // Anti-FOUC immediate theme application
+    (function() {
+      var t = localStorage.getItem('trip_nav_theme') || 'light';
+      document.documentElement.setAttribute('data-theme', t);
+    })();
+  </script>
+  <style>
+:root {
+  --bg: #f8fafc;
+  --surface: #ffffff;
+  --surface-subtle: #f1f5f9;
+  --text: #0f172a;
+  --text-muted: #64748b;
+  --border: #e2e8f0;
+  --primary: #0284c7;
+  --primary-hover: #0369a1;
+  --accent: #d97706;
+  --card-shadow: 0 1px 3px rgba(0,0,0,0.06), 0 1px 2px rgba(0,0,0,0.04);
+  --font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+}
+[data-theme="dark"] {
+  --bg: #090d16;
+  --surface: #131b2e;
+  --surface-subtle: #1e293b;
+  --text: #f8fafc;
+  --text-muted: #94a3b8;
+  --border: #1e293b;
+  --card-shadow: 0 4px 6px -1px rgba(0,0,0,0.3);
+}
+* { box-sizing: border-box; margin: 0; padding: 0; -webkit-tap-highlight-color: transparent; }
+body {
+  font-family: var(--font-family);
+  background-color: var(--bg);
+  color: var(--text);
+  line-height: 1.5;
+  font-size: 15px;
+  padding-bottom: 80px;
+}
+.header-bar {
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  background: rgba(255, 255, 255, 0.92);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border-bottom: 1px solid var(--border);
+  padding: 12px 16px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+[data-theme="dark"] .header-bar { background: rgba(19, 27, 46, 0.92); }
+.brand-title { font-size: 1.05rem; font-weight: 700; display: flex; align-items: center; gap: 8px; }
+.header-actions { display: flex; gap: 8px; align-items: center; }
+.btn-action {
+  background: var(--surface-subtle);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: 6px 12px;
+  font-size: 13px;
+  color: var(--text);
+  cursor: pointer;
+  text-decoration: none;
+}
+.container { max-width: 680px; margin: 0 auto; padding: 16px; }
+
+/* Day Navigation Bar */
+.nav-bar {
+  display: flex;
+  background: var(--surface-subtle);
+  padding: 6px;
+  border-radius: 10px;
+  margin-bottom: 16px;
+  gap: 6px;
+  align-items: center;
+  justify-content: space-between;
+}
+.nav-link {
+  flex: 1;
+  text-align: center;
+  padding: 7px 10px;
+  border-radius: 7px;
+  font-size: 13px;
+  font-weight: 600;
+  text-decoration: none;
+  color: var(--text-muted);
+  background: transparent;
+  border: none;
+  cursor: pointer;
+}
+.nav-link.active {
+  background: var(--surface);
+  color: var(--primary);
+  box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+}
+
+/* Quick Jump Chips */
+.jump-chips {
+  display: flex;
+  gap: 6px;
+  overflow-x: auto;
+  padding-bottom: 10px;
+  margin-bottom: 16px;
+  white-space: nowrap;
+  scrollbar-width: none;
+}
+.jump-chips::-webkit-scrollbar { display: none; }
+.jump-chip {
+  display: inline-block;
+  font-size: 12px;
+  font-weight: 600;
+  padding: 5px 10px;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 16px;
+  color: var(--text);
+  text-decoration: none;
+}
+
+/* Slot Cards */
+.day-block { margin-bottom: 32px; }
+.day-header {
+  font-size: 1.15rem;
+  font-weight: 700;
+  margin-bottom: 12px;
+  padding-bottom: 6px;
+  border-bottom: 2px solid var(--primary);
+  color: var(--primary);
+}
+
+/* Macro Route Box (Day全体ルート立ち回り) */
+.macro-route-box {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-left: 4px solid var(--primary);
+  border-radius: 10px;
+  padding: 12px 14px;
+  margin-bottom: 16px;
+  box-shadow: var(--card-shadow);
+}
+.macro-route-head {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 6px;
+}
+.macro-route-title {
+  font-size: 13px;
+  font-weight: 800;
+  color: var(--primary);
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+[data-theme="dark"] .macro-route-title { color: #38bdf8; }
+.macro-route-body {
+  font-size: 13px;
+  line-height: 1.55;
+  color: var(--text);
+  margin-bottom: 8px;
+}
+.macro-map-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  font-size: 12px;
+  font-weight: 700;
+  color: var(--primary);
+  text-decoration: none;
+  background: rgba(2, 132, 199, 0.08);
+  padding: 4px 10px;
+  border-radius: 6px;
+  border: 1px solid rgba(2, 132, 199, 0.2);
+}
+[data-theme="dark"] .macro-map-link {
+  color: #38bdf8;
+  background: rgba(56, 189, 248, 0.1);
+  border-color: rgba(56, 189, 248, 0.3);
+}
+.slot-card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  margin-bottom: 12px;
+  padding: 14px 16px;
+  box-shadow: var(--card-shadow);
+  transition: opacity 0.2s, background-color 0.2s;
+}
+.slot-card.is-dimmed { opacity: 0.45; filter: grayscale(40%); }
+.slot-card.is-must { border-left: 4px solid var(--accent); }
+.slot-meta { display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px; }
+.slot-time { font-size: 13px; font-weight: 700; font-variant-numeric: tabular-nums; }
+.slot-badge {
+  font-size: 11px;
+  font-weight: 700;
+  padding: 2px 8px;
+  border-radius: 4px;
+  text-transform: uppercase;
+}
+.badge-sightseeing { background: #d1fae5; color: #065f46; }
+.badge-food { background: #ffedd5; color: #9a3412; }
+.badge-transit { background: #e0e7ff; color: #3730a3; }
+[data-theme="dark"] .badge-sightseeing { background: #064e3b; color: #6ee7b7; }
+[data-theme="dark"] .badge-food { background: #7c2d12; color: #fdba74; }
+[data-theme="dark"] .badge-transit { background: #312e81; color: #a5b4fc; }
+
+.slot-title-row { display: flex; align-items: flex-start; gap: 8px; margin-bottom: 6px; }
+.slot-checkbox { margin-top: 3px; cursor: pointer; width: 18px; height: 18px; accent-color: var(--primary); }
+.slot-title { font-size: 1rem; font-weight: 700; line-height: 1.4; flex: 1; }
+.slot-desc { font-size: 13.5px; color: var(--text-muted); margin-bottom: 10px; line-height: 1.5; padding-left: 26px; }
+
+/* Swap Guide Box */
+.swap-box {
+  margin: 10px 0 10px 26px;
+  padding: 10px 12px;
+  border-radius: 8px;
+  background: rgba(217, 119, 6, 0.08);
+  border: 1px dashed var(--accent);
+  font-size: 12.5px;
+}
+.swap-title { font-weight: 700; color: var(--accent); margin-bottom: 4px; display: flex; align-items: center; gap: 4px; }
+
+.slot-foot { display: flex; justify-content: space-between; align-items: center; padding-top: 8px; border-top: 1px solid var(--border); margin-left: 26px; }
+.map-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  font-size: 12px;
+  font-weight: 600;
+  color: #1a73e8;
+  text-decoration: none;
+  background: rgba(26, 115, 232, 0.08);
+  padding: 4px 10px;
+  border-radius: 20px;
+}
+[data-theme="dark"] .map-pill { color: #8ab4f8; background: rgba(138, 180, 248, 0.12); }
+
+/* Tactics Step Box (立ち回り・攻略手順) */
+.tactics-box {
+  margin: 12px 0 12px 26px;
+  padding: 10px 14px;
+  background: rgba(2, 132, 199, 0.06);
+  border: 1px solid rgba(2, 132, 199, 0.25);
+  border-left: 3.5px solid var(--primary);
+  border-radius: 8px;
+}
+[data-theme="dark"] .tactics-box {
+  background: rgba(56, 189, 248, 0.08);
+  border-color: rgba(56, 189, 248, 0.3);
+  border-left-color: #38bdf8;
+}
+.tactics-header {
+  font-size: 13px;
+  font-weight: 700;
+  color: var(--primary);
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  margin-bottom: 8px;
+}
+.tactics-tag {
+  font-size: 10px;
+  font-weight: 800;
+  background: var(--primary);
+  color: #fff;
+  padding: 1px 6px;
+  border-radius: 4px;
+  letter-spacing: 0.05em;
+}
+[data-theme="dark"] .tactics-header { color: #38bdf8; }
+[data-theme="dark"] .tactics-tag { background: #0284c7; }
+.tactics-list { display: flex; flex-direction: column; gap: 6px; }
+.tactics-step-row { display: flex; align-items: flex-start; gap: 8px; font-size: 12.5px; line-height: 1.5; }
+.tactics-num {
+  flex-shrink: 0;
+  width: 18px;
+  height: 18px;
+  border-radius: 4px;
+  background: rgba(2, 132, 199, 0.18);
+  color: var(--primary);
+  font-size: 11px;
+  font-weight: 800;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-top: 1px;
+}
+[data-theme="dark"] .tactics-num { background: rgba(56, 189, 248, 0.25); color: #38bdf8; }
+
+/* Checkpoints List */
+.checkpoint-list {
+  margin: 10px 0 10px 26px;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+.checkpoint-row {
+  display: flex;
+  align-items: flex-start;
+  gap: 8px;
+  font-size: 12px;
+  background: var(--surface-subtle);
+  padding: 8px 10px;
+  border-radius: 6px;
+  border: 1px solid var(--border);
+}
+.cp-badge {
+  font-size: 10px;
+  font-weight: 700;
+  padding: 1px 5px;
+  border-radius: 3px;
+  background: #0284c7;
+  color: #fff;
+  flex-shrink: 0;
+}
+.cp-title { font-weight: 600; color: var(--text); }
+.cp-desc { font-size: 11.5px; color: var(--text-muted); margin-top: 2px; }
+
+/* Practical Footer */
+.practical-footer {
+  margin: 10px 0 10px 26px;
+  padding: 8px 10px;
+  background: var(--surface-subtle);
+  border-left: 3px solid var(--accent);
+  border-radius: 4px;
+  font-size: 12px;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+.pf-row { display: flex; gap: 6px; }
+.pf-tag { font-weight: 700; color: var(--accent); flex-shrink: 0; min-width: 65px; }
+.pf-val { color: var(--text); }
+
+/* Print & Paged Media */
+@media print {
+  @page { size: A4 portrait; margin: 12mm 15mm; }
+  body { background: #fff !important; color: #000 !important; font-size: 11pt; }
+  .header-bar, .nav-bar, .jump-chips, .no-print { display: none !important; }
+  .day-block { page-break-after: always; break-after: page; }
+  .slot-card { break-inside: avoid; page-break-inside: avoid; box-shadow: none !important; border: 1px solid #ccc !important; }
+  .slot-card.is-dimmed { opacity: 1 !important; filter: none !important; }
+  .slot-checkbox { display: none !important; }
+  .slot-desc, .swap-box, .slot-foot { margin-left: 0 !important; padding-left: 0 !important; }
+}
+
+  </style>
+</head>
+<body>
+  <header class="header-bar">
+    <div class="brand-title">
+      <span>🌲</span>
+      <span>東北 ｜ 仙台・松島・平泉・秋田・山形・会津 一人旅の原点 縦走しおり</span>
+    </div>
+    <div class="header-actions no-print">
+      <button class="btn-action" onclick="toggleTheme()">🌓 テーマ</button>
+      <button class="btn-action" onclick="window.print()">🖨️ 製本印刷</button>
+    </div>
+  </header>
+
+  <main class="container">
+    
+    <nav class="nav-bar no-print">
+      <a class="nav-link" href="tohoku.html">📑 全日程</a>
+      <a class="nav-link " href="tohoku_day1.html">Day 1</a><a class="nav-link " href="tohoku_day2.html">Day 2</a><a class="nav-link " href="tohoku_day3.html">Day 3</a><a class="nav-link " href="tohoku_day4.html">Day 4</a><a class="nav-link " href="tohoku_day5.html">Day 5</a><a class="nav-link " href="tohoku_day6.html">Day 6</a><a class="nav-link active" href="tohoku_day7.html">Day 7</a><a class="nav-link " href="tohoku_day8.html">Day 8</a><a class="nav-link " href="tohoku_day9.html">Day 9</a><a class="nav-link " href="tohoku_day10.html">Day 10</a><a class="nav-link " href="tohoku_day11.html">Day 11</a><a class="nav-link " href="tohoku_day12.html">Day 12</a>
+    </nav>
+    
+    <div class="jump-chips no-print">
+      
+        <a class="jump-chip" href="#d7-01" data-day="7">📍 男鹿駅前「オガーレ」</a>
+      
+        <a class="jump-chip" href="#d7-02" data-day="7">📍 入道崎（入道埼灯台・</a>
+      
+        <a class="jump-chip" href="#d7-03" data-day="7">📍 なまはげ館 ＆ 男鹿</a>
+      
+        <a class="jump-chip" href="#d7-04" data-day="7">📍 JR男鹿線で秋田駅へ</a>
+      
+    </div>
+    
+      <section class="day-block" id="day-sec-7" data-day="7">
+        <h2 class="day-header">Day 7: 2026年5月5日 (火・祝)</h2>
+        
+        <div class="macro-route-box">
+          <div class="macro-route-head">
+            <span class="macro-route-title">🗺️ 【全体ルート立ち回り】マクロ動線シークエンス</span>
+            <a class="macro-map-link" href="https://www.google.com/maps/dir/?api=1&amp;origin=男鹿駅&amp;destination=秋田キャッスルホテル&amp;waypoints=入道崎|なまはげ館|秋田駅&amp;travelmode=driving" target="_blank" rel="noopener">📍 広域Google Maps</a>
+          </div>
+          <div class="macro-route-body">男鹿駅・オガーレ ➔ なまはげシャトル（ぐるっと便） ➔ 入道崎（入道埼灯台） ➔ なまはげ館・男鹿真山伝承館 ➔ 男鹿駅 ➔ 秋田駅（Amazon荷物受取） ➔ 秋田キャッスルホテル</div>
+        </div>
+        <div class="slot-list">
+          
+    <article class="slot-card " id="d7-01" data-slot-id="d7-01">
+      <div class="slot-meta">
+        <span class="slot-time">⏱️ 09:30 - 10:30</span>
+        <span class="slot-badge badge-sightseeing">観光</span>
+      </div>
+      <div class="slot-title-row">
+        <input type="checkbox" class="slot-checkbox no-print" onchange="toggleSlot('d7-01', this.checked)" title="完了・スキップを消し込み">
+        <h3 class="slot-title">男鹿駅前「オガーレ」散策 ＆ なまはげシャトル乗車準備</h3>
+      </div>
+      <p class="slot-desc">男鹿駅前の道の駅「おが なまはげの里 オガーレ」で男鹿産の魚介や特産品を見学した後、10:30発の観光乗合タクシー「なまはげシャトル（ぐるっと便）」に乗車する。</p>
+      
+      <div class="swap-box">
+        <div class="swap-title">🔀 スワップ・代替ルート候補</div>
+        <div><strong>代替プラン:</strong> シャトル予約が取れない場合は男鹿駅から「なまはげ館」方面への路線バスとタクシーを併用する。</div>
+      </div>
+      
+      <div class="tactics-box">
+        <div class="tactics-header">
+          <span>🎯</span>
+          <span class="tactics-tag">個別立ち回り</span>
+          <span>【構内順路】攻略戦術</span>
+        </div>
+        <div class="tactics-list">
+          
+            <div class="tactics-step-row">
+              <span class="tactics-num">1</span>
+              <span class="tactics-text">路線バスだけでは接続が難しい男鹿半島先端（入道崎）と内陸（真山・なまはげ館）を、予約制乗合シャトル「なまはげシャトル」で一筆書き攻略する。</span>
+            </div>
+          
+        </div>
+      </div>
+      
+      <div class="checkpoint-list">
+        
+          <div class="checkpoint-row">
+            <span class="cp-badge">必須</span>
+            <div>
+              <div class="cp-title">現地確認・必達ポイント</div>
+              <div class="cp-desc">駅前広場の巨大なまはげモニュメントと、シャトル運転手さんによるローカルガイド。</div>
+            </div>
+          </div>
+        
+      </div>
+      
+      <div class="practical-footer">
+        
+        <div class="pf-row"><span class="pf-tag">💡 現地Tips:</span><span class="pf-val">レンタカーなしのソロ旅行者にとって、男鹿半島の二次交通は「なまはげシャトル」が唯一の最適解となる。</span></div>
+        
+      </div>
+      <div class="slot-foot">
+        <a class="map-pill" href="https://www.google.com/maps/search/?api=1&amp;query=道の駅おが+オガーレ" target="_blank" rel="noopener">📍 Google Maps</a>
+        
+      </div>
+    </article>
+    <article class="slot-card " id="d7-02" data-slot-id="d7-02">
+      <div class="slot-meta">
+        <span class="slot-time">⏱️ 10:30 - 12:30</span>
+        <span class="slot-badge badge-sightseeing">観光</span>
+      </div>
+      <div class="slot-title-row">
+        <input type="checkbox" class="slot-checkbox no-print" onchange="toggleSlot('d7-02', this.checked)" title="完了・スキップを消し込み">
+        <h3 class="slot-title">入道崎（入道埼灯台・北緯40度モニュメント・海鮮昼食）</h3>
+      </div>
+      <p class="slot-desc">男鹿半島の最北端・北緯40度線上に位置する「入道崎」へ。緑の芝生と青い日本海、そして白と黒のツートンカラーが鮮やかな「入道埼灯台（日本の灯台50選）」を巡り、岬の食事処で海鮮を味わう。</p>
+      
+      <div class="swap-box">
+        <div class="swap-title">🔀 スワップ・代替ルート候補</div>
+        <div><strong>代替プラン:</strong> 荒天時は灯台参観を見送り、海底透視船または周辺ドライブインでの食事・休憩を長めにとる。</div>
+      </div>
+      
+      <div class="tactics-box">
+        <div class="tactics-header">
+          <span>🎯</span>
+          <span class="tactics-tag">個別立ち回り</span>
+          <span>【構内順路】攻略戦術</span>
+        </div>
+        <div class="tactics-list">
+          
+            <div class="tactics-step-row">
+              <span class="tactics-num">1</span>
+              <span class="tactics-text">灯台の上まで登って日本海と鹿落としの断崖を360度見渡し、北緯40度モニュメント（安山岩の列石）を踏破する。</span>
+            </div>
+          
+        </div>
+      </div>
+      
+      <div class="checkpoint-list">
+        
+          <div class="checkpoint-row">
+            <span class="cp-badge">必須</span>
+            <div>
+              <div class="cp-title">現地確認・必達ポイント</div>
+              <div class="cp-desc">男鹿名物の海鮮丼や石焼料理（真っ赤に焼いた男鹿石を木の桶に投入する漁師料理）。</div>
+            </div>
+          </div>
+        
+      </div>
+      
+      <div class="practical-footer">
+        
+        <div class="pf-row"><span class="pf-tag">💡 現地Tips:</span><span class="pf-val">岬の先端は遮るものがなく強風が吹くため、帽子や荷物の飛散に注意。</span></div>
+        
+      </div>
+      <div class="slot-foot">
+        <a class="map-pill" href="https://www.google.com/maps/search/?api=1&amp;query=入道崎" target="_blank" rel="noopener">📍 Google Maps</a>
+        
+      </div>
+    </article>
+    <article class="slot-card " id="d7-03" data-slot-id="d7-03">
+      <div class="slot-meta">
+        <span class="slot-time">⏱️ 13:00 - 15:00</span>
+        <span class="slot-badge badge-sightseeing">観光</span>
+      </div>
+      <div class="slot-title-row">
+        <input type="checkbox" class="slot-checkbox no-print" onchange="toggleSlot('d7-03', this.checked)" title="完了・スキップを消し込み">
+        <h3 class="slot-title">なまはげ館 ＆ 男鹿真山伝承館</h3>
+      </div>
+      <p class="slot-desc">ユネスコ無形文化遺産「男鹿のナマハゲ」の聖地・真山（しんざん）地区へ。「なまはげ館」で男鹿市内各地で実際に使われていた150枚以上の多様ななまはげ面を見比べ、隣接する曲家民家「男鹿真山伝承館」で大晦日のなまはげ習俗の実演を体感する。</p>
+      
+      <div class="swap-box">
+        <div class="swap-title">🔀 スワップ・代替ルート候補</div>
+        <div><strong>代替プラン:</strong> 時間が余った場合は館内の「なまはげ変身コーナー」や面彫り実演工房を見学する。</div>
+      </div>
+      
+      <div class="tactics-box">
+        <div class="tactics-header">
+          <span>🎯</span>
+          <span class="tactics-tag">個別立ち回り</span>
+          <span>【構内順路】攻略戦術</span>
+        </div>
+        <div class="tactics-list">
+          
+            <div class="tactics-step-row">
+              <span class="tactics-num">1</span>
+              <span class="tactics-text">なまはげ館の展示を先に見学してから真山伝承館の実演回（30分間隔）へ入ることで、主人の「作柄・家内安全の問答」とナマハゲの荒々しい所作の意味が深く理解できる。</span>
+            </div>
+          
+        </div>
+      </div>
+      
+      <div class="checkpoint-list">
+        
+          <div class="checkpoint-row">
+            <span class="cp-badge">必須</span>
+            <div>
+              <div class="cp-title">現地確認・必達ポイント</div>
+              <div class="cp-desc">集落ごとに全く異なる面の造形（韓風・笑み・角の形）と、伝承館に響き渡る咆哮・足踏みの迫力。</div>
+            </div>
+          </div>
+        
+      </div>
+      
+      <div class="practical-footer">
+        
+        <div class="pf-row"><span class="pf-tag">💡 現地Tips:</span><span class="pf-val">徒歩5分の場所にある「真山神社」の杉並木と歓喜天王もあわせて参拝すると、ナマハゲ信仰のルーツが一本の線で繋がる。</span></div>
+        
+      </div>
+      <div class="slot-foot">
+        <a class="map-pill" href="https://www.google.com/maps/search/?api=1&amp;query=なまはげ館" target="_blank" rel="noopener">📍 Google Maps</a>
+        
+      </div>
+    </article>
+    <article class="slot-card " id="d7-04" data-slot-id="d7-04">
+      <div class="slot-meta">
+        <span class="slot-time">⏱️ 15:30 - 18:30</span>
+        <span class="slot-badge badge-sightseeing">観光</span>
+      </div>
+      <div class="slot-title-row">
+        <input type="checkbox" class="slot-checkbox no-print" onchange="toggleSlot('d7-04', this.checked)" title="完了・スキップを消し込み">
+        <h3 class="slot-title">JR男鹿線で秋田駅へ帰還・Amazon受取 ➔ 秋田キャッスルホテル</h3>
+      </div>
+      <p class="slot-desc">男鹿駅からJR男鹿線で秋田駅へ戻り、コンビニ受取に指定していたAmazon注文品（WEGOの衣類や折りたたみ傘ポーチ）を回収。千秋公園のお堀端に建つ名門「秋田キャッスルホテル」へチェックインする。</p>
+      
+      <div class="swap-box">
+        <div class="swap-title">🔀 スワップ・代替ルート候補</div>
+        <div><strong>代替プラン:</strong> 体調が万全な場合は川反（かわばた）の飲食街へ繰り出し、きりたんぽ鍋やハタハタ寿司を味わう。</div>
+      </div>
+      
+      <div class="tactics-box">
+        <div class="tactics-header">
+          <span>🎯</span>
+          <span class="tactics-tag">個別立ち回り</span>
+          <span>【構内順路】攻略戦術</span>
+        </div>
+        <div class="tactics-list">
+          
+            <div class="tactics-step-row">
+              <span class="tactics-num">1</span>
+              <span class="tactics-text">7日間の連続移動と前夜のドミトリー泊で少し風邪気味の兆候が出たため、この日は夜の外出を控え、格式高いシティホテルのベッドとバスルームで徹底的に体を休める「戦略的休養日」とする。</span>
+            </div>
+          
+        </div>
+      </div>
+      
+      <div class="checkpoint-list">
+        
+          <div class="checkpoint-row">
+            <span class="cp-badge">必須</span>
+            <div>
+              <div class="cp-title">現地確認・必達ポイント</div>
+              <div class="cp-desc">翌朝のホテル朝食ビュッフェと、すぐ向かいにある「秋田県立美術館」への朝一番アクセス動線。</div>
+            </div>
+          </div>
+        
+      </div>
+      
+      <div class="practical-footer">
+        
+        <div class="pf-row"><span class="pf-tag">💡 現地Tips:</span><span class="pf-val">長期の一人旅では「1日だけハイクラスなホテルを入れて睡眠負債を一掃する」ことが後半失速を防ぐ最大の秘訣。</span></div>
+        
+      </div>
+      <div class="slot-foot">
+        <a class="map-pill" href="https://www.google.com/maps/search/?api=1&amp;query=秋田キャッスルホテル" target="_blank" rel="noopener">📍 Google Maps</a>
+        
+      </div>
+    </article>
+        </div>
+      </section>
+    
+    <nav class="nav-bar no-print" style="margin-top: 24px;">
+      <a class="nav-link" href="tohoku.html">📑 全日程（統合版）</a>
+      <a class="nav-link " href="tohoku_day1.html">Day 1</a><a class="nav-link " href="tohoku_day2.html">Day 2</a><a class="nav-link " href="tohoku_day3.html">Day 3</a><a class="nav-link " href="tohoku_day4.html">Day 4</a><a class="nav-link " href="tohoku_day5.html">Day 5</a><a class="nav-link " href="tohoku_day6.html">Day 6</a><a class="nav-link active" href="tohoku_day7.html">Day 7</a><a class="nav-link " href="tohoku_day8.html">Day 8</a><a class="nav-link " href="tohoku_day9.html">Day 9</a><a class="nav-link " href="tohoku_day10.html">Day 10</a><a class="nav-link " href="tohoku_day11.html">Day 11</a><a class="nav-link " href="tohoku_day12.html">Day 12</a>
+    </nav>
+  </main>
+
+  <script>
+    const STORAGE_KEY = 'tohoku_completed_slots';
+
+    function toggleTheme() {
+      const cur = document.documentElement.getAttribute('data-theme') || 'light';
+      const nxt = cur === 'dark' ? 'light' : 'dark';
+      document.documentElement.setAttribute('data-theme', nxt);
+      localStorage.setItem('trip_nav_theme', nxt);
+    }
+
+    function getCompletedSlots() {
+      try {
+        return JSON.parse(localStorage.getItem(STORAGE_KEY) || '[]');
+      } catch (e) {
+        return [];
+      }
+    }
+
+    function toggleSlot(slotId, isDone) {
+      const card = document.getElementById(slotId);
+      let list = getCompletedSlots();
+      if (isDone) {
+        if (!list.includes(slotId)) list.push(slotId);
+        if (card) card.classList.add('is-dimmed');
+      } else {
+        list = list.filter(id => id !== slotId);
+        if (card) card.classList.remove('is-dimmed');
+      }
+      localStorage.setItem(STORAGE_KEY, JSON.stringify(list));
+    }
+
+    // In-page Day Segment Switcher (Instant filter without HTTP reload)
+    function switchDay(targetDay) {
+      const dayBlocks = document.querySelectorAll('.day-block');
+      const jumpChips = document.querySelectorAll('.jump-chip');
+      const navLinks = document.querySelectorAll('.nav-link[data-day]');
+
+      // 1. Filter Day Sections
+      dayBlocks.forEach(sec => {
+        const secDay = sec.getAttribute('data-day');
+        if (targetDay === 'all' || secDay === String(targetDay)) {
+          sec.style.display = '';
+        } else {
+          sec.style.display = 'none';
+        }
+      });
+
+      // 2. Filter Jump Chips
+      jumpChips.forEach(chip => {
+        const chipDay = chip.getAttribute('data-day');
+        if (targetDay === 'all' || chipDay === String(targetDay)) {
+          chip.style.display = '';
+        } else {
+          chip.style.display = 'none';
+        }
+      });
+
+      // 3. Update Nav Active State
+      navLinks.forEach(link => {
+        if (link.getAttribute('data-day') === String(targetDay)) {
+          link.classList.add('active');
+        } else {
+          link.classList.remove('active');
+        }
+      });
+
+      // 4. Sync Hash (optional bookmarking)
+      if (history.replaceState) {
+        const newHash = targetDay === 'all' ? '' : `#day${targetDay}`;
+        history.replaceState(null, '', newHash || window.location.pathname);
+      }
+    }
+
+    // Initialize state on load
+    document.addEventListener('DOMContentLoaded', () => {
+      // Restore checked slots
+      const list = getCompletedSlots();
+      list.forEach(slotId => {
+        const card = document.getElementById(slotId);
+        if (card) {
+          card.classList.add('is-dimmed');
+          const cb = card.querySelector('.slot-checkbox');
+          if (cb) cb.checked = true;
+        }
+      });
+
+      // Initial day selection from URL hash: e.g. #day1, #day2
+      const hash = window.location.hash.toLowerCase();
+      const match = hash.match(/^#day(\d+)$/);
+      if (match) {
+        switchDay(match[1]);
+      } else {
+        switchDay('all');
+      }
+    });
+  </script>
+</body>
+</html>

@@ -1,0 +1,857 @@
+<!DOCTYPE html>
+<html lang="ja" data-theme="light">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <title>青森 ｜ 津軽・下北・恐山 完全縦断4泊5日 しおり - Day 3</title>
+  <script>
+    // Anti-FOUC immediate theme application
+    (function() {
+      var t = localStorage.getItem('trip_nav_theme') || 'light';
+      document.documentElement.setAttribute('data-theme', t);
+    })();
+  </script>
+  <style>
+:root {
+  --bg: #f8fafc;
+  --surface: #ffffff;
+  --surface-subtle: #f1f5f9;
+  --text: #0f172a;
+  --text-muted: #64748b;
+  --border: #e2e8f0;
+  --primary: #0284c7;
+  --primary-hover: #0369a1;
+  --accent: #d97706;
+  --card-shadow: 0 1px 3px rgba(0,0,0,0.06), 0 1px 2px rgba(0,0,0,0.04);
+  --font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+}
+[data-theme="dark"] {
+  --bg: #090d16;
+  --surface: #131b2e;
+  --surface-subtle: #1e293b;
+  --text: #f8fafc;
+  --text-muted: #94a3b8;
+  --border: #1e293b;
+  --card-shadow: 0 4px 6px -1px rgba(0,0,0,0.3);
+}
+* { box-sizing: border-box; margin: 0; padding: 0; -webkit-tap-highlight-color: transparent; }
+body {
+  font-family: var(--font-family);
+  background-color: var(--bg);
+  color: var(--text);
+  line-height: 1.5;
+  font-size: 15px;
+  padding-bottom: 80px;
+}
+.header-bar {
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  background: rgba(255, 255, 255, 0.92);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border-bottom: 1px solid var(--border);
+  padding: 12px 16px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+[data-theme="dark"] .header-bar { background: rgba(19, 27, 46, 0.92); }
+.brand-title { font-size: 1.05rem; font-weight: 700; display: flex; align-items: center; gap: 8px; }
+.header-actions { display: flex; gap: 8px; align-items: center; }
+.btn-action {
+  background: var(--surface-subtle);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: 6px 12px;
+  font-size: 13px;
+  color: var(--text);
+  cursor: pointer;
+  text-decoration: none;
+}
+.container { max-width: 680px; margin: 0 auto; padding: 16px; }
+
+/* Day Navigation Bar */
+.nav-bar {
+  display: flex;
+  background: var(--surface-subtle);
+  padding: 6px;
+  border-radius: 10px;
+  margin-bottom: 16px;
+  gap: 6px;
+  align-items: center;
+  justify-content: space-between;
+}
+.nav-link {
+  flex: 1;
+  text-align: center;
+  padding: 7px 10px;
+  border-radius: 7px;
+  font-size: 13px;
+  font-weight: 600;
+  text-decoration: none;
+  color: var(--text-muted);
+  background: transparent;
+  border: none;
+  cursor: pointer;
+}
+.nav-link.active {
+  background: var(--surface);
+  color: var(--primary);
+  box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+}
+
+/* Quick Jump Chips */
+.jump-chips {
+  display: flex;
+  gap: 6px;
+  overflow-x: auto;
+  padding-bottom: 10px;
+  margin-bottom: 16px;
+  white-space: nowrap;
+  scrollbar-width: none;
+}
+.jump-chips::-webkit-scrollbar { display: none; }
+.jump-chip {
+  display: inline-block;
+  font-size: 12px;
+  font-weight: 600;
+  padding: 5px 10px;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 16px;
+  color: var(--text);
+  text-decoration: none;
+}
+
+/* Slot Cards */
+.day-block { margin-bottom: 32px; }
+.day-header {
+  font-size: 1.15rem;
+  font-weight: 700;
+  margin-bottom: 12px;
+  padding-bottom: 6px;
+  border-bottom: 2px solid var(--primary);
+  color: var(--primary);
+}
+
+/* Macro Route Box (Day全体ルート立ち回り) */
+.macro-route-box {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-left: 4px solid var(--primary);
+  border-radius: 10px;
+  padding: 12px 14px;
+  margin-bottom: 16px;
+  box-shadow: var(--card-shadow);
+}
+.macro-route-head {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 6px;
+}
+.macro-route-title {
+  font-size: 13px;
+  font-weight: 800;
+  color: var(--primary);
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+[data-theme="dark"] .macro-route-title { color: #38bdf8; }
+.macro-route-body {
+  font-size: 13px;
+  line-height: 1.55;
+  color: var(--text);
+  margin-bottom: 8px;
+}
+.macro-map-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  font-size: 12px;
+  font-weight: 700;
+  color: var(--primary);
+  text-decoration: none;
+  background: rgba(2, 132, 199, 0.08);
+  padding: 4px 10px;
+  border-radius: 6px;
+  border: 1px solid rgba(2, 132, 199, 0.2);
+}
+[data-theme="dark"] .macro-map-link {
+  color: #38bdf8;
+  background: rgba(56, 189, 248, 0.1);
+  border-color: rgba(56, 189, 248, 0.3);
+}
+.slot-card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  margin-bottom: 12px;
+  padding: 14px 16px;
+  box-shadow: var(--card-shadow);
+  transition: opacity 0.2s, background-color 0.2s;
+}
+.slot-card.is-dimmed { opacity: 0.45; filter: grayscale(40%); }
+.slot-card.is-must { border-left: 4px solid var(--accent); }
+.slot-meta { display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px; }
+.slot-time { font-size: 13px; font-weight: 700; font-variant-numeric: tabular-nums; }
+.slot-badge {
+  font-size: 11px;
+  font-weight: 700;
+  padding: 2px 8px;
+  border-radius: 4px;
+  text-transform: uppercase;
+}
+.badge-sightseeing { background: #d1fae5; color: #065f46; }
+.badge-food { background: #ffedd5; color: #9a3412; }
+.badge-transit { background: #e0e7ff; color: #3730a3; }
+[data-theme="dark"] .badge-sightseeing { background: #064e3b; color: #6ee7b7; }
+[data-theme="dark"] .badge-food { background: #7c2d12; color: #fdba74; }
+[data-theme="dark"] .badge-transit { background: #312e81; color: #a5b4fc; }
+
+.slot-title-row { display: flex; align-items: flex-start; gap: 8px; margin-bottom: 6px; }
+.slot-checkbox { margin-top: 3px; cursor: pointer; width: 18px; height: 18px; accent-color: var(--primary); }
+.slot-title { font-size: 1rem; font-weight: 700; line-height: 1.4; flex: 1; }
+.slot-desc { font-size: 13.5px; color: var(--text-muted); margin-bottom: 10px; line-height: 1.5; padding-left: 26px; }
+
+/* Swap Guide Box */
+.swap-box {
+  margin: 10px 0 10px 26px;
+  padding: 10px 12px;
+  border-radius: 8px;
+  background: rgba(217, 119, 6, 0.08);
+  border: 1px dashed var(--accent);
+  font-size: 12.5px;
+}
+.swap-title { font-weight: 700; color: var(--accent); margin-bottom: 4px; display: flex; align-items: center; gap: 4px; }
+
+.slot-foot { display: flex; justify-content: space-between; align-items: center; padding-top: 8px; border-top: 1px solid var(--border); margin-left: 26px; }
+.map-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  font-size: 12px;
+  font-weight: 600;
+  color: #1a73e8;
+  text-decoration: none;
+  background: rgba(26, 115, 232, 0.08);
+  padding: 4px 10px;
+  border-radius: 20px;
+}
+[data-theme="dark"] .map-pill { color: #8ab4f8; background: rgba(138, 180, 248, 0.12); }
+
+/* Tactics Step Box (立ち回り・攻略手順) */
+.tactics-box {
+  margin: 12px 0 12px 26px;
+  padding: 10px 14px;
+  background: rgba(2, 132, 199, 0.06);
+  border: 1px solid rgba(2, 132, 199, 0.25);
+  border-left: 3.5px solid var(--primary);
+  border-radius: 8px;
+}
+[data-theme="dark"] .tactics-box {
+  background: rgba(56, 189, 248, 0.08);
+  border-color: rgba(56, 189, 248, 0.3);
+  border-left-color: #38bdf8;
+}
+.tactics-header {
+  font-size: 13px;
+  font-weight: 700;
+  color: var(--primary);
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  margin-bottom: 8px;
+}
+.tactics-tag {
+  font-size: 10px;
+  font-weight: 800;
+  background: var(--primary);
+  color: #fff;
+  padding: 1px 6px;
+  border-radius: 4px;
+  letter-spacing: 0.05em;
+}
+[data-theme="dark"] .tactics-header { color: #38bdf8; }
+[data-theme="dark"] .tactics-tag { background: #0284c7; }
+.tactics-list { display: flex; flex-direction: column; gap: 6px; }
+.tactics-step-row { display: flex; align-items: flex-start; gap: 8px; font-size: 12.5px; line-height: 1.5; }
+.tactics-num {
+  flex-shrink: 0;
+  width: 18px;
+  height: 18px;
+  border-radius: 4px;
+  background: rgba(2, 132, 199, 0.18);
+  color: var(--primary);
+  font-size: 11px;
+  font-weight: 800;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-top: 1px;
+}
+[data-theme="dark"] .tactics-num { background: rgba(56, 189, 248, 0.25); color: #38bdf8; }
+
+/* Checkpoints List */
+.checkpoint-list {
+  margin: 10px 0 10px 26px;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+.checkpoint-row {
+  display: flex;
+  align-items: flex-start;
+  gap: 8px;
+  font-size: 12px;
+  background: var(--surface-subtle);
+  padding: 8px 10px;
+  border-radius: 6px;
+  border: 1px solid var(--border);
+}
+.cp-badge {
+  font-size: 10px;
+  font-weight: 700;
+  padding: 1px 5px;
+  border-radius: 3px;
+  background: #0284c7;
+  color: #fff;
+  flex-shrink: 0;
+}
+.cp-title { font-weight: 600; color: var(--text); }
+.cp-desc { font-size: 11.5px; color: var(--text-muted); margin-top: 2px; }
+
+/* Practical Footer */
+.practical-footer {
+  margin: 10px 0 10px 26px;
+  padding: 8px 10px;
+  background: var(--surface-subtle);
+  border-left: 3px solid var(--accent);
+  border-radius: 4px;
+  font-size: 12px;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+.pf-row { display: flex; gap: 6px; }
+.pf-tag { font-weight: 700; color: var(--accent); flex-shrink: 0; min-width: 65px; }
+.pf-val { color: var(--text); }
+
+/* Print & Paged Media */
+@media print {
+  @page { size: A4 portrait; margin: 12mm 15mm; }
+  body { background: #fff !important; color: #000 !important; font-size: 11pt; }
+  .header-bar, .nav-bar, .jump-chips, .no-print { display: none !important; }
+  .day-block { page-break-after: always; break-after: page; }
+  .slot-card { break-inside: avoid; page-break-inside: avoid; box-shadow: none !important; border: 1px solid #ccc !important; }
+  .slot-card.is-dimmed { opacity: 1 !important; filter: none !important; }
+  .slot-checkbox { display: none !important; }
+  .slot-desc, .swap-box, .slot-foot { margin-left: 0 !important; padding-left: 0 !important; }
+}
+
+  </style>
+</head>
+<body>
+  <header class="header-bar">
+    <div class="brand-title">
+      <span>🍎</span>
+      <span>青森 ｜ 津軽・下北・恐山 完全縦断4泊5日 しおり</span>
+    </div>
+    <div class="header-actions no-print">
+      <button class="btn-action" onclick="toggleTheme()">🌓 テーマ</button>
+      <button class="btn-action" onclick="window.print()">🖨️ 製本印刷</button>
+    </div>
+  </header>
+
+  <main class="container">
+    
+    <nav class="nav-bar no-print">
+      <a class="nav-link" href="aomori_beta.html">📑 全日程</a>
+      <a class="nav-link " href="aomori_beta_day1.html">Day 1</a><a class="nav-link " href="aomori_beta_day2.html">Day 2</a><a class="nav-link active" href="aomori_beta_day3.html">Day 3</a><a class="nav-link " href="aomori_beta_day4.html">Day 4</a><a class="nav-link " href="aomori_beta_day5.html">Day 5</a>
+    </nav>
+    
+    <div class="jump-chips no-print">
+      
+        <a class="jump-chip" href="#d3-hotokegaura" data-day="3">📍 国名勝・天然記念物「</a>
+      
+        <a class="jump-chip" href="#d3-omazaki-maguro" data-day="3">🍜 本州最北端・大間崎モ</a>
+      
+        <a class="jump-chip" href="#d3-osorezan-kichijokaku" data-day="3">📍 日本三大霊場・恐山 </a>
+      
+    </div>
+    
+      <section class="day-block" id="day-sec-3" data-day="3">
+        <h2 class="day-header">Day 3: 2026年9月13日 (日)</h2>
+        
+        <div class="macro-route-box">
+          <div class="macro-route-head">
+            <span class="macro-route-title">🗺️ 【全体ルート立ち回り】マクロ動線シークエンス</span>
+            <a class="macro-map-link" href="https://www.google.com/maps/dir/%E4%BD%90%E3%80%85%E6%9C%A8%E6%97%85%E9%A4%A8+%E8%9F%B9%E7%94%B0/%E8%9F%99%E7%94%B0%E6%B8%AF/%E8%84%87%E9%87%8E%E6%B2%A2%E6%B8%AF/%E4%BB%8F%E3%83%B6%E6%B5%A6%E9%A7%90%E8%BB%8A%E5%A0%B4/%E6%B0%91%E5%AE%BF+%E6%B5%B7%E5%B3%A1%E8%8D%98+%E5%A4%A7%E9%96%93/%E6%81%90%E5%B1%B1%E6%B8%A9%E6%B3%89+%E5%AE%BF%E5%9D%8A%E5%90%89%E7%A5%A5%E9%96%A3" target="_blank" rel="noopener">📍 広域Google Maps</a>
+          </div>
+          <div class="macro-route-body">佐々木旅館（08:40発） ➔ 蟹田港（09:20発 むつ湾フェリー「かもしか」） ➔ 脇野沢港（10:20着） ➔ 国道338号海峡ライン ➔ 仏ヶ浦（展望台＆階段歩道踏破） ➔ 本州最北端・大間崎（民宿 海峡荘 生本マグロ丼） ➔ 霊場恐山 宿坊「吉祥閣」（16:00チェックイン・地獄巡り・精進料理・夜間探検インシデント）</div>
+        </div>
+        <div class="slot-list">
+          
+    <article class="slot-card is-must" id="d3-mutsuwan-ferry" data-slot-id="d3-mutsuwan-ferry">
+      <div class="slot-meta">
+        <span class="slot-time">⏱️ 08:40 - 10:20</span>
+        <span class="slot-badge badge-transit">【必見】陸奥湾60分横断</span>
+      </div>
+      <div class="slot-title-row">
+        <input type="checkbox" class="slot-checkbox no-print" onchange="toggleSlot('d3-mutsuwan-ferry', this.checked)" title="完了・スキップを消し込み">
+        <h3 class="slot-title"><span style="color:var(--accent);">【必見】</span> むつ湾フェリー「かもしか」第1便（蟹田 09:20 ➔ 脇野沢 10:20）</h3>
+      </div>
+      <p class="slot-desc">津軽半島（蟹田港）から下北半島（脇野沢港）へ、平舘海峡をレンタカーごと横断する「むつ湾フェリー（かもしか）」。青森・野辺地経由の陸路なら約3時間半〜4時間かかるところをわずか60分の船旅で劇的にショートカットし、下北半島の秘境・仏ヶ浦へ直結させる最強の戦略航路。</p>
+      
+      
+      <div class="tactics-box">
+        <div class="tactics-header">
+          <span>🎯</span>
+          <span class="tactics-tag">個別立ち回り</span>
+          <span>【構内順路】攻略戦術</span>
+        </div>
+        <div class="tactics-list">
+          
+            <div class="tactics-step-row">
+              <span class="tactics-num">1</span>
+              <span class="tactics-text">08:40に佐々木旅館を出発し、車で3分の「蟹田港フェリーターミナル」へ08:45に到着。</span>
+            </div>
+          
+            <div class="tactics-step-row">
+              <span class="tactics-num">2</span>
+              <span class="tactics-text">窓口にレンタカーの車検証を提示して乗船手続き・決済を完了（車両航送＋同乗者運賃 折半7,650円/人）。</span>
+            </div>
+          
+            <div class="tactics-step-row">
+              <span class="tactics-num">3</span>
+              <span class="tactics-text">係員の誘導に従い車を船底車両甲板へ積み込み、09:20出航。デッキから津軽半島と下北半島の海峡パノラマ（運が良ければカマイルカ群遊）を楽しみ、10:20に脇野沢港へ上陸。</span>
+            </div>
+          
+        </div>
+      </div>
+      
+      <div class="checkpoint-list">
+        
+          <div class="checkpoint-row">
+            <span class="cp-badge">必須</span>
+            <div>
+              <div class="cp-title">08:50 蟹田港窓口にて車検証提示・車両航送手続き</div>
+              <div class="cp-desc">出航30分前までの手続き完了が必須。予約確認と車両長（4m未満/5m未満）の精算を実施。</div>
+            </div>
+          </div>
+        
+          <div class="checkpoint-row">
+            <span class="cp-badge">必須</span>
+            <div>
+              <div class="cp-title">09:20〜10:20 むつ湾フェリー「かもしか」海上クルーズ</div>
+              <div class="cp-desc">60分間で津軽から下北へワープ。10:20脇野沢港下船後、即座に国道338号（海峡ライン）へ出発。</div>
+            </div>
+          </div>
+        
+      </div>
+      
+      <div class="practical-footer">
+        <div class="pf-row"><span class="pf-tag">🚗 移動・駐車:</span><span class="pf-val">佐々木旅館から蟹田港まで約1.5km（車3分）。</span></div>
+        <div class="pf-row"><span class="pf-tag">💡 現地Tips:</span><span class="pf-val">船内には売店・自販機・展望客室あり。揺れが心配な場合は乗船30分前に酔い止めを服用。</span></div>
+        <div class="pf-row"><span class="pf-tag">⏱️ 撤収基準:</span><span class="pf-val">10:20脇野沢港着後、トイレを済ませて10:25には国道338号で仏ヶ浦へ向けて出発する。</span></div>
+      </div>
+      <div class="slot-foot">
+        <a class="map-pill" href="https://www.google.com/maps/search/?api=1&amp;query=むつ湾フェリー+蟹田港" target="_blank" rel="noopener">📍 Google Maps</a>
+        <span style="font-size:12px;font-weight:700;color:var(--accent);">⭐ 必達スポット</span>
+      </div>
+    </article>
+    <article class="slot-card is-must" id="d3-hotokegaura" data-slot-id="d3-hotokegaura">
+      <div class="slot-meta">
+        <span class="slot-time">⏱️ 10:25 - 12:45</span>
+        <span class="slot-badge badge-sightseeing">【必見】白緑奇岩と碧海</span>
+      </div>
+      <div class="slot-title-row">
+        <input type="checkbox" class="slot-checkbox no-print" onchange="toggleSlot('d3-hotokegaura', this.checked)" title="完了・スキップを消し込み">
+        <h3 class="slot-title"><span style="color:var(--accent);">【必見】</span> 国名勝・天然記念物「仏ヶ浦」（展望台 ＆ 海岸急階段ルート踏破）</h3>
+      </div>
+      <p class="slot-desc">津軽海峡の荒波と風雪が数百万年かけて削り出した、高さ100m超の白緑色（グリーンタフ）奇岩断崖が2kmにわたって連なる国の名勝・天然記念物「仏ヶ浦」。如来の首・五百羅漢・極楽浜など極楽浄土さながらの造形美とエメラルドグリーンの海を堪能。遊覧船欠航時も、国道338号の仏ヶ浦展望台および森の急階段遊歩道（往復約40〜50分）を歩いて海岸へ直接上陸！</p>
+      
+      <div class="swap-box">
+        <div class="swap-title">🔀 スワップ・代替ルート候補</div>
+        <div><strong>プランA:</strong> 佐井港アルサスから仏ヶ浦定期観光船</div><div><strong>プランB:</strong> 波浪欠航時は国道338号仏ヶ浦展望台＆階段歩道で直接海岸へ降下</div><div><strong>定期観光船ルート:</strong> 佐井港アルサスから観光船（往復3,000円）で海上アプローチ＆上陸30分</div><div><strong>展望台＆階段歩道ルート（実走採用）:</strong> 波浪による遊覧船欠航時も、仏ヶ浦展望台＆駐車場からの階段歩道で0円・自由時間で海岸を完全攻略</div>
+      </div>
+      
+      <div class="tactics-box">
+        <div class="tactics-header">
+          <span>🎯</span>
+          <span class="tactics-tag">個別立ち回り</span>
+          <span>【構内順路】攻略戦術</span>
+        </div>
+        <div class="tactics-list">
+          
+            <div class="tactics-step-row">
+              <span class="tactics-num">1</span>
+              <span class="tactics-text">脇野沢港から国道338号（海峡ライン）を北上し、まず高台の「仏ヶ浦展望台」から白緑色の断崖とエメラルドの海の全景を俯瞰撮影。</span>
+            </div>
+          
+            <div class="tactics-step-row">
+              <span class="tactics-num">2</span>
+              <span class="tactics-text">【海況良好時】佐井港アルサス（または牛滝港）から仏ヶ浦定期観光船に乗船し、海上から奇岩群を眺めつつ仏ヶ浦桟橋へ上陸（30分散策）。</span>
+            </div>
+          
+            <div class="tactics-step-row">
+              <span class="tactics-num">3</span>
+              <span class="tactics-text">【遊覧船欠航・陸路直撃時】国道338号の「仏ヶ浦駐車場」に車を停め、ヒバ林の急勾配歩道・階段（高低差約100m・徒歩約15〜20分）を一気に降りて仏ヶ浦の海岸（極楽浜・如来の首・蓬莱山）へ直接降り立ち、奇岩の足元を踏破！</span>
+            </div>
+          
+        </div>
+      </div>
+      
+      <div class="checkpoint-list">
+        
+          <div class="checkpoint-row">
+            <span class="cp-badge">必須</span>
+            <div>
+              <div class="cp-title">仏ヶ浦展望台（国道338号高台からの俯瞰パノラマ）</div>
+              <div class="cp-desc">海の色が南国のように透き通るエメラルドグリーンと白緑色の凝灰岩のコントラストを一望。</div>
+            </div>
+          </div>
+        
+          <div class="checkpoint-row">
+            <span class="cp-badge">必須</span>
+            <div>
+              <div class="cp-title">仏ヶ浦 奇岩群（如来の首・五百羅漢・一ツ仏・極楽浜）上陸散策</div>
+              <div class="cp-desc">近くで見上げると圧倒される巨大岩柱群と、透き通った波打ち際を散策。帰りの登り階段も一気に走破！</div>
+            </div>
+          </div>
+        
+      </div>
+      
+      <div class="practical-footer">
+        <div class="pf-row"><span class="pf-tag">🚗 移動・駐車:</span><span class="pf-val">脇野沢港から仏ヶ浦駐車場まで国道338号（海峡ライン）で約40km（山道ワインディング約60分）。無料駐車場・トイレあり。</span></div>
+        <div class="pf-row"><span class="pf-tag">💡 現地Tips:</span><span class="pf-val">陸路駐車場から海岸へ降りる遊歩道は後半が急な階段（高低差約100m）となるため、飲み物を持参しスニーカーで挑む。</span></div>
+        <div class="pf-row"><span class="pf-tag">⏱️ 撤収基準:</span><span class="pf-val">16:00恐山チェックイン厳守から逆算し、12:45には仏ヶ浦（または佐井港）を出発して大間崎へ向かう。</span></div>
+      </div>
+      <div class="slot-foot">
+        <a class="map-pill" href="https://www.google.com/maps/search/?api=1&amp;query=仏ヶ浦" target="_blank" rel="noopener">📍 Google Maps</a>
+        <span style="font-size:12px;font-weight:700;color:var(--accent);">⭐ 必達スポット</span>
+      </div>
+    </article>
+    <article class="slot-card is-must" id="d3-omazaki-maguro" data-slot-id="d3-omazaki-maguro">
+      <div class="slot-meta">
+        <span class="slot-time">⏱️ 13:15 - 14:30</span>
+        <span class="slot-badge badge-food">【必食】本州最北端マグロ</span>
+      </div>
+      <div class="slot-title-row">
+        <input type="checkbox" class="slot-checkbox no-print" onchange="toggleSlot('d3-omazaki-maguro', this.checked)" title="完了・スキップを消し込み">
+        <h3 class="slot-title"><span style="color:var(--accent);">【必見】</span> 本州最北端・大間崎モニュメント ＆「民宿 海峡荘」極上大間本マグロ丼</h3>
+      </div>
+      <p class="slot-desc">北緯41度33分・本州最北端の地「大間崎」。巨大なマグロ一本釣りモニュメントと「こごが本州最北端の地」碑で到達記念撮影を行い、徒歩1分の人気店「民宿 海峡荘」にて、とろける脂の旨味と赤身のコクが凝縮された本場・大間の生本マグロ丼（3,500円）を実食！</p>
+      
+      
+      <div class="tactics-box">
+        <div class="tactics-header">
+          <span>🎯</span>
+          <span class="tactics-tag">個別立ち回り</span>
+          <span>【構内順路】攻略戦術</span>
+        </div>
+        <div class="tactics-list">
+          
+            <div class="tactics-step-row">
+              <span class="tactics-num">1</span>
+              <span class="tactics-text">佐井村から国道338号を海沿いに約30分走り、13:15に「大間崎無料駐車場」へ入庫。</span>
+            </div>
+          
+            <div class="tactics-step-row">
+              <span class="tactics-num">2</span>
+              <span class="tactics-text">まず混雑前に「民宿 海峡荘（食堂）」へ入店し、名物の「大間マグロ丼（大トロ・中トロ・赤身の贅沢盛り 3,500円）」または「マグロだけ丼」を注文・実食。</span>
+            </div>
+          
+            <div class="tactics-step-row">
+              <span class="tactics-num">3</span>
+              <span class="tactics-text">食後、目の前の大間崎広場へ出て「本州最北端の碑」と「マグロ一本釣りモニュメント」で3名揃って記念撮影。対岸わずか17.5km先の函館山・汐首岬を肉眼で確認。</span>
+            </div>
+          
+        </div>
+      </div>
+      
+      <div class="checkpoint-list">
+        
+          <div class="checkpoint-row">
+            <span class="cp-badge">必須</span>
+            <div>
+              <div class="cp-title">民宿 海峡荘「大間産 生本マグロ丼（3,500円）」実食</div>
+              <div class="cp-desc">9月はまさに津軽海峡の大間マグロ漁の本格シーズン！口の中でとろける大トロ・中トロの脂の甘みは別次元。</div>
+            </div>
+          </div>
+        
+          <div class="checkpoint-row">
+            <span class="cp-badge">必須</span>
+            <div>
+              <div class="cp-title">本州最北端の碑 ＆ マグロ一本釣りモニュメント撮影</div>
+              <div class="cp-desc">青森ドライブ北端の到達証明スポット。大間崎テントサイト横の無料駐車場から徒歩2分。</div>
+            </div>
+          </div>
+        
+      </div>
+      
+      <div class="practical-footer">
+        <div class="pf-row"><span class="pf-tag">🚗 移動・駐車:</span><span class="pf-val">仏ヶ浦から約30km（車約40分）、佐井港から約18km（車約25分）。大間崎無料大駐車場完備。</span></div>
+        <div class="pf-row"><span class="pf-tag">💡 現地Tips:</span><span class="pf-val">海峡荘の食事は現金決済（Walica 3,500円/人登録）。店先のタコ串やホタテ焼きも絶品。</span></div>
+        <div class="pf-row"><span class="pf-tag">⏱️ 撤収基準:</span><span class="pf-val">恐山宿坊「吉祥閣」の16:00チェックイン厳守のため、**14:30〜14:40には必ず大間崎を出発**する（恐山まで約50km・車約60〜70分）。</span></div>
+      </div>
+      <div class="slot-foot">
+        <a class="map-pill" href="https://www.google.com/maps/search/?api=1&amp;query=民宿+海峡荘+大間崎" target="_blank" rel="noopener">📍 Google Maps</a>
+        <span style="font-size:12px;font-weight:700;color:var(--accent);">⭐ 必達スポット</span>
+      </div>
+    </article>
+    <article class="slot-card " id="d3-drive-osorezan" data-slot-id="d3-drive-osorezan">
+      <div class="slot-meta">
+        <span class="slot-time">⏱️ 14:30 - 15:50</span>
+        <span class="slot-badge badge-transit">16:00宿坊厳守移動</span>
+      </div>
+      <div class="slot-title-row">
+        <input type="checkbox" class="slot-checkbox no-print" onchange="toggleSlot('d3-drive-osorezan', this.checked)" title="完了・スキップを消し込み">
+        <h3 class="slot-title">大間崎 ➔ むつ・恐山街道（県道4号）霊場アプローチ</h3>
+      </div>
+      <p class="slot-desc">大間崎から国道279号（はまなすライン）で風間浦・大畑を通り、途中のガソリンスタンドで給油を実施。むつ市から県道4号（恐山街道）の山道へ入り、不老水「冷水（ひやみず）」と三途の川（太鼓橋）を越えて標高240mのカルデラ霊場・恐山へアプローチ。</p>
+      
+      
+      <div class="tactics-box">
+        <div class="tactics-header">
+          <span>🎯</span>
+          <span class="tactics-tag">個別立ち回り</span>
+          <span>【構内順路】攻略戦術</span>
+        </div>
+        <div class="tactics-list">
+          
+            <div class="tactics-step-row">
+              <span class="tactics-num">1</span>
+              <span class="tactics-text">14:30に大間崎を出発し、国道279号を東進。途中の大畑エリアでレンタカーの中間給油を実施（恐山山上にはGSなし）。</span>
+            </div>
+          
+            <div class="tactics-step-row">
+              <span class="tactics-num">2</span>
+              <span class="tactics-text">むつ市田名部から県道4号（恐山街道）へ右折し、鬱蒼としたヒバ林を抜けて山を登る。</span>
+            </div>
+          
+            <div class="tactics-step-row">
+              <span class="tactics-num">3</span>
+              <span class="tactics-text">宇曽利山湖のほとりに湧く硫黄臭と赤い「三途川（さんずのかわ）太鼓橋」を通過し、15:50に恐山総門前駐車場へ到着。</span>
+            </div>
+          
+        </div>
+      </div>
+      
+      <div class="checkpoint-list">
+        
+          <div class="checkpoint-row">
+            <span class="cp-badge">必須</span>
+            <div>
+              <div class="cp-title">大畑周辺での事前給油 ＆ 三途の川（太鼓橋）通過</div>
+              <div class="cp-desc">恐山周辺にはガソリンスタンドもコンビニもないため、下山前・入山前の燃料確認が必須。</div>
+            </div>
+          </div>
+        
+      </div>
+      
+      <div class="practical-footer">
+        <div class="pf-row"><span class="pf-tag">🚗 移動・駐車:</span><span class="pf-val">大間崎から恐山まで約50km（所要約60〜70分）。</span></div>
+        <div class="pf-row"><span class="pf-tag">💡 現地Tips:</span><span class="pf-val">恐山へ近づくにつれ車内まで硫黄（硫化水素）の匂いが漂い始め、現世からあの世（霊場）へ入る独特の空気感が高まる。</span></div>
+        <div class="pf-row"><span class="pf-tag">⏱️ 撤収基準:</span><span class="pf-val">16:00の宿坊受付リミットに遅れそうな場合は、15:00時点で宿坊（0175-22-3825）へ一報を入れる。</span></div>
+      </div>
+      <div class="slot-foot">
+        <a class="map-pill" href="https://www.google.com/maps/dir/?api=1&amp;origin=大間崎&amp;destination=恐山菩提寺" target="_blank" rel="noopener">📍 Google Maps</a>
+        
+      </div>
+    </article>
+    <article class="slot-card is-must" id="d3-osorezan-kichijokaku" data-slot-id="d3-osorezan-kichijokaku">
+      <div class="slot-meta">
+        <span class="slot-time">⏱️ 15:50 - 21:00</span>
+        <span class="slot-badge badge-temple">【必見】日本三大霊場・宿坊</span>
+      </div>
+      <div class="slot-title-row">
+        <input type="checkbox" class="slot-checkbox no-print" onchange="toggleSlot('d3-osorezan-kichijokaku', this.checked)" title="完了・スキップを消し込み">
+        <h3 class="slot-title"><span style="color:var(--accent);">【必見】</span> 日本三大霊場・恐山 菩提寺 ＆ 宿坊「吉祥閣」宿泊（16:00厳守）</h3>
+      </div>
+      <p class="slot-desc">比叡山・高野山と並ぶ日本三大霊場「恐山（おそれざん）」。荒涼とした火山岩から噴気が立ち上る「地獄（無限地獄・重罪地獄・賽の河原）」と、エメラルドグリーンの宇曽利山湖に白砂が広がる「極楽浜」が同居する唯一無二の聖地。総門内の宿坊「吉祥閣」（1泊2食17,000円・現金のみ）に宿泊し、閉門後の静まり返った境内散策、白濁硫黄泉「御所の湯」、豪華精進料理、そして夜間噴気地帯の硫化水素リスクを身をもって体感。</p>
+      
+      
+      <div class="tactics-box">
+        <div class="tactics-header">
+          <span>🎯</span>
+          <span class="tactics-tag">個別立ち回り</span>
+          <span>【構内順路】攻略戦術</span>
+        </div>
+        <div class="tactics-list">
+          
+            <div class="tactics-step-row">
+              <span class="tactics-num">1</span>
+              <span class="tactics-text">15:50に恐山到着。総門横の受付を経て、荘厳かつ清潔な近代和風宿坊「吉祥閣」へ16:00までにチェックイン（1人17,000円現金精算）。</span>
+            </div>
+          
+            <div class="tactics-step-row">
+              <span class="tactics-num">2</span>
+              <span class="tactics-text">16:10〜17:30の夕暮れ時、日帰り参拝客がいなくなった貸切状態の境内「地獄めぐり（1周約3km・45〜60分）」へ出発。地蔵殿 ➔ 無限地獄・血の池地獄 ➔ 賽の河原 ➔ エメラルドグリーンの宇曽利山湖「極楽浜」 ➔ 五智如来・東日本大震災供養塔を巡拝。</span>
+            </div>
+          
+            <div class="tactics-step-row">
+              <span class="tactics-num">3</span>
+              <span class="tactics-text">17:30から宿坊内の天然硫黄温泉大浴場「御所の湯」（または境内の木造湯小屋「古滝の湯」「冷抜の湯」）で源泉かけ流しの白濁名湯を堪能。</span>
+            </div>
+          
+            <div class="tactics-step-row">
+              <span class="tactics-num">4</span>
+              <span class="tactics-text">18:00から大広間にて、従来の質素なイメージを覆す超豪華な「本格精進料理」の夕食を味わう。</span>
+            </div>
+          
+            <div class="tactics-step-row">
+              <span class="tactics-num">5</span>
+              <span class="tactics-text">【⚠️重大安全ルール】夜間は風向きにより高濃度の硫化水素ガス（酸性噴気）が滞留し、生命危険およびスマートフォン・ライト等の基板腐食故障を引き起こすため、**夜間の噴気地帯探検は絶対禁止**とし、精密機器は密閉防護する。</span>
+            </div>
+          
+        </div>
+      </div>
+      
+      <div class="checkpoint-list">
+        
+          <div class="checkpoint-row">
+            <span class="cp-badge">必須</span>
+            <div>
+              <div class="cp-title">16:00 恐山宿坊「吉祥閣」チェックイン ＆ 夕暮れの地獄めぐり・極楽浜散策</div>
+              <div class="cp-desc">ホテル顔負けの美しく清潔な宿坊。まるで広大な霊場庭園そのものに泊まっているかのような圧倒的開放感と静寂。</div>
+            </div>
+          </div>
+        
+          <div class="checkpoint-row">
+            <span class="cp-badge">必須</span>
+            <div>
+              <div class="cp-title">17:30 源泉かけ流し硫黄泉「御所の湯」＆ 18:00 豪華精進料理</div>
+              <div class="cp-desc">湯の花が舞う極上の白濁硫黄泉と、品数豊富で滋味深い精進料理会席に感動。</div>
+            </div>
+          </div>
+        
+          <div class="checkpoint-row">
+            <span class="cp-badge">必須</span>
+            <div>
+              <div class="cp-title">【危機管理教訓】硫化水素ガスによる電子機器腐食防止（夜間噴気地帯立入厳禁）</div>
+              <div class="cp-desc">実際に夜間探検で同行者のスマホがガス腐食故障＆ライト点滅異常を発生させた現場教訓。噴気孔周辺ではスマホ露出を最小化し、夜間の無風時は館内で静かに過ごす。</div>
+            </div>
+          </div>
+        
+      </div>
+      
+      <div class="practical-footer">
+        <div class="pf-row"><span class="pf-tag">🚗 移動・駐車:</span><span class="pf-val">総門前の宿泊者専用駐車エリアに無料駐車。</span></div>
+        <div class="pf-row"><span class="pf-tag">💡 現地Tips:</span><span class="pf-val">硫黄成分で銀製品や金属アクセサリーは一瞬で黒変するため、入浴・散策時は必ず外す。館内にテレビはなく、デジタルデトックスと内省に最適。</span></div>
+        <div class="pf-row"><span class="pf-tag">⏱️ 撤収基準:</span><span class="pf-val">翌朝06:30からの本堂「朝の勤行（大般若祈祷）」に参加するため、22:00までに就寝。</span></div>
+      </div>
+      <div class="slot-foot">
+        <a class="map-pill" href="https://www.google.com/maps/search/?api=1&amp;query=恐山+宿坊+吉祥閣" target="_blank" rel="noopener">📍 Google Maps</a>
+        <span style="font-size:12px;font-weight:700;color:var(--accent);">⭐ 必達スポット</span>
+      </div>
+    </article>
+        </div>
+      </section>
+    
+    <nav class="nav-bar no-print" style="margin-top: 24px;">
+      <a class="nav-link" href="aomori_beta.html">📑 全日程（統合版）</a>
+      <a class="nav-link " href="aomori_beta_day1.html">Day 1</a><a class="nav-link " href="aomori_beta_day2.html">Day 2</a><a class="nav-link active" href="aomori_beta_day3.html">Day 3</a><a class="nav-link " href="aomori_beta_day4.html">Day 4</a><a class="nav-link " href="aomori_beta_day5.html">Day 5</a>
+    </nav>
+  </main>
+
+  <script>
+    const STORAGE_KEY = 'aomori_completed_slots';
+
+    function toggleTheme() {
+      const cur = document.documentElement.getAttribute('data-theme') || 'light';
+      const nxt = cur === 'dark' ? 'light' : 'dark';
+      document.documentElement.setAttribute('data-theme', nxt);
+      localStorage.setItem('trip_nav_theme', nxt);
+    }
+
+    function getCompletedSlots() {
+      try {
+        return JSON.parse(localStorage.getItem(STORAGE_KEY) || '[]');
+      } catch (e) {
+        return [];
+      }
+    }
+
+    function toggleSlot(slotId, isDone) {
+      const card = document.getElementById(slotId);
+      let list = getCompletedSlots();
+      if (isDone) {
+        if (!list.includes(slotId)) list.push(slotId);
+        if (card) card.classList.add('is-dimmed');
+      } else {
+        list = list.filter(id => id !== slotId);
+        if (card) card.classList.remove('is-dimmed');
+      }
+      localStorage.setItem(STORAGE_KEY, JSON.stringify(list));
+    }
+
+    // In-page Day Segment Switcher (Instant filter without HTTP reload)
+    function switchDay(targetDay) {
+      const dayBlocks = document.querySelectorAll('.day-block');
+      const jumpChips = document.querySelectorAll('.jump-chip');
+      const navLinks = document.querySelectorAll('.nav-link[data-day]');
+
+      // 1. Filter Day Sections
+      dayBlocks.forEach(sec => {
+        const secDay = sec.getAttribute('data-day');
+        if (targetDay === 'all' || secDay === String(targetDay)) {
+          sec.style.display = '';
+        } else {
+          sec.style.display = 'none';
+        }
+      });
+
+      // 2. Filter Jump Chips
+      jumpChips.forEach(chip => {
+        const chipDay = chip.getAttribute('data-day');
+        if (targetDay === 'all' || chipDay === String(targetDay)) {
+          chip.style.display = '';
+        } else {
+          chip.style.display = 'none';
+        }
+      });
+
+      // 3. Update Nav Active State
+      navLinks.forEach(link => {
+        if (link.getAttribute('data-day') === String(targetDay)) {
+          link.classList.add('active');
+        } else {
+          link.classList.remove('active');
+        }
+      });
+
+      // 4. Sync Hash (optional bookmarking)
+      if (history.replaceState) {
+        const newHash = targetDay === 'all' ? '' : `#day${targetDay}`;
+        history.replaceState(null, '', newHash || window.location.pathname);
+      }
+    }
+
+    // Initialize state on load
+    document.addEventListener('DOMContentLoaded', () => {
+      // Restore checked slots
+      const list = getCompletedSlots();
+      list.forEach(slotId => {
+        const card = document.getElementById(slotId);
+        if (card) {
+          card.classList.add('is-dimmed');
+          const cb = card.querySelector('.slot-checkbox');
+          if (cb) cb.checked = true;
+        }
+      });
+
+      // Initial day selection from URL hash: e.g. #day1, #day2
+      const hash = window.location.hash.toLowerCase();
+      const match = hash.match(/^#day(\d+)$/);
+      if (match) {
+        switchDay(match[1]);
+      } else {
+        switchDay('all');
+      }
+    });
+  </script>
+</body>
+</html>

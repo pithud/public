@@ -1,0 +1,405 @@
+<!DOCTYPE html>
+<html lang="ja" data-theme="light">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>北陸・信越 ｜ 草津・長岡・富山・金沢・飛騨 旅アルバム 2026 ｜ ポップ行動ログ（完全確定版）</title>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <script>
+    (function() {
+      var t = localStorage.getItem('trip_nav_theme') || 'light';
+      document.documentElement.setAttribute('data-theme', t);
+    })();
+  </script>
+  <link rel="stylesheet" href="../assets/album.css">
+</head>
+<body>
+
+  <!-- Sticky Header -->
+  <header>
+    <div class="container header-inner">
+      <div class="logo-area">
+        <div class="logo"><span>📸</span> 北陸・信越 ｜ 草津・長岡・富山・金沢・飛騨 旅アルバム</div>
+      </div>
+      <div class="header-actions">
+        <a href="index.html" class="nav-btn">◀ 旅ポータル</a>
+        <a href="prod.html" class="nav-btn">確定旅程</a>
+        <a href="../index.html" class="nav-btn">総合ポータル 🏠</a>
+        <button class="theme-toggle" id="themeBtn" aria-label="テーマ切替">🌙</button>
+      </div>
+    </div>
+  </header>
+
+  <main class="container">
+
+    <!-- Album Hero -->
+    <div class="album-hero">
+      <div class="tape">GEMINI MYACTIVITY &amp; APPLE HEALTH VERIFIED</div>
+      <h1 class="hero-title">北陸・信越・飛騨 10泊11日 夏の大遠征アルバム</h1>
+      <p class="hero-subtitle">前編：友人車旅（草津・長岡花火・富山・金沢）× 中編：単独（高山・飛騨古川）× 後編：合流帰省</p>
+      
+      <div class="hero-tags">
+        <span class="tag-badge tag-blue">📅 2026.08.02 - 08.11 (10日間)</span>
+        <span class="tag-badge tag-orange">🎆 草津感謝祭・長岡大花火・雨晴・金沢・白川郷・飛騨高山</span>
+        <span class="tag-badge tag-green">🛡️ 写真ゼロ・完全公開仕様</span>
+        <span class="tag-badge tag-purple">⚡ 実測 143,648歩 / 91.29km / 180階</span>
+      </div>
+
+      <!-- Health KPI Real Data -->
+      <div class="health-kpi-grid">
+                <div class="health-kpi-card">
+          <div class="kpi-title">10日間 合計歩数</div>
+          <div class="kpi-val primary">143,648 歩</div>
+        </div>
+        <div class="health-kpi-card">
+          <div class="kpi-title">10日間 歩行距離</div>
+          <div class="kpi-val mint">91.29 km</div>
+        </div>
+        <div class="health-kpi-card">
+          <div class="kpi-title">8/2(日)-3(月) 草津温泉・伊香保・長岡花火</div>
+          <div class="kpi-val">32,792歩 / 20.24km (77階)</div>
+        </div>
+        <div class="health-kpi-card">
+          <div class="kpi-title">8/4(火)-5(水) 富山・雨晴・金沢おでん＆城夜景</div>
+          <div class="kpi-val">41,314歩 / 26.83km</div>
+        </div>
+        <div class="health-kpi-card">
+          <div class="kpi-title">8/6(木) 白川郷・高山陣屋・飛騨古川聖地</div>
+          <div class="kpi-val">28,308歩 / 19.27km (59階)</div>
+        </div>
+        <div class="health-kpi-card">
+          <div class="kpi-title">8/7(金)-11(火) 瀬戸川コイ・飛騨の里・朝市・帰省</div>
+          <div class="kpi-val">41,234歩 / 24.95km</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Chart Section -->
+        <section>
+      <div class="section-header">
+        <div class="section-icon">📈</div>
+        <h2 class="section-title">インタラクティブ・アクティビティ分析</h2>
+      </div>
+      <div class="chart-card">
+        <div class="chart-tabs">
+          <button class="chart-tab-btn active" data-view="hourly">🐾 時間帯別 歩数推移</button>
+          <button class="chart-tab-btn" data-view="duration">⏱️ スポット別 滞在時間 (分)</button>
+          <button class="chart-tab-btn" data-view="cumulative">📈 累積歩数カーブ</button>
+        </div>
+        <div class="chart-wrapper">
+          <canvas id="mainChartCanvas" role="img" aria-label="旅行アクティビティ推移グラフ（時間帯別歩数・スポット滞在時間・累積歩数）"></canvas>
+        </div>
+        <div class="chart-meta-caption" id="chartCaption">
+          📊 タブを切り替えて「時間帯別歩数」「スポット滞在時間」「累積歩数カーブ」をインタラクティブに分析可能
+        </div>
+      </div>
+    </section>
+
+
+    <!-- Spot Sections (Polaroid Grid) -->
+        <section>
+      <div class="section-header">
+        <div class="section-icon">⚖️</div>
+        <h2 class="section-title">計画 vs 実際の行動（時系列完全整列）</h2>
+      </div>
+      <div class="diff-table-card">
+  <div class="diff-table-wrapper">
+    <table class="diff-table">
+      <colgroup>
+        <col class="col-spot" style="width: 28%;">
+        <col class="col-plan" style="width: 22%;">
+        <col class="col-actual" style="width: 36%;">
+        <col class="col-verdict" style="width: 14%;">
+      </colgroup>
+      <thead>
+        <tr>
+          <th scope="col">日時・フェーズ</th>
+          <th scope="col">当初の計画（Plan）</th>
+          <th scope="col">実際の行動（Actual 確定ログ）</th>
+          <th scope="col" style="text-align: center;">判定・差分（Verdict）</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><strong>Day 1 (8/2): 信越ドライブ・草津</strong></td>
+          <td><strong>軽井沢 ➔ 志賀草津高原 ➔ 草津温泉</strong><br>前日夜に草津温泉感謝祭の存在を知り、急遽ルートに組み込んで出発。</td>
+          <td><strong>渋峠2,172m制覇 ＆ 感謝祭5,000円宿・マスターキー事件</strong><br>`08:07` 東京駅合流。軽井沢白糸の滝・渋峠を経て `17:06` 草津着。当日約5,000円で確保したペンションで湯畑ライトアップ満喫後、深夜の2連続締め出しを管理人のマスターキー丸投げ手渡しで突破。</td>
+          <td style="text-align: center;"><span class="badge-diff diff-upgrade">神コスパ宿・伝説事件</span><br>昼のジャンボリミッキー爆音ループが翌夜の伏線に。</td>
+        </tr>
+        <tr>
+          <td><strong>Day 2 (8/3): 伊香保・長岡大花火</strong></td>
+          <td><strong>土合駅・清津峡 ➔ 長岡まつり大花火大会</strong><br>モグラ駅と清津峡を見てから長岡花火へ向かう構想。</td>
+          <td><strong>伊香保・水沢うどん ➔ 五日町駅P&R ➔ 選挙カー事件</strong><br>IC降り忘れで土合・清津峡をスルーし伊香保石段街＆大澤屋水沢うどんへ。`16:30` 無人駅の五日町駅に無料駐車してJRで長岡花火（フェニックス）を神回避観賞。23時の五日町駅でジャンボリミッキーが選挙カー並みに響き渡り民家凝視・車中泊へ。</td>
+          <td style="text-align: center;"><span class="badge-diff diff-smart">五日町駅P&R大成功</span><br>長岡周辺の地獄渋滞を無人駅パーク＆ライドで完全回避。</td>
+        </tr>
+        <tr>
+          <td><strong>Day 3 (8/4): 富山・高岡・金沢</strong></td>
+          <td><strong>富山観光 ➔ 雨晴海岸 ➔ 金沢泊</strong><br>車中泊から富山・雨晴海岸を経て金沢へ入る。</td>
+          <td><strong>快活シャワー復活 ➔ 西町大喜・環水公園・瑞龍寺・雨晴 ➔ 金沢</strong><br>`08:30` 快活CLUB富山でシャワーリセット後、富山城・ガラス美術館・西町大喜（富山ブラック）・環水公園・国宝瑞龍寺・雨晴海岸・氷見番屋街を走破し、ホテルアマネク金沢へチェックイン。</td>
+          <td style="text-align: center;"><span class="badge-diff diff-match">完全一致・王道制覇</span><br>車中泊の疲労を朝一の快活シャワーで完全解消。</td>
+        </tr>
+        <tr>
+          <td><strong>Day 4 (8/5): 金沢市内・単独移行</strong></td>
+          <td><strong>金沢名所周遊 ➔ 昼に友人車解散</strong><br>兼六園・21世紀美術館・茶屋街を巡り、後半は一人旅へ。</td>
+          <td><strong>金沢4大名所 ➔ 友人20:58返却 ➔ 赤玉おでん＆金沢城夜景</strong><br>ひがし茶屋街・兼六園・21美・近江町市場を巡り15時解散（友人は20:58に東京でギリギリ返却成功）。単独で金沢カレー・野村家武家屋敷・金澤おでん赤玉本店・玉泉院丸庭園＆尾山神社ライトアップまで26,246歩を踏破。</td>
+          <td style="text-align: center;"><span class="badge-diff diff-upgrade">単独アジリティ爆発</span><br>夜の金沢城〜尾山神社ライトアップ動線が完璧に機能。</td>
+        </tr>
+        <tr>
+          <td><strong>Day 5 (8/6): 白川郷・高山・飛騨古川</strong></td>
+          <td><strong>金沢 ➔ 白川郷・高山 ➔ 飛騨古川泊</strong><br>北陸から飛騨へ抜け、高山と飛騨古川を訪問。</td>
+          <td><strong>白川郷展望台 ➔ 麺屋しらかわ・高山陣屋 ➔ 飛騨古川聖地</strong><br>白川郷（城山天守閣展望台）と高山本線を経て高山へ。麺屋しらかわ・高山陣屋・古い町並みを満喫し `16:00` 飛騨古川「大村屋旅館」チェックイン。夜は『君の名は。』聖地と気多若宮神社を参拝（28,308歩）。</td>
+          <td style="text-align: center;"><span class="badge-diff diff-match">完全一致・28,308歩</span><br>16時宿チェックインで荷物を置いてからの夕暮れ散策が快適。</td>
+        </tr>
+        <tr>
+          <td><strong>Day 6〜10 (8/7-11): 飛騨・合流・帰省</strong></td>
+          <td><strong>飛騨古川・高山観光 ➔ 祖父母合流 ➔ 愛知帰省</strong><br>夕方に高山で祖父母と合流し、墓参り・萩原契約を経て愛知へ。</td>
+          <td><strong>瀬戸川コイ餌5袋熱中 ➔ まさごそば・飛騨の里 ➔ 2時間説教事件</strong><br>瀬戸川のコイに餌5袋分・30分以上熱中。まさごそば・光ミュージアム・飛騨東照宮・飛騨の里を巡りアルピナ展望温泉へ。`17:30` 祖父母合流後、ほぼ豚肉ハンバーグの落胆と合流地変更による2時間説教を経て、翌朝墓参り・宮川朝市・萩原契約を完遂し愛知帰省。</td>
+          <td style="text-align: center;"><span class="badge-diff diff-smart">人間味満載・全行程完遂</span><br>コイ熱中から2時間説教まで一生記憶に残る夏遠征に。</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+
+    </section>
+
+    <section>
+      <div class="section-header">
+        <div class="section-icon">📍</div>
+        <h2 class="section-title">2. 前編（8/2-8/4）：友人車旅（軽井沢・草津感謝祭・長岡大花火・富山・雨晴海岸）</h2>
+      </div>
+      <div class="polaroid-grid">
+        <div class="polaroid-card">
+          <div>
+            <div class="card-top">
+              <span class="spot-time">8/2 08:07 - 22:30</span>
+              <span class="stamp stamp-god">♨️ 日本国道最高地点 ＆ 湯畑夜景</span>
+            </div>
+            <h3 class="spot-name">1. 軽井沢 白糸の滝 ➔ 志賀草津高原ルート（渋峠 2,172m） ➔ 草津温泉感謝祭</h3>
+            <div class="punchline">「渋峠2,172m ＆ 草津温泉湯畑ライトアップ」</div>
+          </div>
+          <ul class="fact-bullet">
+            <li>東京駅で友人と合流し、軽井沢・白糸の滝から標高2,172mの渋峠（日本国道最高地点）を越えて草津温泉へ。「草津温泉感謝祭」当日にもかかわらず約5,000円で当日確保したペンションに荷物を置き、ライトアップされた湯畑と西の河原公園を満喫。深夜はロビー＆自室の2連続締め出しを管理人の「マスターキー丸投げ手渡し」で乗り切る波乱の幕開け。</li>
+          </ul>
+        </div>
+        <div class="polaroid-card">
+          <div>
+            <div class="card-top">
+              <span class="spot-time">8/3 14:25 - 23:30</span>
+              <span class="stamp stamp-god">🎆 神回避P&amp;R ＆ 深夜の選挙カー事件</span>
+            </div>
+            <h3 class="spot-name">2. 伊香保石段街・大澤屋水沢うどん ➔ 五日町駅Park &amp; Ride・長岡まつり大花火大会</h3>
+            <div class="punchline">「長岡フェニックス花火 ＆ 五日町駅事件」</div>
+          </div>
+          <ul class="fact-bullet">
+            <li>伊香保温泉の石段街365段と「大澤屋 第一店舗」の水沢うどんを堪能後、長岡市内の大渋滞を察知して数駅手前の無人駅「五日町駅」に無料駐車しJRで会場へ（神回避Park & Ride）。信濃川河川敷で復興祈願フェニックス花火の圧倒的スケールに感動。しかし23時の五日町駅帰還時、昼の軽井沢の感覚のままジャンボリミッキーを音量MAXで流してしまい、田んぼの静寂の中で「選挙カー並みの超爆音」が炸裂。目の前の民家が点灯しておばさんに30秒以上凝視される中、友人が「あれだ、選挙カー！」と検索し終えるまで発進しない極限の恐怖を味わう。</li>
+          </ul>
+        </div>
+        <div class="polaroid-card">
+          <div>
+            <div class="card-top">
+              <span class="spot-time">8/4 08:30 - 20:30</span>
+              <span class="stamp stamp-god">🌊 富山湾絶景 ＆ 国宝禅宗伽藍</span>
+            </div>
+            <h3 class="spot-name">3. 快活CLUB富山シャワー ➔ 西町大喜・環水公園・国宝瑞龍寺・雨晴海岸 ➔ 金沢片町</h3>
+            <div class="punchline">「富岩運河環水公園・国宝瑞龍寺・雨晴海岸」</div>
+          </div>
+          <ul class="fact-bullet">
+            <li>車中泊の翌朝、快活CLUB富山のシャワーで完全にリフレッシュ。富山城・富山市ガラス美術館・西町大喜本店の元祖富山ブラック・富岩運河環水公園を巡り、午後は高岡の国宝「瑞龍寺」から雨晴海岸（女岩）・氷見番屋街へドライブ。夕方には金沢片町の「ホテルアマネク金沢」へチェックインし、鼓門ライトアップともりもり寿司を満喫。</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <section>
+      <div class="section-header">
+        <div class="section-icon">📍</div>
+        <h2 class="section-title">3. 中編（8/5-8/7昼）：単独行動（金沢・白川郷・高山・飛騨古川『君の名は。』聖地）</h2>
+      </div>
+      <div class="polaroid-grid">
+        <div class="polaroid-card">
+          <div>
+            <div class="card-top">
+              <span class="spot-time">8/5 09:00 - 21:40</span>
+              <span class="stamp stamp-god">🏮 単独モード移行・金沢26,246歩</span>
+            </div>
+            <h3 class="spot-name">1. 兼六園・ひがし茶屋街・近江町市場 ➔ 金澤おでん赤玉本店・金沢城＆尾山神社夜景</h3>
+            <div class="punchline">「兼六園・赤玉おでん・尾山神社神門」</div>
+          </div>
+          <ul class="fact-bullet">
+            <li>午前中にひがし茶屋街・兼六園・金沢21世紀美術館・近江町市場を制覇し、15時に友人と解散（友人は高速を爆走し21:00返却期限の2分前・20:58に東京返却成功）。単独モードに切り替わり、金沢カレーと長町武家屋敷跡（野村家）を経て、夜は名店「金澤おでん 赤玉本店」から金沢城公園（玉泉院丸庭園・鼠多門）・尾山神社のステンドグラス神門ライトアップまで歩き抜く。</li>
+          </ul>
+        </div>
+        <div class="polaroid-card">
+          <div>
+            <div class="card-top">
+              <span class="spot-time">8/6 08:30 - 21:00</span>
+              <span class="stamp stamp-god">🏯 国史跡陣屋 ＆ 聖地夜間参拝（28,308歩）</span>
+            </div>
+            <h3 class="spot-name">2. 白川郷（城山展望台） ➔ 高山「麺屋しらかわ」・高山陣屋 ➔ 飛騨古川『君の名は。』聖地</h3>
+            <div class="punchline">「白川郷展望台・高山陣屋・気多若宮神社」</div>
+          </div>
+          <ul class="fact-bullet">
+            <li>白川郷の城山天守閣展望台から合掌造り集落を俯瞰し、高山へ。名店「麺屋しらかわ」の中華そばと、全国唯一の代官所遺構「国史跡 高山陣屋」を見学。16時に飛騨古川の老舗「大村屋旅館」へチェックインして荷物を置き、夕暮れの飛騨古川駅跨線橋・飛騨市図書館・夜の気多若宮神社まで『君の名は。』聖地を巡礼。</li>
+          </ul>
+        </div>
+        <div class="polaroid-card">
+          <div>
+            <div class="card-top">
+              <span class="spot-time">8/7 09:00 - 15:30</span>
+              <span class="stamp stamp-god">🐟 計画を手放す没頭 ＆ 高山西側周遊</span>
+            </div>
+            <h3 class="spot-name">3. 飛騨古川「瀬戸川コイの餌5袋熱中事件」 ＆ 高山「まさごそば」・光ミュージアム・飛騨の里</h3>
+            <div class="punchline">「瀬戸川の鯉 ＆ 味処古川五平餅・飛騨の里」</div>
+          </div>
+          <ul class="fact-bullet">
+            <li>飛騨古川の白壁土蔵街で「味処古川」の五平餅を味わった後、瀬戸川を泳ぐ1,000匹のコイに心を奪われ、自分の昼飯を抜いてまでコイの餌を5袋購入し30分以上熱中。その後高山へ戻り、創業昭和13年の元祖「まさごそば」で中華そばを実食し、バスで光ミュージアム・飛騨東照宮・飛騨の里（合掌造り集落）を周遊。</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <section>
+      <div class="section-header">
+        <div class="section-icon">📍</div>
+        <h2 class="section-title">4. 後編（8/7夕-8/11）：グループ合流・高山朝市・下呂萩原・愛知拠点帰省</h2>
+      </div>
+      <div class="polaroid-grid">
+        <div class="polaroid-card">
+          <div>
+            <div class="card-top">
+              <span class="spot-time">8/7 16:00 - 22:00</span>
+              <span class="stamp stamp-god">♨️ 展望露天 ＆ 激動の合流ナイト</span>
+            </div>
+            <h3 class="spot-name">1. スパホテルアルピナ飛騨高山 展望温泉 ＆ 祖父母合流「豚肉ハンバーグ＆2時間説教事件」</h3>
+            <div class="punchline">「アルピナ展望温泉 ＆ 祖父母合流の夜」</div>
+          </div>
+          <ul class="fact-bullet">
+            <li>16時にスパホテルアルピナ飛騨高山へチェックインし、最上階の展望温泉で汗を流しながら待機。17:30に祖父母と無事合流するも、夕食の飲食店で頼んだ「飛騨牛入りハンバーグ」がほぼ豚肉の味で落胆した直後、合流地点の案内を途中で変更したことをめぐり20時から22時まで2時間みっちり説教を食らう激動の夜に。</li>
+          </ul>
+        </div>
+        <div class="polaroid-card">
+          <div>
+            <div class="card-top">
+              <span class="spot-time">8/8 08:30 - 8/11 16:00</span>
+              <span class="stamp stamp-god">🌅 日本三大朝市 ＆ 10泊11日完走</span>
+            </div>
+            <h3 class="spot-name">2. お墓参り・宮川朝市＆陣屋前朝市 ➔ 下呂萩原（契約手続き） ➔ 愛知拠点帰省</h3>
+            <div class="punchline">「宮川朝市・陣屋前朝市 ＆ 愛知帰省」</div>
+          </div>
+          <ul class="fact-bullet">
+            <li>翌朝は祖父母とお墓参りを済ませ、宮川朝市・陣屋前朝市・高山の古い町並みを散策。13時に下呂市萩原での契約手続きを無事完了し、愛知の拠点へ帰省して10泊11日の夏休み大遠征を完走。</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+
+    <!-- Essay Cards -->
+        <section>
+      <div class="section-header">
+        <div class="section-icon">💡</div>
+        <h2 class="section-title">現地リアル批評 ＆ アーカイブインサイト</h2>
+      </div>
+      <div class="essay-card">
+        <h3>1. 大規模花火・祭典における「数駅手前の無人駅 Park &amp; Ride」の圧倒的優位性</h3>
+        <p>- 長岡まつり大花火大会のような数十万人規模のイベントに車で直接突っ込むのは自殺行為である。今回、南魚沼市の完全無人駅「五日町駅（周囲一面田んぼ・無料スペース）」に車をデポしてJR上越線で長岡入りし、帰路も五日町駅から上越方面へ迂回したことで、会場周辺の壊滅的渋滞と駐車場難民を100%回避できた。</p>
+      </div>
+      <div class="essay-card">
+        <h3>2. 環境騒音差による「車内音量の認知錯覚」と深夜ローカル駅の静寂リスク</h3>
+        <p>- 昼の軽井沢（三笠通り）や高速道路では、周囲の環境騒音や走行音によって車外への音漏れがマスキングされるため「音量MAXでも外には大して聞こえない」と錯覚しやすい。しかし深夜23時の地方無人駅（五日町駅）は完全な無音地帯であり、同じ音量が「選挙カー並みの爆音」として近隣民家を直撃する。夜間停車時は乗降ドアを開ける前に必ず音量をゼロに絞る規律が必要である。</p>
+      </div>
+      <div class="essay-card">
+        <h3>3. 同行者車中泊の限界と「睡眠環境の独立性確保」（ADR 0461）</h3>
+        <p>- 繁忙期の宿全滅時に車と翌朝の快活CLUBシャワーで生命維持できる冗長性は車の強みだが、複数人での車中泊は姿勢拘束・生活リズム差・気遣いにより睡眠の質が崩壊する。また、往復800km超の長距離運転を友人に任せきりにする車旅は双方の疲労が大きいため、友人ドライブは片道100〜150km圏内の近郊僻地に絞り、遠方縦走は公共交通＋個室宿の一人旅で行う棲み分けが最適解である。</p>
+      </div>
+    </section>
+
+
+    <!-- Footer -->
+    <footer>
+      <p>北陸・信越 ｜ 草津・長岡・富山・金沢・飛騨 旅アルバム 2026 ｜ 旅行総合ポータルへ戻る</p>
+    </footer>
+
+  </main>
+
+  <!-- Injected Chart Data -->
+  <script>
+    window.__ALBUM_CHART_DATA__ = {
+  "hourly": {
+    "labels": [
+      "8/2 草津",
+      "8/3 長岡花火",
+      "8/4 富山・雨晴",
+      "8/5 金沢単独",
+      "8/6 白川郷・高山",
+      "8/7 飛騨古川",
+      "8/8-11 朝市・帰省"
+    ],
+    "data": [
+      15636,
+      17156,
+      15068,
+      26246,
+      28308,
+      18711,
+      22523
+    ],
+    "colors": [
+      "#10b981",
+      "#f97316",
+      "#38bdf8",
+      "#8b5cf6",
+      "#e11d48",
+      "#f59e0b",
+      "#64748b"
+    ]
+  },
+  "duration": {
+    "labels": [
+      "歴史建築・城郭・名勝庭園 (22h)",
+      "大花火・海岸・山岳自然 (14h)",
+      "温泉・快活シャワー・宿 (18h)",
+      "ご当地麺・おでん・食べ歩き (12h)",
+      "ドライブ・JR高山本線移動 (20h)"
+    ],
+    "data": [
+      22,
+      14,
+      18,
+      12,
+      20
+    ],
+    "colors": [
+      "#8b5cf6",
+      "#f97316",
+      "#10b981",
+      "#f59e0b",
+      "#38bdf8"
+    ]
+  },
+  "cumulative": {
+    "labels": [
+      "8/2 草津",
+      "8/3 長岡",
+      "8/4 富山・金沢",
+      "8/5 金沢市内",
+      "8/6 高山・古川",
+      "8/7 飛騨周遊",
+      "8/8-11 帰省完走"
+    ],
+    "data": [
+      9.56,
+      20.24,
+      29.18,
+      47.07,
+      66.34,
+      78.44,
+      91.29
+    ]
+  }
+};
+  </script>
+  <script src="../assets/album_runtime.js"></script>
+</body>
+</html>

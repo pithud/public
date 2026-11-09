@@ -1,0 +1,1613 @@
+<!DOCTYPE html>
+<html lang="ja" data-theme="light">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <title>信州5大S級完全制覇スプリント旅程（1泊2日）</title>
+  <script>
+    // Anti-FOUC immediate theme application
+    (function() {
+      var t = localStorage.getItem('trip_nav_theme') || 'light';
+      document.documentElement.setAttribute('data-theme', t);
+    })();
+  </script>
+  <style>
+:root {
+  --bg: #f8fafc;
+  --surface: #ffffff;
+  --surface-subtle: #f1f5f9;
+  --text: #0f172a;
+  --text-muted: #64748b;
+  --border: #e2e8f0;
+  --primary: #0284c7;
+  --primary-hover: #0369a1;
+  --accent: #d97706;
+  --card-shadow: 0 1px 3px rgba(0,0,0,0.06), 0 1px 2px rgba(0,0,0,0.04);
+  --font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+}
+[data-theme="dark"] {
+  --bg: #090d16;
+  --surface: #131b2e;
+  --surface-subtle: #1e293b;
+  --text: #f8fafc;
+  --text-muted: #94a3b8;
+  --border: #1e293b;
+  --card-shadow: 0 4px 6px -1px rgba(0,0,0,0.3);
+}
+* { box-sizing: border-box; margin: 0; padding: 0; -webkit-tap-highlight-color: transparent; }
+body {
+  font-family: var(--font-family);
+  background-color: var(--bg);
+  color: var(--text);
+  line-height: 1.5;
+  font-size: 15px;
+  padding-bottom: 80px;
+}
+.header-bar {
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  background: rgba(255, 255, 255, 0.92);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border-bottom: 1px solid var(--border);
+  padding: 12px 16px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+[data-theme="dark"] .header-bar { background: rgba(19, 27, 46, 0.92); }
+.brand-title { font-size: 1.05rem; font-weight: 700; display: flex; align-items: center; gap: 8px; }
+.header-actions { display: flex; gap: 8px; align-items: center; }
+.btn-action {
+  background: var(--surface-subtle);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: 6px 12px;
+  font-size: 13px;
+  color: var(--text);
+  cursor: pointer;
+  text-decoration: none;
+}
+.container { max-width: 680px; margin: 0 auto; padding: 16px; }
+
+/* Day Navigation Bar */
+.nav-bar {
+  display: flex;
+  background: var(--surface-subtle);
+  padding: 6px;
+  border-radius: 10px;
+  margin-bottom: 16px;
+  gap: 6px;
+  align-items: center;
+  justify-content: space-between;
+}
+.nav-link {
+  flex: 1;
+  text-align: center;
+  padding: 7px 10px;
+  border-radius: 7px;
+  font-size: 13px;
+  font-weight: 600;
+  text-decoration: none;
+  color: var(--text-muted);
+  background: transparent;
+  border: none;
+  cursor: pointer;
+}
+.nav-link.active {
+  background: var(--surface);
+  color: var(--primary);
+  box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+}
+
+/* Quick Jump Chips */
+.jump-chips {
+  display: flex;
+  gap: 6px;
+  overflow-x: auto;
+  padding-bottom: 10px;
+  margin-bottom: 16px;
+  white-space: nowrap;
+  scrollbar-width: none;
+}
+.jump-chips::-webkit-scrollbar { display: none; }
+.jump-chip {
+  display: inline-block;
+  font-size: 12px;
+  font-weight: 600;
+  padding: 5px 10px;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 16px;
+  color: var(--text);
+  text-decoration: none;
+}
+
+/* Slot Cards */
+.day-block { margin-bottom: 32px; }
+.day-header {
+  font-size: 1.15rem;
+  font-weight: 700;
+  margin-bottom: 12px;
+  padding-bottom: 6px;
+  border-bottom: 2px solid var(--primary);
+  color: var(--primary);
+}
+
+/* Macro Route Box (Day全体ルート立ち回り) */
+.macro-route-box {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-left: 4px solid var(--primary);
+  border-radius: 10px;
+  padding: 12px 14px;
+  margin-bottom: 16px;
+  box-shadow: var(--card-shadow);
+}
+.macro-route-head {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 6px;
+}
+.macro-route-title {
+  font-size: 13px;
+  font-weight: 800;
+  color: var(--primary);
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+[data-theme="dark"] .macro-route-title { color: #38bdf8; }
+.macro-route-body {
+  font-size: 13px;
+  line-height: 1.55;
+  color: var(--text);
+  margin-bottom: 8px;
+}
+.macro-map-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  font-size: 12px;
+  font-weight: 700;
+  color: var(--primary);
+  text-decoration: none;
+  background: rgba(2, 132, 199, 0.08);
+  padding: 4px 10px;
+  border-radius: 6px;
+  border: 1px solid rgba(2, 132, 199, 0.2);
+}
+[data-theme="dark"] .macro-map-link {
+  color: #38bdf8;
+  background: rgba(56, 189, 248, 0.1);
+  border-color: rgba(56, 189, 248, 0.3);
+}
+.slot-card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  margin-bottom: 12px;
+  padding: 14px 16px;
+  box-shadow: var(--card-shadow);
+  transition: opacity 0.2s, background-color 0.2s;
+}
+.slot-card.is-dimmed { opacity: 0.45; filter: grayscale(40%); }
+.slot-card.is-must { border-left: 4px solid var(--accent); }
+.slot-meta { display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px; }
+.slot-time { font-size: 13px; font-weight: 700; font-variant-numeric: tabular-nums; }
+.slot-badge {
+  font-size: 11px;
+  font-weight: 700;
+  padding: 2px 8px;
+  border-radius: 4px;
+  text-transform: uppercase;
+}
+.badge-sightseeing { background: #d1fae5; color: #065f46; }
+.badge-food { background: #ffedd5; color: #9a3412; }
+.badge-transit { background: #e0e7ff; color: #3730a3; }
+[data-theme="dark"] .badge-sightseeing { background: #064e3b; color: #6ee7b7; }
+[data-theme="dark"] .badge-food { background: #7c2d12; color: #fdba74; }
+[data-theme="dark"] .badge-transit { background: #312e81; color: #a5b4fc; }
+
+.slot-title-row { display: flex; align-items: flex-start; gap: 8px; margin-bottom: 6px; }
+.slot-checkbox { margin-top: 3px; cursor: pointer; width: 18px; height: 18px; accent-color: var(--primary); }
+.slot-title { font-size: 1rem; font-weight: 700; line-height: 1.4; flex: 1; }
+.slot-desc { font-size: 13.5px; color: var(--text-muted); margin-bottom: 10px; line-height: 1.5; padding-left: 26px; }
+
+/* Swap Guide Box */
+.swap-box {
+  margin: 10px 0 10px 26px;
+  padding: 10px 12px;
+  border-radius: 8px;
+  background: rgba(217, 119, 6, 0.08);
+  border: 1px dashed var(--accent);
+  font-size: 12.5px;
+}
+.swap-title { font-weight: 700; color: var(--accent); margin-bottom: 4px; display: flex; align-items: center; gap: 4px; }
+
+.slot-foot { display: flex; justify-content: space-between; align-items: center; padding-top: 8px; border-top: 1px solid var(--border); margin-left: 26px; }
+.map-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  font-size: 12px;
+  font-weight: 600;
+  color: #1a73e8;
+  text-decoration: none;
+  background: rgba(26, 115, 232, 0.08);
+  padding: 4px 10px;
+  border-radius: 20px;
+}
+[data-theme="dark"] .map-pill { color: #8ab4f8; background: rgba(138, 180, 248, 0.12); }
+
+/* Tactics Step Box (立ち回り・攻略手順) */
+.tactics-box {
+  margin: 12px 0 12px 26px;
+  padding: 10px 14px;
+  background: rgba(2, 132, 199, 0.06);
+  border: 1px solid rgba(2, 132, 199, 0.25);
+  border-left: 3.5px solid var(--primary);
+  border-radius: 8px;
+}
+[data-theme="dark"] .tactics-box {
+  background: rgba(56, 189, 248, 0.08);
+  border-color: rgba(56, 189, 248, 0.3);
+  border-left-color: #38bdf8;
+}
+.tactics-header {
+  font-size: 13px;
+  font-weight: 700;
+  color: var(--primary);
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  margin-bottom: 8px;
+}
+.tactics-tag {
+  font-size: 10px;
+  font-weight: 800;
+  background: var(--primary);
+  color: #fff;
+  padding: 1px 6px;
+  border-radius: 4px;
+  letter-spacing: 0.05em;
+}
+[data-theme="dark"] .tactics-header { color: #38bdf8; }
+[data-theme="dark"] .tactics-tag { background: #0284c7; }
+.tactics-list { display: flex; flex-direction: column; gap: 6px; }
+.tactics-step-row { display: flex; align-items: flex-start; gap: 8px; font-size: 12.5px; line-height: 1.5; }
+.tactics-num {
+  flex-shrink: 0;
+  width: 18px;
+  height: 18px;
+  border-radius: 4px;
+  background: rgba(2, 132, 199, 0.18);
+  color: var(--primary);
+  font-size: 11px;
+  font-weight: 800;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-top: 1px;
+}
+[data-theme="dark"] .tactics-num { background: rgba(56, 189, 248, 0.25); color: #38bdf8; }
+
+/* Checkpoints List */
+.checkpoint-list {
+  margin: 10px 0 10px 26px;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+.checkpoint-row {
+  display: flex;
+  align-items: flex-start;
+  gap: 8px;
+  font-size: 12px;
+  background: var(--surface-subtle);
+  padding: 8px 10px;
+  border-radius: 6px;
+  border: 1px solid var(--border);
+}
+.cp-badge {
+  font-size: 10px;
+  font-weight: 700;
+  padding: 1px 5px;
+  border-radius: 3px;
+  background: #0284c7;
+  color: #fff;
+  flex-shrink: 0;
+}
+.cp-title { font-weight: 600; color: var(--text); }
+.cp-desc { font-size: 11.5px; color: var(--text-muted); margin-top: 2px; }
+
+/* Practical Footer */
+.practical-footer {
+  margin: 10px 0 10px 26px;
+  padding: 8px 10px;
+  background: var(--surface-subtle);
+  border-left: 3px solid var(--accent);
+  border-radius: 4px;
+  font-size: 12px;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+.pf-row { display: flex; gap: 6px; }
+.pf-tag { font-weight: 700; color: var(--accent); flex-shrink: 0; min-width: 65px; }
+.pf-val { color: var(--text); }
+
+/* Print & Paged Media */
+@media print {
+  @page { size: A4 portrait; margin: 12mm 15mm; }
+  body { background: #fff !important; color: #000 !important; font-size: 11pt; }
+  .header-bar, .nav-bar, .jump-chips, .no-print { display: none !important; }
+  .day-block { page-break-after: always; break-after: page; }
+  .slot-card { break-inside: avoid; page-break-inside: avoid; box-shadow: none !important; border: 1px solid #ccc !important; }
+  .slot-card.is-dimmed { opacity: 1 !important; filter: none !important; }
+  .slot-checkbox { display: none !important; }
+  .slot-desc, .swap-box, .slot-foot { margin-left: 0 !important; padding-left: 0 !important; }
+}
+
+  </style>
+</head>
+<body>
+  <header class="header-bar">
+    <div class="brand-title">
+      <span>🏔️</span>
+      <span>信州5大S級完全制覇スプリント旅程</span>
+    </div>
+    <div class="header-actions no-print">
+      <button class="btn-action" onclick="toggleTheme()">🌓 テーマ</button>
+      <button class="btn-action" onclick="window.print()">🖨️ 製本印刷</button>
+    </div>
+  </header>
+
+  <main class="container">
+    
+    <nav class="nav-bar no-print">
+      <button type="button" class="nav-link active" data-day="all" onclick="switchDay('all')">📑 全日程</button>
+      <button type="button" class="nav-link" data-day="1" onclick="switchDay(1)">Day 1</button><button type="button" class="nav-link" data-day="2" onclick="switchDay(2)">Day 2</button>
+    </nav>
+    
+    <div class="jump-chips no-print">
+      
+        <a class="jump-chip" href="#d1-togakushi" data-day="1">📍 長野駅 ➔ 戸隠神社</a>
+      
+        <a class="jump-chip" href="#d1-lunch-soba" data-day="1">🍜 戸隠そば昼食：戸隠つ</a>
+      
+        <a class="jump-chip" href="#d1-zenkoji" data-day="1">📍 国宝 善光寺（本堂内</a>
+      
+        <a class="jump-chip" href="#d1-obuse" data-day="1">🍜 小布施・新栗スイーツ</a>
+      
+        <a class="jump-chip" href="#d1-matsumoto-dinner" data-day="1">🍜 松本ディナー：信州郷</a>
+      
+        <a class="jump-chip" href="#d2-matsumoto-castle" data-day="2">📍 国宝 松本城（開門一</a>
+      
+        <a class="jump-chip" href="#d2-nawate-nakamachi" data-day="2">📍 松本城下町・蔵の街散</a>
+      
+        <a class="jump-chip" href="#d2-abe-cafe" data-day="2">🍜 松本老舗喫茶＆ランチ</a>
+      
+        <a class="jump-chip" href="#d2-skip-narai" data-day="2">📍 【実績スキップ判断】</a>
+      
+    </div>
+    
+      <section class="day-block" id="day-sec-1" data-day="1">
+        <h2 class="day-header">Day 1: 2026年10月31日 (土)</h2>
+        
+        <div class="macro-route-box">
+          <div class="macro-route-head">
+            <span class="macro-route-title">🗺️ 【全体ルート立ち回り】マクロ動線シークエンス</span>
+            <a class="macro-map-link" href="https://www.google.com/maps/dir/?api=1&amp;origin=長野駅&amp;destination=松本駅&amp;waypoints=戸隠神社+奥社|善光寺|小布施堂+本店" target="_blank" rel="noopener">📍 広域Google Maps</a>
+          </div>
+          <div class="macro-route-body">行徳駅 ➔ 東京駅（かがやき501号） ➔ 長野駅 ➔ 戸隠奥社（観光特急01C） ➔ 善光寺大門（戸隠そば） ➔ 善光寺本堂 ➔ 長野駅（長電） ➔ 小布施（栗スイーツ） ➔ 長野駅MIDORI ➔ 松本駅（特急しなの24号） ➔ ホテルMマツモト</div>
+        </div>
+        <div class="slot-list">
+          
+    <article class="slot-card " id="d1-shinkansen" data-slot-id="d1-shinkansen">
+      <div class="slot-meta">
+        <span class="slot-time">⏱️ 05:08 - 07:36</span>
+        <span class="slot-badge badge-transit">新幹線最速</span>
+      </div>
+      <div class="slot-title-row">
+        <input type="checkbox" class="slot-checkbox no-print" onchange="toggleSlot('d1-shinkansen', this.checked)" title="完了・スキップを消し込み">
+        <h3 class="slot-title">行徳 ➔ 東京 ➔ 長野駅（北陸新幹線かがやき501号・最速直行）</h3>
+      </div>
+      <p class="slot-desc">東西線始発（05:08発）で大手町へ。地下通路を早足で東京駅新幹線乗換口へ（徒歩8分）。北陸新幹線かがやき501号敦賀行（全車指定席）でわずか1時間20分で長野駅へ直行。</p>
+      
+      
+      <div class="tactics-box">
+        <div class="tactics-header">
+          <span>🎯</span>
+          <span class="tactics-tag">個別立ち回り</span>
+          <span>【構内順路】朝イチ長野アプローチステップ</span>
+        </div>
+        <div class="tactics-list">
+          
+            <div class="tactics-step-row">
+              <span class="tactics-num">1</span>
+              <span class="tactics-text">行徳駅05:08発東西線中野行に乗車。大手町駅05:32着。</span>
+            </div>
+          
+            <div class="tactics-step-row">
+              <span class="tactics-num">2</span>
+              <span class="tactics-text">東西線大手町駅B1出口方面から地下連絡通路を通り、東京駅日本橋口・丸の内北口新幹線乗換改札へ（05:42頃到着）。</span>
+            </div>
+          
+            <div class="tactics-step-row">
+              <span class="tactics-num">3</span>
+              <span class="tactics-text">06:16発かがやき501号に乗車。車内で朝食・充電を済ませ、07:36長野駅善光寺口へ降り立つ。</span>
+            </div>
+          
+        </div>
+      </div>
+      
+      <div class="checkpoint-list">
+        
+          <div class="checkpoint-row">
+            <span class="cp-badge">必須</span>
+            <div>
+              <div class="cp-title">大手町地下通路をスムーズに乗換</div>
+              <div class="cp-desc">東西線から東京駅新幹線改札へロスなく直行。</div>
+            </div>
+          </div>
+        
+          <div class="checkpoint-row">
+            <span class="cp-badge">必須</span>
+            <div>
+              <div class="cp-title">長野駅善光寺口7番のりば確認</div>
+              <div class="cp-desc">下車後善光寺口へ出て、アルピコ交通案内所前のバスのりばを確認。</div>
+            </div>
+          </div>
+        
+      </div>
+      
+      <div class="practical-footer">
+        <div class="pf-row"><span class="pf-tag">🚗 移動・駐車:</span><span class="pf-val">かがやき501号は全車指定席のため事前確保必須。</span></div>
+        <div class="pf-row"><span class="pf-tag">💡 現地Tips:</span><span class="pf-val">朝の長野駅は気温が低いため防寒ジャケットを羽織る。</span></div>
+        
+      </div>
+      <div class="slot-foot">
+        <a class="map-pill" href="https://www.google.com/maps/dir/?api=1&amp;origin=行徳駅&amp;destination=長野駅" target="_blank" rel="noopener">📍 Google Maps</a>
+        
+      </div>
+    </article>
+    <article class="slot-card " id="d1-togakushi" data-slot-id="d1-togakushi">
+      <div class="slot-meta">
+        <span class="slot-time">⏱️ 08:20 - 10:12</span>
+        <span class="slot-badge badge-sightseeing">【必見】爆速完遂</span>
+      </div>
+      <div class="slot-title-row">
+        <input type="checkbox" class="slot-checkbox no-print" onchange="toggleSlot('d1-togakushi', this.checked)" title="完了・スキップを消し込み">
+        <h3 class="slot-title">長野駅 ➔ 戸隠神社 奥社（観光特急01C席 ＆ 爆速ピストン完遂）</h3>
+      </div>
+      <p class="slot-desc">アルピコ交通観光特急戸隠線第3便（最前列01C席確保済）で戸隠奥社入口へ（09:19着）。標高1,300m超の寒気の中、樹齢400年超の杉並木と往復4kmの急登参道をわずか50分で走破し本殿参拝を完全制覇。</p>
+      
+      
+      <div class="tactics-box">
+        <div class="tactics-header">
+          <span>🎯</span>
+          <span class="tactics-tag">個別立ち回り</span>
+          <span>【構内順路】戸隠奥社 爆速ピストン手順</span>
+        </div>
+        <div class="tactics-list">
+          
+            <div class="tactics-step-row">
+              <span class="tactics-num">1</span>
+              <span class="tactics-text">09:19 奥社入口下車後、即座に大鳥居をくぐり杉並木参道へアタック開始。</span>
+            </div>
+          
+            <div class="tactics-step-row">
+              <span class="tactics-num">2</span>
+              <span class="tactics-text">随神門を抜け、後半の急勾配石段をハイペースで踏破し09:45奥社本殿へ登頂参拝。</span>
+            </div>
+          
+            <div class="tactics-step-row">
+              <span class="tactics-num">3</span>
+              <span class="tactics-text">参拝後直ちに折り返し、下り勾配を駆け降りて10:12奥社入口へ奇跡の生還。</span>
+            </div>
+          
+        </div>
+      </div>
+      
+      <div class="checkpoint-list">
+        
+          <div class="checkpoint-row">
+            <span class="cp-badge">必須</span>
+            <div>
+              <div class="cp-title">杉並木参道・随神門の荘厳景観鑑賞</div>
+              <div class="cp-desc">樹齢400年の巨木群に圧倒されるパワースポット。</div>
+            </div>
+          </div>
+        
+          <div class="checkpoint-row">
+            <span class="cp-badge">必須</span>
+            <div>
+              <div class="cp-title">10:14発の戻り観光特急へ滑り込み乗車</div>
+              <div class="cp-desc">予定を1時間20分前倒しする大勝利ボーナス。</div>
+            </div>
+          </div>
+        
+      </div>
+      
+      <div class="practical-footer">
+        
+        <div class="pf-row"><span class="pf-tag">💡 現地Tips:</span><span class="pf-val">朝の戸隠奥社は体感気温3〜5℃。手袋・防寒具必須。滑りにくいスニーカー推奨。</span></div>
+        
+      </div>
+      <div class="slot-foot">
+        <a class="map-pill" href="https://www.google.com/maps/search/?api=1&amp;query=戸隠神社+奥社" target="_blank" rel="noopener">📍 Google Maps</a>
+        
+      </div>
+    </article>
+    <article class="slot-card " id="d1-transit-zenkoji" data-slot-id="d1-transit-zenkoji">
+      <div class="slot-meta">
+        <span class="slot-time">⏱️ 10:14 - 11:35</span>
+        <span class="slot-badge badge-transit">特急前倒し</span>
+      </div>
+      <div class="slot-title-row">
+        <input type="checkbox" class="slot-checkbox no-print" onchange="toggleSlot('d1-transit-zenkoji', this.checked)" title="完了・スキップを消し込み">
+        <h3 class="slot-title">戸隠奥社入口 ➔ 長野駅 ➔ 善光寺大門（市内路線バス接続）</h3>
+      </div>
+      <p class="slot-desc">10:14発の観光特急に滑り込み、長野駅善光寺口へ11:15帰着。善光寺口1番のりば発の市内路線バス（11:20発）にダイレクト接続し、善光寺大門へ11:35到着。</p>
+      
+      
+      <div class="tactics-box">
+        <div class="tactics-header">
+          <span>🎯</span>
+          <span class="tactics-tag">個別立ち回り</span>
+          <span>【構内順路】善光寺アプローチステップ</span>
+        </div>
+        <div class="tactics-list">
+          
+            <div class="tactics-step-row">
+              <span class="tactics-num">1</span>
+              <span class="tactics-text">10:14発観光特急で座席を確保し、疲れた足をリフレッシュ。</span>
+            </div>
+          
+            <div class="tactics-step-row">
+              <span class="tactics-num">2</span>
+              <span class="tactics-text">11:15長野駅着後、善光寺口1番のりばへ直行（運賃190円）。</span>
+            </div>
+          
+            <div class="tactics-step-row">
+              <span class="tactics-num">3</span>
+              <span class="tactics-text">11:35善光寺大門で下車し、大門交差点角の戸隠つきや門前へ。</span>
+            </div>
+          
+        </div>
+      </div>
+      
+      <div class="checkpoint-list">
+        
+          <div class="checkpoint-row">
+            <span class="cp-badge">必須</span>
+            <div>
+              <div class="cp-title">善光寺口1番のりばのバスへ即乗車</div>
+              <div class="cp-desc">頻発運行のため待ち時間ほぼゼロ。</div>
+            </div>
+          </div>
+        
+      </div>
+      
+      <div class="slot-foot">
+        <a class="map-pill" href="https://www.google.com/maps/dir/?api=1&amp;origin=戸隠奥社入口&amp;destination=善光寺大門" target="_blank" rel="noopener">📍 Google Maps</a>
+        
+      </div>
+    </article>
+    <article class="slot-card " id="d1-lunch-soba" data-slot-id="d1-lunch-soba">
+      <div class="slot-meta">
+        <span class="slot-time">⏱️ 11:40 - 12:20</span>
+        <span class="slot-badge badge-food">【必食】名物そば</span>
+      </div>
+      <div class="slot-title-row">
+        <input type="checkbox" class="slot-checkbox no-print" onchange="toggleSlot('d1-lunch-soba', this.checked)" title="完了・スキップを消し込み">
+        <h3 class="slot-title">戸隠そば昼食：戸隠つきや 門前（日本三大そば・ぼっち盛り）</h3>
+      </div>
+      <p class="slot-desc">善光寺大門すぐの名店。伝統の「ぼっち盛り」（一口大に束ねられた盛り付け）で供される風味豊かな戸隠新そばを堪能。戸隠現地での混雑を回避しつつ本場の味を完璧に回収。</p>
+      
+      
+      <div class="tactics-box">
+        <div class="tactics-header">
+          <span>🎯</span>
+          <span class="tactics-tag">個別立ち回り</span>
+          <span>【構内順路】戸隠そば攻略手順</span>
+        </div>
+        <div class="tactics-list">
+          
+            <div class="tactics-step-row">
+              <span class="tactics-num">1</span>
+              <span class="tactics-text">11:40に入店。お昼のピーク混雑直前のタイミングで着席。</span>
+            </div>
+          
+            <div class="tactics-step-row">
+              <span class="tactics-num">2</span>
+              <span class="tactics-text">戸隠ざるそば（ぼっち盛り）を注文。辛味大根と本わさびで新そばの香りを満喫。</span>
+            </div>
+          
+            <div class="tactics-step-row">
+              <span class="tactics-num">3</span>
+              <span class="tactics-text">濃厚なそば湯をいただき、12:20に退店して善光寺表参道へ。</span>
+            </div>
+          
+        </div>
+      </div>
+      
+      <div class="checkpoint-list">
+        
+          <div class="checkpoint-row">
+            <span class="cp-badge">必須</span>
+            <div>
+              <div class="cp-title">伝統の「ぼっち盛り」戸隠新そば鑑賞</div>
+              <div class="cp-desc">瑞々しく喉越しの良い新そばの味覚を堪能。</div>
+            </div>
+          </div>
+        
+      </div>
+      
+      <div class="slot-foot">
+        <a class="map-pill" href="https://www.google.com/maps/search/?api=1&amp;query=戸隠つきや+門前" target="_blank" rel="noopener">📍 Google Maps</a>
+        
+      </div>
+    </article>
+    <article class="slot-card " id="d1-zenkoji" data-slot-id="d1-zenkoji">
+      <div class="slot-meta">
+        <span class="slot-time">⏱️ 12:20 - 13:10</span>
+        <span class="slot-badge badge-sightseeing">【必見】お戒壇巡り</span>
+      </div>
+      <div class="slot-title-row">
+        <input type="checkbox" class="slot-checkbox no-print" onchange="toggleSlot('d1-zenkoji', this.checked)" title="完了・スキップを消し込み">
+        <h3 class="slot-title">国宝 善光寺（本堂内陣参拝 ＆ お戒壇巡り・極楽の錠前タッチ）</h3>
+      </div>
+      <p class="slot-desc">「一生に一度は善光寺参り」。重厚な山門をくぐり国宝本堂へ。内陣参拝券を購入し、床下の真っ暗な回廊を進む「お戒壇巡り」へ。完全な暗闇の中で秘仏本尊の真下に位置する「極楽の錠前」に触れ極楽往生を祈願。</p>
+      
+      
+      <div class="tactics-box">
+        <div class="tactics-header">
+          <span>🎯</span>
+          <span class="tactics-tag">個別立ち回り</span>
+          <span>【構内順路】善光寺巡回ステップ</span>
+        </div>
+        <div class="tactics-list">
+          
+            <div class="tactics-step-row">
+              <span class="tactics-num">1</span>
+              <span class="tactics-text">表参道から山門を仰ぎ見つつ国宝本堂へアプローチ。</span>
+            </div>
+          
+            <div class="tactics-step-row">
+              <span class="tactics-num">2</span>
+              <span class="tactics-text">本堂内陣へ上がり、お戒壇巡りの入口へ進む。</span>
+            </div>
+          
+            <div class="tactics-step-row">
+              <span class="tactics-num">3</span>
+              <span class="tactics-text">右手を腰の高さの右壁に添えながら完全な漆黒空間を進み、極楽の錠前をしっかり手探りでタッチ。</span>
+            </div>
+          
+            <div class="tactics-step-row">
+              <span class="tactics-num">4</span>
+              <span class="tactics-text">参拝後、善光寺大門バス停へ戻り長野駅行きバスに乗車。</span>
+            </div>
+          
+        </div>
+      </div>
+      
+      <div class="checkpoint-list">
+        
+          <div class="checkpoint-row">
+            <span class="cp-badge">必須</span>
+            <div>
+              <div class="cp-title">お戒壇巡りで極楽の錠前タッチ</div>
+              <div class="cp-desc">一切の光がない暗闇での究極の感覚体験。</div>
+            </div>
+          </div>
+        
+          <div class="checkpoint-row">
+            <span class="cp-badge">必須</span>
+            <div>
+              <div class="cp-title">国宝本堂の巨大木造建築美鑑賞</div>
+              <div class="cp-desc">震災を免れ現代に残る東日本最大級の国宝建築。</div>
+            </div>
+          </div>
+        
+      </div>
+      
+      <div class="slot-foot">
+        <a class="map-pill" href="https://www.google.com/maps/search/?api=1&amp;query=善光寺+本堂" target="_blank" rel="noopener">📍 Google Maps</a>
+        
+      </div>
+    </article>
+    <article class="slot-card " id="d1-transit-obuse" data-slot-id="d1-transit-obuse">
+      <div class="slot-meta">
+        <span class="slot-time">⏱️ 13:15 - 14:28</span>
+        <span class="slot-badge badge-transit">長電直通</span>
+      </div>
+      <div class="slot-title-row">
+        <input type="checkbox" class="slot-checkbox no-print" onchange="toggleSlot('d1-transit-obuse', this.checked)" title="完了・スキップを消し込み">
+        <h3 class="slot-title">善光寺大門 ➔ 長野駅 ➔ 小布施駅（長野電鉄長野線直通）</h3>
+      </div>
+      <p class="slot-desc">善光寺大門から市内バスで長野駅へ（13:35着）。長野駅地下の長野電鉄改札へ移動し、普通信州中野行（13:56発）に乗車。車窓のリンゴ畑を眺めつつ14:28小布施駅到着（当初予定より約50分早い先着）。</p>
+      
+      
+      <div class="tactics-box">
+        <div class="tactics-header">
+          <span>🎯</span>
+          <span class="tactics-tag">個別立ち回り</span>
+          <span>【構内順路】小布施アプローチステップ</span>
+        </div>
+        <div class="tactics-list">
+          
+            <div class="tactics-step-row">
+              <span class="tactics-num">1</span>
+              <span class="tactics-text">長野駅善光寺口地下連絡口から長野電鉄のりばへ。券売機で乗車券（870円）を購入。</span>
+            </div>
+          
+            <div class="tactics-step-row">
+              <span class="tactics-num">2</span>
+              <span class="tactics-text">13:56発普通列車に乗車。座席を確保して休憩。</span>
+            </div>
+          
+            <div class="tactics-step-row">
+              <span class="tactics-num">3</span>
+              <span class="tactics-text">14:28小布施駅着後、改札を出て栗の街中心部へ徒歩アプローチ（徒歩約10分）。</span>
+            </div>
+          
+        </div>
+      </div>
+      
+      <div class="checkpoint-list">
+        
+          <div class="checkpoint-row">
+            <span class="cp-badge">必須</span>
+            <div>
+              <div class="cp-title">長野電鉄地下ホーム乗換</div>
+              <div class="cp-desc">地下化された長野電鉄のレトロモダンな改札口。</div>
+            </div>
+          </div>
+        
+      </div>
+      
+      <div class="slot-foot">
+        <a class="map-pill" href="https://www.google.com/maps/dir/?api=1&amp;origin=善光寺大門&amp;destination=小布施駅" target="_blank" rel="noopener">📍 Google Maps</a>
+        
+      </div>
+    </article>
+    <article class="slot-card " id="d1-obuse" data-slot-id="d1-obuse">
+      <div class="slot-meta">
+        <span class="slot-time">⏱️ 14:30 - 16:25</span>
+        <span class="slot-badge badge-food">【必食】新栗スイーツ</span>
+      </div>
+      <div class="slot-title-row">
+        <input type="checkbox" class="slot-checkbox no-print" onchange="toggleSlot('d1-obuse', this.checked)" title="完了・スキップを消し込み">
+        <h3 class="slot-title">小布施・新栗スイーツ無双 ＆ 蔵の街散策（小布施堂・竹風堂・栗の小径）</h3>
+      </div>
+      <p class="slot-desc">栗と北斎の街・小布施。秋の旬真っ盛りの新栗スイーツを連続攻略。小布施堂本店売店でテイクアウト用「朱雀モンブラン」と「栗鹿ノ子」を即座に確保。竹風堂で栗あんソフトクリームを味わい、栗の木レンガが敷き詰められた「栗の小径」と白壁土蔵の街並みをゆったり散策。</p>
+      
+      
+      <div class="tactics-box">
+        <div class="tactics-header">
+          <span>🎯</span>
+          <span class="tactics-tag">個別立ち回り</span>
+          <span>【構内順路】小布施スイーツ＆散策ステップ</span>
+        </div>
+        <div class="tactics-list">
+          
+            <div class="tactics-step-row">
+              <span class="tactics-num">1</span>
+              <span class="tactics-text">小布施堂本店売店へ直行。朱雀モンブラン＆栗鹿ノ子をテイクアウト確保。</span>
+            </div>
+          
+            <div class="tactics-step-row">
+              <span class="tactics-num">2</span>
+              <span class="tactics-text">竹風堂小布施本店へ立ち寄り、濃厚な栗あんソフトクリームを摂取。</span>
+            </div>
+          
+            <div class="tactics-step-row">
+              <span class="tactics-num">3</span>
+              <span class="tactics-text">栗の小径・北斎館周辺の土蔵街・酒蔵の風情ある街並みを写真撮影散策。</span>
+            </div>
+          
+            <div class="tactics-step-row">
+              <span class="tactics-num">4</span>
+              <span class="tactics-text">桜井甘精堂本店周辺を巡り、16:20までに小布施駅へ戻る。</span>
+            </div>
+          
+        </div>
+      </div>
+      
+      <div class="checkpoint-list">
+        
+          <div class="checkpoint-row">
+            <span class="cp-badge">必須</span>
+            <div>
+              <div class="cp-title">小布施堂 朱雀モンブラン入手</div>
+              <div class="cp-desc">新栗の風味が凝縮された秋限定の至高スイーツ。</div>
+            </div>
+          </div>
+        
+          <div class="checkpoint-row">
+            <span class="cp-badge">必須</span>
+            <div>
+              <div class="cp-title">栗の小径の風情ある散策路歩行</div>
+              <div class="cp-desc">栗の木の間伐材を敷き詰めた情緒溢れる小道。</div>
+            </div>
+          </div>
+        
+      </div>
+      
+      <div class="practical-footer">
+        
+        <div class="pf-row"><span class="pf-tag">💡 現地Tips:</span><span class="pf-val">カフェ席は混雑するが、本店売店のテイクアウトは並ばずにスムーズ購入可能。</span></div>
+        
+      </div>
+      <div class="slot-foot">
+        <a class="map-pill" href="https://www.google.com/maps/search/?api=1&amp;query=小布施堂+本店" target="_blank" rel="noopener">📍 Google Maps</a>
+        
+      </div>
+    </article>
+    <article class="slot-card " id="d1-slot-8" data-slot-id="d1-slot-8">
+      <div class="slot-meta">
+        <span class="slot-time">⏱️ 16:32 - 18:05</span>
+        <span class="slot-badge badge-transit">移動</span>
+      </div>
+      <div class="slot-title-row">
+        <input type="checkbox" class="slot-checkbox no-print" onchange="toggleSlot('d1-slot-8', this.checked)" title="完了・スキップを消し込み">
+        <h3 class="slot-title">小布施駅 ➔ 長野駅 ➔ MIDORIお土産処（八幡屋礒五郎七味調達）</h3>
+      </div>
+      <p class="slot-desc">長電で長野駅へ帰還。駅ビルMIDORIで信州銘菓・八幡屋礒五郎の特製七味をゆったり調達。</p>
+      
+      
+      
+      <div class="checkpoint-list">
+        
+          <div class="checkpoint-row">
+            
+            <div>
+              <div class="cp-title">小布施駅 ➔ 長野駅 ➔ MIDORIお土産処（八幡屋礒五郎七味調達）</div>
+              <div class="cp-desc">長電で長野駅へ帰還。駅ビルMIDORIで信州銘菓・八幡屋礒五郎の特製七味をゆったり調達。</div>
+            </div>
+          </div>
+        
+      </div>
+      
+      <div class="slot-foot">
+        <span></span>
+        
+      </div>
+    </article>
+    <article class="slot-card " id="d1-transit-matsumoto" data-slot-id="d1-transit-matsumoto">
+      <div class="slot-meta">
+        <span class="slot-time">⏱️ 16:32 - 19:03</span>
+        <span class="slot-badge badge-transit">特急しなの</span>
+      </div>
+      <div class="slot-title-row">
+        <input type="checkbox" class="slot-checkbox no-print" onchange="toggleSlot('d1-transit-matsumoto', this.checked)" title="完了・スキップを消し込み">
+        <h3 class="slot-title">小布施駅 ➔ 長野駅 ➔ 松本駅（JR特急しなの24号・篠ノ井線パノラマ）</h3>
+      </div>
+      <p class="slot-desc">小布施駅16:32発の長電で長野駅へ（17:05着）。駅ビルMIDORIのお土産フロアで信州名物「八幡屋礒五郎」の七味唐辛子や信州銘菓を調達（約1時間の完全バッファ）。18:11発JR特急しなの24号名古屋行に乗車し、姨捨の日本三大車窓を眺めながら19:03松本駅へ快適に到着。</p>
+      
+      
+      <div class="tactics-box">
+        <div class="tactics-header">
+          <span>🎯</span>
+          <span class="tactics-tag">個別立ち回り</span>
+          <span>【構内順路】松本アプローチステップ</span>
+        </div>
+        <div class="tactics-list">
+          
+            <div class="tactics-step-row">
+              <span class="tactics-num">1</span>
+              <span class="tactics-text">長野駅着後、MIDORI 2F信州くらうど・お土産フロアへ。</span>
+            </div>
+          
+            <div class="tactics-step-row">
+              <span class="tactics-num">2</span>
+              <span class="tactics-text">八幡屋礒五郎の缶入り七味・限定スパイスを調達。</span>
+            </div>
+          
+            <div class="tactics-step-row">
+              <span class="tactics-num">3</span>
+              <span class="tactics-text">18:11発特急しなの24号に乗車。夕暮れの篠ノ井線から善光寺平・姨捨の車窓を眺める。</span>
+            </div>
+          
+            <div class="tactics-step-row">
+              <span class="tactics-num">4</span>
+              <span class="tactics-text">19:03松本駅お城口へ下車。</span>
+            </div>
+          
+        </div>
+      </div>
+      
+      <div class="checkpoint-list">
+        
+          <div class="checkpoint-row">
+            <span class="cp-badge">必須</span>
+            <div>
+              <div class="cp-title">八幡屋礒五郎七味調達</div>
+              <div class="cp-desc">長野駅直結のMIDORIで定番土産を完璧に回収。</div>
+            </div>
+          </div>
+        
+          <div class="checkpoint-row">
+            <span class="cp-badge">必須</span>
+            <div>
+              <div class="cp-title">特急しなの24号乗車</div>
+              <div class="cp-desc">快適リクライニングシートで夕方の移動疲れを癒す。</div>
+            </div>
+          </div>
+        
+      </div>
+      
+      <div class="slot-foot">
+        <a class="map-pill" href="https://www.google.com/maps/dir/?api=1&amp;origin=小布施駅&amp;destination=松本駅" target="_blank" rel="noopener">📍 Google Maps</a>
+        
+      </div>
+    </article>
+    <article class="slot-card " id="d1-matsumoto-dinner" data-slot-id="d1-matsumoto-dinner">
+      <div class="slot-meta">
+        <span class="slot-time">⏱️ 19:15 - 20:30</span>
+        <span class="slot-badge badge-food">【必食】松本名物</span>
+      </div>
+      <div class="slot-title-row">
+        <input type="checkbox" class="slot-checkbox no-print" onchange="toggleSlot('d1-matsumoto-dinner', this.checked)" title="完了・スキップを消し込み">
+        <h3 class="slot-title">松本ディナー：信州郷土料理 ＆ 名物山賊焼 ＆ 馬刺し</h3>
+      </div>
+      <p class="slot-desc">松本駅前の郷土料理名店にて松本名物「山賊焼」（ニンニク醤油に漬け込んだ鶏もも肉を片栗粉で豪快に揚げた名物料理）と、新鮮で甘みのある「信州馬刺し」を堪能。長野の豊かな食文化を存分に味わう。</p>
+      
+      
+      <div class="tactics-box">
+        <div class="tactics-header">
+          <span>🎯</span>
+          <span class="tactics-tag">個別立ち回り</span>
+          <span>【構内順路】ディナー攻略手順</span>
+        </div>
+        <div class="tactics-list">
+          
+            <div class="tactics-step-row">
+              <span class="tactics-num">1</span>
+              <span class="tactics-text">松本駅お城口を出て駅前通り沿いの郷土居酒屋・名店へ入店。</span>
+            </div>
+          
+            <div class="tactics-step-row">
+              <span class="tactics-num">2</span>
+              <span class="tactics-text">名物山賊焼（特大ハーフまたはフル）と信州馬刺し盛り合わせを注文。</span>
+            </div>
+          
+            <div class="tactics-step-row">
+              <span class="tactics-num">3</span>
+              <span class="tactics-text">揚げたて熱々の山賊焼の圧倒的ボリュームを堪能。20:30に退店してホテルへ。</span>
+            </div>
+          
+        </div>
+      </div>
+      
+      <div class="checkpoint-list">
+        
+          <div class="checkpoint-row">
+            <span class="cp-badge">必須</span>
+            <div>
+              <div class="cp-title">カリッとジューシーな山賊焼</div>
+              <div class="cp-desc">鶏肉を豪快に揚げた松本・塩尻エリアの絶対ソウルフード。</div>
+            </div>
+          </div>
+        
+          <div class="checkpoint-row">
+            <span class="cp-badge">必須</span>
+            <div>
+              <div class="cp-title">鮮度抜群の信州馬刺し</div>
+              <div class="cp-desc">臭みがなく上質な赤身の旨味を堪能。</div>
+            </div>
+          </div>
+        
+      </div>
+      
+      <div class="slot-foot">
+        <a class="map-pill" href="https://www.google.com/maps/search/?api=1&amp;query=松本駅前+山賊焼+郷土料理" target="_blank" rel="noopener">📍 Google Maps</a>
+        
+      </div>
+    </article>
+    <article class="slot-card " id="d1-hotel" data-slot-id="d1-hotel">
+      <div class="slot-meta">
+        <span class="slot-time">⏱️ 20:45〜</span>
+        <span class="slot-badge badge-hotel">大浴場完備</span>
+      </div>
+      <div class="slot-title-row">
+        <input type="checkbox" class="slot-checkbox no-print" onchange="toggleSlot('d1-hotel', this.checked)" title="完了・スキップを消し込み">
+        <h3 class="slot-title">ホテル M マツモト チェックイン（駅前徒歩3分・大浴場＆サウナ）</h3>
+      </div>
+      <p class="slot-desc">松本駅お城口徒歩わずか3分。紅葉ピーク前夜の土曜宿泊高騰期において、予算ジャストの6,000円枠を完全確保した大勝利宿。男女別大浴場・サウナを完備し、初日の戸隠急登ピストンの疲労を芯から癒して翌朝の松本城アサルトに備える。</p>
+      
+      
+      <div class="tactics-box">
+        <div class="tactics-header">
+          <span>🎯</span>
+          <span class="tactics-tag">個別立ち回り</span>
+          <span>【構内順路】宿入りステップ</span>
+        </div>
+        <div class="tactics-list">
+          
+            <div class="tactics-step-row">
+              <span class="tactics-num">1</span>
+              <span class="tactics-text">20:45フロントチェックイン。カードキー・館内着受取。</span>
+            </div>
+          
+            <div class="tactics-step-row">
+              <span class="tactics-num">2</span>
+              <span class="tactics-text">大浴場＆サウナへ直行。温冷交代浴で足腰の筋肉疲労をリセット。</span>
+            </div>
+          
+            <div class="tactics-step-row">
+              <span class="tactics-num">3</span>
+              <span class="tactics-text">翌朝の松本城電子チケット購入・確認を済ませて就寝。</span>
+            </div>
+          
+        </div>
+      </div>
+      
+      <div class="checkpoint-list">
+        
+          <div class="checkpoint-row">
+            <span class="cp-badge">必須</span>
+            <div>
+              <div class="cp-title">大浴場＆サウナで疲労完全回復</div>
+              <div class="cp-desc">歩行距離15km超の身体を癒す最高の設備。</div>
+            </div>
+          </div>
+        
+      </div>
+      
+      <div class="slot-foot">
+        <a class="map-pill" href="https://www.google.com/maps/search/?api=1&amp;query=ホテル+M+マツモト" target="_blank" rel="noopener">📍 Google Maps</a>
+        
+      </div>
+    </article>
+        </div>
+      </section>
+      <section class="day-block" id="day-sec-2" data-day="2">
+        <h2 class="day-header">Day 2: 2026年11月1日 (日)</h2>
+        
+        <div class="macro-route-box">
+          <div class="macro-route-head">
+            <span class="macro-route-title">🗺️ 【全体ルート立ち回り】マクロ動線シークエンス</span>
+            <a class="macro-map-link" href="https://www.google.com/maps/dir/?api=1&amp;origin=松本駅&amp;destination=拠点駅&amp;waypoints=松本城|珈琲美学アベ|中津川駅" target="_blank" rel="noopener">📍 広域Google Maps</a>
+          </div>
+          <div class="macro-route-body">ホテルMマツモト ➔ 国宝松本城（開門8:30一番乗り） ➔ 縄手通りカエル街 ➔ 中町通り土蔵街 ➔ 珈琲美学アベ（モーニング/パフェ） ➔ 松本駅前（奈良井宿スキップ・休憩） ➔ 松本駅 ➔ 塩尻駅 ➔ 中津川駅 ➔ 多治見駅 ➔ 名古屋近郊拠点駅</div>
+        </div>
+        <div class="slot-list">
+          
+    <article class="slot-card " id="d2-checkout" data-slot-id="d2-checkout">
+      <div class="slot-meta">
+        <span class="slot-time">⏱️ 08:00 - 08:15</span>
+        <span class="slot-badge badge-transit">機動力重視</span>
+      </div>
+      <div class="slot-title-row">
+        <input type="checkbox" class="slot-checkbox no-print" onchange="toggleSlot('d2-checkout', this.checked)" title="完了・スキップを消し込み">
+        <h3 class="slot-title">ホテル M マツモト チェックアウト（完全リュック1つ仕様で出撃）</h3>
+      </div>
+      <p class="slot-desc">荷物をコンパクトなリュック1つ（20L、約3kg）に集約しチェックアウト。駅のコインロッカーに預ける時間・料金・戻り動線を一切排除し、城下町散策から帰省電車への飛び乗りまで完全自由な機動力を確保。</p>
+      
+      
+      <div class="tactics-box">
+        <div class="tactics-header">
+          <span>🎯</span>
+          <span class="tactics-tag">個別立ち回り</span>
+          <span>【構内順路】朝イチ出撃ステップ</span>
+        </div>
+        <div class="tactics-list">
+          
+            <div class="tactics-step-row">
+              <span class="tactics-num">1</span>
+              <span class="tactics-text">08:00に客室退室、チェックアウト完了。</span>
+            </div>
+          
+            <div class="tactics-step-row">
+              <span class="tactics-num">2</span>
+              <span class="tactics-text">朝の澄んだ空気の中、松本城公園方面へ北上（徒歩約15分）。</span>
+            </div>
+          
+            <div class="tactics-step-row">
+              <span class="tactics-num">3</span>
+              <span class="tactics-text">08:15に松本城黒門・券売所前へ到着し、開門列の先頭付近へスタンバイ。</span>
+            </div>
+          
+        </div>
+      </div>
+      
+      <div class="checkpoint-list">
+        
+          <div class="checkpoint-row">
+            <span class="cp-badge">必須</span>
+            <div>
+              <div class="cp-title">ロッカーフリー出撃</div>
+              <div class="cp-desc">コインロッカー代と駅戻りの時間ロスを完全ゼロ化。</div>
+            </div>
+          </div>
+        
+      </div>
+      
+      <div class="slot-foot">
+        <a class="map-pill" href="https://www.google.com/maps/dir/?api=1&amp;origin=ホテルMマツモト&amp;destination=松本城" target="_blank" rel="noopener">📍 Google Maps</a>
+        
+      </div>
+    </article>
+    <article class="slot-card " id="d2-matsumoto-castle" data-slot-id="d2-matsumoto-castle">
+      <div class="slot-meta">
+        <span class="slot-time">⏱️ 08:15 - 09:45</span>
+        <span class="slot-badge badge-sightseeing">【必見】待ち時間ゼロ</span>
+      </div>
+      <div class="slot-title-row">
+        <input type="checkbox" class="slot-checkbox no-print" onchange="toggleSlot('d2-matsumoto-castle', this.checked)" title="完了・スキップを消し込み">
+        <h3 class="slot-title">国宝 松本城（開門一番乗り天守登閣 ＆ 北アルプス借景絶景鑑賞）</h3>
+      </div>
+      <p class="slot-desc">現存十二天守の最高峰、五重六階の現存最古の天守閣。黒漆塗りの威容と、冠雪した北アルプスが本丸庭園の堀に映える絶景。08:30の開門一番乗りで入城することで、日中最大60分以上発生する天守階段待ちを完全ゼロ化。急勾配の木造階段を登りきり最上階からの大パノラマを制覇。</p>
+      
+      
+      <div class="tactics-box">
+        <div class="tactics-header">
+          <span>🎯</span>
+          <span class="tactics-tag">個別立ち回り</span>
+          <span>【構内順路】松本城 朝イチ攻略手順</span>
+        </div>
+        <div class="tactics-list">
+          
+            <div class="tactics-step-row">
+              <span class="tactics-num">1</span>
+              <span class="tactics-text">08:15に黒門前待機。事前に購入したWeb電子チケット画面をスマホでスタンバイ。</span>
+            </div>
+          
+            <div class="tactics-step-row">
+              <span class="tactics-num">2</span>
+              <span class="tactics-text">08:30開門と同時に黒門をくぐり、本丸庭園を抜けて天守閣へ最優先で登閣。</span>
+            </div>
+          
+            <div class="tactics-step-row">
+              <span class="tactics-num">3</span>
+              <span class="tactics-text">最大斜度61度の狭隘な木造階段を慎重かつスムーズに登り、最上階（6階）へ到達。</span>
+            </div>
+          
+            <div class="tactics-step-row">
+              <span class="tactics-num">4</span>
+              <span class="tactics-text">四方の窓から松本市街地と北アルプス連峰（槍ヶ岳・常念岳方面）の雄大な借景をパノラマ鑑賞。</span>
+            </div>
+          
+            <div class="tactics-step-row">
+              <span class="tactics-num">5</span>
+              <span class="tactics-text">天守を出て、埋門・堀越しに黒漆の天守と水鏡を写真撮影。</span>
+            </div>
+          
+        </div>
+      </div>
+      
+      <div class="checkpoint-list">
+        
+          <div class="checkpoint-row">
+            <span class="cp-badge">必須</span>
+            <div>
+              <div class="cp-title">現存五重六階天守の急階段登閣</div>
+              <div class="cp-desc">日本の城郭建築美の頂点を体感。</div>
+            </div>
+          </div>
+        
+          <div class="checkpoint-row">
+            <span class="cp-badge">必須</span>
+            <div>
+              <div class="cp-title">北アルプス借景の本丸写真撮影</div>
+              <div class="cp-desc">堀の水面に映る天守閣と雪山の対比を激写。</div>
+            </div>
+          </div>
+        
+      </div>
+      
+      <div class="practical-footer">
+        
+        <div class="pf-row"><span class="pf-tag">💡 現地Tips:</span><span class="pf-val">天守内は土足厳禁で急階段。靴袋を持って両手を空けて登る。</span></div>
+        
+      </div>
+      <div class="slot-foot">
+        <a class="map-pill" href="https://www.google.com/maps/search/?api=1&amp;query=国宝+松本城" target="_blank" rel="noopener">📍 Google Maps</a>
+        
+      </div>
+    </article>
+    <article class="slot-card " id="d2-nawate-nakamachi" data-slot-id="d2-nawate-nakamachi">
+      <div class="slot-meta">
+        <span class="slot-time">⏱️ 09:45 - 12:00</span>
+        <span class="slot-badge badge-sightseeing">城下町情緒</span>
+      </div>
+      <div class="slot-title-row">
+        <input type="checkbox" class="slot-checkbox no-print" onchange="toggleSlot('d2-nawate-nakamachi', this.checked)" title="完了・スキップを消し込み">
+        <h3 class="slot-title">松本城下町・蔵の街散策（縄手通りカエル街 ＆ 中町通りなまこ壁土蔵街）</h3>
+      </div>
+      <p class="slot-desc">松本城から南へ下り、女鳥羽川沿いの城下町情緒をゆったり満喫。縄手通り商店街（カエルをシンボルとした下町風情）を歩き四柱神社で参拝。女鳥羽川の橋を渡って中町通りへ入り、白と黒の幾何学模様が美しい「なまこ壁」の土蔵造りの町家が連なる風情ある通りを散策。</p>
+      
+      
+      <div class="tactics-box">
+        <div class="tactics-header">
+          <span>🎯</span>
+          <span class="tactics-tag">個別立ち回り</span>
+          <span>【構内順路】城下町散策ルート</span>
+        </div>
+        <div class="tactics-list">
+          
+            <div class="tactics-step-row">
+              <span class="tactics-num">1</span>
+              <span class="tactics-text">松本城大手門枡形跡を抜けて南へ進み、縄手通りへ入る。</span>
+            </div>
+          
+            <div class="tactics-step-row">
+              <span class="tactics-num">2</span>
+              <span class="tactics-text">縄手通りのカエル大明神、たい焼き店や工芸品店を覗きつつ「四柱神社」へ参拝。</span>
+            </div>
+          
+            <div class="tactics-step-row">
+              <span class="tactics-num">3</span>
+              <span class="tactics-text">千歳橋または千代田橋を渡り、南側の中町通りへ進出。</span>
+            </div>
+          
+            <div class="tactics-step-row">
+              <span class="tactics-num">4</span>
+              <span class="tactics-text">中町・蔵シック館や老舗民芸品店が並ぶなまこ壁土蔵街をマイペースで散策。</span>
+            </div>
+          
+        </div>
+      </div>
+      
+      <div class="checkpoint-list">
+        
+          <div class="checkpoint-row">
+            <span class="cp-badge">必須</span>
+            <div>
+              <div class="cp-title">縄手通りのレトロな街並み</div>
+              <div class="cp-desc">「若返る・無事帰る」のカエル像が並ぶ歩行者天国。</div>
+            </div>
+          </div>
+        
+          <div class="checkpoint-row">
+            <span class="cp-badge">必須</span>
+            <div>
+              <div class="cp-title">中町通りの白黒なまこ壁土蔵群</div>
+              <div class="cp-desc">江戸・明治期の火災から守られた伝統的耐火建築。</div>
+            </div>
+          </div>
+        
+      </div>
+      
+      <div class="slot-foot">
+        <a class="map-pill" href="https://www.google.com/maps/search/?api=1&amp;query=松本+中町通り" target="_blank" rel="noopener">📍 Google Maps</a>
+        
+      </div>
+    </article>
+    <article class="slot-card " id="d2-abe-cafe" data-slot-id="d2-abe-cafe">
+      <div class="slot-meta">
+        <span class="slot-time">⏱️ 12:00 - 13:30</span>
+        <span class="slot-badge badge-food">【必食】昭和レトロ喫茶</span>
+      </div>
+      <div class="slot-title-row">
+        <input type="checkbox" class="slot-checkbox no-print" onchange="toggleSlot('d2-abe-cafe', this.checked)" title="完了・スキップを消し込み">
+        <h3 class="slot-title">松本老舗喫茶＆ランチ：珈琲美学アベ（名物モカパフェ ＆ 水出し珈琲）</h3>
+      </div>
+      <p class="slot-desc">1957年創業、松本駅前を代表する名曲・名喫茶「珈琲美学アベ」。クラシックな木製家具とステンドグラスが醸し出す重厚な空間。名物の「モカパフェ」（ほろ苦いコーヒーゼリーと濃厚モカアイス）や、グラスの目の前で高い位置からコーヒーとミルクを同時に注ぐ「アイスモカジャバ」を味わい、優雅なひとときを過ごす。</p>
+      
+      
+      <div class="tactics-box">
+        <div class="tactics-header">
+          <span>🎯</span>
+          <span class="tactics-tag">個別立ち回り</span>
+          <span>【構内順路】珈琲美学アベ立ち回り手順</span>
+        </div>
+        <div class="tactics-list">
+          
+            <div class="tactics-step-row">
+              <span class="tactics-num">1</span>
+              <span class="tactics-text">12:00頃に松本駅前通り沿いのアベへ入店。落ち着いた木調のテーブル席へ。</span>
+            </div>
+          
+            <div class="tactics-step-row">
+              <span class="tactics-num">2</span>
+              <span class="tactics-text">名物「モカパフェ」または「アイスモカジャバ」を注文。</span>
+            </div>
+          
+            <div class="tactics-step-row">
+              <span class="tactics-num">3</span>
+              <span class="tactics-text">店員さんが目の前で豪快に注ぎ分けるパフォーマンスを鑑賞し、上品な甘みと香りを堪能。</span>
+            </div>
+          
+            <div class="tactics-step-row">
+              <span class="tactics-num">4</span>
+              <span class="tactics-text">必要に応じて駅前で信州そば等の軽食を合わせ、13:30に退店。</span>
+            </div>
+          
+        </div>
+      </div>
+      
+      <div class="checkpoint-list">
+        
+          <div class="checkpoint-row">
+            <span class="cp-badge">必須</span>
+            <div>
+              <div class="cp-title">アイスモカジャバの注ぎ分け演出</div>
+              <div class="cp-desc">高い位置から注がれふんわり泡立つ至芸。</div>
+            </div>
+          </div>
+        
+          <div class="checkpoint-row">
+            <span class="cp-badge">必須</span>
+            <div>
+              <div class="cp-title">昭和レトロな極上空間での休息</div>
+              <div class="cp-desc">旅の締めくくりにふさわしい落ち着いた空間。</div>
+            </div>
+          </div>
+        
+      </div>
+      
+      <div class="slot-foot">
+        <a class="map-pill" href="https://www.google.com/maps/search/?api=1&amp;query=珈琲美学アベ" target="_blank" rel="noopener">📍 Google Maps</a>
+        
+      </div>
+    </article>
+    <article class="slot-card " id="d2-skip-narai" data-slot-id="d2-skip-narai">
+      <div class="slot-meta">
+        <span class="slot-time">⏱️ 13:30 - 14:15</span>
+        <span class="slot-badge badge-sightseeing">実績スキップ反映</span>
+      </div>
+      <div class="slot-title-row">
+        <input type="checkbox" class="slot-checkbox no-print" onchange="toggleSlot('d2-skip-narai', this.checked)" title="完了・スキップを消し込み">
+        <h3 class="slot-title">【実績スキップ判断】奈良井宿スキップ ＆ 松本駅前ゆったり休憩</h3>
+      </div>
+      <p class="slot-desc">【実績反映】前日の戸隠奥社往復急登ピストンによる疲労蓄積、および重要観光資源である「木曽の大橋」が大規模改修工事中で全面通行止め（渡橋不可・骨組み外観のみ）であった実情を考慮し、奈良井宿への遠征を無理せず安全スキップ。松本周辺の城下町観光に集中し、松本駅構内・駅ビルでお土産選びと休憩をゆったり満喫。</p>
+      
+      <div class="swap-box">
+        <div class="swap-title">🔀 スワップ・代替ルート候補</div>
+        <div><strong>実績採用：奈良井スキップ:</strong> 松本周辺の散策・名喫茶でゆったり休憩 ➔ 松本から安全・快適に直行帰還</div><div><strong>旧本線：奈良井宿強行:</strong> 12:13発で奈良井へ移動 ➔ 2時間半散策（大橋通行止） ➔ 15:36発アンカー便で帰還</div>
+      </div>
+      
+      <div class="tactics-box">
+        <div class="tactics-header">
+          <span>🎯</span>
+          <span class="tactics-tag">個別立ち回り</span>
+          <span>【構内順路】スキップ判断と安全撤退経緯</span>
+        </div>
+        <div class="tactics-list">
+          
+            <div class="tactics-step-row">
+              <span class="tactics-num">1</span>
+              <span class="tactics-text">奈良井宿への往復移動（普通列車で片道約50分・本数が極少で15:36発死守の拘束）による疲労リスクを冷静に評価。</span>
+            </div>
+          
+            <div class="tactics-step-row">
+              <span class="tactics-num">2</span>
+              <span class="tactics-text">奈良井宿のシンボル「木曽の大橋」が全面通行止めであるため、今無理に行く価値が半減していると判断。</span>
+            </div>
+          
+            <div class="tactics-step-row">
+              <span class="tactics-num">3</span>
+              <span class="tactics-text">奈良井宿スキップを決定し、松本駅前でゆったりとお茶・お土産の追加購入を完了。</span>
+            </div>
+          
+        </div>
+      </div>
+      
+      <div class="checkpoint-list">
+        
+          <div class="checkpoint-row">
+            <span class="cp-badge">必須</span>
+            <div>
+              <div class="cp-title">体調最優先の安全スキップ英断</div>
+              <div class="cp-desc">疲労による事故や無理な移動を未然に防ぐプロの立ち回り。</div>
+            </div>
+          </div>
+        
+      </div>
+      
+      <div class="slot-foot">
+        <a class="map-pill" href="https://www.google.com/maps/search/?api=1&amp;query=松本駅" target="_blank" rel="noopener">📍 Google Maps</a>
+        
+      </div>
+    </article>
+    <article class="slot-card " id="d2-transit-home" data-slot-id="d2-transit-home">
+      <div class="slot-meta">
+        <span class="slot-time">⏱️ 14:15 - 17:37</span>
+        <span class="slot-badge badge-transit">直行スマート帰省</span>
+      </div>
+      <div class="slot-title-row">
+        <input type="checkbox" class="slot-checkbox no-print" onchange="toggleSlot('d2-transit-home', this.checked)" title="完了・スキップを消し込み">
+        <h3 class="slot-title">松本駅 ➔ 中津川 ➔ 多治見 ➔ 拠点駅（JR中央本線拠点直行帰還）</h3>
+      </div>
+      <p class="slot-desc">松本駅からJR中央本線で南下。塩尻・木曽路を抜けて中津川駅へ。中津川から快速名古屋行に乗り換え、多治見駅を経由して名古屋近郊の滞在拠点へ直行。名古屋駅までオーバーランして逆走することなく、約50分短縮かつ夕食前のベストな時間帯に拠点到着。</p>
+      
+      
+      <div class="tactics-box">
+        <div class="tactics-header">
+          <span>🎯</span>
+          <span class="tactics-tag">個別立ち回り</span>
+          <span>【構内順路】拠点直行スマート帰還ステップ</span>
+        </div>
+        <div class="tactics-list">
+          
+            <div class="tactics-step-row">
+              <span class="tactics-num">1</span>
+              <span class="tactics-text">松本駅改札口からJR中央西線普通列車に乗車。木曽川沿いの山並み車窓を眺める。</span>
+            </div>
+          
+            <div class="tactics-step-row">
+              <span class="tactics-num">2</span>
+              <span class="tactics-text">中津川駅にて中央線快速（名古屋行）へ乗り換え。</span>
+            </div>
+          
+            <div class="tactics-step-row">
+              <span class="tactics-num">3</span>
+              <span class="tactics-text">多治見駅を通過し、拠点駅にて17:37下車。</span>
+            </div>
+          
+            <div class="tactics-step-row">
+              <span class="tactics-num">4</span>
+              <span class="tactics-text">改札を出て拠点へ合流。信州5大S級完全制覇スプリント旅程を無事完遂。</span>
+            </div>
+          
+        </div>
+      </div>
+      
+      <div class="checkpoint-list">
+        
+          <div class="checkpoint-row">
+            <span class="cp-badge">必須</span>
+            <div>
+              <div class="cp-title">多治見経由拠点直行ルート</div>
+              <div class="cp-desc">名古屋へ遠回りしないスマートな帰省動線。</div>
+            </div>
+          </div>
+        
+          <div class="checkpoint-row">
+            <span class="cp-badge">必須</span>
+            <div>
+              <div class="cp-title">有休0日・宿代6,000円での完全勝利完遂</div>
+              <div class="cp-desc">コスパ・タイパを極限まで高めた秋遠征の完結。</div>
+            </div>
+          </div>
+        
+      </div>
+      
+      <div class="slot-foot">
+        <a class="map-pill" href="https://www.google.com/maps/dir/?api=1&amp;origin=松本駅&amp;destination=拠点駅" target="_blank" rel="noopener">📍 Google Maps</a>
+        
+      </div>
+    </article>
+    <article class="slot-card " id="d2-slot-7" data-slot-id="d2-slot-7">
+      <div class="slot-meta">
+        <span class="slot-time">⏱️ 17:37〜</span>
+        <span class="slot-badge badge-transit">移動</span>
+      </div>
+      <div class="slot-title-row">
+        <input type="checkbox" class="slot-checkbox no-print" onchange="toggleSlot('d2-slot-7', this.checked)" title="完了・スキップを消し込み">
+        <h3 class="slot-title">拠点駅到着・信州スプリント完全完遂</h3>
+      </div>
+      <p class="slot-desc">夕食前の絶妙な時間帯に拠点合流。有休ゼロ・宿代6,000円の弾丸遠征が完結。</p>
+      
+      
+      
+      <div class="checkpoint-list">
+        
+          <div class="checkpoint-row">
+            
+            <div>
+              <div class="cp-title">拠点駅到着・信州スプリント完全完遂</div>
+              <div class="cp-desc">夕食前の絶妙な時間帯に拠点合流。有休ゼロ・宿代6,000円の弾丸遠征が完結。</div>
+            </div>
+          </div>
+        
+      </div>
+      
+      <div class="slot-foot">
+        <span></span>
+        
+      </div>
+    </article>
+        </div>
+      </section>
+    
+    <nav class="nav-bar no-print" style="margin-top: 24px;">
+      <button type="button" class="nav-link active" data-day="all" onclick="switchDay('all'); window.scrollTo({top:0, behavior:'smooth'});">📑 全日程</button>
+      <button type="button" class="nav-link" data-day="1" onclick="switchDay(1); window.scrollTo({top:0, behavior:'smooth'});">Day 1</button><button type="button" class="nav-link" data-day="2" onclick="switchDay(2); window.scrollTo({top:0, behavior:'smooth'});">Day 2</button>
+    </nav>
+  </main>
+
+  <script>
+    const STORAGE_KEY = 'nagano_completed_slots';
+
+    function toggleTheme() {
+      const cur = document.documentElement.getAttribute('data-theme') || 'light';
+      const nxt = cur === 'dark' ? 'light' : 'dark';
+      document.documentElement.setAttribute('data-theme', nxt);
+      localStorage.setItem('trip_nav_theme', nxt);
+    }
+
+    function getCompletedSlots() {
+      try {
+        return JSON.parse(localStorage.getItem(STORAGE_KEY) || '[]');
+      } catch (e) {
+        return [];
+      }
+    }
+
+    function toggleSlot(slotId, isDone) {
+      const card = document.getElementById(slotId);
+      let list = getCompletedSlots();
+      if (isDone) {
+        if (!list.includes(slotId)) list.push(slotId);
+        if (card) card.classList.add('is-dimmed');
+      } else {
+        list = list.filter(id => id !== slotId);
+        if (card) card.classList.remove('is-dimmed');
+      }
+      localStorage.setItem(STORAGE_KEY, JSON.stringify(list));
+    }
+
+    // In-page Day Segment Switcher (Instant filter without HTTP reload)
+    function switchDay(targetDay) {
+      const dayBlocks = document.querySelectorAll('.day-block');
+      const jumpChips = document.querySelectorAll('.jump-chip');
+      const navLinks = document.querySelectorAll('.nav-link[data-day]');
+
+      // 1. Filter Day Sections
+      dayBlocks.forEach(sec => {
+        const secDay = sec.getAttribute('data-day');
+        if (targetDay === 'all' || secDay === String(targetDay)) {
+          sec.style.display = '';
+        } else {
+          sec.style.display = 'none';
+        }
+      });
+
+      // 2. Filter Jump Chips
+      jumpChips.forEach(chip => {
+        const chipDay = chip.getAttribute('data-day');
+        if (targetDay === 'all' || chipDay === String(targetDay)) {
+          chip.style.display = '';
+        } else {
+          chip.style.display = 'none';
+        }
+      });
+
+      // 3. Update Nav Active State
+      navLinks.forEach(link => {
+        if (link.getAttribute('data-day') === String(targetDay)) {
+          link.classList.add('active');
+        } else {
+          link.classList.remove('active');
+        }
+      });
+
+      // 4. Sync Hash (optional bookmarking)
+      if (history.replaceState) {
+        const newHash = targetDay === 'all' ? '' : `#day${targetDay}`;
+        history.replaceState(null, '', newHash || window.location.pathname);
+      }
+    }
+
+    // Initialize state on load
+    document.addEventListener('DOMContentLoaded', () => {
+      // Restore checked slots
+      const list = getCompletedSlots();
+      list.forEach(slotId => {
+        const card = document.getElementById(slotId);
+        if (card) {
+          card.classList.add('is-dimmed');
+          const cb = card.querySelector('.slot-checkbox');
+          if (cb) cb.checked = true;
+        }
+      });
+
+      // Initial day selection from URL hash: e.g. #day1, #day2
+      const hash = window.location.hash.toLowerCase();
+      const match = hash.match(/^#day(\d+)$/);
+      if (match) {
+        switchDay(match[1]);
+      } else {
+        switchDay('all');
+      }
+    });
+  </script>
+</body>
+</html>

@@ -1,0 +1,622 @@
+<!DOCTYPE html>
+<html lang="ja" data-theme="light">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>長野 ｜ 戸隠・善光寺・小布施・松本 旅アルバム 2026 ｜ ポップ行動ログ（完全確定版）</title>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <script>
+    (function() {
+      var t = localStorage.getItem('trip_nav_theme') || 'light';
+      document.documentElement.setAttribute('data-theme', t);
+    })();
+  </script>
+  <link rel="stylesheet" href="../assets/album.css">
+</head>
+<body>
+
+  <!-- Sticky Header -->
+  <header>
+    <div class="container header-inner">
+      <div class="logo-area">
+        <div class="logo"><span>📸</span> 長野 ｜ 戸隠・善光寺・小布施・松本 旅アルバム</div>
+      </div>
+      <div class="header-actions">
+        <a href="index.html" class="nav-btn">◀ 旅ポータル</a>
+        <a href="prod.html" class="nav-btn">最終版</a>
+        <button class="theme-toggle" id="themeBtn" aria-label="テーマ切替">🌙</button>
+      </div>
+    </div>
+  </header>
+
+  <main class="container">
+
+    <!-- Album Hero -->
+    <div class="album-hero">
+      <div class="tape">GOOGLE TIMELINE &amp; APPLE HEALTH VERIFIED</div>
+      <h1 class="hero-title">長野 ｜ 信州5大S級 弾丸行動アルバム</h1>
+      <p class="hero-subtitle">Googleマップ タイムライン ＆ Apple Health 実測同期完了版</p>
+      
+      <div class="hero-tags">
+        <span class="tag-badge tag-blue">📅 2026.10.31 - 11.01</span>
+        <span class="tag-badge tag-orange">⛩️ 戸隠奥社・善光寺・小布施・国宝松本城</span>
+        <span class="tag-badge tag-green">🛡️ 写真ゼロ・完全公開仕様</span>
+        <span class="tag-badge tag-purple">⚡ 実測 約29,000歩 / 20.00km</span>
+      </div>
+
+      <!-- Health KPI Real Data -->
+      <div class="health-kpi-grid">
+                <div class="health-kpi-card">
+          <div class="kpi-title">2日間 合計歩数</div>
+          <div class="kpi-val primary">約 29,000 歩</div>
+        </div>
+        <div class="health-kpi-card">
+          <div class="kpi-title">2日間 歩行距離</div>
+          <div class="kpi-val mint">20.00 km</div>
+        </div>
+        <div class="health-kpi-card">
+          <div class="kpi-title">10/31 (土) 戸隠・善光寺・小布施</div>
+          <div class="kpi-val">約 21,300歩 / 14.97km</div>
+        </div>
+        <div class="health-kpi-card">
+          <div class="kpi-title">11/1 (日) 松本城・城下町・帰省</div>
+          <div class="kpi-val">約 7,700歩 / 5.03km</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Chart Section -->
+        <section>
+      <div class="section-header">
+        <div class="section-icon">📈</div>
+        <h2 class="section-title">インタラクティブ・アクティビティ分析</h2>
+      </div>
+      <div class="chart-card">
+        <div class="chart-tabs">
+          <button class="chart-tab-btn active" data-view="hourly">🐾 時間帯別 歩数推移</button>
+          <button class="chart-tab-btn" data-view="duration">⏱️ スポット別 滞在時間 (分)</button>
+          <button class="chart-tab-btn" data-view="cumulative">📈 累積歩数カーブ</button>
+        </div>
+        <div class="chart-wrapper">
+          <canvas id="mainChartCanvas" role="img" aria-label="旅行アクティビティ推移グラフ（時間帯別歩数・スポット滞在時間・累積歩数）"></canvas>
+        </div>
+        <div class="chart-meta-caption" id="chartCaption">
+          📊 タブを切り替えて「時間帯別歩数」「スポット滞在時間」「累積歩数カーブ」をインタラクティブに分析可能
+        </div>
+      </div>
+    </section>
+
+
+    <!-- Spot Sections (Polaroid Grid) -->
+        <section>
+      <div class="section-header">
+        <div class="section-icon">⚖️</div>
+        <h2 class="section-title">計画 vs 実際の行動（時系列完全整列）</h2>
+      </div>
+      <div class="diff-table-card">
+  <div class="diff-table-wrapper">
+    <table class="diff-table">
+      <colgroup>
+        <col class="col-spot" style="width: 28%;">
+        <col class="col-plan" style="width: 22%;">
+        <col class="col-actual" style="width: 36%;">
+        <col class="col-verdict" style="width: 14%;">
+      </colgroup>
+      <thead>
+        <tr>
+          <th scope="col">スポット・行程</th>
+          <th scope="col">当初計画</th>
+          <th scope="col">実測行動ログ（Timeline）</th>
+          <th scope="col" style="text-align: center;">判定</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><strong>① 行徳 ➔ 東京 ➔ 長野駅（かがやき501号）</strong></td>
+          <td>05:08始発・06:16新幹線</td>
+          <td><strong>05:22 - 07:36</strong>（東西線始発圏・東京06:24発かがやき最速長野着）</td>
+          <td style="text-align: center;"><span class="stamp stamp-win">◎ 完全勝利</span></td>
+        </tr>
+        <tr>
+          <td><strong>② 長野駅 ➔ 戸隠奥社入口（観光特急）</strong></td>
+          <td>08:20発・最前列01C席</td>
+          <td><strong>08:20 - 09:21</strong>（バードライン経由で戸隠奥社入口へ定刻到達）</td>
+          <td style="text-align: center;"><span class="stamp stamp-god">★ 神判定</span></td>
+        </tr>
+        <tr>
+          <td><strong>③ 戸隠神社 奥社（杉並木＆急登ピストン）</strong></td>
+          <td>往復90分・11:34帰路便想定</td>
+          <td><strong>09:21 - 10:12</strong>（往復4km急登を50分で走破・9時台3,443歩記録）</td>
+          <td style="text-align: center;"><span class="stamp stamp-god">★ 神判定</span></td>
+        </tr>
+        <tr>
+          <td><strong>④ 戸隠奥社 ➔ 長野駅（前倒し特急生還）</strong></td>
+          <td>11:34発バスで長野戻り</td>
+          <td><strong>10:14 - 11:16</strong>（10:14発へ滑り込み乗車・1時間20分前倒し達成）</td>
+          <td style="text-align: center;"><span class="stamp stamp-god">★ 神判定</span></td>
+        </tr>
+        <tr>
+          <td><strong>⑤ 戸隠そば昼食（戸隠つきや 門前・駅前圏）</strong></td>
+          <td>門前そば店で新そば昼食</td>
+          <td><strong>11:21 - 12:06</strong>（ピーク前に着席・伝統ぼっち盛り戸隠新そば完食）</td>
+          <td style="text-align: center;"><span class="stamp stamp-win">◎ 完全勝利</span></td>
+        </tr>
+        <tr>
+          <td><strong>⑥ 国宝 善光寺（仲見世・山門・お戒壇巡り）</strong></td>
+          <td>本堂参拝＆お戒壇巡り</td>
+          <td><strong>12:06 - 13:44</strong>（98分滞在・漆黒のお戒壇巡りで極楽の錠前タッチ）</td>
+          <td style="text-align: center;"><span class="stamp stamp-god">★ 神判定</span></td>
+        </tr>
+        <tr>
+          <td><strong>⑦ 善光寺大門 ➔ 長野駅 ➔ 小布施（長電）</strong></td>
+          <td>15時台小布施入り想定</td>
+          <td><strong>13:44 - 14:49</strong>（路線バス17分＋長電27分で予定より50分早く先着）</td>
+          <td style="text-align: center;"><span class="stamp stamp-win">◎ 完全勝利</span></td>
+        </tr>
+        <tr>
+          <td><strong>⑧ 小布施・新栗スイーツ＆蔵の街散策</strong></td>
+          <td>小布施堂・竹風堂・栗の小径</td>
+          <td><strong>14:49 - 16:29</strong>（100分滞在・朱雀モンブラン＆栗あんソフト＆栗の小径）</td>
+          <td style="text-align: center;"><span class="stamp stamp-god">★ 神判定</span></td>
+        </tr>
+        <tr>
+          <td><strong>⑨ 小布施 ➔ 長野駅 MIDORI（七味・土産）</strong></td>
+          <td>長電戻り＆駅ビル土産調達</td>
+          <td><strong>16:29 - 18:11</strong>（長電帰還後MIDORIで八幡屋礒五郎七味・銘菓調達）</td>
+          <td style="text-align: center;"><span class="stamp stamp-win">◎ 完全勝利</span></td>
+        </tr>
+        <tr>
+          <td><strong>⑩ 長野 ➔ 松本（JR特急しなの24号）</strong></td>
+          <td>18:11発 特急しなの移動</td>
+          <td><strong>18:11 - 18:57</strong>（篠ノ井線47.3km快走・姨捨三大車窓夜景を通過し松本着）</td>
+          <td style="text-align: center;"><span class="stamp stamp-win">◎ 完全勝利</span></td>
+        </tr>
+        <tr>
+          <td><strong>⑪ 松本ナイトラン：名物山賊焼＆信州馬刺し</strong></td>
+          <td>松本駅前で郷土料理夕食</td>
+          <td><strong>19:15 - 20:30</strong>（特大山賊焼＆信州馬刺し堪能・19時台1,229歩計測）</td>
+          <td style="text-align: center;"><span class="stamp stamp-god">★ 神判定</span></td>
+        </tr>
+        <tr>
+          <td><strong>⑫ ホテル M マツモト（大浴場＆サウナ泊）</strong></td>
+          <td>6,000円枠・大浴場回復</td>
+          <td><strong>20:45 - 翌08:33</strong>（松本駅近6,000円神宿・大浴場とサウナで14.97km疲労完治）</td>
+          <td style="text-align: center;"><span class="stamp stamp-god">★ 神判定</span></td>
+        </tr>
+        <tr>
+          <td><strong>⑬ 国宝 松本城（開門直撃・天守登閣）</strong></td>
+          <td>朝イチ天守登閣・北アルプス</td>
+          <td><strong>08:33 - 10:10</strong>（待ち時間ゼロで五重六階天守登頂・北アルプス借景激写）</td>
+          <td style="text-align: center;"><span class="stamp stamp-god">★ 神判定</span></td>
+        </tr>
+        <tr>
+          <td><strong>⑭ 松本城下町（縄手通り・四柱神社・中町通り）</strong></td>
+          <td>カエル街＆なまこ壁土蔵街</td>
+          <td><strong>10:10 - 11:42</strong>（女鳥羽川沿い縄手通り・四柱神社・中町通り白黒土蔵群）</td>
+          <td style="text-align: center;"><span class="stamp stamp-win">◎ 完全勝利</span></td>
+        </tr>
+        <tr>
+          <td><strong>⑮ 珈琲美学アベ（松本駅前・昭和純喫茶）</strong></td>
+          <td>名物モカパフェ・珈琲休憩</td>
+          <td><strong>11:42 - 12:06</strong>（創業1957年名喫茶でモカパフェ＆モカジャバ電撃堪能）</td>
+          <td style="text-align: center;"><span class="stamp stamp-god">★ 神判定</span></td>
+        </tr>
+        <tr>
+          <td><strong>⑯ 奈良井宿（木曽の大橋・宿場町散策）</strong></td>
+          <td>午後2時間半散策予定</td>
+          <td><strong>13:09 車窓通過</strong>（前日2.1万歩疲労＆木曽の大橋改修通行止のため安全スキップ）</td>
+          <td style="text-align: center;"><span class="stamp stamp-skip">⏭ 戦略的スキップ</span></td>
+        </tr>
+        <tr>
+          <td><strong>⑰ 松本 ➔ 塩尻 ➔ 中津川 ➔ 多治見 ➔ 拠点帰省</strong></td>
+          <td>14:15発 ➔ 17:37拠点着</td>
+          <td><strong>12:06 - 15:35</strong>（1便早い12:13先行列車へ乗換・多治見経由で岐阜/春日井拠点直帰）</td>
+          <td style="text-align: center;"><span class="stamp stamp-god">★ 神判定</span></td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+
+    </section>
+
+    <section>
+      <div class="section-header">
+        <div class="section-icon">📍</div>
+        <h2 class="section-title">2. Day 1: 10月31日(土) — 戸隠神社奥社・善光寺・小布施・松本ナイトラン</h2>
+      </div>
+      <div class="polaroid-grid">
+        <div class="polaroid-card">
+          <div>
+            <div class="card-top">
+              <span class="spot-time">05:22 - 07:36</span>
+              <span class="stamp stamp-win">◎ 完全勝利</span>
+            </div>
+            <h3 class="spot-name">1. 東京始発アプローチ ＆ 北陸新幹線かがやき501号</h3>
+            <div class="punchline success">「05:22自宅出撃から東西線・かがやき501号へ完璧接続。07:36長野駅一番乗り」</div>
+          </div>
+          <ul class="fact-bullet">
+            <li>05:22自宅発、徒歩475mで行徳駅へアプローチし東京メトロ東西線に乗車（14.18km）</li>
+            <li>大手町から東京駅新幹線改札へスムーズに連絡（06:04 - 06:24）</li>
+            <li>北陸新幹線かがやき501号で軽井沢・佐久平を通過し、わずか80分で朝の長野駅善光寺口へ到達</li>
+          </ul>
+        </div>
+        <div class="polaroid-card">
+          <div>
+            <div class="card-top">
+              <span class="spot-time">08:20 - 10:12</span>
+              <span class="stamp stamp-god">★ 神判定</span>
+            </div>
+            <h3 class="spot-name">2. アルピコ交通 観光特急（最前列01C席）➔ 戸隠神社 奥社 参道50分爆速ピストン</h3>
+            <div class="punchline success">「樹齢400年の杉並木と急登往復4kmを50分で走破。10:14発の戻り特急に滑り込む1時間20分前倒し神記録」</div>
+          </div>
+          <ul class="fact-bullet">
+            <li>事前確保した観光特急最前列01C席でバードライン七曲りを駆け上がり、09:21に戸隠奥社入口（`36.7580, 138.0757`）着</li>
+            <li>随神門から奥社本殿（`36.7642, 138.0631`）へ続く急勾配石段をノンストップで登頂参拝（09時台だけで3,443歩を計測）</li>
+            <li>10:12に奥社入口バス停へ生還し、本来11:34発予定だった帰路バスを10:14発へ1時間20分前倒しする決定的な時間貯金を創出</li>
+          </ul>
+        </div>
+        <div class="polaroid-card">
+          <div>
+            <div class="card-top">
+              <span class="spot-time">11:21 - 12:06</span>
+              <span class="stamp stamp-win">◎ 完全勝利</span>
+            </div>
+            <h3 class="spot-name">3. 門前 戸隠そば昼食（戸隠つきや 門前 ＆ 長野善光寺アプローチ）</h3>
+            <div class="punchline success">「戸隠現地の昼食大行列を華麗にパスし、善光寺門前で伝統『ぼっち盛り』戸隠新そばを待ち時間ゼロで回収」</div>
+          </div>
+          <ul class="fact-bullet">
+            <li>11:16に長野駅へ帰還（`36.6438, 138.1878`）後、昼食ピーク前のベストタイミングで門前そば処へ入店（45分滞在）</li>
+            <li>竹ざるの上に5〜6束に丸めて盛られる戸隠伝統の「ぼっち盛り」新そばと濃厚なそば湯で日本三大そば実績を達成</li>
+          </ul>
+        </div>
+        <div class="polaroid-card">
+          <div>
+            <div class="card-top">
+              <span class="spot-time">12:06 - 13:44</span>
+              <span class="stamp stamp-god">★ 神判定</span>
+            </div>
+            <h3 class="spot-name">4. 国宝 善光寺（仲見世通り・山門・本堂内陣・お戒壇巡り）</h3>
+            <div class="punchline success">「完全漆黒の回廊を手探りで進む『お戒壇巡り』。ご本尊真下の極楽の錠前に触れ、東日本最大級の国宝木造建築を堪能」</div>
+          </div>
+          <ul class="fact-bullet">
+            <li>善光寺大門（`36.6582, 138.1875`）から仲見世通り・山門（`36.6609, 138.1876`）を経て国宝本堂（`36.6616, 138.1873`）へ98分間の濃密参拝</li>
+            <li>一切の光が遮断された床下回廊「お戒壇巡り」で右壁を伝い、秘仏本尊と結ばれた「極楽の錠前」を確実にタッチ</li>
+            <li>参拝後は善光寺大門から路線バス（13:44 - 14:01、1.74km）で長野駅へスマートに帰還</li>
+          </ul>
+        </div>
+        <div class="polaroid-card">
+          <div>
+            <div class="card-top">
+              <span class="spot-time">14:22 - 16:29</span>
+              <span class="stamp stamp-god">★ 神判定</span>
+            </div>
+            <h3 class="spot-name">5. 長野電鉄アプローチ ＆ 小布施・新栗スイーツ無双（小布施堂・竹風堂・栗の小径）</h3>
+            <div class="punchline success">「戸隠前倒し効果で小布施に50分先着。小布施堂の新栗『朱雀モンブラン』＆竹風堂ソフトと『栗の小径』を100分満喫」</div>
+          </div>
+          <ul class="fact-bullet">
+            <li>長野駅地下ホーム14:22発の長野電鉄（17.09km）に乗車し、14:49に小布施駅（`36.6989, 138.3129`）へ到着</li>
+            <li>小布施堂本店売店（`36.6964, 138.3163`）で秋限定の「朱雀モンブラン」と栗鹿ノ子を確保し、竹風堂本店の栗あんソフトクリームを実食</li>
+            <li>栗の間伐材レンガが敷き詰められた「栗の小径」や北斎館周辺（`36.6946, 138.3170`）の白壁土蔵群を散策（14〜16時台で計5,108歩）</li>
+          </ul>
+        </div>
+        <div class="polaroid-card">
+          <div>
+            <div class="card-top">
+              <span class="spot-time">16:29 - 21:30</span>
+              <span class="stamp stamp-god">★ 神判定</span>
+            </div>
+            <h3 class="spot-name">6. 長野駅MIDORIお土産調達 ➔ JR特急しなの24号 ➔ 松本山賊焼ディナー ＆ ホテルMマツモト</h3>
+            <div class="punchline success">「長野駅MIDORIで八幡屋礒五郎七味を回収し、特急しなので松本へ。名物山賊焼＆馬刺しから6,000円大浴場宿で初日2.1万歩完遂」</div>
+          </div>
+          <ul class="fact-bullet">
+            <li>小布施から長電で長野駅へ戻り（17:57着）、駅ビルMIDORIで八幡屋礒五郎の七味唐辛子と信州銘菓を調達</li>
+            <li>18:11発のJR特急しなの24号（47.29km）に乗車し、日本三大車窓・姨捨（`36.5000, 138.0972`）の夜景を眺めながら松本へ南下</li>
+            <li>松本駅前でニンニク醤油が香る豪快な「信州山賊焼」と新鮮な「信州馬刺し」を堪能後、ホテルMマツモトの大浴場＆サウナで初日14.97km・21,307歩の疲労を完全リセット</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <section>
+      <div class="section-header">
+        <div class="section-icon">📍</div>
+        <h2 class="section-title">3. Day 2: 11月1日(日) — 国宝松本城・城下町・珈琲美学アベ・多治見経由帰省</h2>
+      </div>
+      <div class="polaroid-grid">
+        <div class="polaroid-card">
+          <div>
+            <div class="card-top">
+              <span class="spot-time">08:33 - 10:10</span>
+              <span class="stamp stamp-god">★ 神判定</span>
+            </div>
+            <h3 class="spot-name">1. 国宝 松本城（開門直撃・五重六階天守登閣 ＆ 北アルプス借景）</h3>
+            <div class="punchline success">「リュック1つのロッカーフリー出撃。待ち時間ゼロで現存最古級の五重六階天守を制覇し、水鏡と北アルプス借景を独占」</div>
+          </div>
+          <ul class="fact-bullet">
+            <li>08:33に宿を出撃（`36.2294, 137.9673`）、コインロッカー預けによる駅戻りロスを排した完全身軽スタイルで松本城公園へ北上</li>
+            <li>黒門から本丸庭園へ入り、日中60分待ちとなる天守閣（`36.2386, 137.9692`）へ待ち時間ゼロで登閣。最大斜度61度の急階段を踏破し最上階6階へ</li>
+            <li>内堀の水面に映る漆黒の天守と冠雪した北アルプス連峰のパノラマを北側外堀（`36.2433, 137.9679`）まで周回して激写</li>
+          </ul>
+        </div>
+        <div class="polaroid-card">
+          <div>
+            <div class="card-top">
+              <span class="spot-time">10:10 - 11:42</span>
+              <span class="stamp stamp-win">◎ 完全勝利</span>
+            </div>
+            <h3 class="spot-name">2. 松本城下町・蔵の街散策（縄手通りカエル街・四柱神社・中町通り）</h3>
+            <div class="punchline success">「女鳥羽川沿いの縄手通りカエル街と四柱神社から、白黒なまこ壁が連なる中町通り土蔵群へ城下町の粋を凝縮散策」</div>
+          </div>
+          <ul class="fact-bullet">
+            <li>松本城大手門跡から女鳥羽川沿いの歩行者天国「縄手通り商店街」へ進み、カエル大明神とすべての願いを叶える「四柱神社」を参拝</li>
+            <li>川を渡って「中町通り」（`36.2344, 137.9716` 〜 `36.2338, 137.9706`）へ入り、白と黒の幾何学模様が美しい伝統的な「なまこ壁」の土蔵群を散策</li>
+            <li>8〜11時台の松本城・城下町集中ウォーキングで6,711歩を記録し、松本歴史街区のコア体験を完全網羅</li>
+          </ul>
+        </div>
+        <div class="polaroid-card">
+          <div>
+            <div class="card-top">
+              <span class="spot-time">11:42 - 12:06</span>
+              <span class="stamp stamp-god">★ 神判定</span>
+            </div>
+            <h3 class="spot-name">3. 松本老舗喫茶：珈琲美学アベ（名物モカパフェ ＆ アイスモカジャバ）</h3>
+            <div class="punchline success">「1957年創業の松本駅前純喫茶。ステンドグラスと重厚な木調空間で名物モカパフェを味わい、12:13発の中央線へ秒単位接続」</div>
+          </div>
+          <ul class="fact-bullet">
+            <li>松本駅お城口すぐの老舗「珈琲美学アベ」（`36.2308, 137.9644`）へ11:42に入店</li>
+            <li>芳醇な水出し珈琲ゼリーと濃厚モカアイスが織りなす名物「モカパフェ」で午前の城下町ウォーキングの疲れを優雅にクールダウン</li>
+            <li>12:06に退店し、徒歩数分の松本駅改札へ直行して12:13発の先行列車へ鮮やかなトランジットを実現</li>
+          </ul>
+        </div>
+        <div class="polaroid-card">
+          <div>
+            <div class="card-top">
+              <span class="spot-time">13:09（JR中央西線 車窓通過）</span>
+              <span class="stamp stamp-skip">⏭ 戦略的スキップ</span>
+            </div>
+            <h3 class="spot-name">4. 【戦略的スキップ判断】奈良井宿（木曽の大橋改修通行止 ＆ 疲労管理）</h3>
+            <div class="punchline warning">「前日2.1万歩の急登疲労と『木曽の大橋』全面通行止めを冷静に天秤にかけ、奈良井宿下車を見送り先行列車で車窓通過する英断」</div>
+          </div>
+          <ul class="fact-bullet">
+            <li>当初計画では午後2時間半の奈良井宿散策を想定していたが、目玉の「木曽の大橋」が大規模改修工事中で渡橋不可（骨組みのみ）である事実を事前把握</li>
+            <li>さらに本数が極めて少ない木曽路普通列車（15:36発アンカー便縛り）による拘束リスクと前日戸隠急登の脚力消耗を考慮し、無理な下車をカット</li>
+            <li>13:09に奈良井駅（`35.9696, 137.8165`）を車窓から確認しつつ通過し、旅の安全と翌週へのコンディション温存を最優先</li>
+          </ul>
+        </div>
+        <div class="polaroid-card">
+          <div>
+            <div class="card-top">
+              <span class="spot-time">12:06 - 15:35</span>
+              <span class="stamp stamp-god">★ 神判定</span>
+            </div>
+            <h3 class="spot-name">5. 松本 ➔ 塩尻 ➔ 中津川 ➔ 多治見経由 拠点直行帰省（2時間前倒し安着）</h3>
+            <div class="punchline success">「当初予定（17:37着）を2時間短縮！塩尻・木曽福島・上松・中津川・恵那・多治見を縦断し、15:35に拠点へスマート直帰」</div>
+          </div>
+          <ul class="fact-bullet">
+            <li>松本駅12:13発のJR中央本線で塩尻駅（`36.1143, 137.9479`、12:33 - 12:43乗換）へ南下し、中央西線で木曽路の渓谷美を縦断</li>
+            <li>木曽福島（13:41）・上松駅（`35.6844, 137.6643`、14:08 - 14:11停車）を経て、14:45に中津川駅（`35.5005, 137.5031`）へ到着し快速名古屋行へ5分接続</li>
+            <li>恵那（14:58）・多治見を経由し、名古屋までオーバーランすることなく15:35に春日井・高蔵寺拠点（`35.2766, 137.0357`）へ無傷の2時間前倒し帰還を達成</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+
+    <!-- Essay Cards -->
+        <section>
+      <div class="section-header">
+        <div class="section-icon">💡</div>
+        <h2 class="section-title">現地リアル批評 ＆ アーカイブインサイト</h2>
+      </div>
+      <div class="essay-card">
+        <h3>1. 戸隠奥社「50分急登ピストン」が生んだ1時間20分の連鎖的レバレッジ</h3>
+        <p>信州1泊2日スプリントにおける最大の勝因は、Day 1朝の<strong>戸隠神社奥社参道（往復約4km・後半急勾配岩場）をわずか50分（09:21〜10:12）で往復走破し、10:14発の長野駅行き観光特急へ滑り込んだこと</strong>にある。</p>
+        <p>通常モデルコースでは往復90〜120分を要し11:34発のバスになるため、戸隠現地のそば屋で大行列に巻き込まれるか、善光寺参拝が午後にずれ込む構造的ボトルネックが存在する。しかし10:14発に乗車して11:16に長野駅へ戻ったことで、ピーク前の門前戸隠そば昼食（11:21〜12:06）、善光寺お戒壇巡り（12:06〜13:44）、小布施新栗スイーツ散策（14:49〜16:29）、さらに長野駅MIDORIでの土産調達まで、<strong>後続の全工程に1時間以上の余裕が連鎖波及する「朝の先行投資レバレッジ」</strong>が完璧に機能した。</p>
+      </div>
+      <div class="essay-card">
+        <h3>2. 国宝松本城の「開門直撃×ロッカーフリー」と城下町コンパクト回遊の完成度</h3>
+        <p>Day 2の松本攻略では、荷物をリュック1つに集約してホテルMマツモトから直接松本城へ向かう<strong>「コインロッカー完全排除（ロッカーフリー）動線」</strong>が威力を発揮した。日曜日の松本城天守は昼前には60分以上の登閣待ちが発生するが、朝イチ枠で入城したことで最大斜度61度の現存五重六階天守をストレスゼロで登頂。</p>
+        <p>さらに松本城から縄手通り・四柱神社・中町通り（なまこ壁土蔵街）、そして松本駅前の老舗「珈琲美学アベ」へと南下するルートは、<strong>徒歩わずか2.5km圏内に国宝建築・水辺の下町・白黒土蔵・昭和純喫茶が一筆書きで収まる超高密度な都市観光設計</strong>であり、駅へ戻る無駄な往復が一切発生しない理想的な朝〜昼ゴールデンルートとなった。</p>
+      </div>
+      <div class="essay-card">
+        <h3>3. 奈良井宿の「戦略的スキップ」と多治見経由ダイレクト帰省の意思決定規律</h3>
+        <p>旅行計画時に組み込んでいたDay 2午後の「奈良井宿」について、現地で<strong>①前日の戸隠・善光寺・小布施での21,307歩（14.97km）走破による脚力消耗、②主要目玉である「木曽の大橋」が大規模改修工事中で全面通行止め（渡橋不可）という体験価値の減衰、③木曽路普通列車の本数希少性による長時間拘束</strong>の3点を冷静に評価し、珈琲美学アベ退店後すぐに12:13発の先行列車で通過・帰還する判断を下した。</p>
+        <p>「せっかく計画したから無理にでも降りる」というサンクコストバイアスを断ち切り、中津川・多治見経由で名古屋を回らず15:35に拠点へ直行帰還したことで、当初予定（17:37着）より2時間早く無傷で旅を完結。翌日の三重・伊勢志摩遠征（2日間3.15万歩）へ体力100%で繋げる、シリーズ遠征全体の最適解となった。</p>
+      </div>
+    </section>
+
+
+    <!-- Footer -->
+    <footer>
+      <p>長野 ｜ 戸隠・善光寺・小布施・松本 旅アルバム 2026 ｜ 旅行総合ポータルへ戻る</p>
+    </footer>
+
+  </main>
+
+  <!-- Injected Chart Data -->
+  <script>
+    window.__ALBUM_CHART_DATA__ = {
+  "hourly": {
+    "type": "bar",
+    "caption": "📊 <strong>時間帯別 歩数推移:</strong> 10/31 Day1（戸隠奥社急登・善光寺・小布施・松本 約21,300歩） vs 11/1 Day2（国宝松本城・縄手・中町通り・多治見帰省 約7,700歩）",
+    "labels": [
+      "05時",
+      "06時",
+      "07時",
+      "08時",
+      "09時",
+      "10時",
+      "11時",
+      "12時",
+      "13時",
+      "14時",
+      "15時",
+      "16時",
+      "17時",
+      "18時",
+      "19時",
+      "20時",
+      "21時"
+    ],
+    "datasets": [
+      {
+        "label": "10/31 Day1 戸隠・善光寺・小布施・松本 (約21,300歩)",
+        "data": [
+          1209,
+          890,
+          507,
+          1023,
+          3443,
+          1760,
+          227,
+          1006,
+          2102,
+          1310,
+          2091,
+          1707,
+          1041,
+          20,
+          1229,
+          493,
+          1110
+        ],
+        "backgroundColor": "#0284c7",
+        "borderRadius": 6
+      },
+      {
+        "label": "11/1 Day2 松本城・城下町・多治見帰省 (約7,700歩)",
+        "data": [
+          0,
+          0,
+          0,
+          1321,
+          2100,
+          2003,
+          1287,
+          172,
+          0,
+          113,
+          693,
+          98,
+          0,
+          48,
+          0,
+          0,
+          143
+        ],
+        "backgroundColor": "#f59e0b",
+        "borderRadius": 6
+      }
+    ]
+  },
+  "duration": {
+    "type": "doughnut",
+    "caption": "⏱️ <strong>主要スポット別 滞在時間（実測分）:</strong> 小布施新栗散策100分、善光寺参拝＆お戒壇巡り98分、国宝松本城95分、松本城下町93分、戸隠奥社急登50分、珈琲美学アベ24分。",
+    "labels": [
+      "北陸新幹線 かがやき501号 (80分)",
+      "戸隠神社 奥社 参道急登ピストン (50分)",
+      "門前戸隠そば 昼食 (45分)",
+      "国宝 善光寺・仲見世・お戒壇巡り (98分)",
+      "小布施 新栗スイーツ＆蔵の街散策 (100分)",
+      "長野駅 MIDORI お土産・七味調達 (45分)",
+      "松本名物 山賊焼＆馬刺しディナー (75分)",
+      "国宝 松本城 開門登閣・本丸鑑賞 (95分)",
+      "縄手通り・四柱神社・中町通り散策 (93分)",
+      "珈琲美学アベ 老舗喫茶 (24分)"
+    ],
+    "datasets": [
+      {
+        "data": [
+          80,
+          50,
+          45,
+          98,
+          100,
+          45,
+          75,
+          95,
+          93,
+          24
+        ],
+        "backgroundColor": [
+          "#64748b",
+          "#0284c7",
+          "#38bdf8",
+          "#f59e0b",
+          "#10b981",
+          "#059669",
+          "#8b5cf6",
+          "#ec4899",
+          "#06b6d4",
+          "#f97316"
+        ],
+        "borderWidth": 2
+      }
+    ]
+  },
+  "cumulative": {
+    "type": "line",
+    "yTitle": "累計歩数",
+    "caption": "📈 <strong>2日間 累積歩数ペース（10/31 Day1: 約21,300歩 ／ 11/1 Day2: 約7,700歩・合計 約29,000歩 / 20.00km）:</strong> 初日に戸隠奥社・善光寺・小布施で15kmを走破し、2日目は松本城と城下町に集中して多治見経由で拠点へスマート帰還。",
+    "labels": [
+      "10/31 Day1 始発",
+      "東京駅乗換",
+      "長野駅着",
+      "戸隠奥社急登",
+      "戸隠下山完了",
+      "門前戸隠そば",
+      "善光寺お戒壇",
+      "長電小布施着",
+      "小布施堂・栗径",
+      "長野MIDORI",
+      "松本山賊焼",
+      "ホテルM大浴場",
+      "11/1 Day2 出撃",
+      "国宝松本城天守",
+      "縄手・四柱神社",
+      "中町なまこ壁",
+      "珈琲美学アベ",
+      "塩尻・木曽路",
+      "多治見経由帰還"
+    ],
+    "datasets": [
+      {
+        "label": "累積歩数 (Steps)",
+        "data": [
+          1209,
+          2099,
+          2606,
+          7072,
+          8832,
+          9059,
+          12167,
+          13477,
+          17275,
+          18316,
+          20058,
+          21300,
+          22621,
+          24721,
+          26724,
+          28011,
+          28183,
+          28296,
+          29000
+        ],
+        "borderColor": "#10b981",
+        "backgroundColor": "rgba(16, 185, 129, 0.15)",
+        "borderWidth": 3,
+        "fill": true,
+        "tension": 0.35,
+        "pointBackgroundColor": "#10b981",
+        "pointRadius": 6,
+        "pointHoverRadius": 8
+      }
+    ]
+  }
+};
+  </script>
+  <script src="../assets/album_runtime.js"></script>
+</body>
+</html>

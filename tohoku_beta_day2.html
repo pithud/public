@@ -1,0 +1,831 @@
+<!DOCTYPE html>
+<html lang="ja" data-theme="light">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <title>東北 ｜ 仙台・松島・平泉・秋田・山形・会津 一人旅の原点 縦走しおり - Day 2</title>
+  <script>
+    // Anti-FOUC immediate theme application
+    (function() {
+      var t = localStorage.getItem('trip_nav_theme') || 'light';
+      document.documentElement.setAttribute('data-theme', t);
+    })();
+  </script>
+  <style>
+:root {
+  --bg: #f8fafc;
+  --surface: #ffffff;
+  --surface-subtle: #f1f5f9;
+  --text: #0f172a;
+  --text-muted: #64748b;
+  --border: #e2e8f0;
+  --primary: #0284c7;
+  --primary-hover: #0369a1;
+  --accent: #d97706;
+  --card-shadow: 0 1px 3px rgba(0,0,0,0.06), 0 1px 2px rgba(0,0,0,0.04);
+  --font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+}
+[data-theme="dark"] {
+  --bg: #090d16;
+  --surface: #131b2e;
+  --surface-subtle: #1e293b;
+  --text: #f8fafc;
+  --text-muted: #94a3b8;
+  --border: #1e293b;
+  --card-shadow: 0 4px 6px -1px rgba(0,0,0,0.3);
+}
+* { box-sizing: border-box; margin: 0; padding: 0; -webkit-tap-highlight-color: transparent; }
+body {
+  font-family: var(--font-family);
+  background-color: var(--bg);
+  color: var(--text);
+  line-height: 1.5;
+  font-size: 15px;
+  padding-bottom: 80px;
+}
+.header-bar {
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  background: rgba(255, 255, 255, 0.92);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border-bottom: 1px solid var(--border);
+  padding: 12px 16px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+[data-theme="dark"] .header-bar { background: rgba(19, 27, 46, 0.92); }
+.brand-title { font-size: 1.05rem; font-weight: 700; display: flex; align-items: center; gap: 8px; }
+.header-actions { display: flex; gap: 8px; align-items: center; }
+.btn-action {
+  background: var(--surface-subtle);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: 6px 12px;
+  font-size: 13px;
+  color: var(--text);
+  cursor: pointer;
+  text-decoration: none;
+}
+.container { max-width: 680px; margin: 0 auto; padding: 16px; }
+
+/* Day Navigation Bar */
+.nav-bar {
+  display: flex;
+  background: var(--surface-subtle);
+  padding: 6px;
+  border-radius: 10px;
+  margin-bottom: 16px;
+  gap: 6px;
+  align-items: center;
+  justify-content: space-between;
+}
+.nav-link {
+  flex: 1;
+  text-align: center;
+  padding: 7px 10px;
+  border-radius: 7px;
+  font-size: 13px;
+  font-weight: 600;
+  text-decoration: none;
+  color: var(--text-muted);
+  background: transparent;
+  border: none;
+  cursor: pointer;
+}
+.nav-link.active {
+  background: var(--surface);
+  color: var(--primary);
+  box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+}
+
+/* Quick Jump Chips */
+.jump-chips {
+  display: flex;
+  gap: 6px;
+  overflow-x: auto;
+  padding-bottom: 10px;
+  margin-bottom: 16px;
+  white-space: nowrap;
+  scrollbar-width: none;
+}
+.jump-chips::-webkit-scrollbar { display: none; }
+.jump-chip {
+  display: inline-block;
+  font-size: 12px;
+  font-weight: 600;
+  padding: 5px 10px;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 16px;
+  color: var(--text);
+  text-decoration: none;
+}
+
+/* Slot Cards */
+.day-block { margin-bottom: 32px; }
+.day-header {
+  font-size: 1.15rem;
+  font-weight: 700;
+  margin-bottom: 12px;
+  padding-bottom: 6px;
+  border-bottom: 2px solid var(--primary);
+  color: var(--primary);
+}
+
+/* Macro Route Box (Day全体ルート立ち回り) */
+.macro-route-box {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-left: 4px solid var(--primary);
+  border-radius: 10px;
+  padding: 12px 14px;
+  margin-bottom: 16px;
+  box-shadow: var(--card-shadow);
+}
+.macro-route-head {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 6px;
+}
+.macro-route-title {
+  font-size: 13px;
+  font-weight: 800;
+  color: var(--primary);
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+[data-theme="dark"] .macro-route-title { color: #38bdf8; }
+.macro-route-body {
+  font-size: 13px;
+  line-height: 1.55;
+  color: var(--text);
+  margin-bottom: 8px;
+}
+.macro-map-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  font-size: 12px;
+  font-weight: 700;
+  color: var(--primary);
+  text-decoration: none;
+  background: rgba(2, 132, 199, 0.08);
+  padding: 4px 10px;
+  border-radius: 6px;
+  border: 1px solid rgba(2, 132, 199, 0.2);
+}
+[data-theme="dark"] .macro-map-link {
+  color: #38bdf8;
+  background: rgba(56, 189, 248, 0.1);
+  border-color: rgba(56, 189, 248, 0.3);
+}
+.slot-card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  margin-bottom: 12px;
+  padding: 14px 16px;
+  box-shadow: var(--card-shadow);
+  transition: opacity 0.2s, background-color 0.2s;
+}
+.slot-card.is-dimmed { opacity: 0.45; filter: grayscale(40%); }
+.slot-card.is-must { border-left: 4px solid var(--accent); }
+.slot-meta { display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px; }
+.slot-time { font-size: 13px; font-weight: 700; font-variant-numeric: tabular-nums; }
+.slot-badge {
+  font-size: 11px;
+  font-weight: 700;
+  padding: 2px 8px;
+  border-radius: 4px;
+  text-transform: uppercase;
+}
+.badge-sightseeing { background: #d1fae5; color: #065f46; }
+.badge-food { background: #ffedd5; color: #9a3412; }
+.badge-transit { background: #e0e7ff; color: #3730a3; }
+[data-theme="dark"] .badge-sightseeing { background: #064e3b; color: #6ee7b7; }
+[data-theme="dark"] .badge-food { background: #7c2d12; color: #fdba74; }
+[data-theme="dark"] .badge-transit { background: #312e81; color: #a5b4fc; }
+
+.slot-title-row { display: flex; align-items: flex-start; gap: 8px; margin-bottom: 6px; }
+.slot-checkbox { margin-top: 3px; cursor: pointer; width: 18px; height: 18px; accent-color: var(--primary); }
+.slot-title { font-size: 1rem; font-weight: 700; line-height: 1.4; flex: 1; }
+.slot-desc { font-size: 13.5px; color: var(--text-muted); margin-bottom: 10px; line-height: 1.5; padding-left: 26px; }
+
+/* Swap Guide Box */
+.swap-box {
+  margin: 10px 0 10px 26px;
+  padding: 10px 12px;
+  border-radius: 8px;
+  background: rgba(217, 119, 6, 0.08);
+  border: 1px dashed var(--accent);
+  font-size: 12.5px;
+}
+.swap-title { font-weight: 700; color: var(--accent); margin-bottom: 4px; display: flex; align-items: center; gap: 4px; }
+
+.slot-foot { display: flex; justify-content: space-between; align-items: center; padding-top: 8px; border-top: 1px solid var(--border); margin-left: 26px; }
+.map-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  font-size: 12px;
+  font-weight: 600;
+  color: #1a73e8;
+  text-decoration: none;
+  background: rgba(26, 115, 232, 0.08);
+  padding: 4px 10px;
+  border-radius: 20px;
+}
+[data-theme="dark"] .map-pill { color: #8ab4f8; background: rgba(138, 180, 248, 0.12); }
+
+/* Tactics Step Box (立ち回り・攻略手順) */
+.tactics-box {
+  margin: 12px 0 12px 26px;
+  padding: 10px 14px;
+  background: rgba(2, 132, 199, 0.06);
+  border: 1px solid rgba(2, 132, 199, 0.25);
+  border-left: 3.5px solid var(--primary);
+  border-radius: 8px;
+}
+[data-theme="dark"] .tactics-box {
+  background: rgba(56, 189, 248, 0.08);
+  border-color: rgba(56, 189, 248, 0.3);
+  border-left-color: #38bdf8;
+}
+.tactics-header {
+  font-size: 13px;
+  font-weight: 700;
+  color: var(--primary);
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  margin-bottom: 8px;
+}
+.tactics-tag {
+  font-size: 10px;
+  font-weight: 800;
+  background: var(--primary);
+  color: #fff;
+  padding: 1px 6px;
+  border-radius: 4px;
+  letter-spacing: 0.05em;
+}
+[data-theme="dark"] .tactics-header { color: #38bdf8; }
+[data-theme="dark"] .tactics-tag { background: #0284c7; }
+.tactics-list { display: flex; flex-direction: column; gap: 6px; }
+.tactics-step-row { display: flex; align-items: flex-start; gap: 8px; font-size: 12.5px; line-height: 1.5; }
+.tactics-num {
+  flex-shrink: 0;
+  width: 18px;
+  height: 18px;
+  border-radius: 4px;
+  background: rgba(2, 132, 199, 0.18);
+  color: var(--primary);
+  font-size: 11px;
+  font-weight: 800;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-top: 1px;
+}
+[data-theme="dark"] .tactics-num { background: rgba(56, 189, 248, 0.25); color: #38bdf8; }
+
+/* Checkpoints List */
+.checkpoint-list {
+  margin: 10px 0 10px 26px;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+.checkpoint-row {
+  display: flex;
+  align-items: flex-start;
+  gap: 8px;
+  font-size: 12px;
+  background: var(--surface-subtle);
+  padding: 8px 10px;
+  border-radius: 6px;
+  border: 1px solid var(--border);
+}
+.cp-badge {
+  font-size: 10px;
+  font-weight: 700;
+  padding: 1px 5px;
+  border-radius: 3px;
+  background: #0284c7;
+  color: #fff;
+  flex-shrink: 0;
+}
+.cp-title { font-weight: 600; color: var(--text); }
+.cp-desc { font-size: 11.5px; color: var(--text-muted); margin-top: 2px; }
+
+/* Practical Footer */
+.practical-footer {
+  margin: 10px 0 10px 26px;
+  padding: 8px 10px;
+  background: var(--surface-subtle);
+  border-left: 3px solid var(--accent);
+  border-radius: 4px;
+  font-size: 12px;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+.pf-row { display: flex; gap: 6px; }
+.pf-tag { font-weight: 700; color: var(--accent); flex-shrink: 0; min-width: 65px; }
+.pf-val { color: var(--text); }
+
+/* Print & Paged Media */
+@media print {
+  @page { size: A4 portrait; margin: 12mm 15mm; }
+  body { background: #fff !important; color: #000 !important; font-size: 11pt; }
+  .header-bar, .nav-bar, .jump-chips, .no-print { display: none !important; }
+  .day-block { page-break-after: always; break-after: page; }
+  .slot-card { break-inside: avoid; page-break-inside: avoid; box-shadow: none !important; border: 1px solid #ccc !important; }
+  .slot-card.is-dimmed { opacity: 1 !important; filter: none !important; }
+  .slot-checkbox { display: none !important; }
+  .slot-desc, .swap-box, .slot-foot { margin-left: 0 !important; padding-left: 0 !important; }
+}
+
+  </style>
+</head>
+<body>
+  <header class="header-bar">
+    <div class="brand-title">
+      <span>🌲</span>
+      <span>東北 ｜ 仙台・松島・平泉・秋田・山形・会津 一人旅の原点 縦走しおり</span>
+    </div>
+    <div class="header-actions no-print">
+      <button class="btn-action" onclick="toggleTheme()">🌓 テーマ</button>
+      <button class="btn-action" onclick="window.print()">🖨️ 製本印刷</button>
+    </div>
+  </header>
+
+  <main class="container">
+    
+    <nav class="nav-bar no-print">
+      <a class="nav-link" href="tohoku_beta.html">📑 全日程</a>
+      <a class="nav-link " href="tohoku_beta_day1.html">Day 1</a><a class="nav-link active" href="tohoku_beta_day2.html">Day 2</a><a class="nav-link " href="tohoku_beta_day3.html">Day 3</a><a class="nav-link " href="tohoku_beta_day4.html">Day 4</a><a class="nav-link " href="tohoku_beta_day5.html">Day 5</a><a class="nav-link " href="tohoku_beta_day6.html">Day 6</a><a class="nav-link " href="tohoku_beta_day7.html">Day 7</a><a class="nav-link " href="tohoku_beta_day8.html">Day 8</a><a class="nav-link " href="tohoku_beta_day9.html">Day 9</a><a class="nav-link " href="tohoku_beta_day10.html">Day 10</a><a class="nav-link " href="tohoku_beta_day11.html">Day 11</a><a class="nav-link " href="tohoku_beta_day12.html">Day 12</a>
+    </nav>
+    
+    <div class="jump-chips no-print">
+      
+        <a class="jump-chip" href="#d2-01" data-day="2">📍 三瀧山不動院 ＆ た</a>
+      
+        <a class="jump-chip" href="#d2-02" data-day="2">📍 JR仙石線移動 ➔ </a>
+      
+        <a class="jump-chip" href="#d2-03" data-day="2">📍 福浦橋・五大堂・瑞巌</a>
+      
+        <a class="jump-chip" href="#d2-04" data-day="2">📍 仙石線（高城町乗り過</a>
+      
+        <a class="jump-chip" href="#d2-05" data-day="2">📍 すし哲 本店（塩竈）</a>
+      
+    </div>
+    
+      <section class="day-block" id="day-sec-2" data-day="2">
+        <h2 class="day-header">Day 2: 2026年4月30日 (木)</h2>
+        
+        <div class="macro-route-box">
+          <div class="macro-route-head">
+            <span class="macro-route-title">🗺️ 【全体ルート立ち回り】マクロ動線シークエンス</span>
+            <a class="macro-map-link" href="https://www.google.com/maps/dir/?api=1&amp;origin=仙台駅&amp;destination=一ノ関駅&amp;waypoints=松島海岸駅|瑞巌寺|鹽竈神社|すし哲&amp;travelmode=transit" target="_blank" rel="noopener">📍 広域Google Maps</a>
+          </div>
+          <div class="macro-route-body">仙台アーケード・三瀧山不動院 ➔ たんや善治郎 仙台駅牛たん通り店 ➔ 松島海岸（阿部かま・仁王丸クルーズ・福浦橋・五大堂・瑞巌寺・円通院・天麟院） ➔ 本塩釜（鹽竈神社・すし哲） ➔ 仙台駅荷物回収 ➔ 一ノ関駅</div>
+        </div>
+        <div class="slot-list">
+          
+    <article class="slot-card " id="d2-01" data-slot-id="d2-01">
+      <div class="slot-meta">
+        <span class="slot-time">⏱️ 09:30 - 11:30</span>
+        <span class="slot-badge badge-sightseeing">観光</span>
+      </div>
+      <div class="slot-title-row">
+        <input type="checkbox" class="slot-checkbox no-print" onchange="toggleSlot('d2-01', this.checked)" title="完了・スキップを消し込み">
+        <h3 class="slot-title">三瀧山不動院 ＆ たんや善治郎 仙台駅牛たん通り店</h3>
+      </div>
+      <p class="slot-desc">朝一番でクリスロードの三瀧山不動院に参拝した後、仙台駅3階「牛たん通り」の行列店・たんや善治郎へ。「真中たん（しんちゅうたん）」を注文し、前夜の「一仙」とガチンコ比較を行う。</p>
+      
+      <div class="swap-box">
+        <div class="swap-title">🔀 スワップ・代替ルート候補</div>
+        <div><strong>代替プラン:</strong> 牛たん通りが大行列の場合は、駅外の「たんや善治郎 本店（駅前本店）」または「喜助」へ分散する。</div>
+      </div>
+      
+      <div class="tactics-box">
+        <div class="tactics-header">
+          <span>🎯</span>
+          <span class="tactics-tag">個別立ち回り</span>
+          <span>【構内順路】攻略戦術</span>
+        </div>
+        <div class="tactics-list">
+          
+            <div class="tactics-step-row">
+              <span class="tactics-num">1</span>
+              <span class="tactics-text">10時台の早い時間帯に入店してGWの長蛇の列を回避し、荷物を仙台駅のコインロッカーへ預けてから仙石線ホームへ向かう。</span>
+            </div>
+          
+        </div>
+      </div>
+      
+      <div class="checkpoint-list">
+        
+          <div class="checkpoint-row">
+            <span class="cp-badge">必須</span>
+            <div>
+              <div class="cp-title">現地確認・必達ポイント</div>
+              <div class="cp-desc">善治郎の「真中たん」のサクッとした歯切れと、一仙の「真芯とろたん」の圧倒的なとろける脂の質の違いを言語化する。</div>
+            </div>
+          </div>
+        
+      </div>
+      
+      <div class="practical-footer">
+        
+        <div class="pf-row"><span class="pf-tag">💡 現地Tips:</span><span class="pf-val">夕方塩竈から仙台へ戻って荷物を回収するため、ロッカーの場所はJR改札近くに固定する。</span></div>
+        
+      </div>
+      <div class="slot-foot">
+        <a class="map-pill" href="https://www.google.com/maps/search/?api=1&amp;query=たんや善治郎+仙台駅牛たん通り店" target="_blank" rel="noopener">📍 Google Maps</a>
+        
+      </div>
+    </article>
+    <article class="slot-card " id="d2-02" data-slot-id="d2-02">
+      <div class="slot-meta">
+        <span class="slot-time">⏱️ 11:45 - 13:50</span>
+        <span class="slot-badge badge-sightseeing">観光</span>
+      </div>
+      <div class="slot-title-row">
+        <input type="checkbox" class="slot-checkbox no-print" onchange="toggleSlot('d2-02', this.checked)" title="完了・スキップを消し込み">
+        <h3 class="slot-title">JR仙石線移動 ➔ 阿部かま ＆ 松島島巡り観光船（仁王丸）</h3>
+      </div>
+      <p class="slot-desc">JR仙石線で松島海岸駅へ（12:29着）。駅前の「阿部かまぼこ店」で手焼き笹かまを味わった後、13:00発の松島島巡り観光船「仁王丸コース」に乗船。船内で追加料金を払い2階グリーンデッキへ上がり、潮風を浴びながら大小260余島を巡る。</p>
+      
+      <div class="swap-box">
+        <div class="swap-title">🔀 スワップ・代替ルート候補</div>
+        <div><strong>代替プラン:</strong> 塩釜行きの片道芭蕉コースにする手もあるが、瑞巌寺・円通院・福浦橋を歩くため松島発着の仁王丸周遊コースを採る。</div>
+      </div>
+      
+      <div class="tactics-box">
+        <div class="tactics-header">
+          <span>🎯</span>
+          <span class="tactics-tag">個別立ち回り</span>
+          <span>【構内順路】攻略戦術</span>
+        </div>
+        <div class="tactics-list">
+          
+            <div class="tactics-step-row">
+              <span class="tactics-num">1</span>
+              <span class="tactics-text">1階一般席の窓越しではなく、迷わず2階グリーン（展望デッキ）へ課金し、仁王島・鐘島・桂島の造形をオープンエアで撮影する。</span>
+            </div>
+          
+        </div>
+      </div>
+      
+      <div class="checkpoint-list">
+        
+          <div class="checkpoint-row">
+            <span class="cp-badge">必須</span>
+            <div>
+              <div class="cp-title">現地確認・必達ポイント</div>
+              <div class="cp-desc">13:00便の乗船券確保と、下船後の徒歩動線（福浦橋〜五大堂〜瑞巌寺）の時計回り／反時計回り設計。</div>
+            </div>
+          </div>
+        
+      </div>
+      
+      <div class="practical-footer">
+        
+        <div class="pf-row"><span class="pf-tag">💡 現地Tips:</span><span class="pf-val">海上は風が強く体感温度が下がるため、ジャケットの防風対策を万全にする。</span></div>
+        
+      </div>
+      <div class="slot-foot">
+        <a class="map-pill" href="https://www.google.com/maps/search/?api=1&amp;query=松島島巡り観光船企業組合" target="_blank" rel="noopener">📍 Google Maps</a>
+        
+      </div>
+    </article>
+    <article class="slot-card " id="d2-03" data-slot-id="d2-03">
+      <div class="slot-meta">
+        <span class="slot-time">⏱️ 13:55 - 15:30</span>
+        <span class="slot-badge badge-sightseeing">観光</span>
+      </div>
+      <div class="slot-title-row">
+        <input type="checkbox" class="slot-checkbox no-print" onchange="toggleSlot('d2-03', this.checked)" title="完了・スキップを消し込み">
+        <h3 class="slot-title">福浦橋・五大堂・瑞巌寺・円通院・天麟院</h3>
+      </div>
+      <p class="slot-desc">朱塗りの「福浦橋（出会い橋）」と松島のシンボル「五大堂」を押さえた後、伊達政宗公の菩提寺である国宝「瑞巌寺」、美しい苔庭の「円通院」、さらに政宗公長女・五郎八姫（いろはひめ）の菩提寺「天麟院」まで一気に駆け抜ける。</p>
+      
+      <div class="swap-box">
+        <div class="swap-title">🔀 スワップ・代替ルート候補</div>
+        <div><strong>代替プラン:</strong> 時間不足の場合は福浦島内部の奥散策をカットし、瑞巌寺・円通院の2大寺院に集中する。</div>
+      </div>
+      
+      <div class="tactics-box">
+        <div class="tactics-header">
+          <span>🎯</span>
+          <span class="tactics-tag">個別立ち回り</span>
+          <span>【構内順路】攻略戦術</span>
+        </div>
+        <div class="tactics-list">
+          
+            <div class="tactics-step-row">
+              <span class="tactics-num">1</span>
+              <span class="tactics-text">15:30の仙石線乗車を見据え、瑞巌寺本堂の絢爛な障壁画と円通院の静寂な庭園、隣接する天麟院までを約95分で高密度に巡回する。</span>
+            </div>
+          
+        </div>
+      </div>
+      
+      <div class="checkpoint-list">
+        
+          <div class="checkpoint-row">
+            <span class="cp-badge">必須</span>
+            <div>
+              <div class="cp-title">現地確認・必達ポイント</div>
+              <div class="cp-desc">瑞巌寺の洞窟遺跡群・法身窟と、円通院の三慧殿（国指定重要文化財）の意匠。</div>
+            </div>
+          </div>
+        
+      </div>
+      
+      <div class="practical-footer">
+        
+        <div class="pf-row"><span class="pf-tag">💡 現地Tips:</span><span class="pf-val">瑞巌寺・円通院は16時台に拝観受付終了となるため、クルーズ下船後すぐに向かう順序が最適。</span></div>
+        
+      </div>
+      <div class="slot-foot">
+        <a class="map-pill" href="https://www.google.com/maps/search/?api=1&amp;query=瑞巌寺" target="_blank" rel="noopener">📍 Google Maps</a>
+        
+      </div>
+    </article>
+    <article class="slot-card " id="d2-04" data-slot-id="d2-04">
+      <div class="slot-meta">
+        <span class="slot-time">⏱️ 15:30 - 16:45</span>
+        <span class="slot-badge badge-sightseeing">観光</span>
+      </div>
+      <div class="slot-title-row">
+        <input type="checkbox" class="slot-checkbox no-print" onchange="toggleSlot('d2-04', this.checked)" title="完了・スキップを消し込み">
+        <h3 class="slot-title">仙石線（高城町乗り過ごしリカバリ）➔ 志波彦神社・鹽竈神社</h3>
+      </div>
+      <p class="slot-desc">松島海岸駅から仙石線に乗る際、誤って逆方向（高城町駅方面）へ1駅乗ってしまうハプニングを即座に折り返しリカバリ。本塩釜駅で下車し、1,200年以上の歴史を誇る陸奥国一之宮「志波彦神社・鹽竈神社」へ登拝する。</p>
+      
+      <div class="swap-box">
+        <div class="swap-title">🔀 スワップ・代替ルート候補</div>
+        <div><strong>代替プラン:</strong> 足腰の疲労が強い場合は東参道（裏坂）または表参道（男坂202段）の下りやすいルートを選択する。</div>
+      </div>
+      
+      <div class="tactics-box">
+        <div class="tactics-header">
+          <span>🎯</span>
+          <span class="tactics-tag">個別立ち回り</span>
+          <span>【構内順路】攻略戦術</span>
+        </div>
+        <div class="tactics-list">
+          
+            <div class="tactics-step-row">
+              <span class="tactics-num">1</span>
+              <span class="tactics-text">夕刻の静まり返った境内を参拝し、帰路は古道「七曲坂」を下って門前町の風情を感じながら「すし哲」へ向かう。</span>
+            </div>
+          
+        </div>
+      </div>
+      
+      <div class="checkpoint-list">
+        
+          <div class="checkpoint-row">
+            <span class="cp-badge">必須</span>
+            <div>
+              <div class="cp-title">現地確認・必達ポイント</div>
+              <div class="cp-desc">鹽竈神社の別宮・本宮の社殿配置と、境内から見下ろす塩釜港の景色。</div>
+            </div>
+          </div>
+        
+      </div>
+      
+      <div class="practical-footer">
+        
+        <div class="pf-row"><span class="pf-tag">💡 現地Tips:</span><span class="pf-val">七曲坂は石段と未舗装の坂道が続くため、足元に注意して下山する。</span></div>
+        
+      </div>
+      <div class="slot-foot">
+        <a class="map-pill" href="https://www.google.com/maps/search/?api=1&amp;query=鹽竈神社" target="_blank" rel="noopener">📍 Google Maps</a>
+        
+      </div>
+    </article>
+    <article class="slot-card " id="d2-05" data-slot-id="d2-05">
+      <div class="slot-meta">
+        <span class="slot-time">⏱️ 16:50 - 18:20</span>
+        <span class="slot-badge badge-sightseeing">観光</span>
+      </div>
+      <div class="slot-title-row">
+        <input type="checkbox" class="slot-checkbox no-print" onchange="toggleSlot('d2-05', this.checked)" title="完了・スキップを消し込み">
+        <h3 class="slot-title">すし哲 本店（塩竈）</h3>
+      </div>
+      <p class="slot-desc">日本有数の生マグロ水揚げ港・塩竈を代表する名店。1階カウンター席に通され、職人の郷古さんや隣り合った常連客と会話を弾ませながら、三陸の旬ネタを握ってもらう至福の90分。</p>
+      
+      <div class="swap-box">
+        <div class="swap-title">🔀 スワップ・代替ルート候補</div>
+        <div><strong>代替プラン:</strong> すし哲が満席・定休日の場合は、同じく塩竈の名店「亀喜寿司」または「鮨 しらはた」へ切り替える。</div>
+      </div>
+      
+      <div class="tactics-box">
+        <div class="tactics-header">
+          <span>🎯</span>
+          <span class="tactics-tag">個別立ち回り</span>
+          <span>【構内順路】攻略戦術</span>
+        </div>
+        <div class="tactics-list">
+          
+            <div class="tactics-step-row">
+              <span class="tactics-num">1</span>
+              <span class="tactics-text">夜のピーク直前（16:50）に飛び込むことで待ち時間ゼロで1階カウンター席を確保。看板の「すし哲物語」や親方おまかせ握り、ふわっと溶ける穴子・生マグロを堪能する。</span>
+            </div>
+          
+        </div>
+      </div>
+      
+      <div class="checkpoint-list">
+        
+          <div class="checkpoint-row">
+            <span class="cp-badge">必須</span>
+            <div>
+              <div class="cp-title">現地確認・必達ポイント</div>
+              <div class="cp-desc">ソロ旅だからこそ生まれるカウンター越しの対話と、食後のデザート（自家製シャーベット）までの完璧なホスピタリティ。</div>
+            </div>
+          </div>
+        
+      </div>
+      
+      <div class="practical-footer">
+        
+        <div class="pf-row"><span class="pf-tag">💡 現地Tips:</span><span class="pf-val">スマホのバッテリー残量が減っていたため、近くのChargeSPOTでモバイルバッテリーをレンタルして夜移動に備える。</span></div>
+        
+      </div>
+      <div class="slot-foot">
+        <a class="map-pill" href="https://www.google.com/maps/search/?api=1&amp;query=すし哲+本店" target="_blank" rel="noopener">📍 Google Maps</a>
+        
+      </div>
+    </article>
+    <article class="slot-card " id="d2-06" data-slot-id="d2-06">
+      <div class="slot-meta">
+        <span class="slot-time">⏱️ 18:30 - 21:15</span>
+        <span class="slot-badge badge-transit">移動</span>
+      </div>
+      <div class="slot-title-row">
+        <input type="checkbox" class="slot-checkbox no-print" onchange="toggleSlot('d2-06', this.checked)" title="完了・スキップを消し込み">
+        <h3 class="slot-title">仙台駅ロッカー回収 ➔ JR東北本線で一ノ関駅へ移動</h3>
+      </div>
+      <p class="slot-desc">本塩釜から仙石線で仙台駅へ戻りロッカーの荷物を回収。当初は「高速バスで一ノ関へ行こう」と試みるも広瀬通の31番バス停が見つからず（「バスという選択肢で遊ぼうとしたら遊ばれた」）、19:18発のJR東北本線（小牛田乗り換え）で一ノ関駅へ向かう。</p>
+      
+      <div class="swap-box">
+        <div class="swap-title">🔀 スワップ・代替ルート候補</div>
+        <div><strong>代替プラン:</strong> 体力温存・時短を最優先する場合は仙台駅から東北新幹線（やまびこ）で一ノ関駅へ約32分でワープする。</div>
+      </div>
+      
+      <div class="tactics-box">
+        <div class="tactics-header">
+          <span>🎯</span>
+          <span class="tactics-tag">個別立ち回り</span>
+          <span>【構内順路】攻略戦術</span>
+        </div>
+        <div class="tactics-list">
+          
+            <div class="tactics-step-row">
+              <span class="tactics-num">1</span>
+              <span class="tactics-text">高速バス乗り場探索の深追いをやめて即座にJR在来線へ切り替え、小牛田駅での接続を経て一ノ関駅前のホテルへチェックインする。</span>
+            </div>
+          
+        </div>
+      </div>
+      
+      <div class="checkpoint-list">
+        
+          <div class="checkpoint-row">
+            <span class="cp-badge">必須</span>
+            <div>
+              <div class="cp-title">現地確認・必達ポイント</div>
+              <div class="cp-desc">新田駅を過ぎたあたりからの真っ暗な車窓、手動のドア開閉ボタン、ワンマン列車の整理券システムなど、地方ローカル線のリアルな仕組みを体感する。</div>
+            </div>
+          </div>
+        
+      </div>
+      
+      <div class="practical-footer">
+        
+        <div class="pf-row"><span class="pf-tag">💡 現地Tips:</span><span class="pf-val">夜の東北本線はドアが開くたびに冷気が吹き込むため、上着を着込んで乗車する。</span></div>
+        
+      </div>
+      <div class="slot-foot">
+        <a class="map-pill" href="https://www.google.com/maps/search/?api=1&amp;query=一ノ関駅" target="_blank" rel="noopener">📍 Google Maps</a>
+        
+      </div>
+    </article>
+        </div>
+      </section>
+    
+    <nav class="nav-bar no-print" style="margin-top: 24px;">
+      <a class="nav-link" href="tohoku_beta.html">📑 全日程（統合版）</a>
+      <a class="nav-link " href="tohoku_beta_day1.html">Day 1</a><a class="nav-link active" href="tohoku_beta_day2.html">Day 2</a><a class="nav-link " href="tohoku_beta_day3.html">Day 3</a><a class="nav-link " href="tohoku_beta_day4.html">Day 4</a><a class="nav-link " href="tohoku_beta_day5.html">Day 5</a><a class="nav-link " href="tohoku_beta_day6.html">Day 6</a><a class="nav-link " href="tohoku_beta_day7.html">Day 7</a><a class="nav-link " href="tohoku_beta_day8.html">Day 8</a><a class="nav-link " href="tohoku_beta_day9.html">Day 9</a><a class="nav-link " href="tohoku_beta_day10.html">Day 10</a><a class="nav-link " href="tohoku_beta_day11.html">Day 11</a><a class="nav-link " href="tohoku_beta_day12.html">Day 12</a>
+    </nav>
+  </main>
+
+  <script>
+    const STORAGE_KEY = 'tohoku_completed_slots';
+
+    function toggleTheme() {
+      const cur = document.documentElement.getAttribute('data-theme') || 'light';
+      const nxt = cur === 'dark' ? 'light' : 'dark';
+      document.documentElement.setAttribute('data-theme', nxt);
+      localStorage.setItem('trip_nav_theme', nxt);
+    }
+
+    function getCompletedSlots() {
+      try {
+        return JSON.parse(localStorage.getItem(STORAGE_KEY) || '[]');
+      } catch (e) {
+        return [];
+      }
+    }
+
+    function toggleSlot(slotId, isDone) {
+      const card = document.getElementById(slotId);
+      let list = getCompletedSlots();
+      if (isDone) {
+        if (!list.includes(slotId)) list.push(slotId);
+        if (card) card.classList.add('is-dimmed');
+      } else {
+        list = list.filter(id => id !== slotId);
+        if (card) card.classList.remove('is-dimmed');
+      }
+      localStorage.setItem(STORAGE_KEY, JSON.stringify(list));
+    }
+
+    // In-page Day Segment Switcher (Instant filter without HTTP reload)
+    function switchDay(targetDay) {
+      const dayBlocks = document.querySelectorAll('.day-block');
+      const jumpChips = document.querySelectorAll('.jump-chip');
+      const navLinks = document.querySelectorAll('.nav-link[data-day]');
+
+      // 1. Filter Day Sections
+      dayBlocks.forEach(sec => {
+        const secDay = sec.getAttribute('data-day');
+        if (targetDay === 'all' || secDay === String(targetDay)) {
+          sec.style.display = '';
+        } else {
+          sec.style.display = 'none';
+        }
+      });
+
+      // 2. Filter Jump Chips
+      jumpChips.forEach(chip => {
+        const chipDay = chip.getAttribute('data-day');
+        if (targetDay === 'all' || chipDay === String(targetDay)) {
+          chip.style.display = '';
+        } else {
+          chip.style.display = 'none';
+        }
+      });
+
+      // 3. Update Nav Active State
+      navLinks.forEach(link => {
+        if (link.getAttribute('data-day') === String(targetDay)) {
+          link.classList.add('active');
+        } else {
+          link.classList.remove('active');
+        }
+      });
+
+      // 4. Sync Hash (optional bookmarking)
+      if (history.replaceState) {
+        const newHash = targetDay === 'all' ? '' : `#day${targetDay}`;
+        history.replaceState(null, '', newHash || window.location.pathname);
+      }
+    }
+
+    // Initialize state on load
+    document.addEventListener('DOMContentLoaded', () => {
+      // Restore checked slots
+      const list = getCompletedSlots();
+      list.forEach(slotId => {
+        const card = document.getElementById(slotId);
+        if (card) {
+          card.classList.add('is-dimmed');
+          const cb = card.querySelector('.slot-checkbox');
+          if (cb) cb.checked = true;
+        }
+      });
+
+      // Initial day selection from URL hash: e.g. #day1, #day2
+      const hash = window.location.hash.toLowerCase();
+      const match = hash.match(/^#day(\d+)$/);
+      if (match) {
+        switchDay(match[1]);
+      } else {
+        switchDay('all');
+      }
+    });
+  </script>
+</body>
+</html>

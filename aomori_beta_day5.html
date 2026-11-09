@@ -1,0 +1,859 @@
+<!DOCTYPE html>
+<html lang="ja" data-theme="light">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <title>青森 ｜ 津軽・下北・恐山 完全縦断4泊5日 しおり - Day 5</title>
+  <script>
+    // Anti-FOUC immediate theme application
+    (function() {
+      var t = localStorage.getItem('trip_nav_theme') || 'light';
+      document.documentElement.setAttribute('data-theme', t);
+    })();
+  </script>
+  <style>
+:root {
+  --bg: #f8fafc;
+  --surface: #ffffff;
+  --surface-subtle: #f1f5f9;
+  --text: #0f172a;
+  --text-muted: #64748b;
+  --border: #e2e8f0;
+  --primary: #0284c7;
+  --primary-hover: #0369a1;
+  --accent: #d97706;
+  --card-shadow: 0 1px 3px rgba(0,0,0,0.06), 0 1px 2px rgba(0,0,0,0.04);
+  --font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+}
+[data-theme="dark"] {
+  --bg: #090d16;
+  --surface: #131b2e;
+  --surface-subtle: #1e293b;
+  --text: #f8fafc;
+  --text-muted: #94a3b8;
+  --border: #1e293b;
+  --card-shadow: 0 4px 6px -1px rgba(0,0,0,0.3);
+}
+* { box-sizing: border-box; margin: 0; padding: 0; -webkit-tap-highlight-color: transparent; }
+body {
+  font-family: var(--font-family);
+  background-color: var(--bg);
+  color: var(--text);
+  line-height: 1.5;
+  font-size: 15px;
+  padding-bottom: 80px;
+}
+.header-bar {
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  background: rgba(255, 255, 255, 0.92);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border-bottom: 1px solid var(--border);
+  padding: 12px 16px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+[data-theme="dark"] .header-bar { background: rgba(19, 27, 46, 0.92); }
+.brand-title { font-size: 1.05rem; font-weight: 700; display: flex; align-items: center; gap: 8px; }
+.header-actions { display: flex; gap: 8px; align-items: center; }
+.btn-action {
+  background: var(--surface-subtle);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: 6px 12px;
+  font-size: 13px;
+  color: var(--text);
+  cursor: pointer;
+  text-decoration: none;
+}
+.container { max-width: 680px; margin: 0 auto; padding: 16px; }
+
+/* Day Navigation Bar */
+.nav-bar {
+  display: flex;
+  background: var(--surface-subtle);
+  padding: 6px;
+  border-radius: 10px;
+  margin-bottom: 16px;
+  gap: 6px;
+  align-items: center;
+  justify-content: space-between;
+}
+.nav-link {
+  flex: 1;
+  text-align: center;
+  padding: 7px 10px;
+  border-radius: 7px;
+  font-size: 13px;
+  font-weight: 600;
+  text-decoration: none;
+  color: var(--text-muted);
+  background: transparent;
+  border: none;
+  cursor: pointer;
+}
+.nav-link.active {
+  background: var(--surface);
+  color: var(--primary);
+  box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+}
+
+/* Quick Jump Chips */
+.jump-chips {
+  display: flex;
+  gap: 6px;
+  overflow-x: auto;
+  padding-bottom: 10px;
+  margin-bottom: 16px;
+  white-space: nowrap;
+  scrollbar-width: none;
+}
+.jump-chips::-webkit-scrollbar { display: none; }
+.jump-chip {
+  display: inline-block;
+  font-size: 12px;
+  font-weight: 600;
+  padding: 5px 10px;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 16px;
+  color: var(--text);
+  text-decoration: none;
+}
+
+/* Slot Cards */
+.day-block { margin-bottom: 32px; }
+.day-header {
+  font-size: 1.15rem;
+  font-weight: 700;
+  margin-bottom: 12px;
+  padding-bottom: 6px;
+  border-bottom: 2px solid var(--primary);
+  color: var(--primary);
+}
+
+/* Macro Route Box (Day全体ルート立ち回り) */
+.macro-route-box {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-left: 4px solid var(--primary);
+  border-radius: 10px;
+  padding: 12px 14px;
+  margin-bottom: 16px;
+  box-shadow: var(--card-shadow);
+}
+.macro-route-head {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 6px;
+}
+.macro-route-title {
+  font-size: 13px;
+  font-weight: 800;
+  color: var(--primary);
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+[data-theme="dark"] .macro-route-title { color: #38bdf8; }
+.macro-route-body {
+  font-size: 13px;
+  line-height: 1.55;
+  color: var(--text);
+  margin-bottom: 8px;
+}
+.macro-map-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  font-size: 12px;
+  font-weight: 700;
+  color: var(--primary);
+  text-decoration: none;
+  background: rgba(2, 132, 199, 0.08);
+  padding: 4px 10px;
+  border-radius: 6px;
+  border: 1px solid rgba(2, 132, 199, 0.2);
+}
+[data-theme="dark"] .macro-map-link {
+  color: #38bdf8;
+  background: rgba(56, 189, 248, 0.1);
+  border-color: rgba(56, 189, 248, 0.3);
+}
+.slot-card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  margin-bottom: 12px;
+  padding: 14px 16px;
+  box-shadow: var(--card-shadow);
+  transition: opacity 0.2s, background-color 0.2s;
+}
+.slot-card.is-dimmed { opacity: 0.45; filter: grayscale(40%); }
+.slot-card.is-must { border-left: 4px solid var(--accent); }
+.slot-meta { display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px; }
+.slot-time { font-size: 13px; font-weight: 700; font-variant-numeric: tabular-nums; }
+.slot-badge {
+  font-size: 11px;
+  font-weight: 700;
+  padding: 2px 8px;
+  border-radius: 4px;
+  text-transform: uppercase;
+}
+.badge-sightseeing { background: #d1fae5; color: #065f46; }
+.badge-food { background: #ffedd5; color: #9a3412; }
+.badge-transit { background: #e0e7ff; color: #3730a3; }
+[data-theme="dark"] .badge-sightseeing { background: #064e3b; color: #6ee7b7; }
+[data-theme="dark"] .badge-food { background: #7c2d12; color: #fdba74; }
+[data-theme="dark"] .badge-transit { background: #312e81; color: #a5b4fc; }
+
+.slot-title-row { display: flex; align-items: flex-start; gap: 8px; margin-bottom: 6px; }
+.slot-checkbox { margin-top: 3px; cursor: pointer; width: 18px; height: 18px; accent-color: var(--primary); }
+.slot-title { font-size: 1rem; font-weight: 700; line-height: 1.4; flex: 1; }
+.slot-desc { font-size: 13.5px; color: var(--text-muted); margin-bottom: 10px; line-height: 1.5; padding-left: 26px; }
+
+/* Swap Guide Box */
+.swap-box {
+  margin: 10px 0 10px 26px;
+  padding: 10px 12px;
+  border-radius: 8px;
+  background: rgba(217, 119, 6, 0.08);
+  border: 1px dashed var(--accent);
+  font-size: 12.5px;
+}
+.swap-title { font-weight: 700; color: var(--accent); margin-bottom: 4px; display: flex; align-items: center; gap: 4px; }
+
+.slot-foot { display: flex; justify-content: space-between; align-items: center; padding-top: 8px; border-top: 1px solid var(--border); margin-left: 26px; }
+.map-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  font-size: 12px;
+  font-weight: 600;
+  color: #1a73e8;
+  text-decoration: none;
+  background: rgba(26, 115, 232, 0.08);
+  padding: 4px 10px;
+  border-radius: 20px;
+}
+[data-theme="dark"] .map-pill { color: #8ab4f8; background: rgba(138, 180, 248, 0.12); }
+
+/* Tactics Step Box (立ち回り・攻略手順) */
+.tactics-box {
+  margin: 12px 0 12px 26px;
+  padding: 10px 14px;
+  background: rgba(2, 132, 199, 0.06);
+  border: 1px solid rgba(2, 132, 199, 0.25);
+  border-left: 3.5px solid var(--primary);
+  border-radius: 8px;
+}
+[data-theme="dark"] .tactics-box {
+  background: rgba(56, 189, 248, 0.08);
+  border-color: rgba(56, 189, 248, 0.3);
+  border-left-color: #38bdf8;
+}
+.tactics-header {
+  font-size: 13px;
+  font-weight: 700;
+  color: var(--primary);
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  margin-bottom: 8px;
+}
+.tactics-tag {
+  font-size: 10px;
+  font-weight: 800;
+  background: var(--primary);
+  color: #fff;
+  padding: 1px 6px;
+  border-radius: 4px;
+  letter-spacing: 0.05em;
+}
+[data-theme="dark"] .tactics-header { color: #38bdf8; }
+[data-theme="dark"] .tactics-tag { background: #0284c7; }
+.tactics-list { display: flex; flex-direction: column; gap: 6px; }
+.tactics-step-row { display: flex; align-items: flex-start; gap: 8px; font-size: 12.5px; line-height: 1.5; }
+.tactics-num {
+  flex-shrink: 0;
+  width: 18px;
+  height: 18px;
+  border-radius: 4px;
+  background: rgba(2, 132, 199, 0.18);
+  color: var(--primary);
+  font-size: 11px;
+  font-weight: 800;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-top: 1px;
+}
+[data-theme="dark"] .tactics-num { background: rgba(56, 189, 248, 0.25); color: #38bdf8; }
+
+/* Checkpoints List */
+.checkpoint-list {
+  margin: 10px 0 10px 26px;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+.checkpoint-row {
+  display: flex;
+  align-items: flex-start;
+  gap: 8px;
+  font-size: 12px;
+  background: var(--surface-subtle);
+  padding: 8px 10px;
+  border-radius: 6px;
+  border: 1px solid var(--border);
+}
+.cp-badge {
+  font-size: 10px;
+  font-weight: 700;
+  padding: 1px 5px;
+  border-radius: 3px;
+  background: #0284c7;
+  color: #fff;
+  flex-shrink: 0;
+}
+.cp-title { font-weight: 600; color: var(--text); }
+.cp-desc { font-size: 11.5px; color: var(--text-muted); margin-top: 2px; }
+
+/* Practical Footer */
+.practical-footer {
+  margin: 10px 0 10px 26px;
+  padding: 8px 10px;
+  background: var(--surface-subtle);
+  border-left: 3px solid var(--accent);
+  border-radius: 4px;
+  font-size: 12px;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+.pf-row { display: flex; gap: 6px; }
+.pf-tag { font-weight: 700; color: var(--accent); flex-shrink: 0; min-width: 65px; }
+.pf-val { color: var(--text); }
+
+/* Print & Paged Media */
+@media print {
+  @page { size: A4 portrait; margin: 12mm 15mm; }
+  body { background: #fff !important; color: #000 !important; font-size: 11pt; }
+  .header-bar, .nav-bar, .jump-chips, .no-print { display: none !important; }
+  .day-block { page-break-after: always; break-after: page; }
+  .slot-card { break-inside: avoid; page-break-inside: avoid; box-shadow: none !important; border: 1px solid #ccc !important; }
+  .slot-card.is-dimmed { opacity: 1 !important; filter: none !important; }
+  .slot-checkbox { display: none !important; }
+  .slot-desc, .swap-box, .slot-foot { margin-left: 0 !important; padding-left: 0 !important; }
+}
+
+  </style>
+</head>
+<body>
+  <header class="header-bar">
+    <div class="brand-title">
+      <span>🍎</span>
+      <span>青森 ｜ 津軽・下北・恐山 完全縦断4泊5日 しおり</span>
+    </div>
+    <div class="header-actions no-print">
+      <button class="btn-action" onclick="toggleTheme()">🌓 テーマ</button>
+      <button class="btn-action" onclick="window.print()">🖨️ 製本印刷</button>
+    </div>
+  </header>
+
+  <main class="container">
+    
+    <nav class="nav-bar no-print">
+      <a class="nav-link" href="aomori_beta.html">📑 全日程</a>
+      <a class="nav-link " href="aomori_beta_day1.html">Day 1</a><a class="nav-link " href="aomori_beta_day2.html">Day 2</a><a class="nav-link " href="aomori_beta_day3.html">Day 3</a><a class="nav-link " href="aomori_beta_day4.html">Day 4</a><a class="nav-link active" href="aomori_beta_day5.html">Day 5</a>
+    </nav>
+    
+    <div class="jump-chips no-print">
+      
+        <a class="jump-chip" href="#d5-warasse-nebuta" data-day="5">📍 コインランドリー投入</a>
+      
+        <a class="jump-chip" href="#d5-hakkodamaru-afactory" data-day="5">🍜 青函連絡船 八甲田丸</a>
+      
+        <a class="jump-chip" href="#d5-miso-curry-milk" data-day="5">🍜 「味の札幌 浅利」元</a>
+      
+        <a class="jump-chip" href="#d5-aomori-museum" data-day="5">📍 青森県立美術館（奈良</a>
+      
+    </div>
+    
+      <section class="day-block" id="day-sec-5" data-day="5">
+        <h2 class="day-header">Day 5: 2026年9月15日 (火)</h2>
+        
+        <div class="macro-route-box">
+          <div class="macro-route-head">
+            <span class="macro-route-title">🗺️ 【全体ルート立ち回り】マクロ動線シークエンス</span>
+            <a class="macro-map-link" href="https://www.google.co.jp/maps/dir/%E3%83%9B%E3%83%86%E3%83%AB%E9%9D%92%E6%A3%AE/%E3%81%AD%E3%81%B6%E3%81%9F%E3%81%AE%E5%AE%B6+%E3%83%AF%E3%83%BB%E3%83%A9%E3%83%83%E3%82%BB/%E5%85%AB%E7%94%B2%E7%94%B0%E4%B8%B8/A-FACTORY/%E5%91%B3%E3%81%AE%E6%9C%AD%E5%B9%8C+%E6%B5%85%E5%88%A9/%E9%9D%92%E6%A3%AE%E7%9C%8C%E7%AB%8B%E7%BE%8E%E8%A1%93%E9%A4%A8/%E6%B4%A5%E8%BB%BD%E6%B5%B7%E5%B3%A1%E3%83%95%E3%82%A7%E3%83%AA%E3%83%BC+%E9%9D%92%E6%A3%AE%E3%83%95%E3%82%A7%E3%83%AA%E3%83%BC%E3%82%BF%E3%83%BC%E3%83%9F%E3%83%8A%E3%83%AB" target="_blank" rel="noopener">📍 広域Google Maps</a>
+          </div>
+          <div class="macro-route-body">ホテル青森（08:45発） ➔ コインランドリー投入 ➔ ねぶたの家 ワ・ラッセ ➔ 八甲田丸 ＆ A-FACTORY（アップルパイ） ➔ 味の札幌 浅利（元祖味噌カレー牛乳ラーメン） ➔ 青森県立美術館（あおもり犬・アレコホール） ➔ 津軽海峡フェリー青森ターミナル（16:35 iドロップオフ・17:05出航） ➔ 青森空港（T・厳 レンタカー返却・帰京）</div>
+        </div>
+        <div class="slot-list">
+          
+    <article class="slot-card is-must" id="d5-warasse-nebuta" data-slot-id="d5-warasse-nebuta">
+      <div class="slot-meta">
+        <span class="slot-time">⏱️ 08:45 - 10:00</span>
+        <span class="slot-badge badge-sightseeing">【必見】本物大型ねぶた</span>
+      </div>
+      <div class="slot-title-row">
+        <input type="checkbox" class="slot-checkbox no-print" onchange="toggleSlot('d5-warasse-nebuta', this.checked)" title="完了・スキップを消し込み">
+        <h3 class="slot-title"><span style="color:var(--accent);">【必見】</span> コインランドリー投入 ➔ ねぶたの家 ワ・ラッセ（09:00開館突入）</h3>
+      </div>
+      <p class="slot-desc">08:45にホテル青森をチェックアウト後、まず市内の大型コインランドリー（せん太くん古川店 / ピア青柳店）に洗濯乾燥機（60分全自動）をセットして北海道後半戦に向けた衣類を完全リセット。その待ち時間を100%活用し、09:00開館と同時に「ねぶたの家 ワ・ラッセ」へ突入！今年の祭りで実際に運行された受賞大型ねぶた4台が暗闇に浮かび上がるド迫力の展示を独占鑑賞。</p>
+      
+      
+      <div class="tactics-box">
+        <div class="tactics-header">
+          <span>🎯</span>
+          <span class="tactics-tag">個別立ち回り</span>
+          <span>【構内順路】攻略戦術</span>
+        </div>
+        <div class="tactics-list">
+          
+            <div class="tactics-step-row">
+              <span class="tactics-num">1</span>
+              <span class="tactics-text">08:50にコインランドリーで全自動洗濯乾燥機に衣類を投入（観光中に自動で乾燥まで完了させる時短ハック）。</span>
+            </div>
+          
+            <div class="tactics-step-row">
+              <span class="tactics-num">2</span>
+              <span class="tactics-text">09:00に青森駅横「ねぶたの家 ワ・ラッセ」駐車場へ入庫し、2Fエントランスからねぶたミュージアムへ入場（大人620円）。</span>
+            </div>
+          
+            <div class="tactics-step-row">
+              <span class="tactics-num">3</span>
+              <span class="tactics-text">スロープを下りながら1F「ねぶたホール」へ。幅9m・高さ5mの超巨大大型ねぶた（知事賞・ねぶた大賞等）の精緻な紙貼り・墨書き・迫力の睨みとねぶた囃子音響を全方位から撮影。</span>
+            </div>
+          
+        </div>
+      </div>
+      
+      <div class="checkpoint-list">
+        
+          <div class="checkpoint-row">
+            <span class="cp-badge">必須</span>
+            <div>
+              <div class="cp-title">08:50 コインランドリー全自動洗濯乾燥投入（時間並列化ハック）</div>
+              <div class="cp-desc">長期9泊10日旅の中間地点（Day 5朝）で衣類を完全リフレッシュし、観光時間との並列処理で待ち時間ゼロを実現。</div>
+            </div>
+          </div>
+        
+          <div class="checkpoint-row">
+            <span class="cp-badge">必須</span>
+            <div>
+              <div class="cp-title">09:00 ねぶたの家 ワ・ラッセ 1F「ねぶたホール」大型ねぶた4台鑑賞</div>
+              <div class="cp-desc">朝一番のため団体客が少なく、巨大ねぶたの正面から迫力満点の写真を撮り放題。</div>
+            </div>
+          </div>
+        
+      </div>
+      
+      <div class="practical-footer">
+        <div class="pf-row"><span class="pf-tag">🚗 移動・駐車:</span><span class="pf-val">ワ・ラッセ有料駐車場（最初の1時間220円、以降30分110円）。</span></div>
+        <div class="pf-row"><span class="pf-tag">💡 現地Tips:</span><span class="pf-val">ねぶたの「送り（背面）」の繊細な表現や、制作者（ねぶた師）ごとの筆致の違いを見比べるとさらに面白い。</span></div>
+        <div class="pf-row"><span class="pf-tag">⏱️ 撤収基準:</span><span class="pf-val">10:00にワ・ラッセを出て、すぐ裏手の八甲田丸・A-FACTORYへ徒歩で向かう。</span></div>
+      </div>
+      <div class="slot-foot">
+        <a class="map-pill" href="https://www.google.com/maps/search/?api=1&amp;query=ねぶたの家+ワ・ラッセ" target="_blank" rel="noopener">📍 Google Maps</a>
+        <span style="font-size:12px;font-weight:700;color:var(--accent);">⭐ 必達スポット</span>
+      </div>
+    </article>
+    <article class="slot-card " id="d5-hakkodamaru-afactory" data-slot-id="d5-hakkodamaru-afactory">
+      <div class="slot-meta">
+        <span class="slot-time">⏱️ 10:00 - 11:00</span>
+        <span class="slot-badge badge-food">連絡船＆アップルパイ</span>
+      </div>
+      <div class="slot-title-row">
+        <input type="checkbox" class="slot-checkbox no-print" onchange="toggleSlot('d5-hakkodamaru-afactory', this.checked)" title="完了・スキップを消し込み">
+        <h3 class="slot-title">青函連絡船 八甲田丸 ＆ A-FACTORY（焼きたてアップルパイ・シードル工房）</h3>
+      </div>
+      <p class="slot-desc">ワ・ラッセから海辺のプロムナードへ出て、かつて青森と函館を4時間で結んだ黄色い船体の「青函連絡船メモリアルシップ 八甲田丸」と青森ベイブリッジ、赤い「AOMORI」モニュメントを散策。隣接のおしゃれな白い三角屋根マルシェ「A-FACTORY」で焼きたてアップルパイや青森県産りんごジュース・シードルを堪能。</p>
+      
+      
+      <div class="tactics-box">
+        <div class="tactics-header">
+          <span>🎯</span>
+          <span class="tactics-tag">個別立ち回り</span>
+          <span>【構内順路】攻略戦術</span>
+        </div>
+        <div class="tactics-list">
+          
+            <div class="tactics-step-row">
+              <span class="tactics-num">1</span>
+              <span class="tactics-text">ワ・ラッセ北側の海浜公園へ出て、「AOMORI」ロゴモニュメントと黄色い「八甲田丸」をバックに記念撮影。</span>
+            </div>
+          
+            <div class="tactics-step-row">
+              <span class="tactics-num">2</span>
+              <span class="tactics-text">徒歩1分の「A-FACTORY」へ入館。ガラス張りのシードル醸造タンクを見学しながら、館内ベーカリー・カフェでアップルパイやジェラートを味わう。</span>
+            </div>
+          
+            <div class="tactics-step-row">
+              <span class="tactics-num">3</span>
+              <span class="tactics-text">T・厳の東京持ち帰り用のお土産（ラグノオささき・りんご菓子等）を確保し、コインランドリーで乾燥完了した衣類を回収。</span>
+            </div>
+          
+        </div>
+      </div>
+      
+      <div class="checkpoint-list">
+        
+          <div class="checkpoint-row">
+            <span class="cp-badge">必須</span>
+            <div>
+              <div class="cp-title">青函連絡船メモリアルシップ 八甲田丸 ＆ 青森ラブリッジ散策</div>
+              <div class="cp-desc">夕方これから実際に渡る津軽海峡の港の風情と、青函連絡船の歴史を感じるウォーターフロント。</div>
+            </div>
+          </div>
+        
+          <div class="checkpoint-row">
+            <span class="cp-badge">必須</span>
+            <div>
+              <div class="cp-title">A-FACTORY（シードル工房 ＆ 青森りんごスイーツ）</div>
+              <div class="cp-desc">洗練されたベイエリア複合施設でアップルパイと厳選お土産をチェック。</div>
+            </div>
+          </div>
+        
+      </div>
+      
+      <div class="practical-footer">
+        <div class="pf-row"><span class="pf-tag">🚗 移動・駐車:</span><span class="pf-val">ワ・ラッセ駐車場に車を置いたまま全て徒歩1〜3分圏内で回遊可能。</span></div>
+        <div class="pf-row"><span class="pf-tag">💡 現地Tips:</span><span class="pf-val">これから北海道へ渡りLCC 7kg制限が待つiは、ここでは持ち帰り箱菓子を買わずその場で食べるスイーツに絞る。</span></div>
+        <div class="pf-row"><span class="pf-tag">⏱️ 撤収基準:</span><span class="pf-val">11:00過ぎにランドリー回収を終え、11:30〜12:00に「味の札幌 浅利」へ移動する。</span></div>
+      </div>
+      <div class="slot-foot">
+        <a class="map-pill" href="https://www.google.com/maps/search/?api=1&amp;query=A-FACTORY+青森" target="_blank" rel="noopener">📍 Google Maps</a>
+        
+      </div>
+    </article>
+    <article class="slot-card is-must" id="d5-miso-curry-milk" data-slot-id="d5-miso-curry-milk">
+      <div class="slot-meta">
+        <span class="slot-time">⏱️ 11:30 - 12:45</span>
+        <span class="slot-badge badge-food">【必食】青森ソウルフード</span>
+      </div>
+      <div class="slot-title-row">
+        <input type="checkbox" class="slot-checkbox no-print" onchange="toggleSlot('d5-miso-curry-milk', this.checked)" title="完了・スキップを消し込み">
+        <h3 class="slot-title"><span style="color:var(--accent);">【必見】</span> 「味の札幌 浅利」元祖・味噌カレー牛乳ラーメン（バター入り）</h3>
+      </div>
+      <p class="slot-desc">同行メンバー（厳）が熱望した青森市民の絶対的ソウルフード「味噌カレー牛乳ラーメン（バター入り）」。中高生の「いろんな味を混ぜてみよう」という遊び心から誕生し、今や青森のご当地ラーメン頂点に君臨する一杯を、元祖の系譜を受け継ぐ名店「味の札幌 浅利」（または「味の札幌 大西」）にて実食！</p>
+      
+      <div class="swap-box">
+        <div class="swap-title">🔀 スワップ・代替ルート候補</div>
+        <div><strong>プランA:</strong> 味の札幌 浅利（青森駅東側・元祖発祥系譜）</div><div><strong>プランB:</strong> 味の札幌 大西（古川・王道人気店）</div><div><strong>味の札幌 浅利（実走採用）:</strong> 青森駅東側・新町。元祖・佐藤清氏の直弟子が営む、地元民にも熱烈に支持される名店</div><div><strong>味の札幌 大西:</strong> 古川1丁目。観光客にも知名度抜群の大型人気店（混雑状況を見て浅利と使い分け）</div>
+      </div>
+      
+      <div class="tactics-box">
+        <div class="tactics-header">
+          <span>🎯</span>
+          <span class="tactics-tag">個別立ち回り</span>
+          <span>【構内順路】攻略戦術</span>
+        </div>
+        <div class="tactics-list">
+          
+            <div class="tactics-step-row">
+              <span class="tactics-num">1</span>
+              <span class="tactics-text">11:30〜12:00に青森駅東側の「味の札幌 浅利」（新町1-11-23）へ到着し列に接続（回転は早く10〜15分待ちで入店可能）。</span>
+            </div>
+          
+            <div class="tactics-step-row">
+              <span class="tactics-num">2</span>
+              <span class="tactics-text">全員迷わず看板の「味噌カレー牛乳ラーメン（バター入り・約950〜1,000円）」をオーダー。</span>
+            </div>
+          
+            <div class="tactics-step-row">
+              <span class="tactics-num">3</span>
+              <span class="tactics-text">まずスープを一口。味噌のコク、スパイシーなカレーの香り、牛乳のクリーミーなまろやかさ、そして溶け出すバターとシャキシャキもやし・わかめ・黄色い中太縮れ麺が驚くほど高次元で調和する奇跡のバランスを堪能。</span>
+            </div>
+          
+        </div>
+      </div>
+      
+      <div class="checkpoint-list">
+        
+          <div class="checkpoint-row">
+            <span class="cp-badge">必須</span>
+            <div>
+              <div class="cp-title">「味の札幌 浅利」味噌カレー牛乳ラーメン（バター入り）実食</div>
+              <div class="cp-desc">名前からは想像つかないほど完成された中毒性抜群の黄金スープ。一滴残らず完飲したくなる青森B級グルメの王様。</div>
+            </div>
+          </div>
+        
+      </div>
+      
+      <div class="practical-footer">
+        <div class="pf-row"><span class="pf-tag">🚗 移動・駐車:</span><span class="pf-val">青森駅から徒歩約4〜5分。近隣コインパーキングまたはワ・ラッセ/アスパム周辺から徒歩でアクセス。</span></div>
+        <div class="pf-row"><span class="pf-tag">💡 現地Tips:</span><span class="pf-val">おろしニンニクを少し溶かすとさらにパンチが増して絶品。</span></div>
+        <div class="pf-row"><span class="pf-tag">⏱️ 撤収基準:</span><span class="pf-val">12:45〜13:00に退店し、午後の青森県立美術館へ向けて出発する。</span></div>
+      </div>
+      <div class="slot-foot">
+        <a class="map-pill" href="https://www.google.com/maps/search/?api=1&amp;query=味の札幌+浅利" target="_blank" rel="noopener">📍 Google Maps</a>
+        <span style="font-size:12px;font-weight:700;color:var(--accent);">⭐ 必達スポット</span>
+      </div>
+    </article>
+    <article class="slot-card is-must" id="d5-aomori-museum" data-slot-id="d5-aomori-museum">
+      <div class="slot-meta">
+        <span class="slot-time">⏱️ 13:30 - 15:30</span>
+        <span class="slot-badge badge-sightseeing">【必見】あおもり犬＆アレコ</span>
+      </div>
+      <div class="slot-title-row">
+        <input type="checkbox" class="slot-checkbox no-print" onchange="toggleSlot('d5-aomori-museum', this.checked)" title="完了・スキップを消し込み">
+        <h3 class="slot-title"><span style="color:var(--accent);">【必見】</span> 青森県立美術館（奈良美智「あおもり犬」＆ シャガール「アレコ」）</h3>
+      </div>
+      <p class="slot-desc">建築家・青木淳氏が隣接する三内丸山遺跡の「発掘現場のトレンチ（壕）」から着想を得て設計した、白い煉瓦と土の壁が織りなす世界屈指の美術館建築。4層吹き抜けの巨大空間にマルク・シャガールのバレエ背景画『アレコ』全4作品が揃う圧巻のホールと、弘前出身の現代アーティスト・奈良美智氏による高さ8.5mの巨大立体作品『あおもり犬』を鑑賞。</p>
+      
+      
+      <div class="tactics-box">
+        <div class="tactics-header">
+          <span>🎯</span>
+          <span class="tactics-tag">個別立ち回り</span>
+          <span>【構内順路】攻略戦術</span>
+        </div>
+        <div class="tactics-list">
+          
+            <div class="tactics-step-row">
+              <span class="tactics-num">1</span>
+              <span class="tactics-text">青森市街から車で約20分、13:30に「青森県立美術館」無料駐車場へ到着。白亜の外観と青い木々のシンボルマークを撮影。</span>
+            </div>
+          
+            <div class="tactics-step-row">
+              <span class="tactics-num">2</span>
+              <span class="tactics-text">エレベーターで地下2階へ降り、縦横約21m×高さ19mの巨大吹き抜け「アレコホール」へ。シャガールが描いた縦9m×横15mの超大作背景画4点に四方を囲まれる贅沢な空間に浸る。</span>
+            </div>
+          
+            <div class="tactics-step-row">
+              <span class="tactics-num">3</span>
+              <span class="tactics-text">屋外トレンチ（連絡通路）を抜けて、半屋外空間に佇む高さ8.5mの『あおもり犬』と対面！ガラス越しではなく直接外に出て足元から見上げるルートで記念撮影。</span>
+            </div>
+          
+            <div class="tactics-step-row">
+              <span class="tactics-num">4</span>
+              <span class="tactics-text">八角堂に鎮座する奈良美智作品『森の子（Miss Forest）』や棟方志功展示室を巡り、ミュージアムショップを散策して15:30に出発。</span>
+            </div>
+          
+        </div>
+      </div>
+      
+      <div class="checkpoint-list">
+        
+          <div class="checkpoint-row">
+            <span class="cp-badge">必須</span>
+            <div>
+              <div class="cp-title">奈良美智『あおもり犬』（高さ8.5mの白亜の巨大モニュメント）</div>
+              <div class="cp-desc">トレンチの底でうつむき加減に微笑む青森県立美術館の絶対的アイコン。屋外へ出て間近で撮影。</div>
+            </div>
+          </div>
+        
+          <div class="checkpoint-row">
+            <span class="cp-badge">必須</span>
+            <div>
+              <div class="cp-title">アレコホール（シャガール『アレコ』全4幕背景画完全展示）</div>
+              <div class="cp-desc">世界でここだけで見られるシャガール舞台背景画全4作の常設ホール。圧倒的なスケール感。</div>
+            </div>
+          </div>
+        
+          <div class="checkpoint-row">
+            <span class="cp-badge">必須</span>
+            <div>
+              <div class="cp-title">八角堂『森の子』＆ 棟方志功コレクション</div>
+              <div class="cp-desc">青森が生んだ世界的版画家・棟方志功の力強い板画と、静謐な八角堂のブロンズ像を鑑賞。</div>
+            </div>
+          </div>
+        
+      </div>
+      
+      <div class="practical-footer">
+        <div class="pf-row"><span class="pf-tag">🚗 移動・駐車:</span><span class="pf-val">無料大型駐車場完備。津軽海峡フェリーターミナルまでは車で約15〜20分（約8km）。</span></div>
+        <div class="pf-row"><span class="pf-tag">💡 現地Tips:</span><span class="pf-val">館内は白い迷路のような構造になっているため、フロアマップで「あおもり犬」への屋外出口を確認して回る（この日23,599歩 / 14.66kmを記録）。</span></div>
+        <div class="pf-row"><span class="pf-tag">⏱️ 撤収基準:</span><span class="pf-val">16:45のフェリー乗船手続き締切に絶対遅れないよう、**15:45〜16:00には必ず美術館を出発**する。</span></div>
+      </div>
+      <div class="slot-foot">
+        <a class="map-pill" href="https://www.google.com/maps/search/?api=1&amp;query=青森県立美術館" target="_blank" rel="noopener">📍 Google Maps</a>
+        <span style="font-size:12px;font-weight:700;color:var(--accent);">⭐ 必達スポット</span>
+      </div>
+    </article>
+    <article class="slot-card is-must" id="d5-tsugaru-kaikyo-ferry" data-slot-id="d5-tsugaru-kaikyo-ferry">
+      <div class="slot-meta">
+        <span class="slot-time">⏱️ 16:15 - 20:45</span>
+        <span class="slot-badge badge-transit">【必見】海峡夕日クルーズ</span>
+      </div>
+      <div class="slot-title-row">
+        <input type="checkbox" class="slot-checkbox no-print" onchange="toggleSlot('d5-tsugaru-kaikyo-ferry', this.checked)" title="完了・スキップを消し込み">
+        <h3 class="slot-title"><span style="color:var(--accent);">【必見】</span> 津軽海峡フェリー青森ターミナル（3名解散・17:05発 函館サンセット航路）</h3>
+      </div>
+      <p class="slot-desc">4泊5日にわたって津軽・下北・恐山を駆け抜けたT・厳・iの3名レンタカー旅のフィナーレ。16:15に「津軽海峡フェリー 青森フェリーターミナル」へ到着し、iをドロップオフして固い握手で解散（T・厳はニッポンレンタカー青森空港営業所へ返却し羽田へ帰還）。iは単独ソロ旅モードへ切り替わり、17:05発の津軽海峡フェリー17便（ブルードルフィン・海割ウォーク×ビューシート 2,830円）に乗船し、津軽海峡に沈む夕日を眺めながら20:45に北海道・函館港へ上陸！</p>
+      
+      
+      <div class="tactics-box">
+        <div class="tactics-header">
+          <span>🎯</span>
+          <span class="tactics-tag">個別立ち回り</span>
+          <span>【構内順路】攻略戦術</span>
+        </div>
+        <div class="tactics-list">
+          
+            <div class="tactics-step-row">
+              <span class="tactics-num">1</span>
+              <span class="tactics-text">16:15〜16:30に青森フェリーターミナル（沖館2-12-1）へ到着。レンタカーからiの荷物を降ろし、ガソリン代精算（折半3,292円/人）を確認してT・厳と解散。</span>
+            </div>
+          
+            <div class="tactics-step-row">
+              <span class="tactics-num">2</span>
+              <span class="tactics-text">16:40までに1階スマートチェックイン機（または窓口）で予約済の「海割ウォーク × ビューシート（2,830円）」乗船券を発券。</span>
+            </div>
+          
+            <div class="tactics-step-row">
+              <span class="tactics-num">3</span>
+              <span class="tactics-text">17:05（または17:15）出航。船体最前方の指定席「ビューシート（左側・西側席）」または外部デッキから、17:47頃の津軽海峡サンセットと遠ざかる八甲田山・津軽半島、近づく函館山のシルエットを鑑賞。</span>
+            </div>
+          
+            <div class="tactics-step-row">
+              <span class="tactics-num">4</span>
+              <span class="tactics-text">船内コンセントでスマホ・バッテリーを満充電にしつつ北海道パートの作戦会議を行い、20:45に函館フェリーターミナルへ下船！</span>
+            </div>
+          
+        </div>
+      </div>
+      
+      <div class="checkpoint-list">
+        
+          <div class="checkpoint-row">
+            <span class="cp-badge">必須</span>
+            <div>
+              <div class="cp-title">16:30 青森フェリーターミナル到着・3名レンタカー隊解散</div>
+              <div class="cp-desc">5日間ノントラブルで青森全域を走破したT・厳に感謝を伝えて見送り。ここから後半5泊6日の北海道ソロ遠征が開幕！</div>
+            </div>
+          </div>
+        
+          <div class="checkpoint-row">
+            <span class="cp-badge">必須</span>
+            <div>
+              <div class="cp-title">17:05〜20:45 津軽海峡フェリー 17便「ビューシート」サンセット航海</div>
+              <div class="cp-desc">スタンダードとわずか450円差でリクライニング・全席電源・前面展望が手に入る神コスパ席。夕暮れの海峡クルーズを満喫。</div>
+            </div>
+          </div>
+        
+      </div>
+      
+      <div class="practical-footer">
+        <div class="pf-row"><span class="pf-tag">🚗 移動・駐車:</span><span class="pf-val">青森県立美術館からフェリーターミナルまで車約15〜20分。T・厳はターミナルから青森空港まで環状7号線経由で車約30分。</span></div>
+        <div class="pf-row"><span class="pf-tag">💡 現地Tips:</span><span class="pf-val">複数人旅から一人旅へ切り替わる瞬間の少しの寂しさは、船が出航した瞬間に「これから6日間、自分の判断だけで北海道を駆け抜ける純粋な冒険感」へと一気に昇華する。</span></div>
+        <div class="pf-row"><span class="pf-tag">⏱️ 撤収基準:</span><span class="pf-val">20:45函館港下船後、正面ロータリー20:55発の「函館帝産バス（函館駅前行・320円）」へスムーズに乗車し、21:30にA-GATE HOTEL函館駅前へチェックインする。</span></div>
+      </div>
+      <div class="slot-foot">
+        <a class="map-pill" href="https://www.google.com/maps/search/?api=1&amp;query=津軽海峡フェリー+青森フェリーターミナル" target="_blank" rel="noopener">📍 Google Maps</a>
+        <span style="font-size:12px;font-weight:700;color:var(--accent);">⭐ 必達スポット</span>
+      </div>
+    </article>
+        </div>
+      </section>
+    
+    <nav class="nav-bar no-print" style="margin-top: 24px;">
+      <a class="nav-link" href="aomori_beta.html">📑 全日程（統合版）</a>
+      <a class="nav-link " href="aomori_beta_day1.html">Day 1</a><a class="nav-link " href="aomori_beta_day2.html">Day 2</a><a class="nav-link " href="aomori_beta_day3.html">Day 3</a><a class="nav-link " href="aomori_beta_day4.html">Day 4</a><a class="nav-link active" href="aomori_beta_day5.html">Day 5</a>
+    </nav>
+  </main>
+
+  <script>
+    const STORAGE_KEY = 'aomori_completed_slots';
+
+    function toggleTheme() {
+      const cur = document.documentElement.getAttribute('data-theme') || 'light';
+      const nxt = cur === 'dark' ? 'light' : 'dark';
+      document.documentElement.setAttribute('data-theme', nxt);
+      localStorage.setItem('trip_nav_theme', nxt);
+    }
+
+    function getCompletedSlots() {
+      try {
+        return JSON.parse(localStorage.getItem(STORAGE_KEY) || '[]');
+      } catch (e) {
+        return [];
+      }
+    }
+
+    function toggleSlot(slotId, isDone) {
+      const card = document.getElementById(slotId);
+      let list = getCompletedSlots();
+      if (isDone) {
+        if (!list.includes(slotId)) list.push(slotId);
+        if (card) card.classList.add('is-dimmed');
+      } else {
+        list = list.filter(id => id !== slotId);
+        if (card) card.classList.remove('is-dimmed');
+      }
+      localStorage.setItem(STORAGE_KEY, JSON.stringify(list));
+    }
+
+    // In-page Day Segment Switcher (Instant filter without HTTP reload)
+    function switchDay(targetDay) {
+      const dayBlocks = document.querySelectorAll('.day-block');
+      const jumpChips = document.querySelectorAll('.jump-chip');
+      const navLinks = document.querySelectorAll('.nav-link[data-day]');
+
+      // 1. Filter Day Sections
+      dayBlocks.forEach(sec => {
+        const secDay = sec.getAttribute('data-day');
+        if (targetDay === 'all' || secDay === String(targetDay)) {
+          sec.style.display = '';
+        } else {
+          sec.style.display = 'none';
+        }
+      });
+
+      // 2. Filter Jump Chips
+      jumpChips.forEach(chip => {
+        const chipDay = chip.getAttribute('data-day');
+        if (targetDay === 'all' || chipDay === String(targetDay)) {
+          chip.style.display = '';
+        } else {
+          chip.style.display = 'none';
+        }
+      });
+
+      // 3. Update Nav Active State
+      navLinks.forEach(link => {
+        if (link.getAttribute('data-day') === String(targetDay)) {
+          link.classList.add('active');
+        } else {
+          link.classList.remove('active');
+        }
+      });
+
+      // 4. Sync Hash (optional bookmarking)
+      if (history.replaceState) {
+        const newHash = targetDay === 'all' ? '' : `#day${targetDay}`;
+        history.replaceState(null, '', newHash || window.location.pathname);
+      }
+    }
+
+    // Initialize state on load
+    document.addEventListener('DOMContentLoaded', () => {
+      // Restore checked slots
+      const list = getCompletedSlots();
+      list.forEach(slotId => {
+        const card = document.getElementById(slotId);
+        if (card) {
+          card.classList.add('is-dimmed');
+          const cb = card.querySelector('.slot-checkbox');
+          if (cb) cb.checked = true;
+        }
+      });
+
+      // Initial day selection from URL hash: e.g. #day1, #day2
+      const hash = window.location.hash.toLowerCase();
+      const match = hash.match(/^#day(\d+)$/);
+      if (match) {
+        switchDay(match[1]);
+      } else {
+        switchDay('all');
+      }
+    });
+  </script>
+</body>
+</html>

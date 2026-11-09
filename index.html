@@ -1,265 +1,264 @@
 <!DOCTYPE html>
-<html lang="ja" data-theme="dark">
+<html lang="ja" data-theme="light">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>旅行ナビゲーション ポータルハブ</title>
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Noto+Sans+JP:wght@400;500;700;900&display=swap" rel="stylesheet">
   <style>
     :root {
+      --bg: #f8fafc;
+      --surface: #ffffff;
+      --border: #e2e8f0;
+      --text: #0f172a;
+      --text-muted: #64748b;
+      --primary: #0284c7;
+      --accent: #d97706;
+      --card-shadow: 0 1px 3px rgba(0,0,0,0.06), 0 1px 2px rgba(0,0,0,0.04);
+      --font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+    }
+    [data-theme="dark"] {
       --bg: #090d16;
       --surface: #131b2e;
       --border: #1e293b;
       --text: #f8fafc;
       --text-muted: #94a3b8;
-      --primary: #38bdf8;
-      --accent: #f59e0b;
-      --success: #10b981;
-      --card-shadow: 0 4px 14px rgba(0,0,0,0.5);
-      --font-family: 'Inter', 'Noto Sans JP', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+      --card-shadow: 0 4px 6px -1px rgba(0,0,0,0.3);
     }
     * { box-sizing: border-box; margin: 0; padding: 0; }
-    body { font-family: var(--font-family); background: var(--bg); color: var(--text); line-height: 1.5; padding: 32px 16px 80px; }
-    .hub-wrap { max-width: 760px; margin: 0 auto; }
+    body { font-family: var(--font-family); background: var(--bg); color: var(--text); line-height: 1.5; padding: 24px 16px 60px; }
+    .hub-wrap { max-width: 680px; margin: 0 auto; }
     .hub-header { text-align: center; margin-bottom: 28px; }
-    .hub-title { font-size: 1.6rem; font-weight: 800; margin-bottom: 8px; letter-spacing: -0.02em; }
-    .hub-subtitle { font-size: 13.5px; color: var(--text-muted); }
-    
-    .arch-spec {
-      background: rgba(30, 41, 59, 0.6);
-      border: 1px solid var(--border);
-      border-radius: 12px;
-      padding: 14px 18px;
-      margin-bottom: 24px;
-      font-size: 13px;
-      color: var(--text-muted);
-      line-height: 1.6;
-    }
-    .arch-spec strong { color: var(--text); }
-    .arch-tree { font-family: ui-monospace, monospace; font-size: 12px; color: var(--primary); margin-top: 6px; }
-
+    .hub-title { font-size: 1.5rem; font-weight: 800; margin-bottom: 6px; }
+    .hub-subtitle { font-size: 14px; color: var(--text-muted); }
     .trip-card {
       background: var(--surface);
       border: 1px solid var(--border);
-      border-radius: 16px;
-      padding: 22px 24px;
-      margin-bottom: 24px;
+      border-radius: 14px;
+      padding: 18px 20px;
+      margin-bottom: 16px;
       box-shadow: var(--card-shadow);
-      transition: transform 0.2s, border-color 0.2s;
     }
-    .trip-card:hover { border-color: rgba(56, 189, 248, 0.4); }
     .trip-card-head { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 8px; }
-    .trip-card-title { font-size: 1.25rem; font-weight: 800; display: flex; align-items: center; gap: 8px; }
-    .trip-badge { font-size: 11px; font-weight: 700; padding: 3px 8px; border-radius: 6px; background: rgba(16, 185, 129, 0.15); color: var(--success); }
-    .trip-date { font-size: 13px; font-weight: 600; color: var(--accent); margin-bottom: 10px; }
-    .trip-desc { font-size: 13.5px; color: var(--text-muted); margin-bottom: 16px; line-height: 1.6; }
-    
-    .hub-launch-btn {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      background: linear-gradient(135deg, rgba(2, 132, 199, 0.2), rgba(56, 189, 248, 0.1));
-      border: 1px solid rgba(56, 189, 248, 0.4);
-      color: #fff;
-      padding: 12px 18px;
-      border-radius: 10px;
-      text-decoration: none;
-      font-size: 14px;
-      font-weight: 700;
-      margin-bottom: 14px;
-      transition: all 0.2s;
-    }
-    .hub-launch-btn:hover {
-      background: linear-gradient(135deg, rgba(2, 132, 199, 0.35), rgba(56, 189, 248, 0.2));
-      border-color: var(--primary);
-      transform: translateY(-1px);
-    }
-    .hub-launch-meta { font-size: 11px; color: var(--primary); font-weight: 500; font-family: ui-monospace, monospace; }
-
-    .sub-tree-label {
-      font-size: 11px;
-      font-weight: 700;
-      color: var(--text-muted);
-      text-transform: uppercase;
-      letter-spacing: 0.5px;
-      margin: 0 0 6px 2px;
-    }
-
-    .tier-group {
-      display: flex;
-      flex-direction: column;
-      gap: 6px;
-      padding-left: 12px;
-      border-left: 2px solid rgba(255, 255, 255, 0.08);
-    }
-    .tier-row {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      background: rgba(255, 255, 255, 0.02);
-      border: 1px solid rgba(255, 255, 255, 0.04);
-      border-radius: 6px;
-      padding: 6px 10px;
-      gap: 10px;
-    }
-    .tier-tag {
-      font-size: 10.5px;
-      font-weight: 800;
-      padding: 2px 6px;
-      border-radius: 4px;
-      min-width: 48px;
-      text-align: center;
-    }
-    .tier-tag.prod { background: #0284c7; color: #fff; }
-    .tier-tag.dev { background: #d97706; color: #fff; }
-    .tier-tag.log { background: #059669; color: #fff; }
-
-    .tier-info {
-      flex: 1;
-      display: flex;
-      align-items: center;
-      gap: 8px;
-    }
-    .tier-name { font-size: 12.5px; font-weight: 600; color: #e2e8f0; }
-    .tier-url { font-size: 11px; color: var(--text-muted); font-family: ui-monospace, monospace; }
-
-    .tier-btn {
+    .trip-card-title { font-size: 1.15rem; font-weight: 700; display: flex; align-items: center; gap: 8px; }
+    .trip-badge { font-size: 11px; font-weight: 700; padding: 2px 8px; border-radius: 4px; background: rgba(2, 132, 199, 0.1); color: var(--primary); }
+    .trip-date { font-size: 13px; font-weight: 600; color: var(--accent); margin-bottom: 8px; }
+    .trip-desc { font-size: 13.5px; color: var(--text-muted); margin-bottom: 14px; line-height: 1.5; }
+    .trip-links { display: flex; flex-wrap: wrap; gap: 8px; }
+    .trip-link-btn {
       display: inline-flex;
       align-items: center;
-      padding: 3px 10px;
-      border-radius: 4px;
-      font-size: 11px;
+      gap: 4px;
+      padding: 6px 14px;
+      border-radius: 20px;
+      font-size: 13px;
       font-weight: 600;
       text-decoration: none;
-      background: rgba(255, 255, 255, 0.05);
-      color: var(--text-muted);
+      background: #f1f5f9;
+      color: var(--text);
       border: 1px solid var(--border);
-      transition: all 0.2s;
     }
-    .tier-btn:hover { background: rgba(56, 189, 248, 0.2); color: var(--primary); border-color: var(--primary); }
+    .trip-link-btn.btn-primary { background: var(--primary); color: #fff; border-color: var(--primary); }
+    [data-theme="dark"] .trip-link-btn { background: #1e293b; color: #f8fafc; }
+    [data-theme="dark"] .trip-link-btn.btn-primary { background: var(--primary); color: #fff; }
   </style>
 </head>
 <body>
   <div class="hub-wrap">
     <header class="hub-header">
       <h1 class="hub-title">✈️ 旅行ナビゲーション ポータル</h1>
-      <p class="hub-subtitle">GitHub Pages 公開旅程しおり ＆ 実走タイムチャート集約ハブ</p>
-      <div style="margin-top: 12px;">
-        <a href="travel/" style="display: inline-flex; align-items: center; gap: 6px; background: rgba(56, 189, 248, 0.15); border: 1px solid var(--primary); color: var(--primary); padding: 6px 16px; border-radius: 20px; text-decoration: none; font-size: 13px; font-weight: 700;">
-          📂 新設計 /travel/ ディレクトリ版ポータルを開く ➔
-        </a>
-      </div>
+      <p class="hub-subtitle">GitHub Pages 公開旅程しおり ＆ アルバムログ集約ハブ (実走スキャン動的生成)</p>
     </header>
-
-    <div class="arch-spec">
-      <strong>📐 階層ナビゲーション構造（Hub and Spoke）:</strong>
-      <div class="arch-tree">
-        総合ポータル (index.html)<br>
-        &nbsp;&nbsp;┗ 🏯 それぞれの旅ポータル (YYYYMMDD_[trip].html) ★同行メンバー共有URL<br>
-        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;┣ [PROD] 確定本番プラン (YYYYMMDD_[trip]_prod.html)<br>
-        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;┣ [DEV]&nbsp; 検討・下書き案 (YYYYMMDD_[trip]_dev.html)<br>
-        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;┗ [LOG]&nbsp; 実走実績ログ&nbsp;&nbsp; (YYYYMMDD_[trip]_log.html)
-      </div>
-    </div>
-
     <main>
-      <!-- 愛知・犬山・名古屋 2026 -->
-      <article class="trip-card">
-        <div class="trip-card-head">
-          <h2 class="trip-card-title"><span>🏯</span> 愛知・犬山・名古屋 旅行</h2>
-          <span class="trip-badge">実走完了</span>
-        </div>
-        <div class="trip-date">📅 2026年11月7日(土) 〜 11月8日(日) ｜ 実働2日間</div>
-        <p class="trip-desc">名古屋城本丸御殿・草薙館・国宝犬山城・有楽苑如庵・城下町山田五平餅・桃太郎神社・木曽川全域踏破（実測3.2万歩）。</p>
-        
-        <!-- 同行メンバー共有用 旅ポータル -->
-        <a href="20261107_aichi.html" class="hub-launch-btn">
-          <div>
-            <span>📱 愛知・犬山 旅ポータルを開く（同行メンバー共有用）</span>
-            <div class="hub-launch-meta">20261107_aichi.html</div>
+      
+        <article class="trip-card">
+          <div class="trip-card-head">
+            <h2 class="trip-card-title"><span>🏯</span> 愛知・犬山・名古屋 旅程ナビ 2026</h2>
+            <span class="trip-badge">最新・実走済</span>
           </div>
-          <span>➔</span>
-        </a>
-
-        <!-- 配下 3層タイムチャート -->
-        <div class="sub-tree-label">配下 3層タイムチャート</div>
-        <div class="tier-group">
-          <div class="tier-row">
-            <span class="tier-tag prod">PROD</span>
-            <div class="tier-info">
-              <span class="tier-name">確定本番タイムチャート</span>
-              <span class="tier-url">20261107_aichi_prod.html</span>
-            </div>
-            <a class="tier-btn" href="20261107_aichi_prod.html">開く ➔</a>
+          <div class="trip-date">📅 2026年11月7日(土) 〜 11月8日(日)</div>
+          <p class="trip-desc">名古屋城本丸御殿・草薙館名刀体験・宮きしめん・国宝犬山城・有楽苑如庵・城下町山田五平餅・成田山・名駅エスカ。</p>
+          <div class="trip-links">
+            
+              <a class="trip-link-btn btn-primary" href="aichi.html">
+                [PROD] 本番ナビ ➔
+              </a>
+            
+              <a class="trip-link-btn " href="aichi_beta.html">
+                [BETA] 検証プレビュー ➔
+              </a>
+            
           </div>
-          <div class="tier-row">
-            <span class="tier-tag dev">DEV</span>
-            <div class="tier-info">
-              <span class="tier-name">検証プレビュー・下書き</span>
-              <span class="tier-url">20261107_aichi_dev.html</span>
-            </div>
-            <a class="tier-btn" href="20261107_aichi_dev.html">開く ➔</a>
+        </article>
+        <article class="trip-card">
+          <div class="trip-card-head">
+            <h2 class="trip-card-title"><span>🍎</span> 青森 津軽・下北・恐山 一周ナビ 2026</h2>
+            <span class="trip-badge">実走済</span>
           </div>
-          <div class="tier-row">
-            <span class="tier-tag log">LOG</span>
-            <div class="tier-info">
-              <span class="tier-name">実走実績ログ ＆ 現地批評エッセイ</span>
-              <span class="tier-url">20261107_aichi_log.html</span>
-            </div>
-            <a class="tier-btn" href="20261107_aichi_log.html">開く ➔</a>
+          <div class="trip-date">📅 2026年9月11日(金) 〜 9月15日(火)</div>
+          <p class="trip-desc">三内丸山遺跡・十二湖青池・高山稲荷・龍飛崎・むつ湾フェリー・仏ヶ浦・大間マグロ・恐山宿坊吉祥閣・浅虫水族館。</p>
+          <div class="trip-links">
+            
+              <a class="trip-link-btn btn-primary" href="aomori.html">
+                [PROD] 本番ナビ ➔
+              </a>
+            
+              <a class="trip-link-btn " href="aomori_beta.html">
+                [BETA] 検証プレビュー ➔
+              </a>
+            
           </div>
-        </div>
-      </article>
-
-      <!-- 三重・伊勢志摩 2026 -->
-      <article class="trip-card">
-        <div class="trip-card-head">
-          <h2 class="trip-card-title"><span>⛩️</span> 三重・伊勢志摩 周遊旅行</h2>
-          <span class="trip-badge">実走完了</span>
-        </div>
-        <div class="trip-date">📅 2026年11月2日(月) 〜 11月3日(火・祝) ｜ グループ4名</div>
-        <p class="trip-desc">伊勢神宮内宮・猿田彦神社・おかげ横丁・大江戸温泉伊勢志摩・賢島エスペランサクルーズ・志摩地中海村・多気VISON。</p>
-        
-        <!-- 同行メンバー共有用 旅ポータル -->
-        <a href="20261102_mie.html" class="hub-launch-btn">
-          <div>
-            <span>📱 三重・伊勢志摩 旅ポータルを開く（同行メンバー共有用）</span>
-            <div class="hub-launch-meta">20261102_mie.html</div>
+        </article>
+        <article class="trip-card">
+          <div class="trip-card-head">
+            <h2 class="trip-card-title"><span>🗺️</span> aquarium_backup.html</h2>
+            <span class="trip-badge">登録旅程</span>
           </div>
-          <span>➔</span>
-        </a>
-
-        <!-- 配下 3層タイムチャート -->
-        <div class="sub-tree-label">配下 3層タイムチャート</div>
-        <div class="tier-group">
-          <div class="tier-row">
-            <span class="tier-tag prod">PROD</span>
-            <div class="tier-info">
-              <span class="tier-name">厳選王道本命プラン</span>
-              <span class="tier-url">20261102_mie_prod.html</span>
-            </div>
-            <a class="tier-btn" href="20261102_mie_prod.html">開く ➔</a>
+          <div class="trip-date">📅 日程情報</div>
+          <p class="trip-desc">公開ファイル数: 1件</p>
+          <div class="trip-links">
+            
+              <a class="trip-link-btn btn-primary" href="aquarium_backup.html">
+                [PROD] 本番ナビ ➔
+              </a>
+            
           </div>
-          <div class="tier-row">
-            <span class="tier-tag dev">DEV</span>
-            <div class="tier-info">
-              <span class="tier-name">雨天・欠航時予備（鳥羽水族館）</span>
-              <span class="tier-url">20261102_mie_dev.html</span>
-            </div>
-            <a class="tier-btn" href="20261102_mie_dev.html">開く ➔</a>
+        </article>
+        <article class="trip-card">
+          <div class="trip-card-head">
+            <h2 class="trip-card-title"><span>🐻</span> 北海道 道南・道央大縦走 旅程ナビ 2026</h2>
+            <span class="trip-badge">実走済</span>
           </div>
-          <div class="tier-row">
-            <span class="tier-tag log">LOG</span>
-            <div class="tier-info">
-              <span class="tier-name">帰路実績ログ（名駅途中合流・日の出ラーメン12分速）</span>
-              <span class="tier-url">20261102_mie_log.html</span>
-            </div>
-            <a class="tier-btn" href="20261102_mie_log.html">開く ➔</a>
+          <div class="trip-date">📅 2026年9月15日(火) 〜 9月20日(日)</div>
+          <p class="trip-desc">函館山夜景・ラッキーピエロ・五稜郭・大沼公園・洞爺湖・登別地獄谷・ウポポイ・支笏湖・札幌・余市蒸溜所・小樽運河。</p>
+          <div class="trip-links">
+            
+              <a class="trip-link-btn btn-primary" href="hokkaido.html">
+                [PROD] 本番ナビ ➔
+              </a>
+            
+              <a class="trip-link-btn " href="hokkaido_beta.html">
+                [BETA] 検証プレビュー ➔
+              </a>
+            
           </div>
-        </div>
-      </article>
+        </article>
+        <article class="trip-card">
+          <div class="trip-card-head">
+            <h2 class="trip-card-title"><span>🎆</span> 北陸・信越・飛騨 夏の大遠征ナビ 2026</h2>
+            <span class="trip-badge">実走済</span>
+          </div>
+          <div class="trip-date">📅 2026年8月2日(日) 〜 8月11日(火)</div>
+          <p class="trip-desc">草津温泉感謝祭・長岡大花火・清津峡・雨晴海岸・金沢兼六園・白川郷展望台・飛騨高山・飛騨古川・上田城。</p>
+          <div class="trip-links">
+            
+              <a class="trip-link-btn btn-primary" href="hokuriku.html">
+                [PROD] 本番ナビ ➔
+              </a>
+            
+              <a class="trip-link-btn " href="hokuriku_beta.html">
+                [BETA] 検証プレビュー ➔
+              </a>
+            
+          </div>
+        </article>
+        <article class="trip-card">
+          <div class="trip-card-head">
+            <h2 class="trip-card-title"><span>🗺️</span> 三重・伊勢志摩 旅アルバム 2026 ｜ ポップ行動ログ</h2>
+            <span class="trip-badge">登録旅程</span>
+          </div>
+          <div class="trip-date">📅 日程情報</div>
+          <p class="trip-desc">公開ファイル数: 1件</p>
+          <div class="trip-links">
+            
+              <a class="trip-link-btn " href="mie-log.html">
+                [ALBUM] 旅アルバムログ ➔
+              </a>
+            
+          </div>
+        </article>
+        <article class="trip-card">
+          <div class="trip-card-head">
+            <h2 class="trip-card-title"><span>⛩️</span> 三重・伊勢志摩 リアルタイム旅程ナビ 2026</h2>
+            <span class="trip-badge">実走済</span>
+          </div>
+          <div class="trip-date">📅 2026年11月2日(月) 〜 11月3日(火・祝)</div>
+          <p class="trip-desc">伊勢神宮外宮・内宮・すし久てこね寿司・横山展望台・賢島エスパーニャクルーズ・鳥羽水族館・日の出らーめん。</p>
+          <div class="trip-links">
+            
+              <a class="trip-link-btn btn-primary" href="mie.html">
+                [PROD] 本番ナビ ➔
+              </a>
+            
+          </div>
+        </article>
+        <article class="trip-card">
+          <div class="trip-card-head">
+            <h2 class="trip-card-title"><span>⛰️</span> 長野・戸隠・善光寺・松本 スプリントナビ 2026</h2>
+            <span class="trip-badge">実走済</span>
+          </div>
+          <div class="trip-date">📅 2026年10月31日(土) 〜 11月1日(日)</div>
+          <p class="trip-desc">戸隠神社五社・つきや戸隠そば・善光寺お戒壇巡り・小布施新栗スイーツ・国宝松本城天守・縄手通り・珈琲美学アベ。</p>
+          <div class="trip-links">
+            
+              <a class="trip-link-btn btn-primary" href="nagano.html">
+                [PROD] 本番ナビ ➔
+              </a>
+            
+              <a class="trip-link-btn " href="nagano_beta.html">
+                [BETA] 検証プレビュー ➔
+              </a>
+            
+          </div>
+        </article>
+        <article class="trip-card">
+          <div class="trip-card-head">
+            <h2 class="trip-card-title"><span>🗺️</span> plan2.html</h2>
+            <span class="trip-badge">登録旅程</span>
+          </div>
+          <div class="trip-date">📅 日程情報</div>
+          <p class="trip-desc">公開ファイル数: 1件</p>
+          <div class="trip-links">
+            
+              <a class="trip-link-btn btn-primary" href="plan2.html">
+                [PROD] 本番ナビ ➔
+              </a>
+            
+          </div>
+        </article>
+        <article class="trip-card">
+          <div class="trip-card-head">
+            <h2 class="trip-card-title"><span>🗺️</span> plan3.html</h2>
+            <span class="trip-badge">登録旅程</span>
+          </div>
+          <div class="trip-date">📅 日程情報</div>
+          <p class="trip-desc">公開ファイル数: 1件</p>
+          <div class="trip-links">
+            
+              <a class="trip-link-btn btn-primary" href="plan3.html">
+                [PROD] 本番ナビ ➔
+              </a>
+            
+          </div>
+        </article>
+        <article class="trip-card">
+          <div class="trip-card-head">
+            <h2 class="trip-card-title"><span>🌲</span> 東北6県縦断GW 一人旅の原点ナビ 2026</h2>
+            <span class="trip-badge">実走済</span>
+          </div>
+          <div class="trip-date">📅 2026年4月28日(火) 〜 5月10日(日)</div>
+          <p class="trip-desc">仙台城跡・おっぺしゃん・仙台大観音・松島・平泉中尊寺・角館・田沢湖・男鹿半島・山寺・銀山温泉・羽黒山・会津若松。</p>
+          <div class="trip-links">
+            
+              <a class="trip-link-btn btn-primary" href="tohoku.html">
+                [PROD] 本番ナビ ➔
+              </a>
+            
+              <a class="trip-link-btn " href="tohoku_beta.html">
+                [BETA] 検証プレビュー ➔
+              </a>
+            
+          </div>
+        </article>
     </main>
   </div>
 </body>

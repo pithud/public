@@ -1,0 +1,777 @@
+<!DOCTYPE html>
+<html lang="ja" data-theme="light">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <title>東北 ｜ 仙台・松島・平泉・秋田・山形・会津 一人旅の原点 縦走しおり - Day 5</title>
+  <script>
+    // Anti-FOUC immediate theme application
+    (function() {
+      var t = localStorage.getItem('trip_nav_theme') || 'light';
+      document.documentElement.setAttribute('data-theme', t);
+    })();
+  </script>
+  <style>
+:root {
+  --bg: #f8fafc;
+  --surface: #ffffff;
+  --surface-subtle: #f1f5f9;
+  --text: #0f172a;
+  --text-muted: #64748b;
+  --border: #e2e8f0;
+  --primary: #0284c7;
+  --primary-hover: #0369a1;
+  --accent: #d97706;
+  --card-shadow: 0 1px 3px rgba(0,0,0,0.06), 0 1px 2px rgba(0,0,0,0.04);
+  --font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+}
+[data-theme="dark"] {
+  --bg: #090d16;
+  --surface: #131b2e;
+  --surface-subtle: #1e293b;
+  --text: #f8fafc;
+  --text-muted: #94a3b8;
+  --border: #1e293b;
+  --card-shadow: 0 4px 6px -1px rgba(0,0,0,0.3);
+}
+* { box-sizing: border-box; margin: 0; padding: 0; -webkit-tap-highlight-color: transparent; }
+body {
+  font-family: var(--font-family);
+  background-color: var(--bg);
+  color: var(--text);
+  line-height: 1.5;
+  font-size: 15px;
+  padding-bottom: 80px;
+}
+.header-bar {
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  background: rgba(255, 255, 255, 0.92);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border-bottom: 1px solid var(--border);
+  padding: 12px 16px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+[data-theme="dark"] .header-bar { background: rgba(19, 27, 46, 0.92); }
+.brand-title { font-size: 1.05rem; font-weight: 700; display: flex; align-items: center; gap: 8px; }
+.header-actions { display: flex; gap: 8px; align-items: center; }
+.btn-action {
+  background: var(--surface-subtle);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: 6px 12px;
+  font-size: 13px;
+  color: var(--text);
+  cursor: pointer;
+  text-decoration: none;
+}
+.container { max-width: 680px; margin: 0 auto; padding: 16px; }
+
+/* Day Navigation Bar */
+.nav-bar {
+  display: flex;
+  background: var(--surface-subtle);
+  padding: 6px;
+  border-radius: 10px;
+  margin-bottom: 16px;
+  gap: 6px;
+  align-items: center;
+  justify-content: space-between;
+}
+.nav-link {
+  flex: 1;
+  text-align: center;
+  padding: 7px 10px;
+  border-radius: 7px;
+  font-size: 13px;
+  font-weight: 600;
+  text-decoration: none;
+  color: var(--text-muted);
+  background: transparent;
+  border: none;
+  cursor: pointer;
+}
+.nav-link.active {
+  background: var(--surface);
+  color: var(--primary);
+  box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+}
+
+/* Quick Jump Chips */
+.jump-chips {
+  display: flex;
+  gap: 6px;
+  overflow-x: auto;
+  padding-bottom: 10px;
+  margin-bottom: 16px;
+  white-space: nowrap;
+  scrollbar-width: none;
+}
+.jump-chips::-webkit-scrollbar { display: none; }
+.jump-chip {
+  display: inline-block;
+  font-size: 12px;
+  font-weight: 600;
+  padding: 5px 10px;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 16px;
+  color: var(--text);
+  text-decoration: none;
+}
+
+/* Slot Cards */
+.day-block { margin-bottom: 32px; }
+.day-header {
+  font-size: 1.15rem;
+  font-weight: 700;
+  margin-bottom: 12px;
+  padding-bottom: 6px;
+  border-bottom: 2px solid var(--primary);
+  color: var(--primary);
+}
+
+/* Macro Route Box (Day全体ルート立ち回り) */
+.macro-route-box {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-left: 4px solid var(--primary);
+  border-radius: 10px;
+  padding: 12px 14px;
+  margin-bottom: 16px;
+  box-shadow: var(--card-shadow);
+}
+.macro-route-head {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 6px;
+}
+.macro-route-title {
+  font-size: 13px;
+  font-weight: 800;
+  color: var(--primary);
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+[data-theme="dark"] .macro-route-title { color: #38bdf8; }
+.macro-route-body {
+  font-size: 13px;
+  line-height: 1.55;
+  color: var(--text);
+  margin-bottom: 8px;
+}
+.macro-map-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  font-size: 12px;
+  font-weight: 700;
+  color: var(--primary);
+  text-decoration: none;
+  background: rgba(2, 132, 199, 0.08);
+  padding: 4px 10px;
+  border-radius: 6px;
+  border: 1px solid rgba(2, 132, 199, 0.2);
+}
+[data-theme="dark"] .macro-map-link {
+  color: #38bdf8;
+  background: rgba(56, 189, 248, 0.1);
+  border-color: rgba(56, 189, 248, 0.3);
+}
+.slot-card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  margin-bottom: 12px;
+  padding: 14px 16px;
+  box-shadow: var(--card-shadow);
+  transition: opacity 0.2s, background-color 0.2s;
+}
+.slot-card.is-dimmed { opacity: 0.45; filter: grayscale(40%); }
+.slot-card.is-must { border-left: 4px solid var(--accent); }
+.slot-meta { display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px; }
+.slot-time { font-size: 13px; font-weight: 700; font-variant-numeric: tabular-nums; }
+.slot-badge {
+  font-size: 11px;
+  font-weight: 700;
+  padding: 2px 8px;
+  border-radius: 4px;
+  text-transform: uppercase;
+}
+.badge-sightseeing { background: #d1fae5; color: #065f46; }
+.badge-food { background: #ffedd5; color: #9a3412; }
+.badge-transit { background: #e0e7ff; color: #3730a3; }
+[data-theme="dark"] .badge-sightseeing { background: #064e3b; color: #6ee7b7; }
+[data-theme="dark"] .badge-food { background: #7c2d12; color: #fdba74; }
+[data-theme="dark"] .badge-transit { background: #312e81; color: #a5b4fc; }
+
+.slot-title-row { display: flex; align-items: flex-start; gap: 8px; margin-bottom: 6px; }
+.slot-checkbox { margin-top: 3px; cursor: pointer; width: 18px; height: 18px; accent-color: var(--primary); }
+.slot-title { font-size: 1rem; font-weight: 700; line-height: 1.4; flex: 1; }
+.slot-desc { font-size: 13.5px; color: var(--text-muted); margin-bottom: 10px; line-height: 1.5; padding-left: 26px; }
+
+/* Swap Guide Box */
+.swap-box {
+  margin: 10px 0 10px 26px;
+  padding: 10px 12px;
+  border-radius: 8px;
+  background: rgba(217, 119, 6, 0.08);
+  border: 1px dashed var(--accent);
+  font-size: 12.5px;
+}
+.swap-title { font-weight: 700; color: var(--accent); margin-bottom: 4px; display: flex; align-items: center; gap: 4px; }
+
+.slot-foot { display: flex; justify-content: space-between; align-items: center; padding-top: 8px; border-top: 1px solid var(--border); margin-left: 26px; }
+.map-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  font-size: 12px;
+  font-weight: 600;
+  color: #1a73e8;
+  text-decoration: none;
+  background: rgba(26, 115, 232, 0.08);
+  padding: 4px 10px;
+  border-radius: 20px;
+}
+[data-theme="dark"] .map-pill { color: #8ab4f8; background: rgba(138, 180, 248, 0.12); }
+
+/* Tactics Step Box (立ち回り・攻略手順) */
+.tactics-box {
+  margin: 12px 0 12px 26px;
+  padding: 10px 14px;
+  background: rgba(2, 132, 199, 0.06);
+  border: 1px solid rgba(2, 132, 199, 0.25);
+  border-left: 3.5px solid var(--primary);
+  border-radius: 8px;
+}
+[data-theme="dark"] .tactics-box {
+  background: rgba(56, 189, 248, 0.08);
+  border-color: rgba(56, 189, 248, 0.3);
+  border-left-color: #38bdf8;
+}
+.tactics-header {
+  font-size: 13px;
+  font-weight: 700;
+  color: var(--primary);
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  margin-bottom: 8px;
+}
+.tactics-tag {
+  font-size: 10px;
+  font-weight: 800;
+  background: var(--primary);
+  color: #fff;
+  padding: 1px 6px;
+  border-radius: 4px;
+  letter-spacing: 0.05em;
+}
+[data-theme="dark"] .tactics-header { color: #38bdf8; }
+[data-theme="dark"] .tactics-tag { background: #0284c7; }
+.tactics-list { display: flex; flex-direction: column; gap: 6px; }
+.tactics-step-row { display: flex; align-items: flex-start; gap: 8px; font-size: 12.5px; line-height: 1.5; }
+.tactics-num {
+  flex-shrink: 0;
+  width: 18px;
+  height: 18px;
+  border-radius: 4px;
+  background: rgba(2, 132, 199, 0.18);
+  color: var(--primary);
+  font-size: 11px;
+  font-weight: 800;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-top: 1px;
+}
+[data-theme="dark"] .tactics-num { background: rgba(56, 189, 248, 0.25); color: #38bdf8; }
+
+/* Checkpoints List */
+.checkpoint-list {
+  margin: 10px 0 10px 26px;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+.checkpoint-row {
+  display: flex;
+  align-items: flex-start;
+  gap: 8px;
+  font-size: 12px;
+  background: var(--surface-subtle);
+  padding: 8px 10px;
+  border-radius: 6px;
+  border: 1px solid var(--border);
+}
+.cp-badge {
+  font-size: 10px;
+  font-weight: 700;
+  padding: 1px 5px;
+  border-radius: 3px;
+  background: #0284c7;
+  color: #fff;
+  flex-shrink: 0;
+}
+.cp-title { font-weight: 600; color: var(--text); }
+.cp-desc { font-size: 11.5px; color: var(--text-muted); margin-top: 2px; }
+
+/* Practical Footer */
+.practical-footer {
+  margin: 10px 0 10px 26px;
+  padding: 8px 10px;
+  background: var(--surface-subtle);
+  border-left: 3px solid var(--accent);
+  border-radius: 4px;
+  font-size: 12px;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+.pf-row { display: flex; gap: 6px; }
+.pf-tag { font-weight: 700; color: var(--accent); flex-shrink: 0; min-width: 65px; }
+.pf-val { color: var(--text); }
+
+/* Print & Paged Media */
+@media print {
+  @page { size: A4 portrait; margin: 12mm 15mm; }
+  body { background: #fff !important; color: #000 !important; font-size: 11pt; }
+  .header-bar, .nav-bar, .jump-chips, .no-print { display: none !important; }
+  .day-block { page-break-after: always; break-after: page; }
+  .slot-card { break-inside: avoid; page-break-inside: avoid; box-shadow: none !important; border: 1px solid #ccc !important; }
+  .slot-card.is-dimmed { opacity: 1 !important; filter: none !important; }
+  .slot-checkbox { display: none !important; }
+  .slot-desc, .swap-box, .slot-foot { margin-left: 0 !important; padding-left: 0 !important; }
+}
+
+  </style>
+</head>
+<body>
+  <header class="header-bar">
+    <div class="brand-title">
+      <span>🌲</span>
+      <span>東北 ｜ 仙台・松島・平泉・秋田・山形・会津 一人旅の原点 縦走しおり</span>
+    </div>
+    <div class="header-actions no-print">
+      <button class="btn-action" onclick="toggleTheme()">🌓 テーマ</button>
+      <button class="btn-action" onclick="window.print()">🖨️ 製本印刷</button>
+    </div>
+  </header>
+
+  <main class="container">
+    
+    <nav class="nav-bar no-print">
+      <a class="nav-link" href="tohoku_beta.html">📑 全日程</a>
+      <a class="nav-link " href="tohoku_beta_day1.html">Day 1</a><a class="nav-link " href="tohoku_beta_day2.html">Day 2</a><a class="nav-link " href="tohoku_beta_day3.html">Day 3</a><a class="nav-link " href="tohoku_beta_day4.html">Day 4</a><a class="nav-link active" href="tohoku_beta_day5.html">Day 5</a><a class="nav-link " href="tohoku_beta_day6.html">Day 6</a><a class="nav-link " href="tohoku_beta_day7.html">Day 7</a><a class="nav-link " href="tohoku_beta_day8.html">Day 8</a><a class="nav-link " href="tohoku_beta_day9.html">Day 9</a><a class="nav-link " href="tohoku_beta_day10.html">Day 10</a><a class="nav-link " href="tohoku_beta_day11.html">Day 11</a><a class="nav-link " href="tohoku_beta_day12.html">Day 12</a>
+    </nav>
+    
+    <div class="jump-chips no-print">
+      
+        <a class="jump-chip" href="#d5-01" data-day="5">📍 角館武家屋敷通り（青</a>
+      
+        <a class="jump-chip" href="#d5-02" data-day="5">📍 角館ランチ（稲庭うど</a>
+      
+        <a class="jump-chip" href="#d5-03" data-day="5">📍 田沢湖駅経由バス ➔</a>
+      
+        <a class="jump-chip" href="#d5-04" data-day="5">📍 田沢湖畔（たつこ像・</a>
+      
+        <a class="jump-chip" href="#d5-05" data-day="5">📍 大曲駅へ帰還・夕食＆</a>
+      
+    </div>
+    
+      <section class="day-block" id="day-sec-5" data-day="5">
+        <h2 class="day-header">Day 5: 2026年5月3日 (日・祝)</h2>
+        
+        <div class="macro-route-box">
+          <div class="macro-route-head">
+            <span class="macro-route-title">🗺️ 【全体ルート立ち回り】マクロ動線シークエンス</span>
+            <a class="macro-map-link" href="https://www.google.com/maps/dir/?api=1&amp;origin=大曲駅&amp;destination=大曲駅&amp;waypoints=角館武家屋敷通り|蟹場温泉|休暇村乳頭温泉郷|田沢湖たつこ像&amp;travelmode=transit" target="_blank" rel="noopener">📍 広域Google Maps</a>
+          </div>
+          <div class="macro-route-body">大曲駅 ➔ 角館駅 ➔ 角館武家屋敷通り（青柳家・樺細工伝承館・稲庭うどん＆比内地鶏親子丼） ➔ 田沢湖駅 ➔ 乳頭温泉郷（蟹場温泉・休暇村） ➔ 田沢湖（たつこ像・ババヘラアイス） ➔ 大曲駅</div>
+        </div>
+        <div class="slot-list">
+          
+    <article class="slot-card " id="d5-01" data-slot-id="d5-01">
+      <div class="slot-meta">
+        <span class="slot-time">⏱️ 10:00 - 11:30</span>
+        <span class="slot-badge badge-sightseeing">観光</span>
+      </div>
+      <div class="slot-title-row">
+        <input type="checkbox" class="slot-checkbox no-print" onchange="toggleSlot('d5-01', this.checked)" title="完了・スキップを消し込み">
+        <h3 class="slot-title">角館武家屋敷通り（青柳家・角館樺細工伝承館）</h3>
+      </div>
+      <p class="slot-desc">大曲駅からJR田沢湖線（またはこまち）で角館へ。江戸時代初期の城下町割りがそのまま残る「角館武家屋敷通り」を歩き、3,000坪の敷地を誇る上級武家屋敷「青柳家」と「角館樺細工伝承館」を見学する。</p>
+      
+      <div class="swap-box">
+        <div class="swap-title">🔀 スワップ・代替ルート候補</div>
+        <div><strong>代替プラン:</strong> 青柳家が混雑している場合は、現存最古の武家屋敷「石黒家」をじっくり見学する。</div>
+      </div>
+      
+      <div class="tactics-box">
+        <div class="tactics-header">
+          <span>🎯</span>
+          <span class="tactics-tag">個別立ち回り</span>
+          <span>【構内順路】攻略戦術</span>
+        </div>
+        <div class="tactics-list">
+          
+            <div class="tactics-step-row">
+              <span class="tactics-num">1</span>
+              <span class="tactics-text">駅から外町（商人町）を抜けて内町（武家町）へ入り、黒板塀と新緑・枝垂れ桜の並木、青柳家の武器蔵・解体新書記念館を重点的に回る。</span>
+            </div>
+          
+        </div>
+      </div>
+      
+      <div class="checkpoint-list">
+        
+          <div class="checkpoint-row">
+            <span class="cp-badge">必須</span>
+            <div>
+              <div class="cp-title">現地確認・必達ポイント</div>
+              <div class="cp-desc">山桜の樹皮を用いた伝統工芸「樺細工（かばざいく）」の緻密な光沢と、武家屋敷の薬医門の格式。</div>
+            </div>
+          </div>
+        
+      </div>
+      
+      <div class="practical-footer">
+        
+        <div class="pf-row"><span class="pf-tag">💡 現地Tips:</span><span class="pf-val">11:30のランチ混雑前に武家屋敷通りのメイン見学を終えるペース配分にする。</span></div>
+        
+      </div>
+      <div class="slot-foot">
+        <a class="map-pill" href="https://www.google.com/maps/search/?api=1&amp;query=角館武家屋敷+青柳家" target="_blank" rel="noopener">📍 Google Maps</a>
+        
+      </div>
+    </article>
+    <article class="slot-card " id="d5-02" data-slot-id="d5-02">
+      <div class="slot-meta">
+        <span class="slot-time">⏱️ 11:30 - 12:30</span>
+        <span class="slot-badge badge-sightseeing">観光</span>
+      </div>
+      <div class="slot-title-row">
+        <input type="checkbox" class="slot-checkbox no-print" onchange="toggleSlot('d5-02', this.checked)" title="完了・スキップを消し込み">
+        <h3 class="slot-title">角館ランチ（稲庭うどん・比内地鶏親子丼）</h3>
+      </div>
+      <p class="slot-desc">角館の武家屋敷通り周辺にて、秋田を代表する「比内地鶏の親子丼」と「稲庭うどん」を味わうランチタイム。</p>
+      
+      <div class="swap-box">
+        <div class="swap-title">🔀 スワップ・代替ルート候補</div>
+        <div><strong>代替プラン:</strong> 行列が長い場合は角館駅前の食事処、または田沢湖駅前の「そば五郎」へ移動して昼食をとる。</div>
+      </div>
+      
+      <div class="tactics-box">
+        <div class="tactics-header">
+          <span>🎯</span>
+          <span class="tactics-tag">個別立ち回り</span>
+          <span>【構内順路】攻略戦術</span>
+        </div>
+        <div class="tactics-list">
+          
+            <div class="tactics-step-row">
+              <span class="tactics-num">1</span>
+              <span class="tactics-text">11:30の開店・昼ピーク直前に入店し、午後の田沢湖駅移動と乳頭温泉行き路線バスに確実に間に合わせる。</span>
+            </div>
+          
+        </div>
+      </div>
+      
+      <div class="checkpoint-list">
+        
+          <div class="checkpoint-row">
+            <span class="cp-badge">必須</span>
+            <div>
+              <div class="cp-title">現地確認・必達ポイント</div>
+              <div class="cp-desc">炭火の香りと弾力がある比内地鶏肉、濃厚なとろとろ卵、そして滑らかな稲庭うどんの喉越し。</div>
+            </div>
+          </div>
+        
+      </div>
+      
+      <div class="practical-footer">
+        
+        <div class="pf-row"><span class="pf-tag">💡 現地Tips:</span><span class="pf-val">翌日秋田市内の「佐藤養助 秋田店」でも本場の稲庭うどんを食べるため、ここでの体験が比較の基準になる。</span></div>
+        
+      </div>
+      <div class="slot-foot">
+        <a class="map-pill" href="https://www.google.com/maps/search/?api=1&amp;query=角館+比内地鶏親子丼+稲庭うどん" target="_blank" rel="noopener">📍 Google Maps</a>
+        
+      </div>
+    </article>
+    <article class="slot-card " id="d5-03" data-slot-id="d5-03">
+      <div class="slot-meta">
+        <span class="slot-time">⏱️ 12:45 - 16:00</span>
+        <span class="slot-badge badge-sightseeing">観光</span>
+      </div>
+      <div class="slot-title-row">
+        <input type="checkbox" class="slot-checkbox no-print" onchange="toggleSlot('d5-03', this.checked)" title="完了・スキップを消し込み">
+        <h3 class="slot-title">田沢湖駅経由バス ➔ 乳頭温泉郷（蟹場温泉・休暇村）</h3>
+      </div>
+      <p class="slot-desc">田沢湖駅から羽後交通バス「乳頭線」に揺られ、十和田・八幡平国立公園の乳頭山麓に点在する秘湯「乳頭温泉郷」へ。最も奥に位置する「蟹場（がにば）温泉」で宿から50m離れたブナ原生林の中の露天風呂「木漏れ日の湯」に浸かり、さらに「休暇村 乳頭温泉郷」で2種類の異なる源泉（単純硫黄泉・ナトリウム炭酸水素塩泉）をハシゴする。</p>
+      
+      <div class="swap-box">
+        <div class="swap-title">🔀 スワップ・代替ルート候補</div>
+        <div><strong>代替プラン:</strong> 午前中から乳頭温泉へ直行できる場合は「鶴の湯温泉」または「妙乃湯」「黒湯温泉」を組み込む。</div>
+      </div>
+      
+      <div class="tactics-box">
+        <div class="tactics-header">
+          <span>🎯</span>
+          <span class="tactics-tag">個別立ち回り</span>
+          <span>【構内順路】攻略戦術</span>
+        </div>
+        <div class="tactics-list">
+          
+            <div class="tactics-step-row">
+              <span class="tactics-num">1</span>
+              <span class="tactics-text">日帰り入浴の受付時間（特に鶴の湯や黒湯は15時終了が多い）と路線バスの折り返し時刻を計算し、終点の蟹場温泉とバス停目の前の休暇村を組み合わせた「秘湯2湯ハシゴ戦術」を実行する。</span>
+            </div>
+          
+        </div>
+      </div>
+      
+      <div class="checkpoint-list">
+        
+          <div class="checkpoint-row">
+            <span class="cp-badge">必須</span>
+            <div>
+              <div class="cp-title">現地確認・必達ポイント</div>
+              <div class="cp-desc">蟹場温泉の原生林に囲まれた開放感と、休暇村の白濁硫黄泉・茶褐色泉の泉質の違い。</div>
+            </div>
+          </div>
+        
+      </div>
+      
+      <div class="practical-footer">
+        
+        <div class="pf-row"><span class="pf-tag">💡 現地Tips:</span><span class="pf-val">原生林露天風呂は脱衣所が簡易的なため、着脱しやすい服装で向かう。</span></div>
+        
+      </div>
+      <div class="slot-foot">
+        <a class="map-pill" href="https://www.google.com/maps/search/?api=1&amp;query=乳頭温泉郷+蟹場温泉" target="_blank" rel="noopener">📍 Google Maps</a>
+        
+      </div>
+    </article>
+    <article class="slot-card " id="d5-04" data-slot-id="d5-04">
+      <div class="slot-meta">
+        <span class="slot-time">⏱️ 16:15 - 17:30</span>
+        <span class="slot-badge badge-sightseeing">観光</span>
+      </div>
+      <div class="slot-title-row">
+        <input type="checkbox" class="slot-checkbox no-print" onchange="toggleSlot('d5-04', this.checked)" title="完了・スキップを消し込み">
+        <h3 class="slot-title">田沢湖畔（たつこ像・ババヘラアイス観察）</h3>
+      </div>
+      <p class="slot-desc">乳頭温泉郷からの帰りバスを「田沢湖畔」または途中の立ち寄りポイントで下車し、水深423.4m（日本一）を誇るカルデラ湖・田沢湖を散策。黄金の「たつこ像」や、湖畔でパラソルを広げる秋田名物「ババヘラアイス」の風景を楽しむ。</p>
+      
+      <div class="swap-box">
+        <div class="swap-title">🔀 スワップ・代替ルート候補</div>
+        <div><strong>代替プラン:</strong> 湖畔周遊バス（たつこ号）の一周乗車券を使って御座石神社とたつこ像をバス停車時間内で巡る。</div>
+      </div>
+      
+      <div class="tactics-box">
+        <div class="tactics-header">
+          <span>🎯</span>
+          <span class="tactics-tag">個別立ち回り</span>
+          <span>【構内順路】攻略戦術</span>
+        </div>
+        <div class="tactics-list">
+          
+            <div class="tactics-step-row">
+              <span class="tactics-num">1</span>
+              <span class="tactics-text">夕方の柔らかな光が差し込むコバルトブルーの湖面を確認し、田沢湖駅行きのバス時刻に合わせて湖畔を散策する。</span>
+            </div>
+          
+        </div>
+      </div>
+      
+      <div class="checkpoint-list">
+        
+          <div class="checkpoint-row">
+            <span class="cp-badge">必須</span>
+            <div>
+              <div class="cp-title">現地確認・必達ポイント</div>
+              <div class="cp-desc">永遠の若さと美貌を願って龍と化した伝説の「たつこ像」と、底知れぬ深さを感じさせる瑠璃色の水色。</div>
+            </div>
+          </div>
+        
+      </div>
+      
+      <div class="practical-footer">
+        
+        <div class="pf-row"><span class="pf-tag">💡 現地Tips:</span><span class="pf-val">田沢湖畔〜田沢湖駅の最終バス時刻を逃さないよう17時台の便で駅へ戻る。</span></div>
+        
+      </div>
+      <div class="slot-foot">
+        <a class="map-pill" href="https://www.google.com/maps/search/?api=1&amp;query=田沢湖+たつこ像" target="_blank" rel="noopener">📍 Google Maps</a>
+        
+      </div>
+    </article>
+    <article class="slot-card " id="d5-05" data-slot-id="d5-05">
+      <div class="slot-meta">
+        <span class="slot-time">⏱️ 18:00 - 21:00</span>
+        <span class="slot-badge badge-sightseeing">観光</span>
+      </div>
+      <div class="slot-title-row">
+        <input type="checkbox" class="slot-checkbox no-print" onchange="toggleSlot('d5-05', this.checked)" title="完了・スキップを消し込み">
+        <h3 class="slot-title">大曲駅へ帰還・夕食＆コインランドリー洗濯</h3>
+      </div>
+      <p class="slot-desc">田沢湖駅から大曲駅へ戻り、夕食をとった後、コインランドリーでこれまでの5日間の衣類を一気に洗濯・乾燥。旅の後半戦に向けた装備リセットを行う。</p>
+      
+      <div class="swap-box">
+        <div class="swap-title">🔀 スワップ・代替ルート候補</div>
+        <div><strong>代替プラン:</strong> 大曲名物「大曲納豆汁」や「神代カレー」を提供する駅前飲食店で夕食をとる。</div>
+      </div>
+      
+      <div class="tactics-box">
+        <div class="tactics-header">
+          <span>🎯</span>
+          <span class="tactics-tag">個別立ち回り</span>
+          <span>【構内順路】攻略戦術</span>
+        </div>
+        <div class="tactics-list">
+          
+            <div class="tactics-step-row">
+              <span class="tactics-num">1</span>
+              <span class="tactics-text">12日間の長期縦走では3〜4日に1回のランドリー運用が荷物を最小化する鍵。乾燥待ちの時間に翌日以降の秋田・男鹿・庄内ルートを精査する。</span>
+            </div>
+          
+        </div>
+      </div>
+      
+      <div class="checkpoint-list">
+        
+          <div class="checkpoint-row">
+            <span class="cp-badge">必須</span>
+            <div>
+              <div class="cp-title">現地確認・必達ポイント</div>
+              <div class="cp-desc">翌朝のJR奥羽本線（大曲➔秋田）の発車時刻と、男鹿での宿泊先の確保。</div>
+            </div>
+          </div>
+        
+      </div>
+      
+      <div class="practical-footer">
+        
+        <div class="pf-row"><span class="pf-tag">💡 現地Tips:</span><span class="pf-val">足りない生活用品や衣類はAmazonのコンビニ受取や地元スーパーで柔軟に補充する。</span></div>
+        
+      </div>
+      <div class="slot-foot">
+        <a class="map-pill" href="https://www.google.com/maps/search/?api=1&amp;query=大曲シティホテル" target="_blank" rel="noopener">📍 Google Maps</a>
+        
+      </div>
+    </article>
+        </div>
+      </section>
+    
+    <nav class="nav-bar no-print" style="margin-top: 24px;">
+      <a class="nav-link" href="tohoku_beta.html">📑 全日程（統合版）</a>
+      <a class="nav-link " href="tohoku_beta_day1.html">Day 1</a><a class="nav-link " href="tohoku_beta_day2.html">Day 2</a><a class="nav-link " href="tohoku_beta_day3.html">Day 3</a><a class="nav-link " href="tohoku_beta_day4.html">Day 4</a><a class="nav-link active" href="tohoku_beta_day5.html">Day 5</a><a class="nav-link " href="tohoku_beta_day6.html">Day 6</a><a class="nav-link " href="tohoku_beta_day7.html">Day 7</a><a class="nav-link " href="tohoku_beta_day8.html">Day 8</a><a class="nav-link " href="tohoku_beta_day9.html">Day 9</a><a class="nav-link " href="tohoku_beta_day10.html">Day 10</a><a class="nav-link " href="tohoku_beta_day11.html">Day 11</a><a class="nav-link " href="tohoku_beta_day12.html">Day 12</a>
+    </nav>
+  </main>
+
+  <script>
+    const STORAGE_KEY = 'tohoku_completed_slots';
+
+    function toggleTheme() {
+      const cur = document.documentElement.getAttribute('data-theme') || 'light';
+      const nxt = cur === 'dark' ? 'light' : 'dark';
+      document.documentElement.setAttribute('data-theme', nxt);
+      localStorage.setItem('trip_nav_theme', nxt);
+    }
+
+    function getCompletedSlots() {
+      try {
+        return JSON.parse(localStorage.getItem(STORAGE_KEY) || '[]');
+      } catch (e) {
+        return [];
+      }
+    }
+
+    function toggleSlot(slotId, isDone) {
+      const card = document.getElementById(slotId);
+      let list = getCompletedSlots();
+      if (isDone) {
+        if (!list.includes(slotId)) list.push(slotId);
+        if (card) card.classList.add('is-dimmed');
+      } else {
+        list = list.filter(id => id !== slotId);
+        if (card) card.classList.remove('is-dimmed');
+      }
+      localStorage.setItem(STORAGE_KEY, JSON.stringify(list));
+    }
+
+    // In-page Day Segment Switcher (Instant filter without HTTP reload)
+    function switchDay(targetDay) {
+      const dayBlocks = document.querySelectorAll('.day-block');
+      const jumpChips = document.querySelectorAll('.jump-chip');
+      const navLinks = document.querySelectorAll('.nav-link[data-day]');
+
+      // 1. Filter Day Sections
+      dayBlocks.forEach(sec => {
+        const secDay = sec.getAttribute('data-day');
+        if (targetDay === 'all' || secDay === String(targetDay)) {
+          sec.style.display = '';
+        } else {
+          sec.style.display = 'none';
+        }
+      });
+
+      // 2. Filter Jump Chips
+      jumpChips.forEach(chip => {
+        const chipDay = chip.getAttribute('data-day');
+        if (targetDay === 'all' || chipDay === String(targetDay)) {
+          chip.style.display = '';
+        } else {
+          chip.style.display = 'none';
+        }
+      });
+
+      // 3. Update Nav Active State
+      navLinks.forEach(link => {
+        if (link.getAttribute('data-day') === String(targetDay)) {
+          link.classList.add('active');
+        } else {
+          link.classList.remove('active');
+        }
+      });
+
+      // 4. Sync Hash (optional bookmarking)
+      if (history.replaceState) {
+        const newHash = targetDay === 'all' ? '' : `#day${targetDay}`;
+        history.replaceState(null, '', newHash || window.location.pathname);
+      }
+    }
+
+    // Initialize state on load
+    document.addEventListener('DOMContentLoaded', () => {
+      // Restore checked slots
+      const list = getCompletedSlots();
+      list.forEach(slotId => {
+        const card = document.getElementById(slotId);
+        if (card) {
+          card.classList.add('is-dimmed');
+          const cb = card.querySelector('.slot-checkbox');
+          if (cb) cb.checked = true;
+        }
+      });
+
+      // Initial day selection from URL hash: e.g. #day1, #day2
+      const hash = window.location.hash.toLowerCase();
+      const match = hash.match(/^#day(\d+)$/);
+      if (match) {
+        switchDay(match[1]);
+      } else {
+        switchDay('all');
+      }
+    });
+  </script>
+</body>
+</html>

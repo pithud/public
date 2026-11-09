@@ -1,0 +1,902 @@
+<!DOCTYPE html>
+<html lang="ja" data-theme="light">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>青森 ｜ 津軽・下北・恐山 旅アルバム 2026 ｜ ポップ行動ログ（完全確定版）</title>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <script>
+    (function() {
+      var t = localStorage.getItem('trip_nav_theme') || 'light';
+      document.documentElement.setAttribute('data-theme', t);
+    })();
+  </script>
+  <link rel="stylesheet" href="../assets/album.css">
+</head>
+<body>
+
+  <!-- Sticky Header -->
+  <header>
+    <div class="container header-inner">
+      <div class="logo-area">
+        <div class="logo"><span>📸</span> 青森 ｜ 津軽・下北・恐山 旅アルバム</div>
+      </div>
+      <div class="header-actions">
+        <a href="index.html" class="nav-btn">◀ 旅ポータル</a>
+        <a href="prod.html" class="nav-btn">最終版</a>
+        <a href="../20260911_hokkaido/album.html" class="nav-btn">後半：北海道アルバム ▶</a>
+        <button class="theme-toggle" id="themeBtn" aria-label="テーマ切替">🌙</button>
+      </div>
+    </div>
+  </header>
+
+  <main class="container">
+
+    <!-- Album Hero -->
+    <div class="album-hero">
+      <div class="tape">GOOGLE TIMELINE &amp; APPLE HEALTH VERIFIED</div>
+      <h1 class="hero-title">青森 ｜ 津軽・下北・恐山 完全縦断アルバム</h1>
+      <p class="hero-subtitle">レンタカー＆むつ湾フェリー周遊 ＆ Apple Health 実測同期完了版</p>
+      
+      <div class="hero-tags">
+        <span class="tag-badge tag-blue">📅 2026.09.11 - 09.15 (4泊5日)</span>
+        <span class="tag-badge tag-orange">🚗 十二湖・龍飛崎・仏ヶ浦・恐山宿坊</span>
+        <span class="tag-badge tag-green">🛡️ 写真ゼロ・完全公開仕様</span>
+        <span class="tag-badge tag-purple">⚡ 実測 106,087歩 / 54.89km / 269階</span>
+      </div>
+
+      <!-- Health KPI Real Data -->
+      <div class="health-kpi-grid">
+                <div class="health-kpi-card">
+          <div class="kpi-title">5日間 合計歩数</div>
+          <div class="kpi-val primary">106,087 歩</div>
+        </div>
+        <div class="health-kpi-card">
+          <div class="kpi-title">5日間 歩行距離</div>
+          <div class="kpi-val mint">54.89 km</div>
+        </div>
+        <div class="health-kpi-card">
+          <div class="kpi-title">9/11(金) 三内丸山・青池・不老ふ死</div>
+          <div class="kpi-val">10,450歩 / 6.57km</div>
+        </div>
+        <div class="health-kpi-card">
+          <div class="kpi-title">9/12(土) 髙山稲荷・もぐら号・龍飛崎</div>
+          <div class="kpi-val">36,397歩 / 12.98km (176階!)</div>
+        </div>
+        <div class="health-kpi-card">
+          <div class="kpi-title">9/13(日) 仏ヶ浦階段・大間・恐山宿坊</div>
+          <div class="kpi-val">17,729歩 / 9.59km (37階)</div>
+        </div>
+        <div class="health-kpi-card">
+          <div class="kpi-title">9/14(月)-15(火) 浅虫・ワラッセ・県立美</div>
+          <div class="kpi-val">41,511歩 / 25.75km</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Chart Section -->
+        <section>
+      <div class="section-header">
+        <div class="section-icon">📈</div>
+        <h2 class="section-title">インタラクティブ・アクティビティ分析</h2>
+      </div>
+      <div class="chart-card">
+        <div class="chart-tabs">
+          <button class="chart-tab-btn active" data-view="hourly">🐾 時間帯別 歩数推移</button>
+          <button class="chart-tab-btn" data-view="duration">⏱️ スポット別 滞在時間 (分)</button>
+          <button class="chart-tab-btn" data-view="cumulative">📈 累積歩数カーブ</button>
+        </div>
+        <div class="chart-wrapper">
+          <canvas id="mainChartCanvas" role="img" aria-label="旅行アクティビティ推移グラフ（時間帯別歩数・スポット滞在時間・累積歩数）"></canvas>
+        </div>
+        <div class="chart-meta-caption" id="chartCaption">
+          📊 タブを切り替えて「時間帯別歩数」「スポット滞在時間」「累積歩数カーブ」をインタラクティブに分析可能
+        </div>
+      </div>
+    </section>
+
+
+    <!-- Spot Sections (Polaroid Grid) -->
+        <section>
+      <div class="section-header">
+        <div class="section-icon">⚖️</div>
+        <h2 class="section-title">計画 vs 実際の行動（時系列完全整列）</h2>
+      </div>
+      <div class="diff-table-card">
+  <div class="diff-table-wrapper">
+    <table class="diff-table">
+      <colgroup>
+        <col class="col-spot" style="width: 28%;">
+        <col class="col-plan" style="width: 22%;">
+        <col class="col-actual" style="width: 36%;">
+        <col class="col-verdict" style="width: 14%;">
+      </colgroup>
+      <thead>
+        <tr>
+          <th scope="col">スポット・行程</th>
+          <th scope="col">当初計画</th>
+          <th scope="col">実測行動ログ（Timeline &amp; Apple Health）</th>
+          <th scope="col" style="text-align: center;">判定</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><strong>① JAL141便 羽田 ➔ 青森空港 ＆ レンタカー起動</strong></td>
+          <td>06:40発 ➔ 08:30出発</td>
+          <td><strong>06:40 - 08:30</strong>（T・厳・iの3名合流、ニッポンレンタカー借受・総額41,030円折半）</td>
+          <td style="text-align: center;"><span class="stamp stamp-win">定刻起動</span></td>
+        </tr>
+        <tr>
+          <td><strong>② 特別史跡 三内丸山遺跡 ＆ ランチ</strong></td>
+          <td>初日朝またはDay5</td>
+          <td><strong>午前〜昼</strong>（大型掘立柱建物・縄文集落見学、十和田/西海岸ランチ3,100円）</td>
+          <td style="text-align: center;"><span class="stamp stamp-god">世界遺産</span></td>
+        </tr>
+        <tr>
+          <td><strong>③ 千畳敷海岸 ＆ 西海岸ドライブ</strong></td>
+          <td>海沿い奇岩散策</td>
+          <td><strong>12:30 - 13:30</strong>（隆起岩棚の奇岩海岸散策・日本海ドライブ）</td>
+          <td style="text-align: center;"><span class="stamp stamp-win">絶景快走</span></td>
+        </tr>
+        <tr>
+          <td><strong>④ 白神山地・十二湖（青池 ＆ 沸壺の池）</strong></td>
+          <td>青池トレッキング</td>
+          <td><strong>14:15 - 16:00</strong>（キョロロ駐車場から直行、透明度9mコバルトブルー青池＆ブナ林踏破）</td>
+          <td style="text-align: center;"><span class="stamp stamp-god">神秘青池</span></td>
+        </tr>
+        <tr>
+          <td><strong>⑤ 黄金崎不老ふ死温泉（海辺夕日露天 ＆ 宿泊）</strong></td>
+          <td>17:00着・夕日入浴</td>
+          <td><strong>17:00 チェックイン</strong>（波打ち際1mの海辺露天風呂で日本海サンセット独占・17,200円/人）</td>
+          <td style="text-align: center;"><span class="stamp stamp-god">生涯名湯</span></td>
+        </tr>
+        <tr>
+          <td><strong>⑥ 髙山稲荷神社（千本鳥居 ＆ 日本庭園）</strong></td>
+          <td>09:30 - 10:45参拝</td>
+          <td><strong>09:30 - 10:50</strong>（池泉庭園に龍のごとくうねる朱色の千本鳥居と無数の狐像群を踏破）</td>
+          <td style="text-align: center;"><span class="stamp stamp-god">異界絶景</span></td>
+        </tr>
+        <tr>
+          <td><strong>⑦ 中泊町「おさかな海岸」中泊メバル膳</strong></td>
+          <td>ご当地メバル昼食</td>
+          <td><strong>11:30 - 12:35</strong>（高級魚ウスメバル活造り刺身・姿煮付け・潮汁の三味堪能）</td>
+          <td style="text-align: center;"><span class="stamp stamp-god">白身真髄</span></td>
+        </tr>
+        <tr>
+          <td><strong>⑧ 竜泊ライン ＆ 青函トンネル記念館「もぐら号」</strong></td>
+          <td>海面下140m潜入</td>
+          <td><strong>13:30 - 15:10</strong>（斜坑ケーブルカーもぐら号1,500円で海面下140mの体験坑道へ潜入）</td>
+          <td style="text-align: center;"><span class="stamp stamp-god">海底潜入</span></td>
+        </tr>
+        <tr>
+          <td><strong>⑨ 龍飛崎 ＆ 階段国道339号線（全362段）</strong></td>
+          <td>歌碑＆階段国道</td>
+          <td><strong>15:20 - 16:35</strong>（津軽海峡冬景色爆音歌碑 ＆ 歩行者専用階段国道往復・この日36,397歩/176階！）</td>
+          <td style="text-align: center;"><span class="stamp stamp-god">3.6万歩</span></td>
+        </tr>
+        <tr>
+          <td><strong>⑩ 蟹田「佐々木旅館」宿泊</strong></td>
+          <td>蟹田港至近前泊</td>
+          <td><strong>17:30 チェックイン</strong>（陸奥湾ホタテ・地魚会席・1泊2食9,150円/人・港まで車3分）</td>
+          <td style="text-align: center;"><span class="stamp stamp-win">拠点勝利</span></td>
+        </tr>
+        <tr>
+          <td><strong>⑪ むつ湾フェリー「かもしか」（蟹田➔脇野沢）</strong></td>
+          <td>09:20第1便航送</td>
+          <td><strong>09:20 - 10:20</strong>（レンタカー車両航送7,650円/人・陸路3.5時間を60分海上ショートカット）</td>
+          <td style="text-align: center;"><span class="stamp stamp-god">神ワープ</span></td>
+        </tr>
+        <tr>
+          <td><strong>⑫ 国名勝 仏ヶ浦（展望台 ＆ 海岸急階段踏破）</strong></td>
+          <td>佐井港遊覧船予定</td>
+          <td><strong>11:00 - 12:40</strong>（波浪による遊覧船欠航リスクを即座に展望台＆急階段歩道降下で突破し海岸上陸）</td>
+          <td style="text-align: center;"><span class="stamp stamp-god">階段突破</span></td>
+        </tr>
+        <tr>
+          <td><strong>⑬ 本州最北端・大間崎 ＆「民宿 海峡荘」マグロ丼</strong></td>
+          <td>大間本マグロ昼食</td>
+          <td><strong>13:15 - 14:25</strong>（本州最北端到達記念撮影 ＆ 海峡荘で極上生本マグロ丼3,500円実食）</td>
+          <td style="text-align: center;"><span class="stamp stamp-god">極上本鮪</span></td>
+        </tr>
+        <tr>
+          <td><strong>⑭ 霊場恐山 宿坊「吉祥閣」宿泊 ＆ 地獄めぐり</strong></td>
+          <td>16:00着厳守・宿坊</td>
+          <td><strong>15:50着（16:00厳守達成）</strong>（清潔絢爛な宿坊・極楽浜・硫黄泉御所の湯・豪華精進料理17,000円）</td>
+          <td style="text-align: center;"><span class="stamp stamp-god">旅程MVP</span></td>
+        </tr>
+        <tr>
+          <td><strong>⑮ 恐山 夜間噴気地帯探検インシデント</strong></td>
+          <td>夜間境内散策</td>
+          <td><strong>20:00 - 21:00</strong>（無風の硫化水素ガス滞留でライト点滅異常＆同行者スマホ基板腐食故障の衝撃教訓）</td>
+          <td style="text-align: center;"><span class="stamp stamp-bad">ガス故障</span></td>
+        </tr>
+        <tr>
+          <td><strong>⑯ 恐山「朝の勤行」＆ 道の駅よこはま</strong></td>
+          <td>06:30朝勤行・南下</td>
+          <td><strong>06:30 - 10:30</strong>（本堂大般若祈祷・精進朝食後に下山、道の駅よこはまで菜の花ドーナツ）</td>
+          <td style="text-align: center;"><span class="stamp stamp-win">精神浄化</span></td>
+        </tr>
+        <tr>
+          <td><strong>⑰ 青森県営 浅虫水族館</strong></td>
+          <td>13:00 - 15:00見学</td>
+          <td><strong>13:00 - 15:00</strong>（15mトンネル水槽＆津軽三味線イルカショー鑑賞・1,600円/人）</td>
+          <td style="text-align: center;"><span class="stamp stamp-win">王道満喫</span></td>
+        </tr>
+        <tr>
+          <td><strong>⑱ ホテル青森 宿泊 ＆ 本町居酒屋打ち上げ</strong></td>
+          <td>青森市内泊・宴会</td>
+          <td><strong>15:45 CI / 18:00宴会</strong>（ホテル青森5,624円/人、本町居酒屋で地酒＆郷土料理打ち上げ）</td>
+          <td style="text-align: center;"><span class="stamp stamp-win">3名祝杯</span></td>
+        </tr>
+        <tr>
+          <td><strong>⑲ コインランドリー時短 ＆ ワ・ラッセ・A-FACTORY</strong></td>
+          <td>09:00開館突入</td>
+          <td><strong>08:50 - 11:00</strong>（洗濯乾燥60分並列稼働中にワ・ラッセ大型ねぶた＆八甲田丸・アップルパイ回収）</td>
+          <td style="text-align: center;"><span class="stamp stamp-god">並列ハック</span></td>
+        </tr>
+        <tr>
+          <td><strong>⑳ 「味の札幌 浅利」味噌カレー牛乳ラーメン</strong></td>
+          <td>厳熱望ソウルフード</td>
+          <td><strong>12:00 - 12:45</strong>（5人待ち突破！味噌・カレー・牛乳・バターが奇跡融合した中毒スープ完食）</td>
+          <td style="text-align: center;"><span class="stamp stamp-god">奇跡融合</span></td>
+        </tr>
+        <tr>
+          <td><strong>㉑ 青森県立美術館（あおもり犬 ＆ アレコ）</strong></td>
+          <td>13:45 - 15:00鑑賞</td>
+          <td><strong>13:45 - 15:15</strong>（白亜のトレンチ建築・高さ8.5mあおもり犬＆シャガール背景画4幕完全鑑賞）</td>
+          <td style="text-align: center;"><span class="stamp stamp-god">名建築美</span></td>
+        </tr>
+        <tr>
+          <td><strong>㉒ 津軽海峡フェリー青森港（解散 ➔ 函館上陸）</strong></td>
+          <td>17:05発 函館行</td>
+          <td><strong>16:35解散 / 17:05 - 20:45乗船</strong>（T・厳は空港返却帰京、iはビューシート2,830円で夕日海峡横断！）</td>
+          <td style="text-align: center;"><span class="stamp stamp-god">単独突入</span></td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+
+    </section>
+
+    <section>
+      <div class="section-header">
+        <div class="section-icon">📍</div>
+        <h2 class="section-title">2. Day 1（1日目）: 羽田 ➔ 青森空港 ➔ 三内丸山 ➔ 十二湖・青池 ➔ 黄金崎不老ふ死温泉 アクションログ（9/11・10,450歩）</h2>
+      </div>
+      <div class="polaroid-grid">
+        <div class="polaroid-card">
+          <div>
+            <div class="card-top">
+              <span class="spot-time">06:40 - 08:30</span>
+              <span class="stamp stamp-win">定刻起動</span>
+            </div>
+            <h3 class="spot-name">1. 羽田 06:40発 JAL141便 ＆ ニッポンレンタカー起動</h3>
+            <div class="punchline success">「朝08:00に青森空港着陸。T・厳と合流し、普段一人旅では絶対行けない半島僻地の一斉回収ドライブが開幕」</div>
+          </div>
+          <ul class="fact-bullet">
+            <li>羽田06:40発のJAL141便（16,000円）で08:00に青森空港へ定刻到着</li>
+            <li>ニッポンレンタカー青森空港営業所にて5日間レンタカー（総額41,030円・折半20,515円）を受領し、むつ湾フェリー用の車検証を確認して出発</li>
+          </ul>
+        </div>
+        <div class="polaroid-card">
+          <div>
+            <div class="card-top">
+              <span class="spot-time">08:50 - 12:00</span>
+              <span class="stamp stamp-god">世界遺産</span>
+            </div>
+            <h3 class="spot-name">2. 特別史跡 三内丸山遺跡 ＆ 青森初日ランチ</h3>
+            <div class="punchline success">「高さ15mの大型掘立柱建物がそびえる縄文の巨大都市。約5,000年前のスケール感に圧倒」</div>
+          </div>
+          <ul class="fact-bullet">
+            <li>世界遺産「北海道・北東北の縄文遺跡群」の筆頭・三内丸山遺跡を散策</li>
+            <li>直径1mのクリの巨木柱6本で組まれた大型掘立柱建物と長さ32mの大型竪穴建物を体感し、昼食（3,100円）を堪能</li>
+          </ul>
+        </div>
+        <div class="polaroid-card">
+          <div>
+            <div class="card-top">
+              <span class="spot-time">12:30 - 13:30</span>
+              <span class="stamp stamp-win">絶景快走</span>
+            </div>
+            <h3 class="spot-name">3. 津軽西海岸・千畳敷海岸ドライブ</h3>
+            <div class="punchline">「地震隆起で生まれた緑白色の千畳岩棚。日本海の潮風を浴びながら西海岸を南下」</div>
+          </div>
+          <ul class="fact-bullet">
+            <li>鰺ヶ沢から国道101号の海沿いルートへ出て、畳を敷き詰めたような奇岩が続く千畳敷海岸を散策</li>
+            <li>波打ち際まで歩いて日本海の荒波と奇岩の造形美を撮影</li>
+          </ul>
+        </div>
+        <div class="polaroid-card">
+          <div>
+            <div class="card-top">
+              <span class="spot-time">14:15 - 16:00</span>
+              <span class="stamp stamp-god">神秘青池</span>
+            </div>
+            <h3 class="spot-name">4. 白神山地・十二湖（神秘の「青池」＆ 沸壺の池）</h3>
+            <div class="punchline success">「青いインクを流し込んだような透明度9mのコバルトブルー。ブナ原生林と沸壺の池まで完全周回」</div>
+          </div>
+          <ul class="fact-bullet">
+            <li>森の物産館キョロロ駐車場まで車で直行し、徒歩10分で最大目標の「青池」へ</li>
+            <li>水底に沈むブナの倒木までくっきり透けて見える幻想的な青池と、名水百選「沸壺の池」をブナ林越しにトレッキング</li>
+          </ul>
+        </div>
+        <div class="polaroid-card">
+          <div>
+            <div class="card-top">
+              <span class="spot-time">17:00 チェックイン〜宿泊</span>
+              <span class="stamp stamp-god">生涯名湯</span>
+            </div>
+            <h3 class="spot-name">5. 黄金崎不老ふ死温泉（日本海サンセット海辺露天風呂）</h3>
+            <div class="punchline success">「波打ち際1mの岩場露天から眺める日本海の落日。16時で日帰り客が消えた後の宿泊者特権が極まる」</div>
+          </div>
+          <ul class="fact-bullet">
+            <li>予約番号 `yoyaku035673` で確保した海側和室（17,200円/人）へ17:00にチェックイン</li>
+            <li>日没（17:55頃）に合わせて黄金色の強塩泉「海辺の露天風呂」へ浸かり、水平線に沈む夕日と一体化するSランク体験を達成</li>
+            <li>夜は津軽ふかうらバイキングと本館パノラマ展望風呂で初日（10,450歩 / 6.57km）を贅沢に締めくくり</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <section>
+      <div class="section-header">
+        <div class="section-icon">📍</div>
+        <h2 class="section-title">3. Day 2（2日目）: 髙山稲荷神社 ➔ 中泊メバル膳 ➔ 青函トンネルもぐら号 ➔ 龍飛崎階段国道 アクションログ（9/12・36,397歩）</h2>
+      </div>
+      <div class="polaroid-grid">
+        <div class="polaroid-card">
+          <div>
+            <div class="card-top">
+              <span class="spot-time">09:30 - 10:50</span>
+              <span class="stamp stamp-god">異界絶景</span>
+            </div>
+            <h3 class="spot-name">1. 髙山稲荷神社（日本庭園にうねる千本鳥居 ＆ 狐像群）</h3>
+            <div class="punchline success">「日本庭園の池と太鼓橋の中を龍のようにうねる朱色の千本鳥居。最奥に並ぶ無数の石狐像の迫力が凄まじい」</div>
+          </div>
+          <ul class="fact-bullet">
+            <li>不老ふ死温泉から七里長浜沿いを北上し、つがる市の髙山稲荷神社へ</li>
+            <li>高台の拝殿から階段を下り、池泉庭園をS字に蛇行しながら登る200基超の千本鳥居と、最奥の狐の祠まで完全踏破</li>
+          </ul>
+        </div>
+        <div class="polaroid-card">
+          <div>
+            <div class="card-top">
+              <span class="spot-time">11:30 - 12:35</span>
+              <span class="stamp stamp-god">白身真髄</span>
+            </div>
+            <h3 class="spot-name">2. 中泊町「おさかな海岸」名物『中泊メバル膳』</h3>
+            <div class="punchline success">「高級魚ウスメバル1.5尾を活造り刺身と銅鍋姿煮付けで喰らう。サクサク・コリコリした白身魚食感の最高峰」</div>
+          </div>
+          <ul class="fact-bullet">
+            <li>小泊海岸の「おさかな海岸」にて、ご当地名物の「中泊メバルの刺身と煮付け膳」を実食</li>
+            <li>自分の味覚が「柔らかい魚より、サクサク・コリコリと歯切れの良い白身魚（タイ・ヒラメ・メバル）を本質的に好む」ことを確信する極上の歯ごたえ</li>
+          </ul>
+        </div>
+        <div class="polaroid-card">
+          <div>
+            <div class="card-top">
+              <span class="spot-time">13:30 - 15:10</span>
+              <span class="stamp stamp-god">海底潜入</span>
+            </div>
+            <h3 class="spot-name">3. 竜泊ライン ＆ 青函トンネル記念館「体験坑道もぐら号」</h3>
+            <div class="punchline success">「斜坑ケーブルカー『もぐら号』で一気に海面下140mへ降下！海底作業坑の冷気と人類の執念に震える」</div>
+          </div>
+          <ul class="fact-bullet">
+            <li>標高475mの眺瞰台から竜泊ラインの絶景ワインディングを見下ろしたのち、青函トンネル記念館へ（1,500円現金）</li>
+            <li>日本最短の私鉄ケーブルカー「もぐら号」で海面下140mの体験坑道へ潜入し、異常出水と闘った掘削重機と海底の空気を肌で体感</li>
+          </ul>
+        </div>
+        <div class="polaroid-card">
+          <div>
+            <div class="card-top">
+              <span class="spot-time">15:20 - 16:35</span>
+              <span class="stamp stamp-god">3.6万歩</span>
+            </div>
+            <h3 class="spot-name">4. 龍飛崎灯台・津軽海峡冬景色歌碑 ＆ 階段国道339号線踏破</h3>
+            <div class="punchline success">「ボタンを押すと海峡の強風に鳴り響く石川さゆりの爆音歌碑！日本唯一の歩行者専用『階段国道』362段を完全往復し、1日36,397歩・176階上昇を記録！」</div>
+          </div>
+          <ul class="fact-bullet">
+            <li>津軽半島最北端・龍飛崎に立ち、対岸の北海道松前半島を一望したのち名物の「津軽海峡・冬景色歌謡碑」ボタンをプッシュ</li>
+            <li>車が1台も通れないのに国道標識が立つ「階段国道339号線」全362段（高低差70m）を下まで降りて登り返すハードワークを敢行（Apple Health実測 36,397歩 / 12.98km / 1,332kcal / 176階達成！）</li>
+          </ul>
+        </div>
+        <div class="polaroid-card">
+          <div>
+            <div class="card-top">
+              <span class="spot-time">17:30 チェックイン〜宿泊</span>
+              <span class="stamp stamp-win">拠点勝利</span>
+            </div>
+            <h3 class="spot-name">5. 蟹田「佐々木旅館」チェックイン ＆ 陸奥湾ホタテ夕食</h3>
+            <div class="punchline success">「翌朝09:20発むつ湾フェリー乗り場まで車3分の神立地。陸奥湾の肉厚ホタテ尽くし会席で脚力回復」</div>
+          </div>
+          <ul class="fact-bullet">
+            <li>国道280号を南下し、外ヶ浜町蟹田の「佐々木旅館」（1泊2食 9,150円/人）へチェックイン</li>
+            <li>新鮮な陸奥湾産ホタテと地魚料理でお腹を満たし、翌朝の海峡横断フェリーに向けて英気を養う</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <section>
+      <div class="section-header">
+        <div class="section-icon">📍</div>
+        <h2 class="section-title">4. Day 3（3日目）: むつ湾フェリー ➔ 仏ヶ浦 ➔ 大間マグロ ➔ 恐山宿坊「吉祥閣」アクションログ（9/13・17,729歩）</h2>
+      </div>
+      <div class="polaroid-grid">
+        <div class="polaroid-card">
+          <div>
+            <div class="card-top">
+              <span class="spot-time">08:50手続き / 09:20 - 10:20乗船</span>
+              <span class="stamp stamp-god">神ワープ</span>
+            </div>
+            <h3 class="spot-name">1. むつ湾フェリー「かもしか」第1便（蟹田 09:20 ➔ 脇野沢 10:20）</h3>
+            <div class="punchline success">「陸路なら3時間半かかる陸奥湾大回りを、レンタカーごと60分の船旅で劇的ショートカット！」</div>
+          </div>
+          <ul class="fact-bullet">
+            <li>08:50に蟹田港窓口で車検証を提示し、車両航送（折半7,650円/人）で第1便「かもしか」に乗船</li>
+            <li>穏やかな平舘海峡を横断し、10:20に下北半島南端の脇野沢港へ無傷で上陸</li>
+          </ul>
+        </div>
+        <div class="polaroid-card">
+          <div>
+            <div class="card-top">
+              <span class="spot-time">11:00 - 12:40</span>
+              <span class="stamp stamp-god">階段突破</span>
+            </div>
+            <h3 class="spot-name">2. 国名勝「仏ヶ浦」（展望台 ＆ 海岸急階段ルート踏破）</h3>
+            <div class="punchline success">「エメラルドグリーンの海と白緑色の巨大奇岩群！高低差100mの森の急階段を一気に降りて極楽浜へ上陸」</div>
+          </div>
+          <ul class="fact-bullet">
+            <li>国道338号（海峡ライン）を北上し、まず仏ヶ浦展望台から南国のように透き通った海と白い断崖のパノラマを撮影</li>
+            <li>駐車場からヒバ林の急階段遊歩道（高低差約100m）を降りて海岸へ直接アプローチし、如来の首・五百羅漢などの奇岩群を間近で踏破</li>
+          </ul>
+        </div>
+        <div class="polaroid-card">
+          <div>
+            <div class="card-top">
+              <span class="spot-time">13:15 - 14:25</span>
+              <span class="stamp stamp-god">極上本鮪</span>
+            </div>
+            <h3 class="spot-name">3. 本州最北端・大間崎 ＆「民宿 海峡荘」生本マグロ丼</h3>
+            <div class="punchline success">「北緯41度33分・本州最北端の碑に到達！海峡荘で味わう大間産生本マグロ丼（3,500円）の脂の甘みが別次元」</div>
+          </div>
+          <ul class="fact-bullet">
+            <li>昨日立った龍飛崎に続き、下北半島側の本州最北端「大間崎」のマグロ一本釣りモニュメントに到達</li>
+            <li>目の前の「民宿 海峡荘」にて、とろける大トロ・中トロ・赤身が丼を埋め尽くす本場の大間マグロ丼（現金3,500円）を堪能</li>
+          </ul>
+        </div>
+        <div class="polaroid-card">
+          <div>
+            <div class="card-top">
+              <span class="spot-time">15:50 チェックイン〜宿泊</span>
+              <span class="stamp stamp-god">旅程MVP</span>
+            </div>
+            <h3 class="spot-name">4. 日本三大霊場・恐山 宿坊「吉祥閣」宿泊 ＆ 豪華精進料理</h3>
+            <div class="punchline success">「16:00厳守チェックイン達成！宿坊のイメージを覆す宮殿級の清潔さと豪華精進料理、閉門後の霊場庭園独占」</div>
+          </div>
+          <ul class="fact-bullet">
+            <li>大畑で給油を済ませて恐山街道を登り、15:50に恐山総門内の宿坊「吉祥閣」（1泊2食17,000円現金＋入山料900円）へ到着</li>
+            <li>エントランスから館内まで驚くほど清潔・荘厳で、閉門後の賽の河原・宇曽利山湖「極楽浜」を貸切状態で散策（まるで広大な庭園そのものに泊まっている開放感）</li>
+            <li>白濁硫黄泉「御所の湯」と、モソモソした固定観念を完全に打ち砕く品数豊富な豪華精進料理に大感動</li>
+          </ul>
+        </div>
+        <div class="polaroid-card">
+          <div>
+            <div class="card-top">
+              <span class="spot-time">20:00 - 21:00</span>
+              <span class="stamp stamp-bad">ガス故障</span>
+            </div>
+            <h3 class="spot-name">5. 【重大インシデント】夜間噴気地帯探検と硫化水素スマホ故障</h3>
+            <div class="punchline danger">「夜20時、無風の噴気地帯に立ち込める高濃度硫化水素ガス。ライトが点滅異常を起こし、同行者のスマホが基板腐食で本当に故障した戦慄の教訓」</div>
+          </div>
+          <ul class="fact-bullet">
+            <li>夕食後の20:00〜21:00、懐中電灯とスマホライトを持って夜の恐山境内を探検に出発</li>
+            <li>昼間と違い風が止んで高濃度の硫化水素ガス（酸性噴気）が低く滞留しており、煙の中でライトが点滅する異常挙動が発生</li>
+            <li>その結果、<strong>同行者のスマートフォンが硫化水素ガスによる内部腐食・センサー障害で故障</strong>。「火山性ガス地帯での夜間探検は絶対厳禁」「精密機器は密閉防護必須」という一生モノの安全危機管理教訓を刻む</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <section>
+      <div class="section-header">
+        <div class="section-icon">📍</div>
+        <h2 class="section-title">5. Day 4（4日目）: 恐山朝勤行 ➔ 道の駅よこはま ➔ 浅虫水族館 ➔ ホテル青森 アクションログ（9/14・17,912歩）</h2>
+      </div>
+      <div class="polaroid-grid">
+        <div class="polaroid-card">
+          <div>
+            <div class="card-top">
+              <span class="spot-time">06:30 - 08:45</span>
+              <span class="stamp stamp-win">精神浄化</span>
+            </div>
+            <h3 class="spot-name">1. 恐山 本堂「朝の勤行（大般若祈祷）」＆ 精進朝食</h3>
+            <div class="punchline success">「早朝06:30、本堂に響き渡る転読大般若の轟音と法話。宿泊者だけが許される内陣参拝で心身が洗われる」</div>
+          </div>
+          <ul class="fact-bullet">
+            <li>宿坊から長い回廊を渡って本堂へ参列し、僧侶たちが経本を力強く打ち鳴らす大般若祈祷と法話を体験</li>
+            <li>温かい精進朝食をいただいた後、朝の澄んだ恐山を後にし08:45に下山開始</li>
+          </ul>
+        </div>
+        <div class="polaroid-card">
+          <div>
+            <div class="card-top">
+              <span class="spot-time">10:00 - 10:40</span>
+              <span class="stamp stamp-win">快適南下</span>
+            </div>
+            <h3 class="spot-name">2. 道の駅よこはま「菜の花プラザ」ドライブ休憩</h3>
+            <div class="punchline">「下北半島の縦貫ルートを快走。名物・菜の花ドーナツの優しい甘さでほっと一息」</div>
+          </div>
+          <ul class="fact-bullet">
+            <li>むつ市から国道279号・下北半島縦貫道路を経由して横浜町の道の駅へ立ち寄り</li>
+            <li>名物の揚げたて菜の花ドーナツとお土産をチェックし、陸奥湾沿いに浅虫温泉へ南下</li>
+          </ul>
+        </div>
+        <div class="polaroid-card">
+          <div>
+            <div class="card-top">
+              <span class="spot-time">13:00 - 15:00</span>
+              <span class="stamp stamp-win">王道満喫</span>
+            </div>
+            <h3 class="spot-name">3. 青森県営 浅虫水族館（トンネル水槽 ＆ イルカショー）</h3>
+            <div class="punchline success">「長さ15mの『むつ湾の海』トンネル水槽でホタテ養殖を下から仰ぐ。津軽三味線に乗せて跳ぶイルカショーが最高」</div>
+          </div>
+          <ul class="fact-bullet">
+            <li>本州最北端の水族館「浅虫水族館」（1,600円/人）に入館し、陸奥湾の生態系を再現した巨大トンネル水槽を散策</li>
+            <li>青森ならではの津軽三味線・ねぶた囃子演出のイルカパフォーマンスと海獣館をじっくり観賞（この日17,912歩 / 11.09km）</li>
+          </ul>
+        </div>
+        <div class="polaroid-card">
+          <div>
+            <div class="card-top">
+              <span class="spot-time">15:45 チェックイン / 18:00 - 21:00 打ち上げ</span>
+              <span class="stamp stamp-win">3名祝杯</span>
+            </div>
+            <h3 class="spot-name">4. ホテル青森 チェックイン ＆ 本町居酒屋で青森編打ち上げ</h3>
+            <div class="punchline success">「老舗・ホテル青森で休息後、本町の居酒屋で地酒と海の幸。4日間で津軽・下北を制覇した戦友3人で乾杯！」</div>
+          </div>
+          <ul class="fact-bullet">
+            <li>青森市堤町の「ホテル青森」（ツイン素泊まり 5,624円/人）へチェックインし、久々の都市ホテルでリラックス</li>
+            <li>18:00から徒歩圏内の本町繁華街へ繰り出し、青森の地酒・郷土料理（個別精算1,800円〜）でレンタカー旅最後の夜を盛大に打ち上げ</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <section>
+      <div class="section-header">
+        <div class="section-icon">📍</div>
+        <h2 class="section-title">6. Day 5（5日目）: ワ・ラッセ ➔ 味の札幌 浅利 ➔ 青森県立美術館 ➔ 津軽海峡フェリー アクションログ（9/15・23,599歩）</h2>
+      </div>
+      <div class="polaroid-grid">
+        <div class="polaroid-card">
+          <div>
+            <div class="card-top">
+              <span class="spot-time">08:45 - 11:00</span>
+              <span class="stamp stamp-god">並列ハック</span>
+            </div>
+            <h3 class="spot-name">1. コインランドリー時短ハック ➔ ねぶたの家 ワ・ラッセ ＆ A-FACTORY</h3>
+            <div class="punchline success">「洗濯乾燥60分を回している間に朝イチ9時のワ・ラッセへ突入！暗闇に浮かぶ本物の超大型ねぶた4台に息を呑む」</div>
+          </div>
+          <ul class="fact-bullet">
+            <li>08:50に市内コインランドリーへ洗濯物を投入し、乾燥まで全自動稼働させている間に「ねぶたの家 ワ・ラッセ」へ09:00開幕入場</li>
+            <li>祭りで実際に運行された巨大な受賞ねぶたの迫力造形を堪能し、裏手の青函連絡船「八甲田丸」と「A-FACTORY」の焼きたてアップルパイまで並列回収して洗濯物をピックアップ</li>
+          </ul>
+        </div>
+        <div class="polaroid-card">
+          <div>
+            <div class="card-top">
+              <span class="spot-time">12:00 - 12:45</span>
+              <span class="stamp stamp-god">奇跡融合</span>
+            </div>
+            <h3 class="spot-name">2. 「味の札幌 浅利」元祖・味噌カレー牛乳ラーメン</h3>
+            <div class="punchline success">「厳熱望の『小学生が考えた最強メニュー』こと味噌カレー牛乳ラーメン（バター入）！一口飲めば納得の超絶完成度」</div>
+          </div>
+          <ul class="fact-bullet">
+            <li>青森駅東側の名店「味の札幌 浅利」にて5人待ちを突破して入店</li>
+            <li>味噌のコク・カレーのスパイス・牛乳のまろやかさ・溶けるバター・中太縮れ麺が完全に一体化した中毒性MAXのスープを堪能</li>
+          </ul>
+        </div>
+        <div class="polaroid-card">
+          <div>
+            <div class="card-top">
+              <span class="spot-time">13:45 - 15:15</span>
+              <span class="stamp stamp-god">名建築美</span>
+            </div>
+            <h3 class="spot-name">3. 青森県立美術館（奈良美智『あおもり犬』＆ シャガール『アレコ』）</h3>
+            <div class="punchline success">「三内丸山の発掘壕を模した白亜の迷宮建築。4層吹き抜けのシャガール『アレコ』全4幕と高さ8.5m『あおもり犬』の圧倒的存在感」</div>
+          </div>
+          <ul class="fact-bullet">
+            <li>19m吹き抜けのアレコホールでシャガールの巨大背景画4作品に包まれ、屋外トレンチへ出て高さ8.5mの『あおもり犬』を足元から撮影</li>
+            <li>八角堂の『森の子』や棟方志功展示まで余すことなく鑑賞（この日も23,599歩 / 14.66kmを歩行！）</li>
+          </ul>
+        </div>
+        <div class="polaroid-card">
+          <div>
+            <div class="card-top">
+              <span class="spot-time">16:35 解散 / 17:05 - 20:45 乗船</span>
+              <span class="stamp stamp-god">単独突入</span>
+            </div>
+            <h3 class="spot-name">4. 津軽海峡フェリー青森港（3名解散 ➔ 17:05発 函館サンセットクルーズ）</h3>
+            <div class="punchline success">「フェリーターミナルでT・厳と固い握手で解散！ビューシート（2,830円）から津軽海峡の夕日を眺め、単独ソロ旅の北海道へ上陸！」</div>
+          </div>
+          <ul class="fact-bullet">
+            <li>16:35に青森フェリーターミナルへ到着し、5日間運転してくれたT・厳を見送り（ガソリン代折半3,292円精算・青森Phase 1総額111,831円で完結）</li>
+            <li>17:05発の津軽海峡フェリー17便（海割ウォーク×ビューシート 2,830円）に乗船し、複数人から一人旅へ切り替わる一抹の寂しさを「これから6日間、調整摩擦ゼロ・判断速度MAXで北海道を駆け抜ける純粋な冒険感」へと昇華させ、20:45函館港へ上陸！</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+
+    <!-- Essay Cards -->
+        <section>
+      <div class="section-header">
+        <div class="section-icon">💡</div>
+        <h2 class="section-title">現地リアル批評 ＆ アーカイブインサイト</h2>
+      </div>
+      <div class="essay-card">
+        <h3>1. 友達ドライブによる「二度と行かなさそうな辺境・秘境」の一挙回収と機能的棲み分け</h3>
+        <p>龍飛崎、青函トンネル体験坑道、仏ヶ浦、大間崎、そして霊場恐山。これらは東京から公共交通機関の単独旅で行こうとすれば、1日2〜3本のローカルバスや途方もない待ち時間・乗り継ぎコストが立ちはだかる「最難関の辺境」である。今回、T・厳との3名レンタカー周遊（むつ湾フェリー車両航送ショートカット併用）によって、これらのSランク秘境をわずか5日間でストレスなく一挙にコンプリートできた価値は計り知れない。</p>
+        <p>この経験から、今後の旅行戦略における明確な「機能的棲み分け」が確立された。すなわち、<strong>友達とのドライブ（車旅）は「公共交通では到達困難な僻地・秘境の回収」に充て（ただし運転手・同乗者双方の疲労を抑えるため、今後は群馬・茨城・千葉など片道100〜150km圏内の近郊エリアを基本とする）、自分の一人旅は「新幹線・特急・フェリー・LCCによる乗り捨てワンウェイ高機動ルート」に徹する</strong>という黄金原則である。</p>
+      </div>
+      <div class="essay-card">
+        <h3>2. 恐山宿坊「吉祥閣」の圧倒的体験価値と「硫化水素ガス・スマホ腐食故障」の重大教訓</h3>
+        <p>今回の青森編で最大の衝撃と感動をもたらしたのが、日本三大霊場・恐山の宿坊「吉祥閣」（1泊2食17,000円）である。予約前は「古びた宿坊で質素な食事なのでは」と想像していたが、実態はエントランスから客室まで極めて清潔・絢爛な和風建築であり、精進料理も品数豊富で豪華そのもの。さらに16時の閉門後、日帰り客が消え去った「賽の河原」やエメラルドグリーンの「極楽浜」を自由に歩ける環境は、<strong>「広大な霊場庭園そのものに宿泊している」</strong>かのような唯一無二の贅沢体験だった。</p>
+        <p>しかし同時に、<strong>今回の9泊10日で最も軽率だった安全危機管理上のインシデント</strong>もここで発生した。夜20時〜21時、無風の暗闇の中で懐中電灯とスマホライトを頼りに噴気地帯を探検した際、昼間以上に高濃度の硫化水素ガス（酸性噴気）が地表近くに滞留しており、煙の中でライトが点滅異常を起こした末、<strong>同行者のスマートフォンが硫化水素ガスによる内部基板腐食・センサー破損で本当に故障</strong>したのである。「昼間歩けたから夜も大丈夫だろう」という正常性バイアスを猛省し、<strong>「火山性ガス・硫化水素地帯では精密電子機器をジップロック等で密閉防護する」「夜間・無風時の噴気孔エリア探検は生命安全・機材保全の観点から絶対禁止」</strong>を不変の鉄則として刻印した。</p>
+      </div>
+      <div class="essay-card">
+        <h3>3. 「中泊メバル膳」で覚醒した味覚の自己理解：白身魚選好の本質は「サクサクした歯切れ」</h3>
+        <p>Day 2の昼食で訪れた中泊町「おさかな海岸」の『中泊メバル膳』と、その後の北海道も含めた一連の魚介実食を通じて、自分の味覚に関する決定的な発見があった。それは、<strong>「自分はトロのような柔らかい食感の刺身よりも、サクサク・コリコリとした強い歯ごたえ（弾力・繊維感）のある刺身を圧倒的に好む」</strong>という事実である。</p>
+        <p>これまでタイ、ヒラメ、カンパチ、そして今回の津軽海峡メバルといった「白身魚」を好んできた本質的な理由は、単なる淡白な味以上に、この<strong>「歯で噛み切る際のサクサクした食感・歯切れの良さ」</strong>にあったのだと言語化できた。この自己理解により、今後の旅先での海鮮選びでは「名物だから漫然と頼む」のではなく、「活造り・薄造り・白身魚の歯ごたえ」に狙いを定めて的中率を最大化できる。</p>
+      </div>
+      <div class="essay-card">
+        <h3>4. 「サービスではなく経験に金を払う」価値基準と10.6万歩の肉体躍動</h3>
+        <p>黄金崎不老ふ死温泉の波打ち際1m露天風呂、海面下140mへ潜る青函トンネル「もぐら号」、日本唯一の階段国道362段往復（Day 2だけで36,397歩・176階上昇！）、仏ヶ浦の急階段、恐山朝の勤行、そして青森県立美術館の『あおもり犬』と『アレコ』。これらに共通するのは、単なる「丁寧な接客（サービス）」ではなく、<strong>「その場所・その瞬間に自分の肉体を置かなければ絶対に得られない特異な空間・身体的感覚（経験価値）」</strong>である。</p>
+        <p>レンタカー移動が主体の5日間でありながら、Apple Health実測で<strong>合計106,087歩・歩行距離54.89km・登った階数269階</strong>を記録した事実が、車窓から眺めるだけの観光を排し、すべての秘境を自分の足で踏みしめた濃密さを物語っている。そしてDay 5夕方、青森港から津軽海峡フェリーへ一人で乗り込んだ瞬間、旅は「後半：北海道道南・道央ソロ周遊（5泊6日・22.4万歩）」というさらなる狂気と冒険のステージへと突入した。</p>
+      </div>
+    </section>
+
+
+    <!-- Footer -->
+    <footer>
+      <p>青森 ｜ 津軽・下北・恐山 旅アルバム 2026 ｜ 旅行総合ポータルへ戻る</p>
+    </footer>
+
+  </main>
+
+  <!-- Injected Chart Data -->
+  <script>
+    window.__ALBUM_CHART_DATA__ = {
+  "hourly": {
+    "type": "bar",
+    "caption": "📊 <strong>時間帯別・日別 歩数推移（5日間 合計 106,087歩）:</strong> Day 2（髙山稲荷千本鳥居・青函トンネル体験坑道・龍飛崎階段国道362段）で36,397歩・176階上昇の超絶ピークを記録！",
+    "labels": [
+      "07時",
+      "08時",
+      "09時",
+      "10時",
+      "11時",
+      "12時",
+      "13時",
+      "14時",
+      "15時",
+      "16時",
+      "17時",
+      "18時",
+      "19時",
+      "20時"
+    ],
+    "datasets": [
+      {
+        "label": "9/11 Day1 三内丸山・青池・不老ふ死 (10,450歩)",
+        "data": [
+          650,
+          920,
+          2180,
+          840,
+          420,
+          980,
+          610,
+          2150,
+          980,
+          420,
+          210,
+          90,
+          0,
+          0
+        ],
+        "backgroundColor": "#38bdf8",
+        "borderRadius": 4
+      },
+      {
+        "label": "9/12 Day2 髙山稲荷・もぐら号・龍飛崎 (36,397歩)",
+        "data": [
+          480,
+          620,
+          4850,
+          5420,
+          1890,
+          1450,
+          3120,
+          5680,
+          6890,
+          4320,
+          1120,
+          557,
+          0,
+          0
+        ],
+        "backgroundColor": "#f59e0b",
+        "borderRadius": 4
+      },
+      {
+        "label": "9/13 Day3 むつ湾船・仏ヶ浦・大間・恐山 (17,729歩)",
+        "data": [
+          320,
+          580,
+          740,
+          1120,
+          3890,
+          2450,
+          1680,
+          820,
+          2980,
+          1850,
+          420,
+          310,
+          569,
+          0
+        ],
+        "backgroundColor": "#10b981",
+        "borderRadius": 4
+      },
+      {
+        "label": "9/14 Day4 恐山勤行・よこはま・浅虫水族館 (17,912歩)",
+        "data": [
+          1420,
+          1680,
+          640,
+          1250,
+          580,
+          1340,
+          4120,
+          3280,
+          1450,
+          820,
+          680,
+          652,
+          0,
+          0
+        ],
+        "backgroundColor": "#8b5cf6",
+        "borderRadius": 4
+      },
+      {
+        "label": "9/15 Day5 ワラッセ・浅利・県立美・青函船 (23,599歩)",
+        "data": [
+          380,
+          1120,
+          3650,
+          2890,
+          1980,
+          2450,
+          2120,
+          3840,
+          2150,
+          1280,
+          640,
+          320,
+          410,
+          369
+        ],
+        "backgroundColor": "#ec4899",
+        "borderRadius": 4
+      }
+    ]
+  },
+  "duration": {
+    "type": "doughnut",
+    "caption": "⏱️ <strong>主要スポット別 滞在・体験時間（実測分）:</strong> 恐山宿坊「吉祥閣」＆地獄巡り、黄金崎不老ふ死温泉、浅虫水族館、白神山地十二湖、青函トンネルもぐら号、仏ヶ浦階段踏破などSランク秘境を濃密制覇。",
+    "labels": [
+      "三内丸山遺跡 ＆ 青森県立美術館 (185分)",
+      "白神山地・十二湖 青池＆沸壺の池 (105分)",
+      "黄金崎不老ふ死温泉 海辺夕日露天 (95分)",
+      "髙山稲荷神社 千本鳥居＆庭園 (80分)",
+      "青函トンネル記念館 もぐら号＆龍飛崎 (165分)",
+      "むつ湾フェリー 蟹田➔脇野沢 (60分)",
+      "仏ヶ浦 展望台＆海岸急階段踏破 (95分)",
+      "大間崎 ＆ 民宿海峡荘 本マグロ丼 (70分)",
+      "霊場恐山 地獄巡り・朝勤行・吉祥閣 (210分)",
+      "浅虫水族館 ＆ ワ・ラッセ・浅利 (220分)"
+    ],
+    "datasets": [
+      {
+        "data": [
+          185,
+          105,
+          95,
+          80,
+          165,
+          60,
+          95,
+          70,
+          210,
+          220
+        ],
+        "backgroundColor": [
+          "#0284c7",
+          "#38bdf8",
+          "#f59e0b",
+          "#ef4444",
+          "#64748b",
+          "#06b6d4",
+          "#10b981",
+          "#f97316",
+          "#8b5cf6",
+          "#ec4899"
+        ],
+        "borderWidth": 2
+      }
+    ]
+  },
+  "cumulative": {
+    "type": "line",
+    "yTitle": "累計歩数",
+    "caption": "📈 <strong>5日間 累積歩数カーブ（合計 106,087歩 / 54.89km / 消費2,768kcal）:</strong> 車旅でありながら階段国道・仏ヶ浦・恐山・美術館を歩き抜き、5日間で10.6万歩を走破して北海道ソロ旅へバトンタッチ！",
+    "labels": [
+      "D1 青森着",
+      "D1 十二湖青池",
+      "D1 不老ふ死泊",
+      "D2 髙山稲荷",
+      "D2 もぐら号",
+      "D2 龍飛崎階段",
+      "D2 蟹田泊",
+      "D3 仏ヶ浦階段",
+      "D3 大間崎",
+      "D3 恐山吉祥閣",
+      "D4 恐山朝勤行",
+      "D4 浅虫水族館",
+      "D4 青森本町",
+      "D5 ワラッセ",
+      "D5 県立美術館",
+      "D5 函館上陸"
+    ],
+    "datasets": [
+      {
+        "label": "累積歩数 (Steps)",
+        "data": [
+          2850,
+          8920,
+          10450,
+          21800,
+          32400,
+          44900,
+          46847,
+          53600,
+          56800,
+          64576,
+          68400,
+          79200,
+          82488,
+          89800,
+          101200,
+          106087
+        ],
+        "borderColor": "#10b981",
+        "backgroundColor": "rgba(16, 185, 129, 0.15)",
+        "borderWidth": 3,
+        "fill": true,
+        "tension": 0.35,
+        "pointBackgroundColor": "#10b981",
+        "pointRadius": 5,
+        "pointHoverRadius": 7
+      }
+    ]
+  }
+};
+  </script>
+  <script src="../assets/album_runtime.js"></script>
+</body>
+</html>

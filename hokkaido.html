@@ -1,0 +1,1411 @@
+<!DOCTYPE html>
+<html lang="ja" data-theme="light">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <title>北海道 ｜ 函館 ＋ 道南・道央周遊（洞爺・登別・小樽・札幌）5泊6日 しおり</title>
+  <script>
+    // Anti-FOUC immediate theme application
+    (function() {
+      var t = localStorage.getItem('trip_nav_theme') || 'light';
+      document.documentElement.setAttribute('data-theme', t);
+    })();
+  </script>
+  <style>
+:root {
+  --bg: #f8fafc;
+  --surface: #ffffff;
+  --surface-subtle: #f1f5f9;
+  --text: #0f172a;
+  --text-muted: #64748b;
+  --border: #e2e8f0;
+  --primary: #0284c7;
+  --primary-hover: #0369a1;
+  --accent: #d97706;
+  --card-shadow: 0 1px 3px rgba(0,0,0,0.06), 0 1px 2px rgba(0,0,0,0.04);
+  --font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+}
+[data-theme="dark"] {
+  --bg: #090d16;
+  --surface: #131b2e;
+  --surface-subtle: #1e293b;
+  --text: #f8fafc;
+  --text-muted: #94a3b8;
+  --border: #1e293b;
+  --card-shadow: 0 4px 6px -1px rgba(0,0,0,0.3);
+}
+* { box-sizing: border-box; margin: 0; padding: 0; -webkit-tap-highlight-color: transparent; }
+body {
+  font-family: var(--font-family);
+  background-color: var(--bg);
+  color: var(--text);
+  line-height: 1.5;
+  font-size: 15px;
+  padding-bottom: 80px;
+}
+.header-bar {
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  background: rgba(255, 255, 255, 0.92);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border-bottom: 1px solid var(--border);
+  padding: 12px 16px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+[data-theme="dark"] .header-bar { background: rgba(19, 27, 46, 0.92); }
+.brand-title { font-size: 1.05rem; font-weight: 700; display: flex; align-items: center; gap: 8px; }
+.header-actions { display: flex; gap: 8px; align-items: center; }
+.btn-action {
+  background: var(--surface-subtle);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: 6px 12px;
+  font-size: 13px;
+  color: var(--text);
+  cursor: pointer;
+  text-decoration: none;
+}
+.container { max-width: 680px; margin: 0 auto; padding: 16px; }
+
+/* Day Navigation Bar */
+.nav-bar {
+  display: flex;
+  background: var(--surface-subtle);
+  padding: 6px;
+  border-radius: 10px;
+  margin-bottom: 16px;
+  gap: 6px;
+  align-items: center;
+  justify-content: space-between;
+}
+.nav-link {
+  flex: 1;
+  text-align: center;
+  padding: 7px 10px;
+  border-radius: 7px;
+  font-size: 13px;
+  font-weight: 600;
+  text-decoration: none;
+  color: var(--text-muted);
+  background: transparent;
+  border: none;
+  cursor: pointer;
+}
+.nav-link.active {
+  background: var(--surface);
+  color: var(--primary);
+  box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+}
+
+/* Quick Jump Chips */
+.jump-chips {
+  display: flex;
+  gap: 6px;
+  overflow-x: auto;
+  padding-bottom: 10px;
+  margin-bottom: 16px;
+  white-space: nowrap;
+  scrollbar-width: none;
+}
+.jump-chips::-webkit-scrollbar { display: none; }
+.jump-chip {
+  display: inline-block;
+  font-size: 12px;
+  font-weight: 600;
+  padding: 5px 10px;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 16px;
+  color: var(--text);
+  text-decoration: none;
+}
+
+/* Slot Cards */
+.day-block { margin-bottom: 32px; }
+.day-header {
+  font-size: 1.15rem;
+  font-weight: 700;
+  margin-bottom: 12px;
+  padding-bottom: 6px;
+  border-bottom: 2px solid var(--primary);
+  color: var(--primary);
+}
+
+/* Macro Route Box (Day全体ルート立ち回り) */
+.macro-route-box {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-left: 4px solid var(--primary);
+  border-radius: 10px;
+  padding: 12px 14px;
+  margin-bottom: 16px;
+  box-shadow: var(--card-shadow);
+}
+.macro-route-head {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 6px;
+}
+.macro-route-title {
+  font-size: 13px;
+  font-weight: 800;
+  color: var(--primary);
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+[data-theme="dark"] .macro-route-title { color: #38bdf8; }
+.macro-route-body {
+  font-size: 13px;
+  line-height: 1.55;
+  color: var(--text);
+  margin-bottom: 8px;
+}
+.macro-map-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  font-size: 12px;
+  font-weight: 700;
+  color: var(--primary);
+  text-decoration: none;
+  background: rgba(2, 132, 199, 0.08);
+  padding: 4px 10px;
+  border-radius: 6px;
+  border: 1px solid rgba(2, 132, 199, 0.2);
+}
+[data-theme="dark"] .macro-map-link {
+  color: #38bdf8;
+  background: rgba(56, 189, 248, 0.1);
+  border-color: rgba(56, 189, 248, 0.3);
+}
+.slot-card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  margin-bottom: 12px;
+  padding: 14px 16px;
+  box-shadow: var(--card-shadow);
+  transition: opacity 0.2s, background-color 0.2s;
+}
+.slot-card.is-dimmed { opacity: 0.45; filter: grayscale(40%); }
+.slot-card.is-must { border-left: 4px solid var(--accent); }
+.slot-meta { display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px; }
+.slot-time { font-size: 13px; font-weight: 700; font-variant-numeric: tabular-nums; }
+.slot-badge {
+  font-size: 11px;
+  font-weight: 700;
+  padding: 2px 8px;
+  border-radius: 4px;
+  text-transform: uppercase;
+}
+.badge-sightseeing { background: #d1fae5; color: #065f46; }
+.badge-food { background: #ffedd5; color: #9a3412; }
+.badge-transit { background: #e0e7ff; color: #3730a3; }
+[data-theme="dark"] .badge-sightseeing { background: #064e3b; color: #6ee7b7; }
+[data-theme="dark"] .badge-food { background: #7c2d12; color: #fdba74; }
+[data-theme="dark"] .badge-transit { background: #312e81; color: #a5b4fc; }
+
+.slot-title-row { display: flex; align-items: flex-start; gap: 8px; margin-bottom: 6px; }
+.slot-checkbox { margin-top: 3px; cursor: pointer; width: 18px; height: 18px; accent-color: var(--primary); }
+.slot-title { font-size: 1rem; font-weight: 700; line-height: 1.4; flex: 1; }
+.slot-desc { font-size: 13.5px; color: var(--text-muted); margin-bottom: 10px; line-height: 1.5; padding-left: 26px; }
+
+/* Swap Guide Box */
+.swap-box {
+  margin: 10px 0 10px 26px;
+  padding: 10px 12px;
+  border-radius: 8px;
+  background: rgba(217, 119, 6, 0.08);
+  border: 1px dashed var(--accent);
+  font-size: 12.5px;
+}
+.swap-title { font-weight: 700; color: var(--accent); margin-bottom: 4px; display: flex; align-items: center; gap: 4px; }
+
+.slot-foot { display: flex; justify-content: space-between; align-items: center; padding-top: 8px; border-top: 1px solid var(--border); margin-left: 26px; }
+.map-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  font-size: 12px;
+  font-weight: 600;
+  color: #1a73e8;
+  text-decoration: none;
+  background: rgba(26, 115, 232, 0.08);
+  padding: 4px 10px;
+  border-radius: 20px;
+}
+[data-theme="dark"] .map-pill { color: #8ab4f8; background: rgba(138, 180, 248, 0.12); }
+
+/* Tactics Step Box (立ち回り・攻略手順) */
+.tactics-box {
+  margin: 12px 0 12px 26px;
+  padding: 10px 14px;
+  background: rgba(2, 132, 199, 0.06);
+  border: 1px solid rgba(2, 132, 199, 0.25);
+  border-left: 3.5px solid var(--primary);
+  border-radius: 8px;
+}
+[data-theme="dark"] .tactics-box {
+  background: rgba(56, 189, 248, 0.08);
+  border-color: rgba(56, 189, 248, 0.3);
+  border-left-color: #38bdf8;
+}
+.tactics-header {
+  font-size: 13px;
+  font-weight: 700;
+  color: var(--primary);
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  margin-bottom: 8px;
+}
+.tactics-tag {
+  font-size: 10px;
+  font-weight: 800;
+  background: var(--primary);
+  color: #fff;
+  padding: 1px 6px;
+  border-radius: 4px;
+  letter-spacing: 0.05em;
+}
+[data-theme="dark"] .tactics-header { color: #38bdf8; }
+[data-theme="dark"] .tactics-tag { background: #0284c7; }
+.tactics-list { display: flex; flex-direction: column; gap: 6px; }
+.tactics-step-row { display: flex; align-items: flex-start; gap: 8px; font-size: 12.5px; line-height: 1.5; }
+.tactics-num {
+  flex-shrink: 0;
+  width: 18px;
+  height: 18px;
+  border-radius: 4px;
+  background: rgba(2, 132, 199, 0.18);
+  color: var(--primary);
+  font-size: 11px;
+  font-weight: 800;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-top: 1px;
+}
+[data-theme="dark"] .tactics-num { background: rgba(56, 189, 248, 0.25); color: #38bdf8; }
+
+/* Checkpoints List */
+.checkpoint-list {
+  margin: 10px 0 10px 26px;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+.checkpoint-row {
+  display: flex;
+  align-items: flex-start;
+  gap: 8px;
+  font-size: 12px;
+  background: var(--surface-subtle);
+  padding: 8px 10px;
+  border-radius: 6px;
+  border: 1px solid var(--border);
+}
+.cp-badge {
+  font-size: 10px;
+  font-weight: 700;
+  padding: 1px 5px;
+  border-radius: 3px;
+  background: #0284c7;
+  color: #fff;
+  flex-shrink: 0;
+}
+.cp-title { font-weight: 600; color: var(--text); }
+.cp-desc { font-size: 11.5px; color: var(--text-muted); margin-top: 2px; }
+
+/* Practical Footer */
+.practical-footer {
+  margin: 10px 0 10px 26px;
+  padding: 8px 10px;
+  background: var(--surface-subtle);
+  border-left: 3px solid var(--accent);
+  border-radius: 4px;
+  font-size: 12px;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+.pf-row { display: flex; gap: 6px; }
+.pf-tag { font-weight: 700; color: var(--accent); flex-shrink: 0; min-width: 65px; }
+.pf-val { color: var(--text); }
+
+/* Print & Paged Media */
+@media print {
+  @page { size: A4 portrait; margin: 12mm 15mm; }
+  body { background: #fff !important; color: #000 !important; font-size: 11pt; }
+  .header-bar, .nav-bar, .jump-chips, .no-print { display: none !important; }
+  .day-block { page-break-after: always; break-after: page; }
+  .slot-card { break-inside: avoid; page-break-inside: avoid; box-shadow: none !important; border: 1px solid #ccc !important; }
+  .slot-card.is-dimmed { opacity: 1 !important; filter: none !important; }
+  .slot-checkbox { display: none !important; }
+  .slot-desc, .swap-box, .slot-foot { margin-left: 0 !important; padding-left: 0 !important; }
+}
+
+  </style>
+</head>
+<body>
+  <header class="header-bar">
+    <div class="brand-title">
+      <span>🐻</span>
+      <span>北海道 ｜ 函館 ＋ 道南・道央周遊</span>
+    </div>
+    <div class="header-actions no-print">
+      <button class="btn-action" onclick="toggleTheme()">🌓 テーマ</button>
+      <button class="btn-action" onclick="window.print()">🖨️ 製本印刷</button>
+    </div>
+  </header>
+
+  <main class="container">
+    
+    <nav class="nav-bar no-print">
+      <button type="button" class="nav-link active" data-day="all" onclick="switchDay('all')">📑 全日程</button>
+      <button type="button" class="nav-link" data-day="1" onclick="switchDay(1)">Day 1</button><button type="button" class="nav-link" data-day="2" onclick="switchDay(2)">Day 2</button><button type="button" class="nav-link" data-day="3" onclick="switchDay(3)">Day 3</button><button type="button" class="nav-link" data-day="4" onclick="switchDay(4)">Day 4</button><button type="button" class="nav-link" data-day="5" onclick="switchDay(5)">Day 5</button><button type="button" class="nav-link" data-day="6" onclick="switchDay(6)">Day 6</button>
+    </nav>
+    
+    <div class="jump-chips no-print">
+      
+        <a class="jump-chip" href="#d1-agate" data-day="1">📍 A-GATE HOT</a>
+      
+        <a class="jump-chip" href="#d2-morningmarket" data-day="2">📍 函館朝市 どんぶり横</a>
+      
+        <a class="jump-chip" href="#d2-goryokaku" data-day="2">📍 五稜郭タワー ＆ 特</a>
+      
+        <a class="jump-chip" href="#d2-luckypierrot" data-day="2">📍 ラッキーピエロ 五稜</a>
+      
+        <a class="jump-chip" href="#d2-motomachi" data-day="2">📍 金森赤レンガ倉庫・ス</a>
+      
+        <a class="jump-chip" href="#d2-mt-hakodate" data-day="2">📍 函館山展望台（ロープ</a>
+      
+        <a class="jump-chip" href="#d3-onuma" data-day="3">📍 大沼国定公園 ＆ 沼</a>
+      
+        <a class="jump-chip" href="#d3-toya" data-day="3">📍 洞爺湖温泉（洞爺湖汽</a>
+      
+        <a class="jump-chip" href="#d3-noboribetsu" data-day="3">📍 登別温泉 地獄谷・鉄</a>
+      
+        <a class="jump-chip" href="#d3-shiraoi" data-day="3">📍 ホテルリブマックスP</a>
+      
+        <a class="jump-chip" href="#d4-upopoy" data-day="4">📍 ウポポイ（民族共生象</a>
+      
+        <a class="jump-chip" href="#d4-yoichi" data-day="4">📍 ニッカウヰスキー 余</a>
+      
+        <a class="jump-chip" href="#d4-otaru" data-day="4">📍 小樽堺町通り（ルタオ</a>
+      
+        <a class="jump-chip" href="#d4-nikorefre" data-day="4">📍 札幌スープカレー実食</a>
+      
+        <a class="jump-chip" href="#d5-jingu" data-day="5">📍 北海道神宮 参拝 ＆</a>
+      
+        <a class="jump-chip" href="#d5-sapporo-core" data-day="5">📍 札幌市時計台 ➔ 北</a>
+      
+        <a class="jump-chip" href="#d5-hokudai" data-day="5">📍 北海道大学 札幌キャ</a>
+      
+        <a class="jump-chip" href="#d5-beer" data-day="5">📍 サッポロビール博物館</a>
+      
+        <a class="jump-chip" href="#d5-autumnfest" data-day="5">📍 さっぽろテレビ塔・オ</a>
+      
+        <a class="jump-chip" href="#d6-t38" data-day="6">📍 千秋庵本店（生ノース</a>
+      
+        <a class="jump-chip" href="#d6-yoshino" data-day="6">📍 みそラーメンのよし乃</a>
+      
+        <a class="jump-chip" href="#d6-chitose" data-day="6">📍 サケのふるさと 千歳</a>
+      
+        <a class="jump-chip" href="#d6-cts-spa" data-day="6">📍 新千歳空港 4時間4</a>
+      
+    </div>
+    
+      <section class="day-block" id="day-sec-1" data-day="1">
+        <h2 class="day-header">Day 1: 2026年9月15日 (火)</h2>
+        
+        <div class="slot-list">
+          
+    <article class="slot-card " id="d1-ferry" data-slot-id="d1-ferry">
+      <div class="slot-meta">
+        <span class="slot-time">⏱️ 17:15 - 20:50</span>
+        <span class="slot-badge badge-transit">移動</span>
+      </div>
+      <div class="slot-title-row">
+        <input type="checkbox" class="slot-checkbox no-print" onchange="toggleSlot('d1-ferry', this.checked)" title="完了・スキップを消し込み">
+        <h3 class="slot-title">津軽海峡フェリー 17便（青森 ➔ 函館・海割ウォーク＆ビューシート）</h3>
+      </div>
+      <p class="slot-desc">確定</p>
+      
+      
+      
+      <div class="checkpoint-list">
+        
+          <div class="checkpoint-row">
+            
+            <div>
+              <div class="cp-title">津軽海峡フェリー 17便（青森 ➔ 函館・海割ウォーク＆ビューシート）</div>
+              <div class="cp-desc">確定</div>
+            </div>
+          </div>
+        
+      </div>
+      
+      <div class="slot-foot">
+        <span></span>
+        
+      </div>
+    </article>
+    <article class="slot-card " id="d1-shuttle" data-slot-id="d1-shuttle">
+      <div class="slot-meta">
+        <span class="slot-time">⏱️ 20:55 - 21:25</span>
+        <span class="slot-badge badge-transit">移動</span>
+      </div>
+      <div class="slot-title-row">
+        <input type="checkbox" class="slot-checkbox no-print" onchange="toggleSlot('d1-shuttle', this.checked)" title="完了・スキップを消し込み">
+        <h3 class="slot-title">函館フェリーターミナル ➔ 函館駅前（函館帝産シャトルバス）</h3>
+      </div>
+      <p class="slot-desc">確定</p>
+      
+      
+      
+      <div class="checkpoint-list">
+        
+          <div class="checkpoint-row">
+            
+            <div>
+              <div class="cp-title">函館フェリーターミナル ➔ 函館駅前（函館帝産シャトルバス）</div>
+              <div class="cp-desc">確定</div>
+            </div>
+          </div>
+        
+      </div>
+      
+      <div class="slot-foot">
+        <span></span>
+        
+      </div>
+    </article>
+    <article class="slot-card " id="d1-agate" data-slot-id="d1-agate">
+      <div class="slot-meta">
+        <span class="slot-time">⏱️ 21:30 - 23:00</span>
+        <span class="slot-badge badge-sightseeing">観光</span>
+      </div>
+      <div class="slot-title-row">
+        <input type="checkbox" class="slot-checkbox no-print" onchange="toggleSlot('d1-agate', this.checked)" title="完了・スキップを消し込み">
+        <h3 class="slot-title">A-GATE HOTEL 函館駅前 チェックイン ＆ 大門エリア深夜夕食</h3>
+      </div>
+      <p class="slot-desc">確定</p>
+      
+      
+      
+      <div class="checkpoint-list">
+        
+          <div class="checkpoint-row">
+            
+            <div>
+              <div class="cp-title">A-GATE HOTEL 函館駅前 チェックイン ＆ 大門エリア深夜夕食</div>
+              <div class="cp-desc">確定</div>
+            </div>
+          </div>
+        
+      </div>
+      
+      <div class="slot-foot">
+        <span></span>
+        
+      </div>
+    </article>
+        </div>
+      </section>
+      <section class="day-block" id="day-sec-2" data-day="2">
+        <h2 class="day-header">Day 2: 2026年9月16日 (水)</h2>
+        
+        <div class="slot-list">
+          
+    <article class="slot-card " id="d2-morningmarket" data-slot-id="d2-morningmarket">
+      <div class="slot-meta">
+        <span class="slot-time">⏱️ 08:00 - 09:30</span>
+        <span class="slot-badge badge-sightseeing">観光</span>
+      </div>
+      <div class="slot-title-row">
+        <input type="checkbox" class="slot-checkbox no-print" onchange="toggleSlot('d2-morningmarket', this.checked)" title="完了・スキップを消し込み">
+        <h3 class="slot-title">函館朝市 どんぶり横丁市場（きくよ食堂 本店・活イカ＆巴丼）</h3>
+      </div>
+      <p class="slot-desc">確定</p>
+      
+      
+      
+      <div class="checkpoint-list">
+        
+          <div class="checkpoint-row">
+            
+            <div>
+              <div class="cp-title">函館朝市 どんぶり横丁市場（きくよ食堂 本店・活イカ＆巴丼）</div>
+              <div class="cp-desc">確定</div>
+            </div>
+          </div>
+        
+      </div>
+      
+      <div class="slot-foot">
+        <span></span>
+        
+      </div>
+    </article>
+    <article class="slot-card " id="d2-goryokaku" data-slot-id="d2-goryokaku">
+      <div class="slot-meta">
+        <span class="slot-time">⏱️ 10:30 - 11:45</span>
+        <span class="slot-badge badge-sightseeing">観光</span>
+      </div>
+      <div class="slot-title-row">
+        <input type="checkbox" class="slot-checkbox no-print" onchange="toggleSlot('d2-goryokaku', this.checked)" title="完了・スキップを消し込み">
+        <h3 class="slot-title">五稜郭タワー ＆ 特別史跡 五稜郭公園（箱館奉行所）</h3>
+      </div>
+      <p class="slot-desc">確定</p>
+      
+      
+      
+      <div class="checkpoint-list">
+        
+          <div class="checkpoint-row">
+            
+            <div>
+              <div class="cp-title">五稜郭タワー ＆ 特別史跡 五稜郭公園（箱館奉行所）</div>
+              <div class="cp-desc">確定</div>
+            </div>
+          </div>
+        
+      </div>
+      
+      <div class="slot-foot">
+        <span></span>
+        
+      </div>
+    </article>
+    <article class="slot-card " id="d2-luckypierrot" data-slot-id="d2-luckypierrot">
+      <div class="slot-meta">
+        <span class="slot-time">⏱️ 11:45 - 12:45</span>
+        <span class="slot-badge badge-sightseeing">観光</span>
+      </div>
+      <div class="slot-title-row">
+        <input type="checkbox" class="slot-checkbox no-print" onchange="toggleSlot('d2-luckypierrot', this.checked)" title="完了・スキップを消し込み">
+        <h3 class="slot-title">ラッキーピエロ 五稜郭公園前店 / ベイエリア本店（チャイニーズチキンバーガー）</h3>
+      </div>
+      <p class="slot-desc">確定</p>
+      
+      
+      
+      <div class="checkpoint-list">
+        
+          <div class="checkpoint-row">
+            
+            <div>
+              <div class="cp-title">ラッキーピエロ 五稜郭公園前店 / ベイエリア本店（チャイニーズチキンバーガー）</div>
+              <div class="cp-desc">確定</div>
+            </div>
+          </div>
+        
+      </div>
+      
+      <div class="slot-foot">
+        <span></span>
+        
+      </div>
+    </article>
+    <article class="slot-card " id="d2-motomachi" data-slot-id="d2-motomachi">
+      <div class="slot-meta">
+        <span class="slot-time">⏱️ 13:15 - 15:30</span>
+        <span class="slot-badge badge-sightseeing">観光</span>
+      </div>
+      <div class="slot-title-row">
+        <input type="checkbox" class="slot-checkbox no-print" onchange="toggleSlot('d2-motomachi', this.checked)" title="完了・スキップを消し込み">
+        <h3 class="slot-title">金森赤レンガ倉庫・スナッフルス ＆ 元町（八幡坂・ハリストス正教会・アンジェリックヴォヤージュ）</h3>
+      </div>
+      <p class="slot-desc">確定</p>
+      
+      
+      
+      <div class="checkpoint-list">
+        
+          <div class="checkpoint-row">
+            
+            <div>
+              <div class="cp-title">金森赤レンガ倉庫・スナッフルス ＆ 元町（八幡坂・ハリストス正教会・アンジェリックヴォヤージュ）</div>
+              <div class="cp-desc">確定</div>
+            </div>
+          </div>
+        
+      </div>
+      
+      <div class="slot-foot">
+        <span></span>
+        
+      </div>
+    </article>
+    <article class="slot-card " id="d2-mt-hakodate" data-slot-id="d2-mt-hakodate">
+      <div class="slot-meta">
+        <span class="slot-time">⏱️ 17:00 - 19:30</span>
+        <span class="slot-badge badge-sightseeing">観光</span>
+      </div>
+      <div class="slot-title-row">
+        <input type="checkbox" class="slot-checkbox no-print" onchange="toggleSlot('d2-mt-hakodate', this.checked)" title="完了・スキップを消し込み">
+        <h3 class="slot-title">函館山展望台（ロープウェイ往復・日没17:47マジックアワー＆世界三大夜景）</h3>
+      </div>
+      <p class="slot-desc">確定</p>
+      
+      
+      
+      <div class="checkpoint-list">
+        
+          <div class="checkpoint-row">
+            
+            <div>
+              <div class="cp-title">函館山展望台（ロープウェイ往復・日没17:47マジックアワー＆世界三大夜景）</div>
+              <div class="cp-desc">確定</div>
+            </div>
+          </div>
+        
+      </div>
+      
+      <div class="slot-foot">
+        <span></span>
+        
+      </div>
+    </article>
+        </div>
+      </section>
+      <section class="day-block" id="day-sec-3" data-day="3">
+        <h2 class="day-header">Day 3: 2026年9月17日 (木)</h2>
+        
+        <div class="slot-list">
+          
+    <article class="slot-card " id="d3-slot-1" data-slot-id="d3-slot-1">
+      <div class="slot-meta">
+        <span class="slot-time">⏱️ 06:15 - 07:10</span>
+        <span class="slot-badge badge-transit">移動</span>
+      </div>
+      <div class="slot-title-row">
+        <input type="checkbox" class="slot-checkbox no-print" onchange="toggleSlot('d3-slot-1', this.checked)" title="完了・スキップを消し込み">
+        <h3 class="slot-title">函館朝市 駅二市場（活いか釣堀 / 一花亭たびじ）＆ 函館駅発（特急北斗3号）</h3>
+      </div>
+      <p class="slot-desc">確定</p>
+      
+      
+      
+      <div class="checkpoint-list">
+        
+          <div class="checkpoint-row">
+            
+            <div>
+              <div class="cp-title">函館朝市 駅二市場（活いか釣堀 / 一花亭たびじ）＆ 函館駅発（特急北斗3号）</div>
+              <div class="cp-desc">確定</div>
+            </div>
+          </div>
+        
+      </div>
+      
+      <div class="slot-foot">
+        <span></span>
+        
+      </div>
+    </article>
+    <article class="slot-card " id="d3-onuma" data-slot-id="d3-onuma">
+      <div class="slot-meta">
+        <span class="slot-time">⏱️ 08:06 - 09:25</span>
+        <span class="slot-badge badge-sightseeing">観光</span>
+      </div>
+      <div class="slot-title-row">
+        <input type="checkbox" class="slot-checkbox no-print" onchange="toggleSlot('d3-onuma', this.checked)" title="完了・スキップを消し込み">
+        <h3 class="slot-title">大沼国定公園 ＆ 沼の家「元祖大沼だんご」（みたらし・あんこ実食）</h3>
+      </div>
+      <p class="slot-desc">確定</p>
+      
+      
+      
+      <div class="checkpoint-list">
+        
+          <div class="checkpoint-row">
+            
+            <div>
+              <div class="cp-title">大沼国定公園 ＆ 沼の家「元祖大沼だんご」（みたらし・あんこ実食）</div>
+              <div class="cp-desc">確定</div>
+            </div>
+          </div>
+        
+      </div>
+      
+      <div class="slot-foot">
+        <span></span>
+        
+      </div>
+    </article>
+    <article class="slot-card " id="d3-toya" data-slot-id="d3-toya">
+      <div class="slot-meta">
+        <span class="slot-time">⏱️ 12:05 - 15:10</span>
+        <span class="slot-badge badge-sightseeing">観光</span>
+      </div>
+      <div class="slot-title-row">
+        <input type="checkbox" class="slot-checkbox no-print" onchange="toggleSlot('d3-toya', this.checked)" title="完了・スキップを消し込み">
+        <h3 class="slot-title">洞爺湖温泉（洞爺湖汽船中島クルーズ・わかさいも本店・珍小島上陸）</h3>
+      </div>
+      <p class="slot-desc">確定</p>
+      
+      
+      
+      <div class="checkpoint-list">
+        
+          <div class="checkpoint-row">
+            
+            <div>
+              <div class="cp-title">洞爺湖温泉（洞爺湖汽船中島クルーズ・わかさいも本店・珍小島上陸）</div>
+              <div class="cp-desc">確定</div>
+            </div>
+          </div>
+        
+      </div>
+      
+      <div class="slot-foot">
+        <span></span>
+        
+      </div>
+    </article>
+    <article class="slot-card " id="d3-noboribetsu" data-slot-id="d3-noboribetsu">
+      <div class="slot-meta">
+        <span class="slot-time">⏱️ 16:30 - 18:00</span>
+        <span class="slot-badge badge-sightseeing">観光</span>
+      </div>
+      <div class="slot-title-row">
+        <input type="checkbox" class="slot-checkbox no-print" onchange="toggleSlot('d3-noboribetsu', this.checked)" title="完了・スキップを消し込み">
+        <h3 class="slot-title">登別温泉 地獄谷・鉄泉池踏破 ＆ 第一滝本館（全浴槽・プール視察・5分チル）</h3>
+      </div>
+      <p class="slot-desc">確定</p>
+      
+      
+      
+      <div class="checkpoint-list">
+        
+          <div class="checkpoint-row">
+            
+            <div>
+              <div class="cp-title">登別温泉 地獄谷・鉄泉池踏破 ＆ 第一滝本館（全浴槽・プール視察・5分チル）</div>
+              <div class="cp-desc">確定</div>
+            </div>
+          </div>
+        
+      </div>
+      
+      <div class="slot-foot">
+        <span></span>
+        
+      </div>
+    </article>
+    <article class="slot-card " id="d3-shiraoi" data-slot-id="d3-shiraoi">
+      <div class="slot-meta">
+        <span class="slot-time">⏱️ 18:52 - 22:00</span>
+        <span class="slot-badge badge-sightseeing">観光</span>
+      </div>
+      <div class="slot-title-row">
+        <input type="checkbox" class="slot-checkbox no-print" onchange="toggleSlot('d3-shiraoi', this.checked)" title="完了・スキップを消し込み">
+        <h3 class="slot-title">ホテルリブマックスPREMIUM北海道白老温泉（ビュッフェ＆モール温泉サウナ）</h3>
+      </div>
+      <p class="slot-desc">確定</p>
+      
+      
+      
+      <div class="checkpoint-list">
+        
+          <div class="checkpoint-row">
+            
+            <div>
+              <div class="cp-title">ホテルリブマックスPREMIUM北海道白老温泉（ビュッフェ＆モール温泉サウナ）</div>
+              <div class="cp-desc">確定</div>
+            </div>
+          </div>
+        
+      </div>
+      
+      <div class="slot-foot">
+        <span></span>
+        
+      </div>
+    </article>
+        </div>
+      </section>
+      <section class="day-block" id="day-sec-4" data-day="4">
+        <h2 class="day-header">Day 4: 2026年9月18日 (金)</h2>
+        
+        <div class="slot-list">
+          
+    <article class="slot-card " id="d4-upopoy" data-slot-id="d4-upopoy">
+      <div class="slot-meta">
+        <span class="slot-time">⏱️ 09:00 - 10:45</span>
+        <span class="slot-badge badge-sightseeing">観光</span>
+      </div>
+      <div class="slot-title-row">
+        <input type="checkbox" class="slot-checkbox no-print" onchange="toggleSlot('d4-upopoy', this.checked)" title="完了・スキップを消し込み">
+        <h3 class="slot-title">ウポポイ（民族共生象徴空間・国立アイヌ民族博物館・ポロト湖畔）</h3>
+      </div>
+      <p class="slot-desc">確定</p>
+      
+      
+      
+      <div class="checkpoint-list">
+        
+          <div class="checkpoint-row">
+            
+            <div>
+              <div class="cp-title">ウポポイ（民族共生象徴空間・国立アイヌ民族博物館・ポロト湖畔）</div>
+              <div class="cp-desc">確定</div>
+            </div>
+          </div>
+        
+      </div>
+      
+      <div class="slot-foot">
+        <span></span>
+        
+      </div>
+    </article>
+    <article class="slot-card " id="d4-slot-2" data-slot-id="d4-slot-2">
+      <div class="slot-meta">
+        <span class="slot-time">⏱️ 11:24 - 14:13</span>
+        <span class="slot-badge badge-transit">移動</span>
+      </div>
+      <div class="slot-title-row">
+        <input type="checkbox" class="slot-checkbox no-print" onchange="toggleSlot('d4-slot-2', this.checked)" title="完了・スキップを消し込み">
+        <h3 class="slot-title">白老駅 ➔ 札幌駅（特急北斗9号）➔ 小樽駅（快速エアポート）➔ 余市駅</h3>
+      </div>
+      <p class="slot-desc">確定</p>
+      
+      
+      
+      <div class="checkpoint-list">
+        
+          <div class="checkpoint-row">
+            
+            <div>
+              <div class="cp-title">白老駅 ➔ 札幌駅（特急北斗9号）➔ 小樽駅（快速エアポート）➔ 余市駅</div>
+              <div class="cp-desc">確定</div>
+            </div>
+          </div>
+        
+      </div>
+      
+      <div class="slot-foot">
+        <span></span>
+        
+      </div>
+    </article>
+    <article class="slot-card " id="d4-yoichi" data-slot-id="d4-yoichi">
+      <div class="slot-meta">
+        <span class="slot-time">⏱️ 14:15 - 15:00</span>
+        <span class="slot-badge badge-sightseeing">観光</span>
+      </div>
+      <div class="slot-title-row">
+        <input type="checkbox" class="slot-checkbox no-print" onchange="toggleSlot('d4-yoichi', this.checked)" title="完了・スキップを消し込み">
+        <h3 class="slot-title">ニッカウヰスキー 余市蒸溜所（正門・キルン塔・ディスティラリーショップ）</h3>
+      </div>
+      <p class="slot-desc">確定</p>
+      
+      
+      
+      <div class="checkpoint-list">
+        
+          <div class="checkpoint-row">
+            
+            <div>
+              <div class="cp-title">ニッカウヰスキー 余市蒸溜所（正門・キルン塔・ディスティラリーショップ）</div>
+              <div class="cp-desc">確定</div>
+            </div>
+          </div>
+        
+      </div>
+      
+      <div class="slot-foot">
+        <span></span>
+        
+      </div>
+    </article>
+    <article class="slot-card " id="d4-otaru" data-slot-id="d4-otaru">
+      <div class="slot-meta">
+        <span class="slot-time">⏱️ 15:30 - 19:30</span>
+        <span class="slot-badge badge-sightseeing">観光</span>
+      </div>
+      <div class="slot-title-row">
+        <input type="checkbox" class="slot-checkbox no-print" onchange="toggleSlot('d4-otaru', this.checked)" title="完了・スキップを消し込み">
+        <h3 class="slot-title">小樽堺町通り（ルタオ本店・北一ホール・伊勢鮨駅中店）＆ 小樽運河トワイライト</h3>
+      </div>
+      <p class="slot-desc">確定</p>
+      
+      
+      
+      <div class="checkpoint-list">
+        
+          <div class="checkpoint-row">
+            
+            <div>
+              <div class="cp-title">小樽堺町通り（ルタオ本店・北一ホール・伊勢鮨駅中店）＆ 小樽運河トワイライト</div>
+              <div class="cp-desc">確定</div>
+            </div>
+          </div>
+        
+      </div>
+      
+      <div class="slot-foot">
+        <span></span>
+        
+      </div>
+    </article>
+    <article class="slot-card " id="d4-nikorefre" data-slot-id="d4-nikorefre">
+      <div class="slot-meta">
+        <span class="slot-time">⏱️ 20:45 - 23:30</span>
+        <span class="slot-badge badge-sightseeing">観光</span>
+      </div>
+      <div class="slot-title-row">
+        <input type="checkbox" class="slot-checkbox no-print" onchange="toggleSlot('d4-nikorefre', this.checked)" title="完了・スキップを消し込み">
+        <h3 class="slot-title">札幌スープカレー実食 ＆ ニコーカプセルホテル リフレ（北のサウナ聖地）</h3>
+      </div>
+      <p class="slot-desc">確定</p>
+      
+      
+      
+      <div class="checkpoint-list">
+        
+          <div class="checkpoint-row">
+            
+            <div>
+              <div class="cp-title">札幌スープカレー実食 ＆ ニコーカプセルホテル リフレ（北のサウナ聖地）</div>
+              <div class="cp-desc">確定</div>
+            </div>
+          </div>
+        
+      </div>
+      
+      <div class="slot-foot">
+        <span></span>
+        
+      </div>
+    </article>
+        </div>
+      </section>
+      <section class="day-block" id="day-sec-5" data-day="5">
+        <h2 class="day-header">Day 5: 2026年9月19日 (土)</h2>
+        
+        <div class="slot-list">
+          
+    <article class="slot-card " id="d5-jingu" data-slot-id="d5-jingu">
+      <div class="slot-meta">
+        <span class="slot-time">⏱️ 10:00 - 11:45</span>
+        <span class="slot-badge badge-sightseeing">観光</span>
+      </div>
+      <div class="slot-title-row">
+        <input type="checkbox" class="slot-checkbox no-print" onchange="toggleSlot('d5-jingu', this.checked)" title="完了・スキップを消し込み">
+        <h3 class="slot-title">北海道神宮 参拝 ＆ 六花亭 神宮茶屋（焼きたて「判官さま」）</h3>
+      </div>
+      <p class="slot-desc">確定</p>
+      
+      
+      
+      <div class="checkpoint-list">
+        
+          <div class="checkpoint-row">
+            
+            <div>
+              <div class="cp-title">北海道神宮 参拝 ＆ 六花亭 神宮茶屋（焼きたて「判官さま」）</div>
+              <div class="cp-desc">確定</div>
+            </div>
+          </div>
+        
+      </div>
+      
+      <div class="slot-foot">
+        <span></span>
+        
+      </div>
+    </article>
+    <article class="slot-card " id="d5-sapporo-core" data-slot-id="d5-sapporo-core">
+      <div class="slot-meta">
+        <span class="slot-time">⏱️ 12:05 - 13:45</span>
+        <span class="slot-badge badge-sightseeing">観光</span>
+      </div>
+      <div class="slot-title-row">
+        <input type="checkbox" class="slot-checkbox no-print" onchange="toggleSlot('d5-sapporo-core', this.checked)" title="完了・スキップを消し込み">
+        <h3 class="slot-title">札幌市時計台 ➔ 北海道庁旧本庁舎（赤れんが）➔ 北菓楼札幌本館 ➔ 六花亭札幌本店</h3>
+      </div>
+      <p class="slot-desc">確定</p>
+      
+      
+      
+      <div class="checkpoint-list">
+        
+          <div class="checkpoint-row">
+            
+            <div>
+              <div class="cp-title">札幌市時計台 ➔ 北海道庁旧本庁舎（赤れんが）➔ 北菓楼札幌本館 ➔ 六花亭札幌本店</div>
+              <div class="cp-desc">確定</div>
+            </div>
+          </div>
+        
+      </div>
+      
+      <div class="slot-foot">
+        <span></span>
+        
+      </div>
+    </article>
+    <article class="slot-card " id="d5-hokudai" data-slot-id="d5-hokudai">
+      <div class="slot-meta">
+        <span class="slot-time">⏱️ 14:00 - 15:15</span>
+        <span class="slot-badge badge-sightseeing">観光</span>
+      </div>
+      <div class="slot-title-row">
+        <input type="checkbox" class="slot-checkbox no-print" onchange="toggleSlot('d5-hokudai', this.checked)" title="完了・スキップを消し込み">
+        <h3 class="slot-title">北海道大学 札幌キャンパス（クラーク像・ポプラ並木・総合博物館）</h3>
+      </div>
+      <p class="slot-desc">確定</p>
+      
+      
+      
+      <div class="checkpoint-list">
+        
+          <div class="checkpoint-row">
+            
+            <div>
+              <div class="cp-title">北海道大学 札幌キャンパス（クラーク像・ポプラ並木・総合博物館）</div>
+              <div class="cp-desc">確定</div>
+            </div>
+          </div>
+        
+      </div>
+      
+      <div class="slot-foot">
+        <span></span>
+        
+      </div>
+    </article>
+    <article class="slot-card " id="d5-beer" data-slot-id="d5-beer">
+      <div class="slot-meta">
+        <span class="slot-time">⏱️ 15:35 - 18:10</span>
+        <span class="slot-badge badge-sightseeing">観光</span>
+      </div>
+      <div class="slot-title-row">
+        <input type="checkbox" class="slot-checkbox no-print" onchange="toggleSlot('d5-beer', this.checked)" title="完了・スキップを消し込み">
+        <h3 class="slot-title">サッポロビール博物館（3種飲み比べ）＆ サッポロファクトリー（開拓使赤レンガ）</h3>
+      </div>
+      <p class="slot-desc">確定</p>
+      
+      
+      
+      <div class="checkpoint-list">
+        
+          <div class="checkpoint-row">
+            
+            <div>
+              <div class="cp-title">サッポロビール博物館（3種飲み比べ）＆ サッポロファクトリー（開拓使赤レンガ）</div>
+              <div class="cp-desc">確定</div>
+            </div>
+          </div>
+        
+      </div>
+      
+      <div class="slot-foot">
+        <span></span>
+        
+      </div>
+    </article>
+    <article class="slot-card " id="d5-autumnfest" data-slot-id="d5-autumnfest">
+      <div class="slot-meta">
+        <span class="slot-time">⏱️ 18:20 - 22:30</span>
+        <span class="slot-badge badge-sightseeing">観光</span>
+      </div>
+      <div class="slot-title-row">
+        <input type="checkbox" class="slot-checkbox no-print" onchange="toggleSlot('d5-autumnfest', this.checked)" title="完了・スキップを消し込み">
+        <h3 class="slot-title">さっぽろテレビ塔・オータムフェスト ➔ ニコーリフレ入浴 ➔ すすきの味噌ラーメン・DiCE個室泊</h3>
+      </div>
+      <p class="slot-desc">確定</p>
+      
+      
+      
+      <div class="checkpoint-list">
+        
+          <div class="checkpoint-row">
+            
+            <div>
+              <div class="cp-title">さっぽろテレビ塔・オータムフェスト ➔ ニコーリフレ入浴 ➔ すすきの味噌ラーメン・DiCE個室泊</div>
+              <div class="cp-desc">確定</div>
+            </div>
+          </div>
+        
+      </div>
+      
+      <div class="slot-foot">
+        <span></span>
+        
+      </div>
+    </article>
+        </div>
+      </section>
+      <section class="day-block" id="day-sec-6" data-day="6">
+        <h2 class="day-header">Day 6: 2026年9月20日 (日)</h2>
+        
+        <div class="slot-list">
+          
+    <article class="slot-card " id="d6-t38" data-slot-id="d6-t38">
+      <div class="slot-meta">
+        <span class="slot-time">⏱️ 08:45 - 10:50</span>
+        <span class="slot-badge badge-sightseeing">観光</span>
+      </div>
+      <div class="slot-title-row">
+        <input type="checkbox" class="slot-checkbox no-print" onchange="toggleSlot('d6-t38', this.checked)" title="完了・スキップを消し込み">
+        <h3 class="slot-title">千秋庵本店（生ノースマン確保）➔ JRタワー展望室 T38 ➔ ポケモンセンターサッポロ</h3>
+      </div>
+      <p class="slot-desc">確定</p>
+      
+      
+      
+      <div class="checkpoint-list">
+        
+          <div class="checkpoint-row">
+            
+            <div>
+              <div class="cp-title">千秋庵本店（生ノースマン確保）➔ JRタワー展望室 T38 ➔ ポケモンセンターサッポロ</div>
+              <div class="cp-desc">確定</div>
+            </div>
+          </div>
+        
+      </div>
+      
+      <div class="slot-foot">
+        <span></span>
+        
+      </div>
+    </article>
+    <article class="slot-card " id="d6-yoshino" data-slot-id="d6-yoshino">
+      <div class="slot-meta">
+        <span class="slot-time">⏱️ 10:55 - 11:40</span>
+        <span class="slot-badge badge-sightseeing">観光</span>
+      </div>
+      <div class="slot-title-row">
+        <input type="checkbox" class="slot-checkbox no-print" onchange="toggleSlot('d6-yoshino', this.checked)" title="完了・スキップを消し込み">
+        <h3 class="slot-title">みそラーメンのよし乃 アピア店（味噌バターコーン・レンゲ退避味変）</h3>
+      </div>
+      <p class="slot-desc">確定</p>
+      
+      
+      
+      <div class="checkpoint-list">
+        
+          <div class="checkpoint-row">
+            
+            <div>
+              <div class="cp-title">みそラーメンのよし乃 アピア店（味噌バターコーン・レンゲ退避味変）</div>
+              <div class="cp-desc">確定</div>
+            </div>
+          </div>
+        
+      </div>
+      
+      <div class="slot-foot">
+        <span></span>
+        
+      </div>
+    </article>
+    <article class="slot-card " id="d6-chitose" data-slot-id="d6-chitose">
+      <div class="slot-meta">
+        <span class="slot-time">⏱️ 12:15 - 15:15</span>
+        <span class="slot-badge badge-sightseeing">観光</span>
+      </div>
+      <div class="slot-title-row">
+        <input type="checkbox" class="slot-checkbox no-print" onchange="toggleSlot('d6-chitose', this.checked)" title="完了・スキップを消し込み">
+        <h3 class="slot-title">サケのふるさと 千歳水族館（野生サケ大遡上）＆ 道の駅サーモンパーク ＆ 千歳神社</h3>
+      </div>
+      <p class="slot-desc">確定</p>
+      
+      
+      
+      <div class="checkpoint-list">
+        
+          <div class="checkpoint-row">
+            
+            <div>
+              <div class="cp-title">サケのふるさと 千歳水族館（野生サケ大遡上）＆ 道の駅サーモンパーク ＆ 千歳神社</div>
+              <div class="cp-desc">確定</div>
+            </div>
+          </div>
+        
+      </div>
+      
+      <div class="slot-foot">
+        <span></span>
+        
+      </div>
+    </article>
+    <article class="slot-card " id="d6-cts-spa" data-slot-id="d6-cts-spa">
+      <div class="slot-meta">
+        <span class="slot-time">⏱️ 15:30 - 20:15</span>
+        <span class="slot-badge badge-sightseeing">観光</span>
+      </div>
+      <div class="slot-title-row">
+        <input type="checkbox" class="slot-checkbox no-print" onchange="toggleSlot('d6-cts-spa', this.checked)" title="完了・スキップを消し込み">
+        <h3 class="slot-title">新千歳空港 4時間45分制覇（ロイズ工場・新千歳空港温泉・ラーメン道場）</h3>
+      </div>
+      <p class="slot-desc">確定</p>
+      
+      
+      
+      <div class="checkpoint-list">
+        
+          <div class="checkpoint-row">
+            
+            <div>
+              <div class="cp-title">新千歳空港 4時間45分制覇（ロイズ工場・新千歳空港温泉・ラーメン道場）</div>
+              <div class="cp-desc">確定</div>
+            </div>
+          </div>
+        
+      </div>
+      
+      <div class="slot-foot">
+        <span></span>
+        
+      </div>
+    </article>
+    <article class="slot-card " id="d6-peach" data-slot-id="d6-peach">
+      <div class="slot-meta">
+        <span class="slot-time">⏱️ 20:15 - 23:30</span>
+        <span class="slot-badge badge-transit">移動</span>
+      </div>
+      <div class="slot-title-row">
+        <input type="checkbox" class="slot-checkbox no-print" onchange="toggleSlot('d6-peach', this.checked)" title="完了・スキップを消し込み">
+        <h3 class="slot-title">Peach MM590便（GUズボン3着現地着捨てハックで7.3kg突破 ➔ 成田豪雨帰還）</h3>
+      </div>
+      <p class="slot-desc">確定</p>
+      
+      
+      
+      <div class="checkpoint-list">
+        
+          <div class="checkpoint-row">
+            
+            <div>
+              <div class="cp-title">Peach MM590便（GUズボン3着現地着捨てハックで7.3kg突破 ➔ 成田豪雨帰還）</div>
+              <div class="cp-desc">確定</div>
+            </div>
+          </div>
+        
+      </div>
+      
+      <div class="slot-foot">
+        <span></span>
+        
+      </div>
+    </article>
+        </div>
+      </section>
+    
+    <nav class="nav-bar no-print" style="margin-top: 24px;">
+      <button type="button" class="nav-link active" data-day="all" onclick="switchDay('all'); window.scrollTo({top:0, behavior:'smooth'});">📑 全日程</button>
+      <button type="button" class="nav-link" data-day="1" onclick="switchDay(1); window.scrollTo({top:0, behavior:'smooth'});">Day 1</button><button type="button" class="nav-link" data-day="2" onclick="switchDay(2); window.scrollTo({top:0, behavior:'smooth'});">Day 2</button><button type="button" class="nav-link" data-day="3" onclick="switchDay(3); window.scrollTo({top:0, behavior:'smooth'});">Day 3</button><button type="button" class="nav-link" data-day="4" onclick="switchDay(4); window.scrollTo({top:0, behavior:'smooth'});">Day 4</button><button type="button" class="nav-link" data-day="5" onclick="switchDay(5); window.scrollTo({top:0, behavior:'smooth'});">Day 5</button><button type="button" class="nav-link" data-day="6" onclick="switchDay(6); window.scrollTo({top:0, behavior:'smooth'});">Day 6</button>
+    </nav>
+  </main>
+
+  <script>
+    const STORAGE_KEY = 'hokkaido_completed_slots';
+
+    function toggleTheme() {
+      const cur = document.documentElement.getAttribute('data-theme') || 'light';
+      const nxt = cur === 'dark' ? 'light' : 'dark';
+      document.documentElement.setAttribute('data-theme', nxt);
+      localStorage.setItem('trip_nav_theme', nxt);
+    }
+
+    function getCompletedSlots() {
+      try {
+        return JSON.parse(localStorage.getItem(STORAGE_KEY) || '[]');
+      } catch (e) {
+        return [];
+      }
+    }
+
+    function toggleSlot(slotId, isDone) {
+      const card = document.getElementById(slotId);
+      let list = getCompletedSlots();
+      if (isDone) {
+        if (!list.includes(slotId)) list.push(slotId);
+        if (card) card.classList.add('is-dimmed');
+      } else {
+        list = list.filter(id => id !== slotId);
+        if (card) card.classList.remove('is-dimmed');
+      }
+      localStorage.setItem(STORAGE_KEY, JSON.stringify(list));
+    }
+
+    // In-page Day Segment Switcher (Instant filter without HTTP reload)
+    function switchDay(targetDay) {
+      const dayBlocks = document.querySelectorAll('.day-block');
+      const jumpChips = document.querySelectorAll('.jump-chip');
+      const navLinks = document.querySelectorAll('.nav-link[data-day]');
+
+      // 1. Filter Day Sections
+      dayBlocks.forEach(sec => {
+        const secDay = sec.getAttribute('data-day');
+        if (targetDay === 'all' || secDay === String(targetDay)) {
+          sec.style.display = '';
+        } else {
+          sec.style.display = 'none';
+        }
+      });
+
+      // 2. Filter Jump Chips
+      jumpChips.forEach(chip => {
+        const chipDay = chip.getAttribute('data-day');
+        if (targetDay === 'all' || chipDay === String(targetDay)) {
+          chip.style.display = '';
+        } else {
+          chip.style.display = 'none';
+        }
+      });
+
+      // 3. Update Nav Active State
+      navLinks.forEach(link => {
+        if (link.getAttribute('data-day') === String(targetDay)) {
+          link.classList.add('active');
+        } else {
+          link.classList.remove('active');
+        }
+      });
+
+      // 4. Sync Hash (optional bookmarking)
+      if (history.replaceState) {
+        const newHash = targetDay === 'all' ? '' : `#day${targetDay}`;
+        history.replaceState(null, '', newHash || window.location.pathname);
+      }
+    }
+
+    // Initialize state on load
+    document.addEventListener('DOMContentLoaded', () => {
+      // Restore checked slots
+      const list = getCompletedSlots();
+      list.forEach(slotId => {
+        const card = document.getElementById(slotId);
+        if (card) {
+          card.classList.add('is-dimmed');
+          const cb = card.querySelector('.slot-checkbox');
+          if (cb) cb.checked = true;
+        }
+      });
+
+      // Initial day selection from URL hash: e.g. #day1, #day2
+      const hash = window.location.hash.toLowerCase();
+      const match = hash.match(/^#day(\d+)$/);
+      if (match) {
+        switchDay(match[1]);
+      } else {
+        switchDay('all');
+      }
+    });
+  </script>
+</body>
+</html>

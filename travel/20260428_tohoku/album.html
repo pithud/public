@@ -1,0 +1,706 @@
+<!DOCTYPE html>
+<html lang="ja" data-theme="light">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>東北 ｜ 仙台・松島・平泉・秋田・山形・会津 旅アルバム 2026 ｜ ポップ行動ログ（完全確定版）</title>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <script>
+    (function() {
+      var t = localStorage.getItem('trip_nav_theme') || 'light';
+      document.documentElement.setAttribute('data-theme', t);
+    })();
+  </script>
+  <link rel="stylesheet" href="../assets/album.css">
+</head>
+<body>
+
+  <!-- Sticky Header -->
+  <header>
+    <div class="container header-inner">
+      <div class="logo-area">
+        <div class="logo"><span>📸</span> 東北 ｜ 仙台・松島・平泉・秋田・山形・会津 旅アルバム</div>
+      </div>
+      <div class="header-actions">
+        <a href="index.html" class="nav-btn">◀ 旅ポータル</a>
+        <a href="prod.html" class="nav-btn">確定旅程</a>
+        <a href="../index.html" class="nav-btn">総合ポータル 🏠</a>
+        <button class="theme-toggle" id="themeBtn" aria-label="テーマ切替">🌙</button>
+      </div>
+    </div>
+  </header>
+
+  <main class="container">
+
+    <!-- Album Hero -->
+    <div class="album-hero">
+      <div class="tape">GEMINI MYACTIVITY (934 LOGS) &amp; APPLE HEALTH VERIFIED</div>
+      <h1 class="hero-title">東北 ｜ 仙台・松島・平泉・秋田・山形・会津 一人旅の原点 実録アーカイブ</h1>
+      <p class="hero-subtitle">4月28日深夜0時の「明日、旅に出よう」という直感から幕を開けた12日間の東北5県大縦走。初日の友人同行ドライブから2日目以降の完全ソロへ覚醒し、仙台「一仙」の真芯とろたん、塩竈「すし哲」での職人・常連との対話、厳美渓の空飛ぶ団子と平泉・猊鼻渓、盛岡三大麺、乳頭温泉の原生林露天風呂、男鹿なまはげ、羽黒山33分RTA、最上川舟下り、銀山温泉と山寺での旅人との出会い、福島「坂内からの丸信ラーメン執念のやり直し」とアパホテル廊下締め出し事件、そして最終日の会津若松5大史跡電撃制覇まで。累計217,671歩・145.93kmのApple Health実測データと934件の現地リアルタイム思考ログが記録する、「2026年1人旅ブーム」の原点。</p>
+      
+      <div class="hero-tags">
+        <span class="tag-badge tag-blue">📅 2026-04-28 〜 2026-05-10 (12泊13日 / 実動12日)</span>
+        <span class="tag-badge tag-orange">🌲 東北5県縦断（宮城・岩手・秋田・山形・福島）</span>
+        <span class="tag-badge tag-green">🛡️ 写真ゼロ・完全公開仕様</span>
+        <span class="tag-badge tag-purple">⚡ 実測 217,671歩 / 145.93km / 356階</span>
+      </div>
+
+      <!-- Health KPI Real Data -->
+      <div class="health-kpi-grid">
+                <div class="health-kpi-card">
+          <div class="kpi-title">12日間 合計歩数</div>
+          <div class="kpi-val primary">217,671 歩</div>
+        </div>
+        <div class="health-kpi-card">
+          <div class="kpi-title">12日間 歩行距離</div>
+          <div class="kpi-val mint">145.93 km</div>
+        </div>
+        <div class="health-kpi-card">
+          <div class="kpi-title">4/29-30 仙台・松島・塩竈すし哲</div>
+          <div class="kpi-val">41,801歩 / 28.30km</div>
+        </div>
+        <div class="health-kpi-card">
+          <div class="kpi-title">5/1-3 平泉・盛岡三大麺・角館・乳頭温泉</div>
+          <div class="kpi-val">53,327歩 / 35.90km (95階)</div>
+        </div>
+        <div class="health-kpi-card">
+          <div class="kpi-title">5/4-7 秋田・男鹿・羽黒山33分RTA・最上川</div>
+          <div class="kpi-val">60,231歩 / 39.51km</div>
+        </div>
+        <div class="health-kpi-card">
+          <div class="kpi-title">5/8-10 銀山温泉・山寺・米沢・福島・会津</div>
+          <div class="kpi-val">60,104歩 / 40.93km (126階)</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Chart Section -->
+        <section>
+      <div class="section-header">
+        <div class="section-icon">📈</div>
+        <h2 class="section-title">インタラクティブ・アクティビティ分析</h2>
+      </div>
+      <div class="chart-card">
+        <div class="chart-tabs">
+          <button class="chart-tab-btn active" data-view="hourly">🐾 時間帯別 歩数推移</button>
+          <button class="chart-tab-btn" data-view="duration">⏱️ スポット別 滞在時間 (分)</button>
+          <button class="chart-tab-btn" data-view="cumulative">📈 累積歩数カーブ</button>
+        </div>
+        <div class="chart-wrapper">
+          <canvas id="mainChartCanvas" role="img" aria-label="旅行アクティビティ推移グラフ（時間帯別歩数・スポット滞在時間・累積歩数）"></canvas>
+        </div>
+        <div class="chart-meta-caption" id="chartCaption">
+          📊 タブを切り替えて「時間帯別歩数」「スポット滞在時間」「累積歩数カーブ」をインタラクティブに分析可能
+        </div>
+      </div>
+    </section>
+
+
+    <!-- Spot Sections (Polaroid Grid) -->
+        <section>
+      <div class="section-header">
+        <div class="section-icon">⚖️</div>
+        <h2 class="section-title">計画 vs 実際の行動（時系列完全整列）</h2>
+      </div>
+      <div class="diff-table-card">
+  <div class="diff-table-wrapper">
+    <table class="diff-table">
+      <colgroup>
+        <col class="col-spot" style="width: 28%;">
+        <col class="col-plan" style="width: 22%;">
+        <col class="col-actual" style="width: 36%;">
+        <col class="col-verdict" style="width: 14%;">
+      </colgroup>
+      <thead>
+        <tr>
+          <th scope="col">日時</th>
+          <th scope="col">当初の計画 (Plan)</th>
+          <th scope="col">実際の行動 (Actual)</th>
+          <th scope="col" style="text-align: center;">差分・現地リアルログ</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><strong>4/28 24:00</strong></td>
+          <td>GW前半の予定未定</td>
+          <td><strong>深夜0時に東北縦走を即決</strong></td>
+          <td style="text-align: center;"><span class="badge-diff diff-upgrade">原点覚醒</span> 2,208歩（1.29km）。「明日仙台へ行こう」と決断しパッキング完了</td>
+        </tr>
+        <tr>
+          <td><strong>4/29 10:00</strong></td>
+          <td>仙台駅で友人と合流・仙台観光</td>
+          <td><strong>仙台城跡 ➔ おっぺしゃん ➔ 秋保温泉華乃湯 ➔ 仙台大観音</strong></td>
+          <td style="text-align: center;"><span class="badge-diff diff-match">友人ドライブ</span> 友人激推しの熊本ラーメン「おっぺしゃん」から秋保温泉・100m巨大観音まで快走</td>
+        </tr>
+        <tr>
+          <td><strong>4/29 17:45</strong></td>
+          <td>夕方解散・仙台泊</td>
+          <td><strong>泉中央駅で解散 ➔ 勾当台公園泊・AER展望台 ➔ 牛たん料理 一仙</strong></td>
+          <td style="text-align: center;"><span class="badge-diff diff-upgrade">真芯とろたん</span> 20,373歩（13.39km）。6,000円の「真芯とろたん定食」とアサヒ熟撰の旨さに衝撃</td>
+        </tr>
+        <tr>
+          <td><strong>4/30 10:35</strong></td>
+          <td>仙台で牛たん朝食 ➔ 松島へ</td>
+          <td><strong>三瀧山不動院 ➔ たんや善治郎（真中たん）で一仙と比較</strong></td>
+          <td style="text-align: center;"><span class="badge-diff diff-match">徹底比較</span> 「真中たん」も高水準ながら、前夜の一仙「真芯とろたん」の別格さを再確認</td>
+        </tr>
+        <tr>
+          <td><strong>4/30 12:30</strong></td>
+          <td>松島湾遊覧と瑞巌寺散策</td>
+          <td><strong>阿部かま ➔ 仁王丸2Fグリーン席 ➔ 福浦橋・五大堂・瑞巌寺・円通院・天麟院</strong></td>
+          <td style="text-align: center;"><span class="badge-diff diff-match">全回収</span> 13:00乗船で2階デッキに課金。高城町へ逆方向乗車のミスも即折り返しで本塩釜へ</td>
+        </tr>
+        <tr>
+          <td><strong>4/30 16:30</strong></td>
+          <td>塩竈神社参拝 ➔ 寿司夕食 ➔ 一ノ関へ</td>
+          <td><strong>鹽竈神社（七曲坂） ➔ すし哲 本店 ➔ バス31番断念・JR東北本線で一ノ関へ</strong></td>
+          <td style="text-align: center;"><span class="badge-diff diff-upgrade">カウンター対話</span> 21,428歩（14.91km）。職人・郷古さんや常連客と歓談。夜は暗闇の東北本線と整理券を体験</td>
+        </tr>
+        <tr>
+          <td><strong>5/1 09:00</strong></td>
+          <td>平泉（中尊寺・毛越寺）と猊鼻渓</td>
+          <td><strong>厳美渓（空飛ぶ郭公だんご）を追加 ➔ 中尊寺金色堂 ➔ 毛越寺 ➔ 猊鼻渓舟下り</strong></td>
+          <td style="text-align: center;"><span class="badge-diff diff-upgrade">3渓谷＆世界遺産</span> 朝09:00バスで雨の厳美渓を先制攻略し、平泉逆打ちタクシー戦術と直通バスで猊鼻渓まで完遂</td>
+        </tr>
+        <tr>
+          <td><strong>5/1 18:26</strong></td>
+          <td>夕方に盛岡へ移動・夕食</td>
+          <td><strong>大船渡線10分遅延 ➔ 一ノ関ロッカー回収・18:49新幹線ダッシュ ➔ 白龍本店</strong></td>
+          <td style="text-align: center;"><span class="badge-diff diff-match">危機突破</span> 17,446歩（12.17km・59階）。23分乗り継ぎを突破し、白龍本店で待ちゼロのじゃじゃ麺＆ちーたんたん</td>
+        </tr>
+        <tr>
+          <td><strong>5/2 10:15</strong></td>
+          <td>盛岡市内散策 ➔ 盛岡冷麺 ➔ 秋田県へ</td>
+          <td><strong>でんでんむし ➔ 盛岡城跡・赤レンガ館・報恩寺五百羅漢・材木町よ市 ➔ 盛楼閣</strong></td>
+          <td style="text-align: center;"><span class="badge-diff diff-upgrade">冷麺最高峰</span> 499体の羅漢像と週末市「よ市」を巡り、16:05に盛楼閣で極上の盛岡冷麺とユッケを堪能</td>
+        </tr>
+        <tr>
+          <td><strong>5/2 17:03</strong></td>
+          <td>こまちで大曲へ移動</td>
+          <td><strong>はやぶさ・こまち連結位置の罠で1本見送り ➔ 15分後の後続で大曲シティホテルへ</strong></td>
+          <td style="text-align: center;"><span class="badge-diff diff-match">即時リカバリ</span> 20,877歩（13.67km）。老舗ホテルの錆臭いシャワー配管に驚きつつグランマート大曲で適応</td>
+        </tr>
+        <tr>
+          <td><strong>5/3 10:00</strong></td>
+          <td>角館・田沢湖・乳頭温泉日帰り</td>
+          <td><strong>角館武家屋敷（青柳家） ➔ 乳頭温泉（蟹場温泉・休暇村） ➔ 田沢湖たつこ像</strong></td>
+          <td style="text-align: center;"><span class="badge-diff diff-upgrade">秘湯2湯ハシゴ</span> 15,004歩（10.06km）。ブナ原生林の蟹場温泉「木漏れ日の湯」と休暇村を路線バスでハシゴ</td>
+        </tr>
+        <tr>
+          <td><strong>5/4 11:00</strong></td>
+          <td>秋田市内観光 ➔ 男鹿半島へ前乗り</td>
+          <td><strong>佐藤養助 秋田店 ➔ 千秋公園・ねぶり流し館・赤れんが郷土館 ➔ 男鹿駅ドミトリー泊</strong></td>
+          <td style="text-align: center;"><span class="badge-diff diff-match">本場稲庭うどん</span> 18,648歩（12.40km）。二味せいろを味わい秋田市内3施設を制覇して夕方の男鹿線へ</td>
+        </tr>
+        <tr>
+          <td><strong>5/5 10:30</strong></td>
+          <td>男鹿半島周遊 ➔ 秋田泊</td>
+          <td><strong>なまはげシャトルで入道崎・なまはげ館・真山伝承館 ➔ 秋田キャッスルホテル泊</strong></td>
+          <td style="text-align: center;"><span class="badge-diff diff-upgrade">戦略的休養</span> 16,669歩（10.82km）。シャトルで二次交通の壁を突破し、風邪の兆候を名門ホテルで早期鎮圧</td>
+        </tr>
+        <tr>
+          <td><strong>5/6 09:00</strong></td>
+          <td>特急いなほで庄内へ・加茂水族館と羽黒山</td>
+          <td><strong>秋田県立美術館 ➔ 特急いなほ ➔ 加茂水族館 ➔ 羽黒山山頂〜五重塔33分RTA ➔ 酒田泊</strong></td>
+          <td style="text-align: center;"><span class="badge-diff diff-upgrade">33分RTA</span> 13,121歩（8.44km）。16:12山頂着から16:45バスまでの33分間で三神合祭殿と国宝五重塔を走破</td>
+        </tr>
+        <tr>
+          <td><strong>5/7 09:30</strong></td>
+          <td>山居倉庫 ➔ 最上川舟下り ➔ 銀山温泉または山形</td>
+          <td><strong>山居倉庫 ➔ 最上川舟下り ➔ 新庄つばさ乗車・大石田スルー即断 ➔ 山形駅前2連泊</strong></td>
+          <td style="text-align: center;"><span class="badge-diff diff-match">冷静撤退</span> 11,793歩（7.85km）。しろがね湯15:30受付終了を車内で確認し、大石田をスルーして山形直行</td>
+        </tr>
+        <tr>
+          <td><strong>5/8 09:30</strong></td>
+          <td>霞城公園・天童・銀山温泉</td>
+          <td><strong>霞城公園 ➔ 天童将棋資料館・水車生そば（鳥中華） ➔ 雨の銀山温泉（廃坑まで踏破）</strong></td>
+          <td style="text-align: center;"><span class="badge-diff diff-upgrade">最多22,245歩</span> 15.40km走破。大正ロマンの銀山温泉で白銀の滝・炭鉱跡まで歩き、旅人と意気投合して帰還</td>
+        </tr>
+        <tr>
+          <td><strong>5/9 09:00</strong></td>
+          <td>山寺（または蔵王）➔ 米沢 ➔ 福島泊</td>
+          <td><strong>山寺1,015段（夫婦と出会い板そば） ➔ 米沢・上杉神社＆稽照殿 ➔ 福島・丸信やり直し</strong></td>
+          <td style="text-align: center;"><span class="badge-diff diff-upgrade">執念の上書き</span> 19,632歩（12.99km・66階）。坂内での後悔を丸信ラーメンで上書き直後、アパ廊下締め出し事件発生</td>
+        </tr>
+        <tr>
+          <td><strong>5/10 09:55</strong></td>
+          <td>会津若松観光 ➔ 東京帰還</td>
+          <td><strong>荷物宅急便発送 ➔ 鶴ヶ城・武家屋敷・さざえ堂・旧滝沢本陣・御薬園・七日町 ➔ 郡山 ➔ 東京</strong></td>
+          <td style="text-align: center;"><span class="badge-diff diff-upgrade">会津6連星</span> 18,227歩（12.54km）。手ぶら化＋鶴ヶ城直行バスで会津の主要史跡を1日で完全制覇し帰京</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+
+    </section>
+
+    <section>
+      <div class="section-header">
+        <div class="section-icon">📍</div>
+        <h2 class="section-title">2. Day 1: 2026年4月29日 (水・祝) ── 0時の衝動と仙台「一仙」真芯とろたんの洗礼</h2>
+      </div>
+      <div class="polaroid-grid">
+        <div class="polaroid-card">
+          <div>
+            <div class="card-top">
+              <span class="spot-time">10:00 - 17:45</span>
+              <span class="stamp stamp-god">✨ 最高の幕開け</span>
+            </div>
+            <h3 class="spot-name">1. 仙台城跡・おっぺしゃん・秋保温泉・仙台大観音（友人ドライブ）</h3>
+            <div class="punchline">「仙台城跡・おっぺしゃん・秋保温泉・仙台大観音（友人ドライブ）」</div>
+          </div>
+          <ul class="fact-bullet">
+            <li><strong>「前夜0時に決めた旅が、10時間後には仙台の風と秋保の湯になっている」</strong><br>4月28日の深夜0時、GWの予定が空いていることに気づき「明日から東北へ行こう」と即決。初日は仙台の友人が車を出してくれ、青葉城跡（仙台城跡）からスタート。 昼食はあえて観光向けの牛たんではなく、友人が日頃から通う熊本ラーメン「おっぺしゃん」へ。焦がしニンニクの黒マー油が効いた濃厚豚骨スープが胃袋に染み渡る。 午後は「秋保温泉 ホテル華乃湯」で名取川渓谷の露天風呂に浸かり、さらに住宅街の背後に突如100mの白衣観音がそびえる「仙台大観音」へ。17:45に泉中央駅で友人と別れた瞬間から、頼れる者が自分しかいない「完全ソロ旅」の幕が上がった。</li>
+          </ul>
+        </div>
+        <div class="polaroid-card">
+          <div>
+            <div class="card-top">
+              <span class="spot-time">18:15 - 22:00</span>
+              <span class="stamp stamp-god">✨ 人生最高の牛たん</span>
+            </div>
+            <h3 class="spot-name">2. AER展望テラス ＆ 牛たん料理 一仙（真芯とろたん）</h3>
+            <div class="punchline">「AER展望テラス ＆ 牛たん料理 一仙（真芯とろたん）」</div>
+          </div>
+          <ul class="fact-bullet">
+            <li><strong>「6,000円の『真芯とろたん』とアサヒ熟撰、これまでの牛たんの概念が音を立てて崩れた」</strong><br>勾当台公園駅近くのホテルにチェックイン後、ユニクロで靴下を買い足しつつ仙台駅前の「AER（アエル）展望テラス（31階）」とクリスロードの「三瀧山不動院」を散策。 夜は広瀬通の地下にある名店「牛たん料理 一仙」へ。思い切って注文した約6,000円の「真芯とろたん定食」とアサヒ熟撰の瓶ビールが到着。表面はカリッと香ばしく、噛んだ瞬間に肉汁と甘い脂がジュワッと溢れ出す異次元の柔らかさに、1日目にして「この旅に出て本当に良かった」と確信した（初日歩数: <strong>20,373歩 / 13.39km</strong>）。</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <section>
+      <div class="section-header">
+        <div class="section-icon">📍</div>
+        <h2 class="section-title">3. Day 2: 2026年4月30日 (木) ── 善治郎との比較検証、松島クルーズ、塩竈「すし哲」と暗闇の東北本線</h2>
+      </div>
+      <div class="polaroid-grid">
+        <div class="polaroid-card">
+          <div>
+            <div class="card-top">
+              <span class="spot-time">09:30 - 15:30</span>
+              <span class="stamp stamp-god">✨ 徹底比較＆全回収</span>
+            </div>
+            <h3 class="spot-name">3. たんや善治郎 仙台駅牛たん通り店 ➔ 松島四大観クルーズ＆瑞巌寺・円通院・天麟院</h3>
+            <div class="punchline">「たんや善治郎 仙台駅牛たん通り店 ➔ 松島四大観クルーズ＆瑞巌寺・円通院・天麟院」</div>
+          </div>
+          <ul class="fact-bullet">
+            <li><strong>「善治郎の『真中たん』を食べたことで、昨夜の『一仙』がどれほど怪物だったかが証明された」</strong><br>朝、アーケードの三瀧山不動院に参拝してから仙台駅3階の「たんや善治郎」へ。10:35に入店し名物の「真中たん」を実食。十分に肉厚で美味しいものの、前夜の一仙「真芯とろたん」の圧倒的なとろけ具合と比べると、一仙の凄みがより鮮明な輪郭を持って浮かび上がる。 12:29に松島海岸駅へ到着。「阿部かまぼこ店」で笹かまを食べ、13:00発の観光船「仁王丸」に乗船。船内で2階グリーンデッキへアップグレードし、潮風を浴びながら松島湾の多島美を堪能。下船後は福浦橋、五大堂、国宝・瑞巌寺、苔庭の円通院、さらに五郎八姫の菩提寺・天麟院まで95分間で一気に巡り切った。</li>
+          </ul>
+        </div>
+        <div class="polaroid-card">
+          <div>
+            <div class="card-top">
+              <span class="spot-time">15:30 - 21:15</span>
+              <span class="stamp stamp-god">✨ ソロ旅の醍醐味</span>
+            </div>
+            <h3 class="spot-name">4. 鹽竈神社・すし哲 本店 ➔ 暗闇のJR東北本線（一ノ関移動）</h3>
+            <div class="punchline">「鹽竈神社・すし哲 本店 ➔ 暗闇のJR東北本線（一ノ関移動）」</div>
+          </div>
+          <ul class="fact-bullet">
+            <li><strong>「すし哲のカウンターで職人・常連と笑い合い、夜は『バスという選択肢で遊ぼうとしたら遊ばれた』末の無人駅サバイバル」</strong><br>松島海岸駅から仙石線に乗る際、逆方向の高城町駅へ行ってしまうミスを即座にリカバリし、本塩釜へ。夕暮れの「志波彦神社・鹽竈神社」に登拝し、古道・七曲坂を下って16:50に名店「すし哲 本店」へ。 1階カウンター席で職人の郷古さんや常連客と会話が弾み、極上の三陸寿司とシャーベットまで至福の時間を過ごす。 仙台駅に戻ってロッカーの荷物を回収後、「高速バスで一ノ関へ行ってみよう」と広瀬通の31番バス停を探すも見つからず、「バスという選択肢で遊ぼうとしたら遊ばれた」と笑って19:18発のJR東北本線へ切り替え。新田駅を過ぎたあたりから車窓は漆黒の闇となり、極寒の外気と手動ドアボタン・整理券システムの意味を肌で理解しながら一ノ関へ到達した（2日目歩数: <strong>21,428歩 / 14.91km・39階</strong>）。</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <section>
+      <div class="section-header">
+        <div class="section-icon">📍</div>
+        <h2 class="section-title">4. Day 3: 2026年5月1日 (金) ── 雨の厳美渓「空飛ぶ団子」と平泉・猊鼻渓、盛岡じゃじゃ麺への極限リレー</h2>
+      </div>
+      <div class="polaroid-grid">
+        <div class="polaroid-card">
+          <div>
+            <div class="card-top">
+              <span class="spot-time">09:00 - 17:00</span>
+              <span class="stamp stamp-god">✨ 完璧な一筆書き</span>
+            </div>
+            <h3 class="spot-name">5. 名勝 厳美渓（空飛ぶ郭公だんご）➔ 平泉（中尊寺金色堂・毛越寺）➔ 猊鼻渓舟下り</h3>
+            <div class="punchline">「名勝 厳美渓（空飛ぶ郭公だんご）➔ 平泉（中尊寺金色堂・毛越寺）➔ 猊鼻渓舟下り」</div>
+          </div>
+          <ul class="fact-bullet">
+            <li><strong>「雨の渓谷を滑空する郭公だんごから、金色堂、毛越寺、そして100m断崖に響く『げいび追分』へ」</strong><br>朝09:00のバスで一ノ関駅から「厳美渓」へ。雨に濡れてエメラルドグリーンが際立つ渓谷で、対岸のかっこう屋からロープを伝って団子とお茶が飛んでくる「空飛ぶ郭公だんご」を体験。 11時に一ノ関へ戻り、平泉駅からタクシーで中尊寺の金色堂近くまで直行して「月見坂を下る」逆打ち戦術を敢行。毛越寺の浄土庭園を巡った後、13:45発の直通バスで「猊鼻渓」へ。船頭さんが棹一本で操る舟に揺られ、高さ100mの岸壁に反響する「げいび追分」の唄声に聴き入った。</li>
+          </ul>
+        </div>
+        <div class="polaroid-card">
+          <div>
+            <div class="card-top">
+              <span class="spot-time">17:15 - 21:00</span>
+              <span class="stamp stamp-god">✨ 23分乗り継ぎ突破</span>
+            </div>
+            <h3 class="spot-name">6. 大船渡線遅延からの一ノ関ダッシュ ➔ 盛岡「白龍（パイロン）本店」</h3>
+            <div class="punchline">「大船渡線遅延からの一ノ関ダッシュ ➔ 盛岡「白龍（パイロン）本店」」</div>
+          </div>
+          <ul class="fact-bullet">
+            <li><strong>「大船渡線10分遅延、18:26着からロッカー回収して18:49の新幹線へ滑り込み、白龍本店で待ちゼロの奇跡」</strong><br>帰りのJR大船渡線が約10分遅れて18:26に一ノ関駅着。18:49発の東北新幹線までわずか23分という状況下、迷わずロッカーから荷物を引き出して新幹線ホームへ駆け上がり、19:32に盛岡駅へ到着。 そのまま盛岡城跡近くの「白龍（パイロン）本店」へ直行すると、19:41時点でまさかの待ち時間ゼロ。香ばしい肉味噌のじゃじゃ麺にニンニクと生姜を効かせ、締めの卵スープ「ちーたんたん」まで完食。ローソンでAmazon手配のコンタクトレンズ（-5.5）も無事回収し、旅の兵站管理が完全に軌道に乗った（3日目歩数: <strong>17,446歩 / 12.17km・59階</strong>）。</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <section>
+      <div class="section-header">
+        <div class="section-icon">📍</div>
+        <h2 class="section-title">5. Day 4: 2026年5月2日 (土) ── 盛岡五百羅漢と「盛楼閣」冷麺、こまち連結の罠を越えて大曲へ</h2>
+      </div>
+      <div class="polaroid-grid">
+        <div class="polaroid-card">
+          <div>
+            <div class="card-top">
+              <span class="spot-time">10:15 - 17:00</span>
+              <span class="stamp stamp-god">✨ 盛岡文化と冷麺の極致</span>
+            </div>
+            <h3 class="spot-name">7. 盛岡城跡・岩手銀行赤レンガ館・報恩寺五百羅漢・材木町「よ市」➔ 盛楼閣</h3>
+            <div class="punchline">「盛岡城跡・岩手銀行赤レンガ館・報恩寺五百羅漢・材木町「よ市」➔ 盛楼閣」</div>
+          </div>
+          <ul class="fact-bullet">
+            <li><strong>「499体の羅漢像の眼差しと週末市『よ市』の熱気、そして盛楼閣の黄金牛骨スープに唸る」</strong><br>循環バス「でんでんむし」で盛岡城跡公園の美しい石垣と岩手銀行赤レンガ館を巡った後、北山の「報恩寺」へ。羅漢堂を埋め尽くす499体の木造五百羅漢像の圧倒的な密度に息を呑む。 15時からは材木町の土曜市「よ市」の賑わいを歩き、16:05に駅前の「盛楼閣」へ。ディナー行列前のベストタイミングで入店し、強いコシの手練り麺と濃厚かつ澄んだ牛骨スープの「盛岡冷麺」とユッケを堪能した。</li>
+          </ul>
+        </div>
+        <div class="polaroid-card">
+          <div>
+            <div class="card-top">
+              <span class="spot-time">17:03 - 21:00</span>
+              <span class="stamp stamp-god">✨ 失敗すら旅のスパイス</span>
+            </div>
+            <h3 class="spot-name">8. 盛岡駅「こまち連結の罠」➔ 大曲シティホテル（2連泊拠点）</h3>
+            <div class="punchline">「盛岡駅「こまち連結の罠」➔ 大曲シティホテル（2連泊拠点）」</div>
+          </div>
+          <ul class="fact-bullet">
+            <li><strong>「はやぶさの後ろにいた『こまち』を見落として目の前で発車、15分後の後続でリカバーして迎えた大曲の古豪ホテル」</strong><br>17:03、盛岡駅ホームで「はやぶさ」の編成に連結されていた「こまち」の位置を勘違いし、目の前でドアが閉まる痛恨のミス。しかしすぐ15分後の後続こまちを手配して大曲駅へ。 宿泊先の「大曲シティホテル（旧ARAYASHIKI HOTEL）」は設備の年季が凄まじく、シャワーのお湯から鉄錆の匂いがする昭和ハードウェアの洗礼を受けたが、地元スーパー「グランマート大曲」で半額惣菜とシャンプーを買い込んで快適化するサバイバル適応力を発揮した（4日目歩数: <strong>20,877歩 / 13.67km</strong>）。</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <section>
+      <div class="section-header">
+        <div class="section-icon">📍</div>
+        <h2 class="section-title">6. Day 5: 2026年5月3日 (日・祝) ── 角館武家屋敷と乳頭温泉郷「蟹場温泉・休暇村」秘湯ハシゴ</h2>
+      </div>
+      <div class="polaroid-grid">
+        <div class="polaroid-card">
+          <div>
+            <div class="card-top">
+              <span class="spot-time">10:00 - 18:00</span>
+              <span class="stamp stamp-god">✨ 原生林露天風呂の至福</span>
+            </div>
+            <h3 class="spot-name">9. 角館武家屋敷通り（青柳家・樺細工伝承館）➔ 乳頭温泉郷（蟹場温泉・休暇村）➔ 田沢湖</h3>
+            <div class="punchline">「角館武家屋敷通り（青柳家・樺細工伝承館）➔ 乳頭温泉郷（蟹場温泉・休暇村）➔ 田沢湖」</div>
+          </div>
+          <ul class="fact-bullet">
+            <li><strong>「黒板塀の角館から乳頭山麓の最奥・蟹場温泉へ、ブナ原生林に抱かれた『木漏れ日の湯』で心身が溶ける」</strong><br>午前中は「みちのくの小京都」角館へ。黒板塀と新緑が美しい武家屋敷通りを歩き、青柳家と樺細工伝承館を見学した後、比内地鶏親子丼と稲庭うどんで昼食。 午後は田沢湖駅から路線バスで念願の「乳頭温泉郷」へ。終点の「蟹場（がにば）温泉」まで入り、宿から森の小径を50m歩いた先にある原生林露天風呂「木漏れ日の湯」へ。無色透明の硫黄泉に浸かりながら新緑のブナ林を見上げる体験はまさに極楽。さらに「休暇村 乳頭温泉郷」で白濁硫黄泉と茶褐色泉をハシゴし、帰路に田沢湖畔（たつこ像・ババヘラアイス）へ立ち寄ってから大曲でコインランドリー洗濯を完遂した（5日目歩数: <strong>15,004歩 / 10.06km</strong>）。</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <section>
+      <div class="section-header">
+        <div class="section-icon">📍</div>
+        <h2 class="section-title">7. Day 6: 2026年5月4日 (月・祝) ── 佐藤養助の稲庭うどんと秋田市街3施設、夕暮れの男鹿線</h2>
+      </div>
+      <div class="polaroid-grid">
+        <div class="polaroid-card">
+          <div>
+            <div class="card-top">
+              <span class="spot-time">10:30 - 19:00</span>
+              <span class="stamp stamp-god">✨ 伝統美と前線移動</span>
+            </div>
+            <h3 class="spot-name">10. 佐藤養助 秋田店 ➔ 千秋公園・ねぶり流し館・赤れんが郷土館 ➔ 男鹿駅ドミトリー泊</h3>
+            <div class="punchline">「佐藤養助 秋田店 ➔ 千秋公園・ねぶり流し館・赤れんが郷土館 ➔ 男鹿駅ドミトリー泊」</div>
+          </div>
+          <ul class="fact-bullet">
+            <li><strong>「八代佐藤養助の艶やかな『二味せいろ』に舌鼓を打ち、竿燈と赤れんが建築を巡ってなまはげの半島へ」</strong><br>大曲から秋田駅へ移動し、11:08に西武秋田店地下の「佐藤養助 秋田店」へ。醤油つゆと胡麻味噌つゆで味わう本場の稲庭うどんの滑らかな喉越しと強いコシに感動。 食後は佐竹氏20万石の居城跡「千秋公園（久保田城跡）」、高さ12mの実物竿燈が並ぶ「秋田市民俗芸能伝承館（ねぶり流し館）・旧金子家住宅」、明治洋風建築の傑作「赤れんが郷土館」を徒歩で巡回。夕方のJR男鹿線で終点・男鹿駅へ乗り込み、港町のドミトリーに前泊して翌朝の半島一周に備えた（6日目歩数: <strong>18,648歩 / 12.40km</strong>）。</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <section>
+      <div class="section-header">
+        <div class="section-icon">📍</div>
+        <h2 class="section-title">8. Day 7: 2026年5月5日 (火・祝) ── 男鹿半島「なまはげシャトル」周遊と秋田キャッスルホテルでの戦略的休養</h2>
+      </div>
+      <div class="polaroid-grid">
+        <div class="polaroid-card">
+          <div>
+            <div class="card-top">
+              <span class="spot-time">09:30 - 19:00</span>
+              <span class="stamp stamp-god">✨ 二次交通突破と緩急の妙</span>
+            </div>
+            <h3 class="spot-name">11. なまはげシャトル（入道崎・なまはげ館・男鹿真山伝承館）➔ 秋田キャッスルホテル</h3>
+            <div class="punchline">「なまはげシャトル（入道崎・なまはげ館・男鹿真山伝承館）➔ 秋田キャッスルホテル」</div>
+          </div>
+          <ul class="fact-bullet">
+            <li><strong>「北緯40度の入道崎と真山に響くナマハゲの咆哮、そして微熱の兆候を名門ホテルで封じ込める大人の危機管理」</strong><br>10:30発の乗合観光タクシー「なまはげシャトル（ぐるっと便）」を活用し、鉄道・路線バスだけでは困難な男鹿半島を効率周遊。まずは北緯40度の最北端「入道崎」で白黒ツートンカラーの灯台と日本海の大パノラマを満喫。 続いて聖地・真山地区の「なまはげ館」で150体超の多様ななまはげ面を見比べ、「男鹿真山伝承館」で大晦日のナマハゲ習俗実演の凄まじい迫力を体感。 夕方に秋田駅へ戻り、Amazonで手配していた衣類と傘ポーチを回収。少し風邪気味のサインを感じたため、この日は千秋公園前の名門「秋田キャッスルホテル」に投宿して外出を控え、ふかふかのベッドで徹底休養して体調をV字回復させた（7日目歩数: <strong>16,669歩 / 10.82km・40階</strong>）。</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <section>
+      <div class="section-header">
+        <div class="section-icon">📍</div>
+        <h2 class="section-title">9. Day 8: 2026年5月6日 (水・振休) ── 安藤忠雄の水庭、特急いなほ、加茂水族館と羽黒山山頂33分RTA</h2>
+      </div>
+      <div class="polaroid-grid">
+        <div class="polaroid-card">
+          <div>
+            <div class="card-top">
+              <span class="spot-time">09:00 - 19:00</span>
+              <span class="stamp stamp-god">✨ 伝説の33分RTA</span>
+            </div>
+            <h3 class="spot-name">12. 秋田県立美術館 ➔ 特急いなほ ➔ 加茂水族館 ➔ 羽黒山山頂〜五重塔33分RTA ➔ 酒田「月のホテル」</h3>
+            <div class="punchline">「秋田県立美術館 ➔ 特急いなほ ➔ 加茂水族館 ➔ 羽黒山山頂〜五重塔33分RTA ➔ 酒田「月のホテル」」</div>
+          </div>
+          <ul class="fact-bullet">
+            <li><strong>「16:12羽黒山頂着、最終バスまで33分。三神合祭殿から杉並木の石段を駆け下りて国宝五重塔まで抜き去った神業」</strong><br>朝、体調万全で秋田キャッスルホテルの朝食を味わい、向かいの「秋田県立美術館」へ。安藤忠雄建築の螺旋階段と水庭、藤田嗣治『秋田の行事』を鑑賞してから特急「いなほ」で日本海と鳥海山を眺めて鶴岡駅へ。 午後は世界一のクラゲ水族館「加茂水族館（クラゲドリーム館）」で直径5mのクラゲ水槽に癒やされた後、バスで出羽三山神社（羽黒山山頂）へ。16:12に山頂へ到着すると、帰りのバス時刻までわずか33分しかないことが判明。即座に山頂の巨大な茅葺き「三神合祭殿」を参拝し、そのまま杉並木の石段を一気に駆け下りて「国宝 羽黒山五重塔」まで拝観してバスに間に合わせる驚異の33分RTAを達成。夜は酒田駅前のスタイリッシュな「月のホテル」で勝利の美酒に酔いしれた（8日目歩数: <strong>13,121歩 / 8.44km</strong>）。</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <section>
+      <div class="section-header">
+        <div class="section-icon">📍</div>
+        <h2 class="section-title">10. Day 9: 2026年5月7日 (木) ── 酒田・山居倉庫と最上川舟下り、大石田スルーの冷静判断</h2>
+      </div>
+      <div class="polaroid-grid">
+        <div class="polaroid-card">
+          <div>
+            <div class="card-top">
+              <span class="spot-time">09:30 - 18:00</span>
+              <span class="stamp stamp-god">✨ サンクコストを断つ知性</span>
+            </div>
+            <h3 class="spot-name">13. 山居倉庫 ➔ 最上川舟下り（古口〜草薙）➔ 大石田見送り・山形駅前へ直行</h3>
+            <div class="punchline">「山居倉庫 ➔ 最上川舟下り（古口〜草薙）➔ 大石田見送り・山形駅前へ直行」</div>
+          </div>
+          <ul class="fact-bullet">
+            <li><strong>「つばさ車内で『しろがね湯15:30受付終了』を検知、大石田で降りず山形へ直行した判断が翌日の銀山温泉を完璧にした」</strong><br>朝は酒田のシンボル「山居倉庫」へ。明治26年建造の黒板壁の米蔵12棟と、新緑のケヤキ並木が織りなす美しい陰影を散策。 11:45発のJR陸羽西線で古口駅へ移動し、12:50発の「最上川舟下り」に乗船。船頭さんの軽快な語りと最上川舟唄を聴きながら最上峡を下った。 15:01に新庄駅へ着き、15:17発の山形新幹線「つばさ」に乗車。当初は大石田駅で降りて銀山温泉へ向かう案も頭をよぎったが、車内で共同浴場「しろがね湯」が15:30受付終了であることを確認。中途半端な滞在を避けて翌日に温存するため大石田駅をスルーして山形駅へ直行し、「ホテルアーバングレイスグラン山形駅前」（2連泊）の大浴場と三つ星シェフ朝食を確保した（9日目歩数: <strong>11,793歩 / 7.85km</strong>）。</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <section>
+      <div class="section-header">
+        <div class="section-icon">📍</div>
+        <h2 class="section-title">11. Day 10: 2026年5月8日 (金) ── 霞城公園、天童「鳥中華」、雨の銀山温泉・炭鉱跡と旅人との出会い</h2>
+      </div>
+      <div class="polaroid-grid">
+        <div class="polaroid-card">
+          <div>
+            <div class="card-top">
+              <span class="spot-time">09:30 - 20:30</span>
+              <span class="stamp stamp-god">✨ 本旅最多22,245歩の絶頂</span>
+            </div>
+            <h3 class="spot-name">14. 霞城公園 ➔ 天童市将棋資料館・水車生そば（鳥中華）➔ 銀山温泉（白銀の滝・延沢銀坑洞・足湯）</h3>
+            <div class="punchline">「霞城公園 ➔ 天童市将棋資料館・水車生そば（鳥中華）➔ 銀山温泉（白銀の滝・延沢銀坑洞・足湯）」</div>
+          </div>
+          <ul class="fact-bullet">
+            <li><strong>「雨に煙る大正ロマンの銀山温泉、奥の炭鉱跡まで踏み込み、現地で意気投合した旅人と帰りのバスまで語り合った夜」</strong><br>午前中は山形城跡「霞城公園」の壮大な二ノ丸東大手門とお堀を散策し、昼に天童へ移動。「天童市将棋資料館」で駒の歴史を学んだ後、文久元年創業の「水車生そば」で名物「元祖 鳥中華」と「将棋ざるそば」を実食。和風そばつゆと鶏油・コショウが絡む鳥中華の旨さに衝撃を受ける。 15:12に天童を発ち、大石田駅から16:10のバスで16:31に「銀山温泉」着。前日に訪問を見送ってこの時間帯に合わせたことで、雨に濡れた木造多層旅館群にガス灯が灯る大正ロマンの絶景を完全に回収。さらに温泉街だけでなく白銀の滝や「延沢銀山廃坑洞（炭鉱跡）」まで歩き切り、足湯やバス待ちで一緒になった旅行者と意気投合して山形への帰路まで盛り上がった（10日目歩数: <strong>22,245歩 / 15.40km［本旅最多］</strong>）。</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <section>
+      <div class="section-header">
+        <div class="section-icon">📍</div>
+        <h2 class="section-title">12. Day 11: 2026年5月9日 (土) ── 山寺での夫婦との出会い、米沢上杉神社、福島「丸信ラーメン執念のやり直し」とアパ締め出し事件</h2>
+      </div>
+      <div class="polaroid-grid">
+        <div class="polaroid-card">
+          <div>
+            <div class="card-top">
+              <span class="spot-time">09:00 - 17:00</span>
+              <span class="stamp stamp-god">✨ 一期一会と歴史の感動</span>
+            </div>
+            <h3 class="spot-name">15. 山寺（立石寺1,015段・夫婦との出会い）➔ 米沢・上杉神社＆稽照殿</h3>
+            <div class="punchline">「山寺（立石寺1,015段・夫婦との出会い）➔ 米沢・上杉神社＆稽照殿」</div>
+          </div>
+          <ul class="fact-bullet">
+            <li><strong>「強風の山寺で出会ったご夫婦と1,015段を登り切って板そばをご馳走になり、米沢・稽照殿の川中島屏風絵に魂が震えた」</strong><br>朝、仙山線で「山寺（宝珠山 立石寺）」へ。強風をやり過ごす中で気さくなご夫婦と出会い、会話しながら1,015段の石段を奥之院・五大堂まで一緒に登拝。断崖の五大堂からの絶景を分かち合った後、麓のお蕎麦屋さんで名物「板そば」までご馳走になるという忘れられない温かな出会いに恵まれた。 午後は米沢へ移動し、「上杉神社」と宝物殿「稽照殿」へ。上杉謙信公・鷹山公の遺品や、武田信玄と上杉謙信の川中島合戦屏風絵・錦絵の迫力に深く心を動かされた。</li>
+          </ul>
+        </div>
+        <div class="polaroid-card">
+          <div>
+            <div class="card-top">
+              <span class="spot-time">17:30 - 22:30</span>
+              <span class="stamp stamp-god">✨ 伝説の夜・旅の美学の結晶</span>
+            </div>
+            <h3 class="spot-name">16. 福島「喜多方ラーメン坂内」での後悔 ➔ 「丸信ラーメン 駅前店」執念のやり直し ➔ アパホテル廊下締め出し事件</h3>
+            <div class="punchline">「福島「喜多方ラーメン坂内」での後悔 ➔ 「丸信ラーメン 駅前店」執念のやり直し ➔ アパホテル廊下締め出し事件」</div>
+          </div>
+          <ul class="fact-bullet">
+            <li><strong>「『どこでも食える坂内に入ってどうすんねん！』胃を7割空けて21時の丸信ラーメンへ再突撃、その直後にパンツなしルームウェア1枚で廊下に締め出される喜劇」</strong><br>夕方、福島駅の「アパホテル〈福島駅東〉」にチェックインし、コラッセふくしま展望ラウンジで夜景を眺めた後、20:25に空腹で「喜多方ラーメン坂内 福島駅前店」へ入店。しかし一口食べた瞬間、「せっかく福島まで来て、東京でもどこでも食えるチェーン店に入ってどうすんねん！」と猛烈な後悔と激萎えが襲う。 さらに調べると、行きたかった地元の名店「丸信ラーメン 駅前店」が翌日曜定休であることが判明。このままでは一生後悔すると決意し、胃袋の7割を空けて21:00に「丸信ラーメン 駅前店」へ執念の再突撃。澄んだ二層スープとちぢれ麺、絶品チャーシューでチェーン店の記憶を完全に上書きし、自己の旅の美学を守り抜いた。 ところが22:08、ホテルの部屋で下着も履かずルームウェア（ガウン）1枚だけの姿で廊下のウォーターサーバーへ水を汲みに出た瞬間、オートロックが「ガチャリ」と閉まり完全締め出し。「マジのルームウェア一枚だけで閉まって焦った」と冷や汗をかきながらフロントへ助けを求め、天国と地獄を1時間で往復する伝説の夜となった（11日目歩数: <strong>19,632歩 / 12.99km・66階［本旅最多階数］</strong>）。</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <section>
+      <div class="section-header">
+        <div class="section-icon">📍</div>
+        <h2 class="section-title">13. Day 12: 2026年5月10日 (日) ── 荷物宅急便発送からの会津若松6箇所電撃制覇と帰京</h2>
+      </div>
+      <div class="polaroid-grid">
+        <div class="polaroid-card">
+          <div>
+            <div class="card-top">
+              <span class="spot-time">09:00 - 21:30</span>
+              <span class="stamp stamp-god">✨ 有終の美・超圧縮行軍</span>
+            </div>
+            <h3 class="spot-name">17. バックパック宅急便発送 ➔ 鶴ヶ城・会津武家屋敷・飯盛山さざえ堂・旧滝沢本陣・御薬園・七日町通り ➔ 郡山・東京帰還</h3>
+            <div class="punchline">「バックパック宅急便発送 ➔ 鶴ヶ城・会津武家屋敷・飯盛山さざえ堂・旧滝沢本陣・御薬園・七日町通り ➔ 郡山・東京帰還」</div>
+          </div>
+          <ul class="fact-bullet">
+            <li><strong>「重たいバックパックを宅急便で家に送り、高速バスで鶴ヶ城へ直行。最終日に会津の6大名所を完全制覇して145.93kmの旅を締めくくった」</strong><br>最終日の朝、12日間背負ったバックパックをアパホテルからヤマト宅急便で自宅へ発送し、完全手ぶら化。09:55発の高速バスで会津若松駅をパスして「鶴ヶ城・合同庁舎前」へ直行する時短戦術を発動。 赤瓦が輝く「鶴ヶ城（会津若松城）」天守閣からスタートし、2,300坪の家老屋敷「会津武家屋敷」、飯盛山の二重螺旋木造建築「会津さざえ堂（円通三匝堂）」、生々しい弾痕が残る「旧滝沢本陣」、歴代藩主の大名庭園「御薬園」、そして「七日町通り（白木屋漆器店〜会津若松駅徒歩）」まで、通常1泊2日かかる会津若松の主要スポット6箇所をわずか5時間半で完全制覇。 夕方に郡山駅へ抜けて地元ソウルフード「クリームボックス」と餃子・お土産を調達し、東北新幹線で東京へ帰還。12日間・累計217,671歩（145.93km）の東北大縦走がここに完結した（12日目歩数: <strong>18,227歩 / 12.54km</strong>）。</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+
+    <!-- Essay Cards -->
+        <section>
+      <div class="section-header">
+        <div class="section-icon">💡</div>
+        <h2 class="section-title">現地リアル批評 ＆ アーカイブインサイト</h2>
+      </div>
+      <div class="essay-card">
+        <h3>1. 「2026年1人旅ブーム」の原点：同行から完全ソロへの覚醒と予約縛りゼロの自由</h3>
+        <p>4月28日深夜0時の「明日、旅に出よう」という直感から始まった本旅は、その後の2026年の一人旅スタイルを決定づけた原点である。初日こそ仙台の友人と車で回ったが、2日目夕方以降は宿も列車も現地でリアルタイムに組み立てる完全ソロへ移行。高城町への乗り過ごし、仙台高速バス31番乗り場断念からの暗闇の東北本線、盛岡駅でのこまち連結見送り、大曲の古豪ホテルの錆びた配管といった数々のハプニングを自力でリカバリする過程で、「どんな地方都市でもスマホと足があれば即座に最適解を再構築できる」という圧倒的な自己効力感を獲得した。また、塩竈「すし哲」のカウンターや銀山温泉、山寺の石段で生まれた現地の人々・旅人との温かい交流は、ソロ旅だからこそ開かれる扉であった。</p>
+      </div>
+      <div class="essay-card">
+        <h3>2. 「坂内からの丸信ラーメンやり直し」に象徴される妥協ゼロの食の美学</h3>
+        <p>11日目の夜、福島駅前で空腹のあまり「喜多方ラーメン坂内」へ入った直後に抱いた「どこでも食えるチェーン店に入ってどうすんねん」という激しい自己嫌悪と、翌日曜定休だった地元名店「丸信ラーメン 駅前店」へ21時に入り直して記憶を上書きしたエピソードは、旅における「1食の重み」を象徴している。初日の仙台「一仙」の真芯とろたん（6,000円）と2日目の「善治郎」真中たんの連続比較、塩竈「すし哲」、盛岡「白龍」と「盛楼閣」、秋田「佐藤養助」、天童「水車生そば」の元祖鳥中華に至るまで、「その土地でしか味わえない最高峰を自分の舌で確かめる」という徹底したこだわりが旅の解像度を極限まで高めた。</p>
+      </div>
+      <div class="essay-card">
+        <h3>3. 羽黒山33分RTA・大石田スルー判断・最終日手ぶら化にみる「現場戦術眼」の進化</h3>
+        <p>旅の後半になるにつれ、限られた公共交通のダイヤと施設営業時間をパズルのように組み合わせる戦術眼が劇的に進化した。8日目の羽黒山では16:12山頂着から16:45最終バスまでの33分間で三神合祭殿と国宝五重塔を駆け抜けるRTAを完遂。9日目の山形新幹線車内では、銀山温泉の共同浴場が15:30受付終了であることを即座に検知し、「せっかく近くを通るから」というサンクコストを捨てて大石田駅をスルーし翌日に回す冷静な判断を下した。そして最終日（12日目）には、バックパックを福島のホテルから宅急便で自宅へ送り、高速バスで鶴ヶ城へ直行することで会津若松6大スポットを半日で制覇する離れ業をやってのけた。</p>
+      </div>
+      <div class="essay-card">
+        <h3>4. Apple Health実測「217,671歩・145.93km・356階」が物語る肉体と知性の持久戦</h3>
+        <p>実動12日間で積み上げた歩数は217,671歩（1日平均約18,000歩・12km）、登った階数は計356階（特に平泉・猊鼻渓のDay 3が59階、山寺1,015段のDay 11が66階）に達した。これだけの高負荷行軍を一度も破綻させずに完走できた要因は、Day 5（大曲）でのコインランドリー洗濯、不足したコンタクトレンズや衣類をAmazonコンビニ受取（盛岡・秋田）で補給する現代的ロジスティクス、そしてDay 7に微熱の兆候を察知した瞬間に「秋田キャッスルホテル」で早期休養をとったペース配分にある。まさに肉体・兵站・知的好奇心のすべてが噛み合った記念碑的オデッセイである。</p>
+      </div>
+    </section>
+
+
+    <!-- Footer -->
+    <footer>
+      <p>東北 ｜ 仙台・松島・平泉・秋田・山形・会津 旅アルバム 2026 ｜ 旅行総合ポータルへ戻る</p>
+    </footer>
+
+  </main>
+
+  <!-- Injected Chart Data -->
+  <script>
+    window.__ALBUM_CHART_DATA__ = {
+  "hourly": {
+    "labels": [
+      "4/29 仙台",
+      "4/30 松島・塩竈",
+      "5/1 平泉・猊鼻渓",
+      "5/2 盛岡・大曲",
+      "5/3 角館・乳頭",
+      "5/4 秋田・男鹿",
+      "5/5 男鹿半島",
+      "5/6 鶴岡・羽黒山",
+      "5/7 酒田・最上川",
+      "5/8 天童・銀山",
+      "5/9 山寺・米沢",
+      "5/10 会津若松"
+    ],
+    "data": [
+      20373,
+      21428,
+      17446,
+      20877,
+      15004,
+      18648,
+      16669,
+      13121,
+      11793,
+      22245,
+      19632,
+      18227
+    ],
+    "colors": [
+      "#c84b31",
+      "#c84b31",
+      "#d97706",
+      "#d97706",
+      "#2b580c",
+      "#2b580c",
+      "#2b580c",
+      "#1d4ed8",
+      "#1d4ed8",
+      "#c84b31",
+      "#7c3aed",
+      "#0f766e"
+    ]
+  },
+  "duration": {
+    "labels": [
+      "城郭・社寺・重伝建・ミュージアム",
+      "渓谷・舟下り・海景・自然探勝",
+      "鉄道・新幹線・ローカルバス縦走",
+      "名店グルメ・寿司・麺・食べ比べ",
+      "秘湯・温泉・ホテル休養"
+    ],
+    "data": [
+      32,
+      18,
+      25,
+      15,
+      10
+    ],
+    "colors": [
+      "#c84b31",
+      "#1d4ed8",
+      "#64748b",
+      "#d97706",
+      "#2b580c"
+    ]
+  },
+  "cumulative": {
+    "labels": [
+      "4/28 前夜",
+      "4/29 Day1",
+      "4/30 Day2",
+      "5/1 Day3",
+      "5/2 Day4",
+      "5/3 Day5",
+      "5/4 Day6",
+      "5/5 Day7",
+      "5/6 Day8",
+      "5/7 Day9",
+      "5/8 Day10",
+      "5/9 Day11",
+      "5/10 Day12"
+    ],
+    "data": [
+      1.29,
+      14.68,
+      29.59,
+      41.76,
+      55.43,
+      65.49,
+      77.89,
+      88.71,
+      97.15,
+      105,
+      120.4,
+      133.39,
+      145.93
+    ]
+  }
+};
+  </script>
+  <script src="../assets/album_runtime.js"></script>
+</body>
+</html>

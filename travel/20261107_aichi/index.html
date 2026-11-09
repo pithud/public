@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-  <title>愛知 ｜ 名古屋 ＋ 犬山 旅ポータル</title>
+  <title>愛知 ｜ 名古屋 ＋ 犬山 旅アルバム</title>
   <script>
     (function() {
       var t = localStorage.getItem('trip_nav_theme') || 'light';
@@ -73,21 +73,11 @@
       border-color: var(--primary);
       transform: scale(1.05);
     }
-
     .main-wrap { max-width: 580px; margin: 0 auto; padding: 20px 16px; }
-    
-    .trip-summary {
-      margin-bottom: 24px;
-    }
+    .trip-summary { margin-bottom: 24px; }
     .trip-title { font-size: 1.35rem; font-weight: 800; margin-bottom: 4px; letter-spacing: -0.01em; }
     .trip-meta { font-size: 13px; color: var(--text-muted); font-weight: 500; }
-
-    .nav-list {
-      display: flex;
-      flex-direction: column;
-      gap: 12px;
-    }
-
+    .nav-list { display: flex; flex-direction: column; gap: 12px; }
     .nav-item {
       display: flex;
       align-items: center;
@@ -101,11 +91,7 @@
       box-shadow: var(--card-shadow);
       transition: background 0.15s, border-color 0.15s;
     }
-    .nav-item:hover {
-      background: var(--surface-subtle);
-      border-color: var(--primary);
-    }
-
+    .nav-item:hover { background: var(--surface-subtle); border-color: var(--primary); }
     .item-left { display: flex; align-items: center; gap: 14px; }
     .badge-tag {
       font-size: 11px;
@@ -117,14 +103,11 @@
     }
     .badge-prod { background: rgba(2, 132, 199, 0.12); color: var(--primary); }
     .badge-dev { background: rgba(217, 119, 6, 0.12); color: #d97706; }
-    .badge-log { background: rgba(16, 185, 129, 0.12); color: #059669; }
-
+    .badge-log { background: rgba(16, 185, 129, 0.15); color: #059669; }
     .item-body { display: flex; flex-direction: column; gap: 2px; }
     .item-title { font-size: 15px; font-weight: 700; color: var(--text); }
     .item-desc { font-size: 12.5px; color: var(--text-muted); }
-
     .item-arrow { color: var(--text-muted); font-size: 14px; }
-
     .back-home {
       display: inline-flex;
       align-items: center;
@@ -140,14 +123,14 @@
 </head>
 <body>
   <header class="header-bar">
-    <div class="brand-title">愛知 ｜ 名古屋 ＋ 犬山 旅ポータル</div>
-    <button class="theme-toggle-btn" id="themeBtn" onclick="toggleTheme()" aria-label="テーマ切替">🌙</button>
+    <div class="brand-title">愛知 ｜ 名古屋 ＋ 犬山 旅アルバム</div>
+    <button class="theme-toggle-btn" id="themeBtn" aria-label="テーマ切替">🌙</button>
   </header>
 
   <main class="main-wrap">
     <div class="trip-summary">
-      <h1 class="trip-title">愛知 ｜ 名古屋 ＋ 犬山 2026</h1>
-      <div class="trip-meta">2026年11月7日(土) 〜 11月8日(日) ｜ 実働2日間</div>
+      <h1 class="trip-title">愛知 ｜ 名古屋 ＋ 犬山 弾丸行動アルバム</h1>
+      <div class="trip-meta">2026年11月7日（土）〜 11月8日（日）</div>
     </div>
 
     <div class="nav-list">
@@ -155,8 +138,8 @@
         <div class="item-left">
           <span class="badge-tag badge-prod">最終版</span>
           <div class="item-body">
-            <span class="item-title">最終版タイムチャート</span>
-            <span class="item-desc">当日の本番プラン（名古屋城・熱田神宮・犬山城）</span>
+            <span class="item-title">最終版タイムチャート（確定旅程）</span>
+            <span class="item-desc">愛知 ｜ 名古屋 ＋ 犬山 旅アルバム 本番しおり・攻略戦術・チェックポイント</span>
           </div>
         </div>
         <span class="item-arrow">➔</span>
@@ -164,10 +147,10 @@
 
       <a href="album.html" class="nav-item">
         <div class="item-left">
-          <span class="badge-tag badge-log" style="background: rgba(16, 185, 129, 0.15); color: #059669;">アルバム</span>
+          <span class="badge-tag badge-log">アルバム</span>
           <div class="item-body">
             <span class="item-title">旅アルバム（実走記録）</span>
-            <span class="item-desc">実測3.2万歩・タイムライン完全突合・犬山城上段の間・五平餅等の現地批評録</span>
+            <span class="item-desc">Googleマップ タイムライン ＆ Apple Health 実測同期完了版</span>
           </div>
         </div>
         <span class="item-arrow">➔</span>
@@ -192,6 +175,8 @@
     (function() {
       var t = localStorage.getItem('trip_nav_theme') || 'light';
       updateThemeIcon(t);
+      var btn = document.getElementById('themeBtn');
+      if (btn) btn.addEventListener('click', toggleTheme);
     })();
   </script>
 </body>

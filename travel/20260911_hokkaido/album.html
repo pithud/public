@@ -1,0 +1,467 @@
+<!DOCTYPE html>
+<html lang="ja" data-theme="light">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>北海道 ｜ 函館・道南・道央周遊 旅アルバム 2026 ｜ ポップ行動ログ（完全確定版）</title>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <script>
+    (function() {
+      var t = localStorage.getItem('trip_nav_theme') || 'light';
+      document.documentElement.setAttribute('data-theme', t);
+    })();
+  </script>
+  <link rel="stylesheet" href="../assets/album.css">
+</head>
+<body>
+
+  <!-- Sticky Header -->
+  <header>
+    <div class="container header-inner">
+      <div class="logo-area">
+        <div class="logo"><span>📸</span> 北海道 ｜ 函館・道南・道央周遊 旅アルバム</div>
+      </div>
+      <div class="header-actions">
+        <a href="index.html" class="nav-btn">◀ 旅ポータル</a>
+        <a href="prod.html" class="nav-btn">確定旅程</a>
+        <a href="../20260911_aomori/album.html" class="nav-btn">◀ 前編：青森アルバム</a>
+        <button class="theme-toggle" id="themeBtn" aria-label="テーマ切替">🌙</button>
+      </div>
+    </div>
+  </header>
+
+  <main class="container">
+
+    <!-- Album Hero -->
+    <div class="album-hero">
+      <div class="tape">GOOGLE TIMELINE &amp; APPLE HEALTH VERIFIED</div>
+      <h1 class="hero-title">北海道 ｜ 函館・道南・道央 5泊6日完全縦断アルバム</h1>
+      <p class="hero-subtitle">津軽海峡フェリー上陸 × JR途中下車縦走 × Apple Health 実測 224,312歩 同期完了版</p>
+      
+      <div class="hero-tags">
+        <span class="tag-badge tag-blue">📅 2026.09.15 - 09.20 (5泊6日)</span>
+        <span class="tag-badge tag-orange">🌋 函館夜景・洞爺湖・登別第一滝本館・余市・小樽・札幌</span>
+        <span class="tag-badge tag-green">🛡️ 写真ゼロ・完全公開仕様</span>
+        <span class="tag-badge tag-purple">⚡ 実測 224,312歩 / 91.59km / 151階</span>
+      </div>
+
+      <!-- Health KPI Real Data -->
+      <div class="health-kpi-grid">
+                <div class="health-kpi-card">
+          <div class="kpi-title">6日間 合計歩数</div>
+          <div class="kpi-val primary">224,312 歩</div>
+        </div>
+        <div class="health-kpi-card">
+          <div class="kpi-title">6日間 歩行距離</div>
+          <div class="kpi-val mint">91.59 km</div>
+        </div>
+        <div class="health-kpi-card">
+          <div class="kpi-title">9/15(火)-16(水) 青森〜函館・五稜郭・函館山</div>
+          <div class="kpi-val">42,642歩 / 27.74km</div>
+        </div>
+        <div class="health-kpi-card">
+          <div class="kpi-title">9/17(木) 大沼・洞爺湖・登別地獄谷・白老</div>
+          <div class="kpi-val">38,242歩 / 13.80km</div>
+        </div>
+        <div class="health-kpi-card">
+          <div class="kpi-title">9/18(金) ウポポイ・余市・小樽運河・札幌</div>
+          <div class="kpi-val">38,844歩 / 13.86km</div>
+        </div>
+        <div class="health-kpi-card">
+          <div class="kpi-title">9/19(土)-20(日) 札幌6.2万歩＆千歳サケ遡上</div>
+          <div class="kpi-val">104,584歩 / 36.19km</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Chart Section -->
+        <section>
+      <div class="section-header">
+        <div class="section-icon">📈</div>
+        <h2 class="section-title">インタラクティブ・アクティビティ分析</h2>
+      </div>
+      <div class="chart-card">
+        <div class="chart-tabs">
+          <button class="chart-tab-btn active" data-view="hourly">🐾 時間帯別 歩数推移</button>
+          <button class="chart-tab-btn" data-view="duration">⏱️ スポット別 滞在時間 (分)</button>
+          <button class="chart-tab-btn" data-view="cumulative">📈 累積歩数カーブ</button>
+        </div>
+        <div class="chart-wrapper">
+          <canvas id="mainChartCanvas" role="img" aria-label="旅行アクティビティ推移グラフ（時間帯別歩数・スポット滞在時間・累積歩数）"></canvas>
+        </div>
+        <div class="chart-meta-caption" id="chartCaption">
+          📊 タブを切り替えて「時間帯別歩数」「スポット滞在時間」「累積歩数カーブ」をインタラクティブに分析可能
+        </div>
+      </div>
+    </section>
+
+
+    <!-- Spot Sections (Polaroid Grid) -->
+        <section>
+      <div class="section-header">
+        <div class="section-icon">⚖️</div>
+        <h2 class="section-title">計画 vs 実際の行動（時系列完全整列）</h2>
+      </div>
+      <div class="diff-table-card">
+  <div class="diff-table-wrapper">
+    <table class="diff-table">
+      <colgroup>
+        <col class="col-spot" style="width: 28%;">
+        <col class="col-plan" style="width: 22%;">
+        <col class="col-actual" style="width: 36%;">
+        <col class="col-verdict" style="width: 14%;">
+      </colgroup>
+      <thead>
+        <tr>
+          <th scope="col">日時・フェーズ</th>
+          <th scope="col">当初の計画（Plan）</th>
+          <th scope="col">実際の行動（Actual 確定ログ）</th>
+          <th scope="col" style="text-align: center;">判定・差分（Verdict）</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><strong>Day 1〜2: 函館上陸・市内周遊</strong></td>
+          <td><strong>津軽海峡フェリー＆函館王道観光</strong><br>17:15青森発フェリーで函館入り。翌日は朝市・五稜郭・元町・函館山夜景。</td>
+          <td><strong>サンセットクルーズ ＆ 函館完全制覇</strong><br>`9/15 17:15` 津軽海峡フェリー17便ビューシートで夕日を眺め函館上陸、A-GATE HOTEL連泊。<br>`9/16` 函館朝市・五稜郭タワー・ラッキーピエロ・金森赤レンガ・八幡坂・函館山100万ドル夜景を市電とロープウェイで完全制覇。</td>
+          <td style="text-align: center;"><span class="badge-diff diff-match">完全一致・王道制覇</span><br>タクシー不使用で函館の主要名所・グルメを網羅。</td>
+        </tr>
+        <tr>
+          <td><strong>Day 3 (9/17) 午前〜昼</strong></td>
+          <td><strong>大沼公園 ➔ 洞爺湖温泉</strong><br>通し乗車券で途中下車し、大沼だんごと洞爺湖中島クルーズを巡る。</td>
+          <td><strong>沼の家だんご ＆ 洞爺湖中島・珍小島上陸</strong><br>`08:06` 大沼公園着、沼の家「大沼だんご（みたらし・あんこ）」実食。特急北斗30分遅延も吸収し、洞爺湖汽船で中島下船＆わかさいも本店＆砂州を渡り珍小島へ上陸。</td>
+          <td style="text-align: center;"><span class="badge-diff diff-upgrade">遅延吸収・高密度回収</span><br>北斗13号の80分遅延を逆手に取って15:30洞爺駅から即乗車成功。</td>
+        </tr>
+        <tr>
+          <td><strong>Day 3 (9/17) 夕方〜夜</strong></td>
+          <td><strong>登別温泉 地獄谷 ➔ 白老温泉</strong><br>地獄谷を軽く見て第一滝本館に入浴し、白老のリブマックスへ。</td>
+          <td><strong>伝説の「登別90分RTA」＆ モール温泉宿</strong><br>`16:30〜18:00` 事前計画ゼロの現場直感で「地獄谷・鉄泉池最奥踏破 ➔ 第一滝本館B1〜2F＆庭園完全マッピング ➔ 大浴場全泉質＆プール視察 ➔ 5分間地獄谷チル」を90分で完遂し、18:52白老着。</td>
+          <td style="text-align: center;"><span class="badge-diff diff-upgrade">神即興・自己効力感MAX</span><br>「やってることがヤバすぎて途中でニヤニヤする」超越体験（ADR 0455）。</td>
+        </tr>
+        <tr>
+          <td><strong>Day 4 (9/18) 全日</strong></td>
+          <td><strong>ウポポイ ➔ 余市 ➔ 小樽 ➔ 札幌</strong><br>白老ウポポイから札幌経由で余市蒸溜所・小樽運河を巡りニコーリフレへ。</td>
+          <td><strong>道央横断4都市リレー ＆ 北のサウナ聖地</strong><br>`09:00` ウポポイ見学後、特急北斗と快速エアポートを乗り継ぎ `14:15` 余市蒸溜所へ。`15:30〜19:30` 小樽ルタオ本店生ドゥーブル・北一ホール・小樽運河夜景を満喫し、札幌ニコーリフレに投宿。</td>
+          <td style="text-align: center;"><span class="badge-diff diff-match">完全一致・38,844歩</span><br>ニコーリフレのザンギ・サ飯と高反発ベッドで劇的回復。</td>
+        </tr>
+        <tr>
+          <td><strong>Day 5 (9/19) 全日</strong></td>
+          <td><strong>札幌市内名所＆オータムフェスト</strong><br>北海道神宮・時計台・北大・ビール園・オータムフェスト・すすきの。</td>
+          <td><strong>前人未到の「1日62,189歩 / 21.57km」札幌大縦断</strong><br>ニコーリフレ一時外出で手ぶら化。北海道神宮「判官さま」➔ 時計台 ➔ 赤れんが ➔ 北菓楼・六花亭本店 ➔ 北大総合博物館 ➔ サッポロビール博物館3種試飲 ➔ オータムフェスト ➔ すすきの味噌ラーメン ➔ DiCE個室泊。</td>
+          <td style="text-align: center;"><span class="badge-diff diff-upgrade">過去最高歩数・完全制覇</span><br>1日で6.2万歩を踏破する超人的な都市探索力を発揮。</td>
+        </tr>
+        <tr>
+          <td><strong>Day 6 (9/20) 午前〜午後</strong></td>
+          <td><strong>札幌駅 ➔ エスコン ➔ 千歳水族館</strong><br>JRタワーT38とよし乃の後、北広島エスコンと千歳を訪問。</td>
+          <td><strong>エスコン混雑スルー ＆ 千歳駅パレード脱出・サケ遡上</strong><br>千秋庵本店で生ノースマン確保、T38展望トイレ、よし乃1巡目滑り込み。試合日の北広島大混雑を即座にスルーし千歳へ。開港100年パレード大混雑の千歳駅から千歳水族館（野生サケ遡上）・千歳神社へ抜けタクシーで空港へ直行。</td>
+          <td style="text-align: center;"><span class="badge-diff diff-smart">危機回避・動的バイパス</span><br>ロッカー難民・改札規制の罠をバッファとタクシー直行で完全回避（ADR 0360）。</td>
+        </tr>
+        <tr>
+          <td><strong>Day 6 (9/20) 夕方〜夜</strong></td>
+          <td><strong>新千歳空港 ➔ Peach帰還</strong><br>空港温泉とグルメを満喫し20:50発MM590便で成田へ。</td>
+          <td><strong>新千歳空港4時間45分制覇 ＆ GU着捨て7.3kg突破</strong><br>ロイズ工場・新千歳空港温泉・ラーメン道場を満喫。処分予定だったGUズボン3着・古靴下・薄手タオルを現地廃棄してLCC 7kg制限を無課金突破（7.3kg通過）。成田着後の台風豪雨も乗り切り無事帰宅。</td>
+          <td style="text-align: center;"><span class="badge-diff diff-smart">着捨て断捨離ハック確立</span><br>LCC受託手荷物課金を拒絶するファストファッション着捨て術を確立（ADR 0525）。</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+
+    </section>
+
+    <section>
+      <div class="section-header">
+        <div class="section-icon">📍</div>
+        <h2 class="section-title">2. Day 1〜2（9/15-16）：津軽海峡フェリー上陸・函館朝市・五稜郭・函館山夜景エリア</h2>
+      </div>
+      <div class="polaroid-grid">
+        <div class="polaroid-card">
+          <div>
+            <div class="card-top">
+              <span class="spot-time">9/15 17:15 - 21:30</span>
+              <span class="stamp stamp-god">🚢 海峡横断・単独パート開幕</span>
+            </div>
+            <h3 class="spot-name">1. 津軽海峡フェリー 17便（ビューシート） ＆ A-GATE HOTEL 函館駅前</h3>
+            <div class="punchline">「津軽海峡サンセット ＆ 函館上陸」</div>
+          </div>
+          <ul class="fact-bullet">
+            <li>青森港で友人たちのレンタカーからドロップオフしてもらい、ここからは完全単独の一人旅モードへ突入。船体西側のビューシートから17:47の津軽海峡サンセットを眺め、20:50函館港へ上陸。他者への気遣いゼロ・判断速度MAXの「一人旅アジリティ」が爆発し始める転換点。</li>
+          </ul>
+        </div>
+        <div class="polaroid-card">
+          <div>
+            <div class="card-top">
+              <span class="spot-time">9/16 08:00 - 12:45</span>
+              <span class="stamp stamp-god">🏯 星形城郭・ご当地バーガー</span>
+            </div>
+            <h3 class="spot-name">2. 函館朝市 ➔ 五稜郭タワー・箱館奉行所 ➔ ラッキーピエロ</h3>
+            <div class="punchline">「函館朝市・五稜郭タワー・ラッキーピエロ」</div>
+          </div>
+          <ul class="fact-bullet">
+            <li>函館朝市で新鮮なイカと海鮮を味わい、市電で五稜郭へ。地上90mのタワー展望台から星形五角形の堀と箱館奉行所を俯瞰撮影。昼は函館限定のラッキーピエロで甘辛ダレが絡む「チャイニーズチキンバーガー」とラキポテを実食。</li>
+          </ul>
+        </div>
+        <div class="polaroid-card">
+          <div>
+            <div class="card-top">
+              <span class="spot-time">9/16 13:15 - 19:30</span>
+              <span class="stamp stamp-god">🌃 世界三大夜景・マジックアワー</span>
+            </div>
+            <h3 class="spot-name">3. 金森赤レンガ倉庫・元町八幡坂 ＆ 函館山100万ドルの夜景</h3>
+            <div class="punchline">「八幡坂・元町教会群 ＆ 函館山夜景」</div>
+          </div>
+          <ul class="fact-bullet">
+            <li>赤レンガ倉庫のスナッフルス、元町アンジェリックヴォヤージュの「賞味期限30分クレープ」を回収しつつ、函館湾へ真っ直ぐ伸びる八幡坂とハリストス正教会を撮影。17:15に函館山ロープウェイで山頂へ上がり、17:47の日没マジックアワーから両側を海に挟まれた黄金色の世界三大夜景まで完全収録。</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <section>
+      <div class="section-header">
+        <div class="section-icon">📍</div>
+        <h2 class="section-title">3. Day 3（9/17）：大沼だんご・洞爺湖中島・登別「第一滝本館90分RTA」エリア</h2>
+      </div>
+      <div class="polaroid-grid">
+        <div class="polaroid-card">
+          <div>
+            <div class="card-top">
+              <span class="spot-time">9/17 08:06 - 09:25</span>
+              <span class="stamp stamp-god">🍡 明治38年創業・途中下車</span>
+            </div>
+            <h3 class="spot-name">1. 大沼国定公園 ＆ 沼の家「元祖大沼だんご」</h3>
+            <div class="punchline">「沼の家「大沼だんご」＆ 駒ヶ岳」</div>
+          </div>
+          <ul class="fact-bullet">
+            <li>JR函館〜札幌の通し乗車券を活かして大沼公園駅で途中下車。08:30開店の「沼の家」で一口サイズの大沼だんごを購入。特に「みたらし」は醤油の香ばしさと甘さのバランスが絶妙で今回の旅のベスト甘味の一つに。</li>
+          </ul>
+        </div>
+        <div class="polaroid-card">
+          <div>
+            <div class="card-top">
+              <span class="spot-time">9/17 12:05 - 15:30</span>
+              <span class="stamp stamp-god">🚢 カルデラ湖・砂州上陸</span>
+            </div>
+            <h3 class="spot-name">2. 洞爺湖汽船（中島下船） ＆ わかさいも本店・珍小島上陸</h3>
+            <div class="punchline">「洞爺湖中島クルーズ ＆ 珍小島」</div>
+          </div>
+          <ul class="fact-bullet">
+            <li>エメラルドグリーンの洞爺湖を遊覧船で渡り中島へ上陸。下船後は「わかさいも本店」や周辺で、作りたての餅の弾力とせんべいの香ばしさが共存する「ふくれもち」、バターのコクが効いた担々麺風「のむみそしる」を実食し、砂州を渡って珍小島へ上陸。洞爺駅では先行する特急北斗13号が約80分遅延していたおかげで、待ち時間ゼロでそのまま飛び乗り成功。</li>
+          </ul>
+        </div>
+        <div class="polaroid-card">
+          <div>
+            <div class="card-top">
+              <span class="spot-time">9/17 16:30 - 18:00</span>
+              <span class="stamp stamp-god">♨️ 現場即興の超越・全浴槽制覇</span>
+            </div>
+            <h3 class="spot-name">3. 登別温泉 地獄谷・鉄泉池踏破 ＆ 第一滝本館「90分完全制覇」</h3>
+            <div class="punchline">「地獄谷・鉄泉池 ＆ 第一滝本館1,500坪」</div>
+          </div>
+          <ul class="fact-bullet">
+            <li>事前計画ゼロの現場直感だけで「地獄谷の最奥・鉄泉池まで一気に踏破 ➔ 第一滝本館の本館B1F〜2F＆庭園を完全マッピング ➔ 1,500坪の大浴場全泉質＆温水プール現場視察 ➔ 最後の5分間は地獄谷の噴煙パノラマを眺めて静寂チル」という神ムーブをわずか90分で完遂。自分の規格外な探索スピードに思わずニヤニヤが止まらない至高の体験。</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <section>
+      <div class="section-header">
+        <div class="section-icon">📍</div>
+        <h2 class="section-title">4. Day 4〜5（9/18-19）：ウポポイ・余市・小樽運河・札幌62,189歩大縦断エリア</h2>
+      </div>
+      <div class="polaroid-grid">
+        <div class="polaroid-card">
+          <div>
+            <div class="card-top">
+              <span class="spot-time">9/18 09:00 - 19:30</span>
+              <span class="stamp stamp-god">🥃 余市・小樽トワイライト</span>
+            </div>
+            <h3 class="spot-name">1. 白老ウポポイ ➔ ニッカ余市蒸溜所 ➔ 小樽運河＆ルタオ本店</h3>
+            <div class="punchline">「ウポポイ・余市蒸溜所・小樽北一ホール」</div>
+          </div>
+          <ul class="fact-bullet">
+            <li>朝一で白老のウポポイ（国立アイヌ民族博物館）を見学後、JRで札幌・小樽を越えて余市蒸溜所へ。石造り正門とキルン塔を撮影して小樽へ折り返し、ルタオ本店の生ドゥーブルフロマージュ、167個の石油ランプが灯る北一ホール、ガス灯が水面に映る夕暮れの小樽運河を満喫。夜は札幌のサウナ聖地「ニコーリフレ」でジューシーなザンギと高反発ベッドを堪能。</li>
+          </ul>
+        </div>
+        <div class="polaroid-card">
+          <div>
+            <div class="card-top">
+              <span class="spot-time">9/19 10:00 - 18:10</span>
+              <span class="stamp stamp-god">🍺 札幌知性＆歴史建築リレー</span>
+            </div>
+            <h3 class="spot-name">2. 北海道神宮「判官さま」・時計台・赤れんが・北大総合博物館・サッポロビール園</h3>
+            <div class="punchline">「北海道神宮・北大博物館・サッポロビール博物館」</div>
+          </div>
+          <ul class="fact-bullet">
+            <li>ニコーリフレのロッカーに荷物を残す「一時外出」で完全手ぶら化。北海道神宮の六花亭神宮茶屋で焼きたて「判官さま」を味わい、時計台・赤れんが庁舎・北菓楼本館・六花亭本店へ。午後は北海道大学総合博物館の圧倒的展示と、サッポロビール博物館での「3種飲み比べ（黒ラベル・クラシック・開拓使麦酒）」を制覇。</li>
+          </ul>
+        </div>
+        <div class="polaroid-card">
+          <div>
+            <div class="card-top">
+              <span class="spot-time">9/19 18:20 - 22:30</span>
+              <span class="stamp stamp-god">⚡ Apple Health 実測 62,189歩</span>
+            </div>
+            <h3 class="spot-name">3. さっぽろオータムフェスト ＆ すすきの夜景（1日62,189歩達成）</h3>
+            <div class="punchline">「オータムフェスト ＆ すすきのニッカ看板」</div>
+          </div>
+          <ul class="fact-bullet">
+            <li>ライトアップされたさっぽろテレビ塔の足元から大通公園オータムフェストを歩き、ニコーリフレへ戻ってサウナで汗を流してからチェックアウト。狸小路のDiCE防音個室に荷物を置き、夜のすすきの巡回と札幌味噌ラーメンで締めくくり、1日62,189歩（21.57km）の自己最高記録を樹立。</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <section>
+      <div class="section-header">
+        <div class="section-icon">📍</div>
+        <h2 class="section-title">5. Day 6（9/20）：JRタワーT38・よし乃味噌・千歳サケ遡上・新千歳空港温泉・7kg着捨て突破エリア</h2>
+      </div>
+      <div class="polaroid-grid">
+        <div class="polaroid-card">
+          <div>
+            <div class="card-top">
+              <span class="spot-time">9/20 08:45 - 11:40</span>
+              <span class="stamp stamp-god">🍜 1巡目滑り込み・味変戦術</span>
+            </div>
+            <h3 class="spot-name">1. JRタワー展望室 T38 ＆ みそラーメンのよし乃（トッピング疎結合作戦）</h3>
+            <div class="punchline">「JRタワーT38 ＆ よし乃味噌バターコーン」</div>
+          </div>
+          <ul class="fact-bullet">
+            <li>朝一で千秋庵本店の「生ノースマン」を確保し、JRタワー展望室T38（地上160m）のパノラマ展望トイレを体験。10:55にアピアの「よし乃」へ並び1巡目ラスト席に滑り込み成功。バターをレンゲへ退避させて後半に溶かす「トッピング疎結合作戦（ADR 0348）」と、店内USENのGReeeeN『刹那』➔宇多田ヒカル『traveling』の神選曲に包まれ、退店即11:48発の快速エアポートへ直行。</li>
+          </ul>
+        </div>
+        <div class="polaroid-card">
+          <div>
+            <div class="card-top">
+              <span class="spot-time">9/20 12:15 - 15:30</span>
+              <span class="stamp stamp-god">🐟 危機回避・千歳川水中観察窓</span>
+            </div>
+            <h3 class="spot-name">2. サケのふるさと 千歳水族館（野生サケ大遡上） ＆ 千歳神社バイパス脱出</h3>
+            <div class="punchline">「千歳川サケ遡上 ＆ 千歳神社タクシー脱出」</div>
+          </div>
+          <ul class="fact-bullet">
+            <li>プロ野球公式戦で大混雑の北広島（エスコン）を車窓スルーして千歳駅へ降り立つと、開港100年市民パレードと重なり駅構内がディズニー並みの大混雑・ロッカー難民地獄に。即座に千歳水族館へ移動して館内100円返却式ロッカーで手ぶら化し、千歳川の水中観察窓から野生シロザケの大群遡上とインディアン水車を見学。静寂の千歳神社を参拝後、混雑する千歳駅へ戻らずタクシーで新千歳空港へ直接バイパス（ADR 0360）。</li>
+          </ul>
+        </div>
+        <div class="polaroid-card">
+          <div>
+            <div class="card-top">
+              <span class="spot-time">9/20 15:30 - 23:30</span>
+              <span class="stamp stamp-god">✈️ LCC受託課金拒絶・完全帰還</span>
+            </div>
+            <h3 class="spot-name">3. 新千歳空港温泉 ＆ GUズボン3着「現地着捨て断捨離ハック」で7.3kg突破</h3>
+            <div class="punchline">「新千歳空港温泉 ＆ 7.3kg手荷物突破」</div>
+          </div>
+          <ul class="fact-bullet">
+            <li>新千歳空港でロイズ工場見学、新千歳空港温泉（露天・サウナ）、北海道ラーメン道場を4時間45分かけて完全制覇。搭乗前はLCCの受託手荷物課金を断固拒絶し、処分を迷っていたGUズボン3着・履き潰し靴下・温泉薄手タオルを現地廃棄することで大幅減量＆断捨離を達成（ADR 0525）。7.3kgで手荷物検査を余裕通過し、成田到着後の台風豪雨も乗り切って全10日間の北日本大遠征を完走。</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+
+    <!-- Essay Cards -->
+        <section>
+      <div class="section-header">
+        <div class="section-icon">💡</div>
+        <h2 class="section-title">現地リアル批評 ＆ アーカイブインサイト</h2>
+      </div>
+      <div class="essay-card">
+        <h3>1. 流動的一人旅の3大攻略ルーティンと「準備期間特権」（ADR 0455）</h3>
+        <p>- 同行者連れでは不可能な「早歩きピンポイント攻略（時速5〜6kmでキラーフックへ直行）」「足を止めない歩行撮影プロトコル（手前×奥フォーカス、縦×横の4枚機械的回収）」「移動中AIルート策定（車窓を楽しみながら接続ダイヤを動的更新）」の3大ルーティンを確立。第一滝本館90分完全制覇や札幌1日62,189歩は、独身かつ身軽な今しか享受できない最高の特権である。</p>
+      </div>
+      <div class="essay-card">
+        <h3>2. ファストファッション「着捨て断捨離」と東京アンテナショップ代替原則（ADR 0525）</h3>
+        <p>- LCCの手荷物追加課金は航空会社のアップセルの罠であり、着古したGUの服や靴下を旅の終盤で現地廃棄すれば、手荷物7kg制限を無課金突破しつつ自宅の断捨離まで同時に完了する。また、苦労して持ち帰った「生ノースマン」よりも現地の作りたて（大沼だんご・判官さま・生ドゥーブル）の方が圧倒的に満足度が高く、日持ちする定番土産は東京のアンテナショップでいつでも買えると割り切ることで完璧主義バイアスから解放された。</p>
+      </div>
+      <div class="essay-card">
+        <h3>3. 味覚の自己発見（白身魚のサクサク食感選好）と「サービスより経験価値」</h3>
+        <p>- ヒメマス等の柔らかい魚と活イカ・白身魚を比較したことで、自分が白身魚（タイ・ヒラメ・カンパチ等）を好む本質的理由は「味」以上に「サクサク・コリコリとした歯切れの良さ（繊維感）」にあることを明確に言語化。宿や食事も、表面的な接客サービスではなく「その場でしか得られない特異な空間・身体的感覚（第一滝本館の巨大浴場、ニコーリフレの高反発ベッド、千歳川のサケ遡上）」にこそ対価を払うべきである。</p>
+      </div>
+    </section>
+
+
+    <!-- Footer -->
+    <footer>
+      <p>北海道 ｜ 函館・道南・道央周遊 旅アルバム 2026 ｜ 旅行総合ポータルへ戻る</p>
+    </footer>
+
+  </main>
+
+  <!-- Injected Chart Data -->
+  <script>
+    window.__ALBUM_CHART_DATA__ = {
+  "hourly": {
+    "labels": [
+      "9/15(火)",
+      "9/16(水)",
+      "9/17(木)",
+      "9/18(金)",
+      "9/19(土)",
+      "9/20(日)"
+    ],
+    "data": [
+      23599,
+      19043,
+      38242,
+      38844,
+      62189,
+      42395
+    ],
+    "colors": [
+      "#38bdf8",
+      "#0284c7",
+      "#f97316",
+      "#8b5cf6",
+      "#e11d48",
+      "#10b981"
+    ]
+  },
+  "duration": {
+    "labels": [
+      "都市・建築・史跡散策 (18h)",
+      "自然・カルデラ湖・渓谷 (11h)",
+      "温泉・サウナ・休養 (14h)",
+      "北海道グルメ・甘味 (12h)",
+      "JR特急・フェリー・空路 (15h)"
+    ],
+    "data": [
+      18,
+      11,
+      14,
+      12,
+      15
+    ],
+    "colors": [
+      "#fb7185",
+      "#10b981",
+      "#8b5cf6",
+      "#f59e0b",
+      "#38bdf8"
+    ]
+  },
+  "cumulative": {
+    "labels": [
+      "9/15 函館上陸",
+      "9/16 函館山夜景",
+      "9/17 洞爺・登別",
+      "9/18 余市・小樽",
+      "9/19 札幌6.2万歩",
+      "9/20 千歳・帰還"
+    ],
+    "data": [
+      14.66,
+      27.74,
+      41.54,
+      55.4,
+      76.97,
+      91.59
+    ]
+  }
+};
+  </script>
+  <script src="../assets/album_runtime.js"></script>
+</body>
+</html>

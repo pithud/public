@@ -814,7 +814,7 @@ header {
 .drawer-title {
   font-size: 1rem;
   font-weight: 800;
-  color: var(--drawer-title);
+  color: var(--text);
   display: flex;
   align-items: center;
   gap: 6px;
@@ -872,8 +872,7 @@ header {
   background: var(--slot-overview-bg);
   padding: 6px 10px;
   border-radius: 6px;
-  border: 1px solid var(--border-subtle);
-  border-left: 3px solid var(--primary);
+  border-left: 3px solid #38bdf8;
 }
 
 
@@ -1045,8 +1044,9 @@ header {
     <div class="header-top">
       <div class="title">🚗 三重・伊勢志摩 リアルタイムナビ</div>
       <div class="header-right">
-        <button id="theme-toggle-btn" class="theme-toggle-btn" onclick="toggleTheme()" title="ライト/ダークモード切替" aria-label="テーマ切替">
+        <button id="theme-toggle-btn" class="theme-toggle-btn" onclick="toggleTheme()" title="ライト/ダークモード切替">
           <span id="theme-toggle-icon">☀️</span>
+          <span id="theme-toggle-text">ライト</span>
         </button>
         <div class="badge-origin">起点: 拠点駅</div>
         <button class="menu-drawer-btn" onclick="toggleDrawer(true)">☰ 履歴 (v6)</button>
@@ -1058,11 +1058,23 @@ header {
   <div class="drawer-overlay" id="drawer-overlay" onclick="toggleDrawer(false)"></div>
   <div class="drawer-content" id="drawer-content">
     <div class="drawer-header">
-      <div class="drawer-title">📚 旅程バージョン履歴</div>
+      <div class="drawer-title">📚 旅程バージョン履歴 & 旅ログ</div>
       <button class="drawer-close" onclick="toggleDrawer(false)">✕</button>
     </div>
     
-    <div style="font-size:0.75rem; color:var(--text-muted); line-height:1.4;">
+    <!-- Trip Log Link Card -->
+    <div class="version-card" style="border: 2px solid #059669; background: rgba(5, 150, 105, 0.08); margin-top: 10px;">
+      <span class="version-tag" style="background: #059669; color: #fff;">📖 旅の記録 (実績)</span>
+      <div class="version-title" style="color: #059669; margin-top: 4px;">三重・伊勢志摩 周遊旅行記（実績ログ＆格付け）</div>
+      <div class="version-desc">
+        ・計画（mie.html）と実際の行動（アドリブ・スキップ）の対比表<br>
+        ・すし久「梅」大盛りミステリー＆伊勢うどん辛口レビュー<br>
+        ・夜のito大会・300円マッサージチェアなど生エピソード収録（※写真なし公開仕様）
+      </div>
+      <a href="mie-log.html" class="version-link" style="color: #059669; font-weight: 700;">旅ログ・実績レビューを開く ↗</a>
+    </div>
+
+    <div style="font-size:0.75rem; color:var(--text-muted); line-height:1.4; margin-top: 10px;">
       旅程更新時に過去分が上書き消滅しないよう物理アーカイブされています。いつでも過去プランへ戻せます。
     </div>
 
@@ -2264,7 +2276,7 @@ header {
                       </div>
                       <div style="display:flex; flex-direction:column; gap:8px;">
                         ${item.bonusSpots.map(sp => `
-                          <div style="background:var(--card-bg); border:1px solid var(--border-subtle); border-radius:6px; padding:8px 10px;">
+                          <div style="background:var(--card-inner); border:1px solid var(--border-subtle); border-radius:6px; padding:8px 10px;">
                             <div style="display:flex; justify-content:space-between; align-items:center;">
                               <div style="font-size:0.84rem; font-weight:700; color:var(--text);">📍 ${sp.name}</div>
                               <a href="${sp.mapUrl}" target="_blank" class="bonus-spot-map">🗺️ 地図 ↗</a>
@@ -2301,8 +2313,8 @@ header {
                         <span class="factor-bullet-text"><strong>同行者（母）配慮・Tips:</strong> ${f.tips}</span>
                       </div>
                       <div class="factor-bullet-line">
-                        <span class="factor-bullet-dot" style="color:#ef4444;">•</span>
-                        <span class="factor-bullet-text" style="color:#fca5a5;"><strong>損切りリミット:</strong> ${f.skipLimit}</span>
+                        <span class="factor-bullet-dot" style="color:var(--danger);">•</span>
+                        <span class="factor-bullet-text" style="color:var(--danger);"><strong>損切りリミット:</strong> ${f.skipLimit}</span>
                       </div>
                     </div>
                   </div>
@@ -2469,8 +2481,15 @@ header {
       document.documentElement.setAttribute('data-theme', theme);
       localStorage.setItem('trip_nav_theme', theme);
       const icon = document.getElementById('theme-toggle-icon');
-      if (icon) {
-        icon.textContent = theme === 'dark' ? '☀️' : '🌙';
+      const text = document.getElementById('theme-toggle-text');
+      if (icon && text) {
+        if (theme === 'dark') {
+          icon.textContent = '🌙';
+          text.textContent = 'ダーク';
+        } else {
+          icon.textContent = '☀️';
+          text.textContent = 'ライト';
+        }
       }
     }
 

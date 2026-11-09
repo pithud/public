@@ -1,0 +1,830 @@
+<!DOCTYPE html>
+<html lang="ja" data-theme="light">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <title>青森 ｜ 津軽・下北・恐山 完全縦断4泊5日 しおり - Day 4</title>
+  <script>
+    // Anti-FOUC immediate theme application
+    (function() {
+      var t = localStorage.getItem('trip_nav_theme') || 'light';
+      document.documentElement.setAttribute('data-theme', t);
+    })();
+  </script>
+  <style>
+:root {
+  --bg: #f8fafc;
+  --surface: #ffffff;
+  --surface-subtle: #f1f5f9;
+  --text: #0f172a;
+  --text-muted: #64748b;
+  --border: #e2e8f0;
+  --primary: #0284c7;
+  --primary-hover: #0369a1;
+  --accent: #d97706;
+  --card-shadow: 0 1px 3px rgba(0,0,0,0.06), 0 1px 2px rgba(0,0,0,0.04);
+  --font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+}
+[data-theme="dark"] {
+  --bg: #090d16;
+  --surface: #131b2e;
+  --surface-subtle: #1e293b;
+  --text: #f8fafc;
+  --text-muted: #94a3b8;
+  --border: #1e293b;
+  --card-shadow: 0 4px 6px -1px rgba(0,0,0,0.3);
+}
+* { box-sizing: border-box; margin: 0; padding: 0; -webkit-tap-highlight-color: transparent; }
+body {
+  font-family: var(--font-family);
+  background-color: var(--bg);
+  color: var(--text);
+  line-height: 1.5;
+  font-size: 15px;
+  padding-bottom: 80px;
+}
+.header-bar {
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  background: rgba(255, 255, 255, 0.92);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border-bottom: 1px solid var(--border);
+  padding: 12px 16px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+[data-theme="dark"] .header-bar { background: rgba(19, 27, 46, 0.92); }
+.brand-title { font-size: 1.05rem; font-weight: 700; display: flex; align-items: center; gap: 8px; }
+.header-actions { display: flex; gap: 8px; align-items: center; }
+.btn-action {
+  background: var(--surface-subtle);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: 6px 12px;
+  font-size: 13px;
+  color: var(--text);
+  cursor: pointer;
+  text-decoration: none;
+}
+.container { max-width: 680px; margin: 0 auto; padding: 16px; }
+
+/* Day Navigation Bar */
+.nav-bar {
+  display: flex;
+  background: var(--surface-subtle);
+  padding: 6px;
+  border-radius: 10px;
+  margin-bottom: 16px;
+  gap: 6px;
+  align-items: center;
+  justify-content: space-between;
+}
+.nav-link {
+  flex: 1;
+  text-align: center;
+  padding: 7px 10px;
+  border-radius: 7px;
+  font-size: 13px;
+  font-weight: 600;
+  text-decoration: none;
+  color: var(--text-muted);
+  background: transparent;
+  border: none;
+  cursor: pointer;
+}
+.nav-link.active {
+  background: var(--surface);
+  color: var(--primary);
+  box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+}
+
+/* Quick Jump Chips */
+.jump-chips {
+  display: flex;
+  gap: 6px;
+  overflow-x: auto;
+  padding-bottom: 10px;
+  margin-bottom: 16px;
+  white-space: nowrap;
+  scrollbar-width: none;
+}
+.jump-chips::-webkit-scrollbar { display: none; }
+.jump-chip {
+  display: inline-block;
+  font-size: 12px;
+  font-weight: 600;
+  padding: 5px 10px;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 16px;
+  color: var(--text);
+  text-decoration: none;
+}
+
+/* Slot Cards */
+.day-block { margin-bottom: 32px; }
+.day-header {
+  font-size: 1.15rem;
+  font-weight: 700;
+  margin-bottom: 12px;
+  padding-bottom: 6px;
+  border-bottom: 2px solid var(--primary);
+  color: var(--primary);
+}
+
+/* Macro Route Box (Day全体ルート立ち回り) */
+.macro-route-box {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-left: 4px solid var(--primary);
+  border-radius: 10px;
+  padding: 12px 14px;
+  margin-bottom: 16px;
+  box-shadow: var(--card-shadow);
+}
+.macro-route-head {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 6px;
+}
+.macro-route-title {
+  font-size: 13px;
+  font-weight: 800;
+  color: var(--primary);
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+[data-theme="dark"] .macro-route-title { color: #38bdf8; }
+.macro-route-body {
+  font-size: 13px;
+  line-height: 1.55;
+  color: var(--text);
+  margin-bottom: 8px;
+}
+.macro-map-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  font-size: 12px;
+  font-weight: 700;
+  color: var(--primary);
+  text-decoration: none;
+  background: rgba(2, 132, 199, 0.08);
+  padding: 4px 10px;
+  border-radius: 6px;
+  border: 1px solid rgba(2, 132, 199, 0.2);
+}
+[data-theme="dark"] .macro-map-link {
+  color: #38bdf8;
+  background: rgba(56, 189, 248, 0.1);
+  border-color: rgba(56, 189, 248, 0.3);
+}
+.slot-card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  margin-bottom: 12px;
+  padding: 14px 16px;
+  box-shadow: var(--card-shadow);
+  transition: opacity 0.2s, background-color 0.2s;
+}
+.slot-card.is-dimmed { opacity: 0.45; filter: grayscale(40%); }
+.slot-card.is-must { border-left: 4px solid var(--accent); }
+.slot-meta { display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px; }
+.slot-time { font-size: 13px; font-weight: 700; font-variant-numeric: tabular-nums; }
+.slot-badge {
+  font-size: 11px;
+  font-weight: 700;
+  padding: 2px 8px;
+  border-radius: 4px;
+  text-transform: uppercase;
+}
+.badge-sightseeing { background: #d1fae5; color: #065f46; }
+.badge-food { background: #ffedd5; color: #9a3412; }
+.badge-transit { background: #e0e7ff; color: #3730a3; }
+[data-theme="dark"] .badge-sightseeing { background: #064e3b; color: #6ee7b7; }
+[data-theme="dark"] .badge-food { background: #7c2d12; color: #fdba74; }
+[data-theme="dark"] .badge-transit { background: #312e81; color: #a5b4fc; }
+
+.slot-title-row { display: flex; align-items: flex-start; gap: 8px; margin-bottom: 6px; }
+.slot-checkbox { margin-top: 3px; cursor: pointer; width: 18px; height: 18px; accent-color: var(--primary); }
+.slot-title { font-size: 1rem; font-weight: 700; line-height: 1.4; flex: 1; }
+.slot-desc { font-size: 13.5px; color: var(--text-muted); margin-bottom: 10px; line-height: 1.5; padding-left: 26px; }
+
+/* Swap Guide Box */
+.swap-box {
+  margin: 10px 0 10px 26px;
+  padding: 10px 12px;
+  border-radius: 8px;
+  background: rgba(217, 119, 6, 0.08);
+  border: 1px dashed var(--accent);
+  font-size: 12.5px;
+}
+.swap-title { font-weight: 700; color: var(--accent); margin-bottom: 4px; display: flex; align-items: center; gap: 4px; }
+
+.slot-foot { display: flex; justify-content: space-between; align-items: center; padding-top: 8px; border-top: 1px solid var(--border); margin-left: 26px; }
+.map-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  font-size: 12px;
+  font-weight: 600;
+  color: #1a73e8;
+  text-decoration: none;
+  background: rgba(26, 115, 232, 0.08);
+  padding: 4px 10px;
+  border-radius: 20px;
+}
+[data-theme="dark"] .map-pill { color: #8ab4f8; background: rgba(138, 180, 248, 0.12); }
+
+/* Tactics Step Box (立ち回り・攻略手順) */
+.tactics-box {
+  margin: 12px 0 12px 26px;
+  padding: 10px 14px;
+  background: rgba(2, 132, 199, 0.06);
+  border: 1px solid rgba(2, 132, 199, 0.25);
+  border-left: 3.5px solid var(--primary);
+  border-radius: 8px;
+}
+[data-theme="dark"] .tactics-box {
+  background: rgba(56, 189, 248, 0.08);
+  border-color: rgba(56, 189, 248, 0.3);
+  border-left-color: #38bdf8;
+}
+.tactics-header {
+  font-size: 13px;
+  font-weight: 700;
+  color: var(--primary);
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  margin-bottom: 8px;
+}
+.tactics-tag {
+  font-size: 10px;
+  font-weight: 800;
+  background: var(--primary);
+  color: #fff;
+  padding: 1px 6px;
+  border-radius: 4px;
+  letter-spacing: 0.05em;
+}
+[data-theme="dark"] .tactics-header { color: #38bdf8; }
+[data-theme="dark"] .tactics-tag { background: #0284c7; }
+.tactics-list { display: flex; flex-direction: column; gap: 6px; }
+.tactics-step-row { display: flex; align-items: flex-start; gap: 8px; font-size: 12.5px; line-height: 1.5; }
+.tactics-num {
+  flex-shrink: 0;
+  width: 18px;
+  height: 18px;
+  border-radius: 4px;
+  background: rgba(2, 132, 199, 0.18);
+  color: var(--primary);
+  font-size: 11px;
+  font-weight: 800;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-top: 1px;
+}
+[data-theme="dark"] .tactics-num { background: rgba(56, 189, 248, 0.25); color: #38bdf8; }
+
+/* Checkpoints List */
+.checkpoint-list {
+  margin: 10px 0 10px 26px;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+.checkpoint-row {
+  display: flex;
+  align-items: flex-start;
+  gap: 8px;
+  font-size: 12px;
+  background: var(--surface-subtle);
+  padding: 8px 10px;
+  border-radius: 6px;
+  border: 1px solid var(--border);
+}
+.cp-badge {
+  font-size: 10px;
+  font-weight: 700;
+  padding: 1px 5px;
+  border-radius: 3px;
+  background: #0284c7;
+  color: #fff;
+  flex-shrink: 0;
+}
+.cp-title { font-weight: 600; color: var(--text); }
+.cp-desc { font-size: 11.5px; color: var(--text-muted); margin-top: 2px; }
+
+/* Practical Footer */
+.practical-footer {
+  margin: 10px 0 10px 26px;
+  padding: 8px 10px;
+  background: var(--surface-subtle);
+  border-left: 3px solid var(--accent);
+  border-radius: 4px;
+  font-size: 12px;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+.pf-row { display: flex; gap: 6px; }
+.pf-tag { font-weight: 700; color: var(--accent); flex-shrink: 0; min-width: 65px; }
+.pf-val { color: var(--text); }
+
+/* Print & Paged Media */
+@media print {
+  @page { size: A4 portrait; margin: 12mm 15mm; }
+  body { background: #fff !important; color: #000 !important; font-size: 11pt; }
+  .header-bar, .nav-bar, .jump-chips, .no-print { display: none !important; }
+  .day-block { page-break-after: always; break-after: page; }
+  .slot-card { break-inside: avoid; page-break-inside: avoid; box-shadow: none !important; border: 1px solid #ccc !important; }
+  .slot-card.is-dimmed { opacity: 1 !important; filter: none !important; }
+  .slot-checkbox { display: none !important; }
+  .slot-desc, .swap-box, .slot-foot { margin-left: 0 !important; padding-left: 0 !important; }
+}
+
+  </style>
+</head>
+<body>
+  <header class="header-bar">
+    <div class="brand-title">
+      <span>🍎</span>
+      <span>青森 ｜ 津軽・下北・恐山 完全縦断4泊5日 しおり</span>
+    </div>
+    <div class="header-actions no-print">
+      <button class="btn-action" onclick="toggleTheme()">🌓 テーマ</button>
+      <button class="btn-action" onclick="window.print()">🖨️ 製本印刷</button>
+    </div>
+  </header>
+
+  <main class="container">
+    
+    <nav class="nav-bar no-print">
+      <a class="nav-link" href="aomori.html">📑 全日程</a>
+      <a class="nav-link " href="aomori_day1.html">Day 1</a><a class="nav-link " href="aomori_day2.html">Day 2</a><a class="nav-link " href="aomori_day3.html">Day 3</a><a class="nav-link active" href="aomori_day4.html">Day 4</a><a class="nav-link " href="aomori_day5.html">Day 5</a>
+    </nav>
+    
+    <div class="jump-chips no-print">
+      
+        <a class="jump-chip" href="#d4-osorezan-morning" data-day="4">📍 恐山・朝の勤行（大般</a>
+      
+        <a class="jump-chip" href="#d4-michinoeki-yokohama" data-day="4">🍜 下北縦断ドライブ ＆</a>
+      
+        <a class="jump-chip" href="#d4-asamushi-aquarium" data-day="4">📍 浅虫温泉ランチ ＆ </a>
+      
+        <a class="jump-chip" href="#d4-honcho-izakaya" data-day="4">🍜 青森市・本町繁華街 </a>
+      
+    </div>
+    
+      <section class="day-block" id="day-sec-4" data-day="4">
+        <h2 class="day-header">Day 4: 2026年9月14日 (月)</h2>
+        
+        <div class="macro-route-box">
+          <div class="macro-route-head">
+            <span class="macro-route-title">🗺️ 【全体ルート立ち回り】マクロ動線シークエンス</span>
+            <a class="macro-map-link" href="https://www.google.com/maps/dir/%E6%81%90%E5%B1%B1%E6%B8%A9%E6%B3%89+%E5%AE%BF%E5%9D%8A%E5%90%89%E7%A5%A5%E9%96%A3/%E9%81%93%E3%81%AE%E9%A7%85%E3%82%88%E3%81%93%E3%81%AF%E3%81%BE/%E9%9D%92%E6%A3%AE%E7%9C%8C%E5%96%B6+%E6%B5%85%E8%99%AB%E6%B0%B4%E6%97%8F%E9%A4%A8/%E3%83%9B%E3%83%86%E3%83%AB%E9%9D%92%E6%A3%AE" target="_blank" rel="noopener">📍 広域Google Maps</a>
+          </div>
+          <div class="macro-route-body">恐山 宿坊吉祥閣（06:30朝勤行・07:30朝食・08:45発） ➔ むつ市街 ➔ 道の駅よこはま「菜の花プラザ」 ➔ 浅虫温泉（昼食） ➔ 青森県営 浅虫水族館 ➔ ホテル青森（チェックイン） ➔ 青森市本町繁華街（4日目打ち上げ居酒屋）</div>
+        </div>
+        <div class="slot-list">
+          
+    <article class="slot-card is-must" id="d4-osorezan-morning" data-slot-id="d4-osorezan-morning">
+      <div class="slot-meta">
+        <span class="slot-time">⏱️ 06:30 - 08:45</span>
+        <span class="slot-badge badge-temple">【必見】宿泊者限定朝勤行</span>
+      </div>
+      <div class="slot-title-row">
+        <input type="checkbox" class="slot-checkbox no-print" onchange="toggleSlot('d4-osorezan-morning', this.checked)" title="完了・スキップを消し込み">
+        <h3 class="slot-title"><span style="color:var(--accent);">【必見】</span> 恐山・朝の勤行（大般若祈祷） ＆ 精進朝食 ➔ 下山</h3>
+      </div>
+      <p class="slot-desc">宿坊「吉祥閣」宿泊者だけが参列できる早朝06:30からの「朝の勤行」。宿坊から長い回廊を渡って本堂（本尊・勝軍地蔵菩薩）へ進み、僧侶たちが経本を蛇腹状に激しく打ち鳴らす迫力の「転読大般若祈祷」と心に響く法話を拝聴。先祖供養・道中安全の焼香を行い、清々しい精進朝食をいただいて下山する。</p>
+      
+      
+      <div class="tactics-box">
+        <div class="tactics-header">
+          <span>🎯</span>
+          <span class="tactics-tag">個別立ち回り</span>
+          <span>【構内順路】攻略戦術</span>
+        </div>
+        <div class="tactics-list">
+          
+            <div class="tactics-step-row">
+              <span class="tactics-num">1</span>
+              <span class="tactics-text">06:15に起床・身支度を整え、06:30までに館内放送の案内に従って本堂へ集合。</span>
+            </div>
+          
+            <div class="tactics-step-row">
+              <span class="tactics-num">2</span>
+              <span class="tactics-text">06:30〜07:20の朝勤行・法話・本堂奥の内陣参拝（お地蔵様のお厨子前）を厳粛に体験。</span>
+            </div>
+          
+            <div class="tactics-step-row">
+              <span class="tactics-num">3</span>
+              <span class="tactics-text">07:30から食堂で温かい精進料理の朝食をいただき、08:45に吉祥閣をチェックアウトしてむつ市街へ下山。</span>
+            </div>
+          
+        </div>
+      </div>
+      
+      <div class="checkpoint-list">
+        
+          <div class="checkpoint-row">
+            <span class="cp-badge">必須</span>
+            <div>
+              <div class="cp-title">06:30 本堂「朝の勤行（転読大般若祈祷）」＆ 内陣参拝</div>
+              <div class="cp-desc">複数の僧侶による読経と経本が風を切る音、胸に刺さる法話は宿坊宿泊の最大価値。</div>
+            </div>
+          </div>
+        
+          <div class="checkpoint-row">
+            <span class="cp-badge">必須</span>
+            <div>
+              <div class="cp-title">07:30 精進朝食 ➔ 08:45 下北半島南下スタート</div>
+              <div class="cp-desc">朝の澄んだ空気の恐山を後にし、県道4号から国道279号へ出る。</div>
+            </div>
+          </div>
+        
+      </div>
+      
+      <div class="practical-footer">
+        <div class="pf-row"><span class="pf-tag">🚗 移動・駐車:</span><span class="pf-val">恐山から道の駅よこはま（横浜町）まで約42km（車約55分）。</span></div>
+        <div class="pf-row"><span class="pf-tag">💡 現地Tips:</span><span class="pf-val">早朝の本堂は標高が高く冷え込むため、上着または羽織を着用して参列する。</span></div>
+        <div class="pf-row"><span class="pf-tag">⏱️ 撤収基準:</span><span class="pf-val">08:50までに出発すれば12時台に浅虫温泉へ余裕で到着できる。</span></div>
+      </div>
+      <div class="slot-foot">
+        <a class="map-pill" href="https://www.google.com/maps/search/?api=1&amp;query=恐山菩提寺" target="_blank" rel="noopener">📍 Google Maps</a>
+        <span style="font-size:12px;font-weight:700;color:var(--accent);">⭐ 必達スポット</span>
+      </div>
+    </article>
+    <article class="slot-card " id="d4-michinoeki-yokohama" data-slot-id="d4-michinoeki-yokohama">
+      <div class="slot-meta">
+        <span class="slot-time">⏱️ 10:00 - 10:45</span>
+        <span class="slot-badge badge-food">菜の花ドーナツ休憩</span>
+      </div>
+      <div class="slot-title-row">
+        <input type="checkbox" class="slot-checkbox no-print" onchange="toggleSlot('d4-michinoeki-yokohama', this.checked)" title="完了・スキップを消し込み">
+        <h3 class="slot-title">下北縦断ドライブ ＆ 道の駅よこはま「菜の花プラザ」</h3>
+      </div>
+      <p class="slot-desc">下北半島の首根っこ（斧の柄の部分）にあたる国道279号（むつ〜横浜町〜野辺地）を陸奥湾沿いに南下。日本一の菜の花作付面積を誇る横浜町の「道の駅よこはま（菜の花プラザ）」に立ち寄り、しっとり優しい甘さの名物「菜の花ドーナツ」や菜の花はちみつソフトでドライブ休憩。</p>
+      
+      
+      <div class="tactics-box">
+        <div class="tactics-header">
+          <span>🎯</span>
+          <span class="tactics-tag">個別立ち回り</span>
+          <span>【構内順路】攻略戦術</span>
+        </div>
+        <div class="tactics-list">
+          
+            <div class="tactics-step-row">
+              <span class="tactics-num">1</span>
+              <span class="tactics-text">恐山からむつ市を経由して国道279号（または下北半島縦貫道路・無料区間）を南下し、10:00に道の駅よこはまへ到着。</span>
+            </div>
+          
+            <div class="tactics-step-row">
+              <span class="tactics-num">2</span>
+              <span class="tactics-text">物産館で焼きたて・揚げたての「菜の花ドーナツ」と横浜町産ホタテ加工品・お土産をチェック。</span>
+            </div>
+          
+            <div class="tactics-step-row">
+              <span class="tactics-num">3</span>
+              <span class="tactics-text">トイレ休憩を済ませ、野辺地・平内（ほたて広場）を経由して浅虫温泉へドライブを継続。</span>
+            </div>
+          
+        </div>
+      </div>
+      
+      <div class="checkpoint-list">
+        
+          <div class="checkpoint-row">
+            <span class="cp-badge">必須</span>
+            <div>
+              <div class="cp-title">道の駅よこはま 名物「菜の花ドーナツ」実食</div>
+              <div class="cp-desc">菜の花のほのかな風味としっとり食感が人気のドライブスイーツ。</div>
+            </div>
+          </div>
+        
+      </div>
+      
+      <div class="practical-footer">
+        <div class="pf-row"><span class="pf-tag">🚗 移動・駐車:</span><span class="pf-val">道の駅よこはまから浅虫水族館までは国道279号〜国道4号経由で約58km（車約1時間10分）。</span></div>
+        <div class="pf-row"><span class="pf-tag">💡 現地Tips:</span><span class="pf-val">下北半島縦貫道路（むつ南バイパス〜横浜吹越IC〜六ヶ所IC〜野辺地北IC）の無料高規格道路を使うと大幅に時間短縮可能。</span></div>
+        <div class="pf-row"><span class="pf-tag">⏱️ 撤収基準:</span><span class="pf-val">10:45に出発し、12:00頃に浅虫温泉エリアへ到着する。</span></div>
+      </div>
+      <div class="slot-foot">
+        <a class="map-pill" href="https://www.google.com/maps/search/?api=1&amp;query=道の駅よこはま+菜の花プラザ" target="_blank" rel="noopener">📍 Google Maps</a>
+        
+      </div>
+    </article>
+    <article class="slot-card is-must" id="d4-asamushi-aquarium" data-slot-id="d4-asamushi-aquarium">
+      <div class="slot-meta">
+        <span class="slot-time">⏱️ 12:00 - 15:15</span>
+        <span class="slot-badge badge-sightseeing">【必見】本州最北端水族館</span>
+      </div>
+      <div class="slot-title-row">
+        <input type="checkbox" class="slot-checkbox no-print" onchange="toggleSlot('d4-asamushi-aquarium', this.checked)" title="完了・スキップを消し込み">
+        <h3 class="slot-title"><span style="color:var(--accent);">【必見】</span> 浅虫温泉ランチ ＆ 青森県営 浅虫水族館（本州最北端水族館）</h3>
+      </div>
+      <p class="slot-desc">東北の熱海と呼ばれる「浅虫温泉」エリアで昼食（ホタテ貝焼き味噌や海鮮丼）をとった後、本州最北端の水族館「青森県営 浅虫水族館」（入館料1,600円/人折半）へ。むつ湾の豊かな海とホタテ養殖風景を再現した長さ15m×幅10mの巨大「むつ湾の海トンネル水槽」や、津軽三味線の音色に合わせて跳躍するイルカパフォーマンスを満喫。</p>
+      
+      
+      <div class="tactics-box">
+        <div class="tactics-header">
+          <span>🎯</span>
+          <span class="tactics-tag">個別立ち回り</span>
+          <span>【構内順路】攻略戦術</span>
+        </div>
+        <div class="tactics-list">
+          
+            <div class="tactics-step-row">
+              <span class="tactics-num">1</span>
+              <span class="tactics-text">12:00に浅虫温泉（道の駅ゆ〜さ浅虫周辺または正立食堂・鶴亀屋食堂）で昼食を摂取。</span>
+            </div>
+          
+            <div class="tactics-step-row">
+              <span class="tactics-num">2</span>
+              <span class="tactics-text">13:00に「青森県営 浅虫水族館」へ入館。まず名物の「むつ湾の海（トンネル水槽）」をくぐり、頭上を泳ぐマダイ・スズキ・ホタテ養殖かごの海中景観を撮影。</span>
+            </div>
+          
+            <div class="tactics-step-row">
+              <span class="tactics-num">3</span>
+              <span class="tactics-text">屋内イルカプールで開催される「イルカパフォーマンス（津軽三味線やねぶた囃子と融合した青森独自演出）」を観覧。</span>
+            </div>
+          
+            <div class="tactics-step-row">
+              <span class="tactics-num">4</span>
+              <span class="tactics-text">アザラシ・ペンギン・ウミガメの「海獣館」やタッチコーナーを見学し、浅虫温泉街・海浜公園を散策して15:15に出発（この日17,912歩 / 11.09kmを計上）。</span>
+            </div>
+          
+        </div>
+      </div>
+      
+      <div class="checkpoint-list">
+        
+          <div class="checkpoint-row">
+            <span class="cp-badge">必須</span>
+            <div>
+              <div class="cp-title">長さ15m「むつ湾の海」巨大トンネル水槽</div>
+              <div class="cp-desc">陸奥湾のホタテ養殖の仕組みと多様な魚群を下から見上げる迫力のメイン水槽。</div>
+            </div>
+          </div>
+        
+          <div class="checkpoint-row">
+            <span class="cp-badge">必須</span>
+            <div>
+              <div class="cp-title">青森限定演出！津軽三味線・ねぶた囃子イルカパフォーマンス</div>
+              <div class="cp-desc">天候に左右されない屋内プールで、ダイナミックなハイジャンプを間近で観賞。</div>
+            </div>
+          </div>
+        
+      </div>
+      
+      <div class="practical-footer">
+        <div class="pf-row"><span class="pf-tag">🚗 移動・駐車:</span><span class="pf-val">無料大型駐車場完備（普通車540台）。青森市街（ホテル青森）までは国道4号で約15km（車約25分）。</span></div>
+        <div class="pf-row"><span class="pf-tag">💡 現地Tips:</span><span class="pf-val">イルカショーの開演時間を入口で確認し、15分前にはプール観覧席を確保すると水しぶきも迫力満点。</span></div>
+        <div class="pf-row"><span class="pf-tag">⏱️ 撤収基準:</span><span class="pf-val">15:15に浅虫水族館を出発し、15:45にホテル青森へチェックインする。</span></div>
+      </div>
+      <div class="slot-foot">
+        <a class="map-pill" href="https://www.google.com/maps/search/?api=1&amp;query=青森県営+浅虫水族館" target="_blank" rel="noopener">📍 Google Maps</a>
+        <span style="font-size:12px;font-weight:700;color:var(--accent);">⭐ 必達スポット</span>
+      </div>
+    </article>
+    <article class="slot-card " id="d4-hotel-aomori" data-slot-id="d4-hotel-aomori">
+      <div class="slot-meta">
+        <span class="slot-time">⏱️ 15:45 - 17:45</span>
+        <span class="slot-badge badge-transit">青森市内名門ホテル</span>
+      </div>
+      <div class="slot-title-row">
+        <input type="checkbox" class="slot-checkbox no-print" onchange="toggleSlot('d4-hotel-aomori', this.checked)" title="完了・スキップを消し込み">
+        <h3 class="slot-title">ホテル青森 チェックイン ＆ 休息（ツイン素泊まり）</h3>
+      </div>
+      <p class="slot-desc">青森市堤町に位置する青森屈指の格式あるシティホテル「ホテル青森」（1人5,624円・ツイン素泊まり）へチェックイン。3日間続いた長距離ドライブと霊場・階段踏破の疲れを広い客室で癒やし、青森市街・善知鳥神社周辺を軽く散歩して夜の打ち上げに備える。</p>
+      
+      
+      <div class="tactics-box">
+        <div class="tactics-header">
+          <span>🎯</span>
+          <span class="tactics-tag">個別立ち回り</span>
+          <span>【構内順路】攻略戦術</span>
+        </div>
+        <div class="tactics-list">
+          
+            <div class="tactics-step-row">
+              <span class="tactics-num">1</span>
+              <span class="tactics-text">15:45にホテル青森の立体駐車場へ入庫し、フロントでチェックイン。</span>
+            </div>
+          
+            <div class="tactics-step-row">
+              <span class="tactics-num">2</span>
+              <span class="tactics-text">荷物を整理し、翌朝のコインランドリー洗濯物やフェリー携行荷物の仕分けを実施。</span>
+            </div>
+          
+            <div class="tactics-step-row">
+              <span class="tactics-num">3</span>
+              <span class="tactics-text">18:00の夕食までベッドで休憩、または青森駅方面へ徒歩散策。</span>
+            </div>
+          
+        </div>
+      </div>
+      
+      <div class="checkpoint-list">
+        
+          <div class="checkpoint-row">
+            <span class="cp-badge">必須</span>
+            <div>
+              <div class="cp-title">15:45 ホテル青森 チェックイン（堤町1-1-23）</div>
+              <div class="cp-desc">平面・立体駐車場完備で車旅に最適。本町繁華街へも徒歩3〜5分の好立地。</div>
+            </div>
+          </div>
+        
+      </div>
+      
+      <div class="practical-footer">
+        <div class="pf-row"><span class="pf-tag">🚗 移動・駐車:</span><span class="pf-val">宿泊者駐車場完備。翌朝ワ・ラッセへ向かう際も国道4号からすぐ。</span></div>
+        <div class="pf-row"><span class="pf-tag">💡 現地Tips:</span><span class="pf-val">洗濯物が溜まっている場合は翌朝ワ・ラッセ観光前に市内の24h大型コインランドリー（せん太くん古川店等）へ投入すると時間を1秒も無駄にしない。</span></div>
+        <div class="pf-row"><span class="pf-tag">⏱️ 撤収基準:</span><span class="pf-val">18:00にロビー集合し、徒歩で本町の居酒屋街へ繰り出す。</span></div>
+      </div>
+      <div class="slot-foot">
+        <a class="map-pill" href="https://www.google.com/maps/search/?api=1&amp;query=ホテル青森" target="_blank" rel="noopener">📍 Google Maps</a>
+        
+      </div>
+    </article>
+    <article class="slot-card " id="d4-honcho-izakaya" data-slot-id="d4-honcho-izakaya">
+      <div class="slot-meta">
+        <span class="slot-time">⏱️ 18:00 - 21:00</span>
+        <span class="slot-badge badge-food">青森編3名打ち上げ</span>
+      </div>
+      <div class="slot-title-row">
+        <input type="checkbox" class="slot-checkbox no-print" onchange="toggleSlot('d4-honcho-izakaya', this.checked)" title="完了・スキップを消し込み">
+        <h3 class="slot-title">青森市・本町繁華街 郷土料理居酒屋で青森編打ち上げ</h3>
+      </div>
+      <p class="slot-desc">ホテル青森から徒歩3〜6分の「本町（ほんちょう）繁華街」にて、T・厳・iの3名で巡った青森レンタカー旅4日間の打ち上げディナー。青森の地酒（田酒・豊盃・八仙）、ホタテ貝焼き味噌、いがめんち、旬の刺身盛り合わせで乾杯。</p>
+      
+      <div class="swap-box">
+        <div class="swap-title">🔀 スワップ・代替ルート候補</div>
+        <div><strong>プランA:</strong> すし居酒屋 樽（本町3丁目）</div><div><strong>プランB:</strong> 津軽じょっぱり漁屋酒場 本町店</div><div><strong>プランC:</strong> 七兵衛や（七輪炭火焼）</div><div><strong>すし居酒屋 樽（本町3丁目）:</strong> ホテルから徒歩3分。新鮮な刺身盛り・握り寿司と地酒が揃う月曜営業の優良店</div><div><strong>津軽じょっぱり漁屋酒場 本町店:</strong> ホテルから徒歩5分。19時から津軽三味線生演奏あり・青森全蔵の地酒と郷土料理が揃う大箱名店</div><div><strong>七兵衛や（本町2丁目）:</strong> ホテルから徒歩5分。七輪炭火で活ホタテや一夜干しを炙る炉端居酒屋</div>
+      </div>
+      
+      <div class="tactics-box">
+        <div class="tactics-header">
+          <span>🎯</span>
+          <span class="tactics-tag">個別立ち回り</span>
+          <span>【構内順路】攻略戦術</span>
+        </div>
+        <div class="tactics-list">
+          
+            <div class="tactics-step-row">
+              <span class="tactics-num">1</span>
+              <span class="tactics-text">18:00にホテル青森から本町2〜3丁目エリアへ徒歩移動（約5分）。</span>
+            </div>
+          
+            <div class="tactics-step-row">
+              <span class="tactics-num">2</span>
+              <span class="tactics-text">月曜夜でも営業している有力店（「すし居酒屋 樽」「津軽じょっぱり漁屋酒場」「七兵衛や」等）へ入店。</span>
+            </div>
+          
+            <div class="tactics-step-row">
+              <span class="tactics-num">3</span>
+              <span class="tactics-text">青森郷土料理と地酒でこれまでの道中（不老ふ死温泉・階段国道・仏ヶ浦・恐山）を振り返り、Walicaで個別精算（1,800円〜）を記録してホテルへ帰還。</span>
+            </div>
+          
+        </div>
+      </div>
+      
+      <div class="checkpoint-list">
+        
+          <div class="checkpoint-row">
+            <span class="cp-badge">必須</span>
+            <div>
+              <div class="cp-title">青森郷土料理（貝焼き味噌・いがめんち・刺身）＆ 地酒「田酒」で乾杯</div>
+              <div class="cp-desc">4日間の青森周遊の無事完走を祝うクライマックスの宴。</div>
+            </div>
+          </div>
+        
+      </div>
+      
+      <div class="practical-footer">
+        <div class="pf-row"><span class="pf-tag">🚗 移動・駐車:</span><span class="pf-val">ホテル青森から徒歩約3〜6分（車はホテル駐車場に置いたまま飲酒OK）。</span></div>
+        <div class="pf-row"><span class="pf-tag">💡 現地Tips:</span><span class="pf-val">月曜定休の個人店があるため、無休・月曜営業の3候補から空席状況を見て即決。</span></div>
+        <div class="pf-row"><span class="pf-tag">⏱️ 撤収基準:</span><span class="pf-val">翌朝08:45チェックアウトに向け、21:30頃までにホテルへ戻る。</span></div>
+      </div>
+      <div class="slot-foot">
+        <a class="map-pill" href="https://www.google.com/maps/search/?api=1&amp;query=青森市+本町+居酒屋" target="_blank" rel="noopener">📍 Google Maps</a>
+        
+      </div>
+    </article>
+        </div>
+      </section>
+    
+    <nav class="nav-bar no-print" style="margin-top: 24px;">
+      <a class="nav-link" href="aomori.html">📑 全日程（統合版）</a>
+      <a class="nav-link " href="aomori_day1.html">Day 1</a><a class="nav-link " href="aomori_day2.html">Day 2</a><a class="nav-link " href="aomori_day3.html">Day 3</a><a class="nav-link active" href="aomori_day4.html">Day 4</a><a class="nav-link " href="aomori_day5.html">Day 5</a>
+    </nav>
+  </main>
+
+  <script>
+    const STORAGE_KEY = 'aomori_completed_slots';
+
+    function toggleTheme() {
+      const cur = document.documentElement.getAttribute('data-theme') || 'light';
+      const nxt = cur === 'dark' ? 'light' : 'dark';
+      document.documentElement.setAttribute('data-theme', nxt);
+      localStorage.setItem('trip_nav_theme', nxt);
+    }
+
+    function getCompletedSlots() {
+      try {
+        return JSON.parse(localStorage.getItem(STORAGE_KEY) || '[]');
+      } catch (e) {
+        return [];
+      }
+    }
+
+    function toggleSlot(slotId, isDone) {
+      const card = document.getElementById(slotId);
+      let list = getCompletedSlots();
+      if (isDone) {
+        if (!list.includes(slotId)) list.push(slotId);
+        if (card) card.classList.add('is-dimmed');
+      } else {
+        list = list.filter(id => id !== slotId);
+        if (card) card.classList.remove('is-dimmed');
+      }
+      localStorage.setItem(STORAGE_KEY, JSON.stringify(list));
+    }
+
+    // In-page Day Segment Switcher (Instant filter without HTTP reload)
+    function switchDay(targetDay) {
+      const dayBlocks = document.querySelectorAll('.day-block');
+      const jumpChips = document.querySelectorAll('.jump-chip');
+      const navLinks = document.querySelectorAll('.nav-link[data-day]');
+
+      // 1. Filter Day Sections
+      dayBlocks.forEach(sec => {
+        const secDay = sec.getAttribute('data-day');
+        if (targetDay === 'all' || secDay === String(targetDay)) {
+          sec.style.display = '';
+        } else {
+          sec.style.display = 'none';
+        }
+      });
+
+      // 2. Filter Jump Chips
+      jumpChips.forEach(chip => {
+        const chipDay = chip.getAttribute('data-day');
+        if (targetDay === 'all' || chipDay === String(targetDay)) {
+          chip.style.display = '';
+        } else {
+          chip.style.display = 'none';
+        }
+      });
+
+      // 3. Update Nav Active State
+      navLinks.forEach(link => {
+        if (link.getAttribute('data-day') === String(targetDay)) {
+          link.classList.add('active');
+        } else {
+          link.classList.remove('active');
+        }
+      });
+
+      // 4. Sync Hash (optional bookmarking)
+      if (history.replaceState) {
+        const newHash = targetDay === 'all' ? '' : `#day${targetDay}`;
+        history.replaceState(null, '', newHash || window.location.pathname);
+      }
+    }
+
+    // Initialize state on load
+    document.addEventListener('DOMContentLoaded', () => {
+      // Restore checked slots
+      const list = getCompletedSlots();
+      list.forEach(slotId => {
+        const card = document.getElementById(slotId);
+        if (card) {
+          card.classList.add('is-dimmed');
+          const cb = card.querySelector('.slot-checkbox');
+          if (cb) cb.checked = true;
+        }
+      });
+
+      // Initial day selection from URL hash: e.g. #day1, #day2
+      const hash = window.location.hash.toLowerCase();
+      const match = hash.match(/^#day(\d+)$/);
+      if (match) {
+        switchDay(match[1]);
+      } else {
+        switchDay('all');
+      }
+    });
+  </script>
+</body>
+</html>
